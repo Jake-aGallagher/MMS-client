@@ -12,8 +12,10 @@ export default function App({ Component, pageProps }: AppProps) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <main className="w-screen h-screen font-sans bg-gray-100">
-                    <NavBar />
+                <NavBar />
+                <div className='pl-52 h-screen'>
                     <Component {...pageProps} />
+                </div>
             </main>
         </>
     );
