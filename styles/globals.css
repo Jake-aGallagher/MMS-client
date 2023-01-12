@@ -1,7 +1,11 @@
-:root {
-  --max-width: 1300px;
-  --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.icon-filter {
+    filter: invert(90%) sepia(7%) saturate(621%) hue-rotate(189deg) brightness(106%) contrast(103%);
+}
+
+.icon-filter:hover {
+    filter: invert(59%) sepia(87%) saturate(1340%) hue-rotate(170deg) brightness(103%) contrast(95%);
 }
