@@ -13,6 +13,7 @@ const NavBar = () => {
             <div className='w-32 h-8 mx-auto mb-6 text-center font-bold text-2xl text-blue-600'>UpTime</div>
             <select className='w-32 h-8 mx-auto mb-6 text-blue-600 border-b-2 border-blue-600'>
                 <option>Current Property</option>
+                <option>Property number 2</option>
             </select>
             <Link href="/" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute === "/" ? "text-blue-600" : "")}>Dashboard</Link>
             <Link href="/properties" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes("properties") ? "text-blue-600" : "")}>Properties</Link>
