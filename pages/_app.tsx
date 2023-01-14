@@ -1,10 +1,25 @@
-import Head from 'next/head';
-import type { AppProps } from 'next/app';
 import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import { store } from '../components/store/store';
+import { Provider } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from '../components/store/store';
+import { useState } from 'react'
+import Head from 'next/head';
 import NavBar from '../navigation/navbar';
-import CompanyLogo from '../public/CompanyLogo.png';
+import Login from '../components/login/login';
 
 export default function App({ Component, pageProps }: AppProps) {
+    const [loggedIn, setLoggedIn] = useState(false)
+
+    const loginHandler = () => {
+        setLoggedIn(true)
+    }
+
+    const logoutHandler = () => {
+        setLoggedIn(false)
+    }
+
     return (
         <>
             <Head>
@@ -19,11 +34,19 @@ export default function App({ Component, pageProps }: AppProps) {
                 <meta name="description" content="A Maintenance Management System" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <main className="w-screen h-screen font-sans bg-gray-100">
-                <NavBar />
-                <div className="pl-52 h-screen">
-                    <Component {...pageProps} />
-                </div>
+            <main className="h-screen font-sans bg-gray-100">
+                <Provider store={store}>
+                    {loggedIn ? (
+                        <>
+                            <NavBar logoutHandler={logoutHandler}/>
+                            <div className="pl-52 h-screen">
+                                <Component {...pageProps} />
+                            </div>
+                        </>
+                    ) : (
+                        <Login loginHandler={loginHandler}/>
+                    )}
+                </Provider>
             </main>
         </>
     );
