@@ -1,6 +1,6 @@
-import axios from 'axios';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import axios from 'axios';
 import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
 
@@ -45,6 +45,7 @@ const Jobs = () => {
             setLoading(false);
         } catch (err) {
             setError(true);
+            setLoading(false);
         }
     };
 

@@ -13,26 +13,22 @@ const Login = (props: Props) => {
     const [warning, setWarning] = useState(false);
     const dispatch = useDispatch();
 
-    useEffect(() =>{
-        checkLogin()
-    },[])
+    useEffect(() => {
+        checkLogin();
+    }, []);
 
     const checkLogin = async () => {
         /* if (localStorage.getItem('token') && localStorage.getItem('expiryDate')) {
             if (localStorage.getItem('expiryDate').getTime)
         } */
         try {
-            const response = await axios.get(
-                'http://localhost:3001/check-auth',
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorisation: 'Bearer ' + localStorage.getItem('token')
-                    },
-                    withCredentials: true,
-                }
-            );
-            console.log(response.data.user)
+            const response = await axios.get('http://localhost:3001/check-auth', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorisation: 'Bearer ' + localStorage.getItem('token'),
+                },
+                withCredentials: true,
+            });
             const user = response.data.user;
             dispatch(
                 setUser({
@@ -44,10 +40,8 @@ const Login = (props: Props) => {
                 })
             );
             props.loginHandler();
-        } catch (err) {
-
-        }
-    }
+        } catch (err) {}
+    };
 
     const loginHandler = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
