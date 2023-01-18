@@ -3,6 +3,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
+import ModalBase from '../../components/modal/modal';
 
 interface Property {
     id: number;
@@ -19,6 +20,8 @@ const Properties = () => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [properties, setProperties] = useState<Property[]>([]);
+    const [viewModal, setViewModal] = useState(false);
+    const [modalType, setmodalType] = useState('');
 
     useEffect(() => {
         setLoading(true);
@@ -28,7 +31,9 @@ const Properties = () => {
 
     const getHandler = async () => {
         try {
-            const propertiesList = await axios.get('http://localhost:3001/properties/all-properties', { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } });
+            const propertiesList = await axios.get('http://localhost:3001/properties/all-properties', {
+                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+            });
             if (propertiesList.data.length === 0) {
                 setNoData(true);
             } else {
@@ -40,6 +45,7 @@ const Properties = () => {
             setLoading(false);
         }
     };
+
 
     var propertiesList;
     propertiesList = properties.map((property) => (
@@ -58,9 +64,9 @@ const Properties = () => {
         </tr>
     ));
 
-
     return (
         <>
+            {viewModal ? <ModalBase modalType={modalType} closeModal={() => setViewModal(false)} /> : null}
             {loading ? (
                 <Loading />
             ) : noData ? (
@@ -69,6 +75,18 @@ const Properties = () => {
                 <RetrieveError />
             ) : (
                 <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
+                    <div className="flex flex-row my-4 items-center">
+                        <div className="ml-8">
+                            <label htmlFor="search">Search:</label>
+                            <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
+                        </div>
+                        <button
+                            onClick={() => [setViewModal(true), setmodalType('createProperty')]}
+                            className='ml-10 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"'
+                        >
+                            Create Property
+                        </button>
+                    </div>
                     <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
                         <thead>
                             <tr className="bg-gray-200">
@@ -86,7 +104,7 @@ const Properties = () => {
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default Properties 
+export default Properties;

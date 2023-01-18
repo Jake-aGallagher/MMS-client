@@ -33,8 +33,8 @@ const Login = (props: Props) => {
             dispatch(
                 setUser({
                     username: user.username,
-                    first: user.first,
-                    last: user.last,
+                    first: user.first_name,
+                    last: user.last_name,
                     authority: user.authority,
                     id: user.id,
                 })

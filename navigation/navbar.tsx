@@ -32,7 +32,7 @@ const NavBar = (props: Props) => {
     };
 
     return (
-        <div className="fixed left-0 top-0 h-screen w-52 z-50 bg-gray-200 flex flex-col pt-4 px-4">
+        <div className="fixed left-0 top-0 h-screen w-52 z-30 bg-gray-200 flex flex-col pt-4 px-4">
             <div className="w-32 h-32 mx-auto mb-2">
                 <img src={CompanyLogo.src} />
             </div>
@@ -53,8 +53,20 @@ const NavBar = (props: Props) => {
             <Link href="/assets" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('assets') ? 'text-blue-600' : '')}>
                 Assets
             </Link>
+            <Link href="/spares" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('spares') ? 'text-blue-600' : '')}>
+                Spares
+            </Link>
+            <Link href="/forecast" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('forecast') ? 'text-blue-600' : '')}>
+                Forecast
+            </Link>
+            <Link href="/matrix" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('matrix') ? 'text-blue-600' : '')}>
+                Matrix
+            </Link>
             <Link href="/notifications" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('notifications') ? 'text-blue-600' : '')}>
                 Notifications
+            </Link>
+            <Link href="/messages" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('messages') ? 'text-blue-600' : '')}>
+                Messages
             </Link>
             <Link href="/settings" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('settings') ? 'text-blue-600' : '')}>
                 Settings
