@@ -30,6 +30,7 @@ const Jobs = () => {
 
     useEffect(() => {
         setLoading(true);
+        setError(false);
         setNoData(false);
         getHandler();
     }, []);

@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 //import ModalBase from '../../Components/Modal/ModalBase';
 import { RootState } from '../../components/store/store';
+import RetrieveError from '../../components/error/retrieveError';
+import Loading from '../../components/loading/loading';
 
 interface Job {
     id: number;
@@ -24,36 +26,44 @@ interface Job {
 }
 
 const JobView = () => {
+    const [loading, setLoading] = useState(true);
+    const [noData, setNoData] = useState(false);
+    const [error, setError] = useState(false);
     const params = useRouter();
     const authLevel = useSelector((state: RootState) => state.user.value.authority);
     const [jobDetails, setJobDetails] = useState<Job[]>([]);
-    const [noData, setNoData] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [status, setStatus] = useState('');
 
-
     useEffect(() => {
         setLoading(true);
+        setError(false);
+        setNoData(false);
         getJobHandler();
     }, []);
 
     const getJobHandler = async () => {
-        const response = await axios.get(`http://localhost:3001/jobs/${params.asPath.split('/')[2]}`, { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } });
-        if (response.data.length === 0) {
-            setNoData(true);
-        } else {
-            setJobDetails(response.data);
-            setNoData(false);
+        try {
+            const response = await axios.get(`http://localhost:3001/jobs/${params.asPath.split('/')[2]}`, {
+                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+            });
+            if (response.data.length === 0) {
+                setNoData(true);
+            } else {
+                setJobDetails(response.data);
+            }
+            setLoading(false);
+        } catch (err) {
+            setError(true);
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const completeJob = () => {
-        setViewModal(true)
-        setModalType('completeJob')
-    }
+        setViewModal(true);
+        setModalType('completeJob');
+    };
 
     const one = jobDetails.map((j) => (
         <div key={Math.random()} className="box row-start-1 row-end-2 col-start-1 col-end-6 pl-6 flex flex-row items-center relative">
@@ -61,7 +71,7 @@ const JobView = () => {
                 <b>{j.property_name}</b>
             </div>
 
-            {(jobDetails[0].status === 'Attended - Fixed' || jobDetails[0].status === 'Attended - Found no Issues') && jobDetails[0].completed !== 1  ? (
+            {(jobDetails[0].status === 'Attended - Fixed' || jobDetails[0].status === 'Attended - Found no Issues') && jobDetails[0].completed !== 1 ? (
                 <button
                     onClick={() => completeJob()}
                     className="absolute right-28 md:right-36 2xl:right-56 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent"
@@ -166,13 +176,23 @@ const JobView = () => {
     ));
 
     return (
-        <div className="w-full h-full grid overflow-hidden  grid-cols-5 grid-rows-12 gap-0.5">
-            {one}
-            {two}
-            {three}
-            {four}
-            {five}
-        </div>
+        <>
+            {loading ? (
+                <Loading />
+            ) : noData ? (
+                <div>There is no data</div>
+            ) : error ? (
+                <RetrieveError />
+            ) : (
+                <div className="w-full h-full grid overflow-hidden  grid-cols-5 grid-rows-12 gap-0.5">
+                    {one}
+                    {two}
+                    {three}
+                    {four}
+                    {five}
+                </div>
+            )}
+        </>
     );
 };
 

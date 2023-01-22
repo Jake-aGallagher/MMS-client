@@ -25,6 +25,7 @@ const Properties = () => {
 
     useEffect(() => {
         setLoading(true);
+        setError(false);
         setNoData(false);
         getHandler();
     }, []);
@@ -45,7 +46,6 @@ const Properties = () => {
             setLoading(false);
         }
     };
-
 
     var propertiesList;
     propertiesList = properties.map((property) => (

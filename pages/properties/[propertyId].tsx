@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { RootState } from '../../components/store/store';
 import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
+import RetrieveError from '../../components/error/retrieveError';
 
 interface Property {
     id: number;
@@ -25,42 +26,55 @@ interface User {
 }
 
 const PropertyView = () => {
+    const [loading, setLoading] = useState(true);
+    const [noData, setNoData] = useState(false);
+    const [error, setError] = useState(false);
     const params = useRouter();
     const [propertyDetails, setPropertyDetails] = useState<Property[]>([]);
-    const [noData, setNoData] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
 
     useEffect(() => {
         setLoading(true);
+        setError(false);
+        setNoData(false);
         getPropertyHandler();
         getAssignedUsersHandler();
     }, []);
 
     const getPropertyHandler = async () => {
-        const response = await axios.get(`http://localhost:3001/properties/${params.asPath.split('/')[2]}`, {
-            headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-        });
-        if (response.data.length === 0) {
-            setNoData(true);
-        } else {
-            setPropertyDetails(response.data);
-            setNoData(false);
+        try {
+            const response = await axios.get(`http://localhost:3001/properties/${params.asPath.split('/')[2]}`, {
+                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+            });
+            if (response.data.length === 0) {
+                setNoData(true);
+            } else {
+                setPropertyDetails(response.data);
+            }
+            setLoading(false);
+        } catch (err) {
+            setError(true);
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const getAssignedUsersHandler = async () => {
-        const response = await axios.get(`http://localhost:3001/properties/${params.asPath.split('/')[2]}/assigned-users`, {
-            headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-        });
-        if (response.data.length === 0) {
-        } else {
-            setAssignedUsers(response.data);
+        try {
+            const response = await axios.get(`http://localhost:3001/properties/${params.asPath.split('/')[2]}/assigned-users`, {
+                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+            });
+            if (response.data.length === 0) {
+                setNoData(true);
+            } else {
+                setAssignedUsers(response.data);
+            }
+            setLoading(false);
+        } catch (err) {
+            setError(true);
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const authSwitch = (auth: number) => {
@@ -132,6 +146,8 @@ const PropertyView = () => {
                 <Loading />
             ) : noData ? (
                 <div>There has been an issue getting the Property Data</div>
+            ) : error ? (
+                <RetrieveError />
             ) : (
                 <div>
                     <div className="w-full h-14 flex flex-row items-center">
@@ -153,8 +169,8 @@ const PropertyView = () => {
                     <div className="flex flex-col xl:flex-row">
                         {details}
                         <div className="ml-10">
-                            <p className='xl:text-center text-left mb-2 font-semibold'>Assigned Users</p>
-                            <table >
+                            <p className="xl:text-center text-left mb-2 font-semibold">Assigned Users</p>
+                            <table>
                                 <thead>
                                     <tr className="bg-gray-200">
                                         <th className="border-2 border-solid border-gray-500 px-2">Username</th>

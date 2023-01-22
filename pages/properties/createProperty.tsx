@@ -18,21 +18,25 @@ const CreateProperty = (props: ModalProps) => {
 
     const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        const response = await axios.post(
-            'http://localhost:3001/properties',
-            {
-                name: name,
-                type: type,
-                address: address,
-                city: city,
-                county: county,
-                postcode: postcode,
-            },
-            { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
-        );
-        if (response.data.created) {
-            props.closeModal();
-        } else {
+        try {
+            const response = await axios.post(
+                'http://localhost:3001/properties',
+                {
+                    name: name,
+                    type: type,
+                    address: address,
+                    city: city,
+                    county: county,
+                    postcode: postcode,
+                },
+                { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
+            );
+            if (response.data.created) {
+                props.closeModal();
+            } else {
+                alert('There has been an issue creating this Property, please try again.');
+            }
+        } catch (err) {
             alert('There has been an issue creating this Property, please try again.');
         }
     };

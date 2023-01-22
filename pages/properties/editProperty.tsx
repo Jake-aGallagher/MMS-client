@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../../components/loading/loading';
+import RetrieveError from '../../components/error/retrieveError';
 
 interface ModalProps {
     closeModal: () => void;
@@ -8,6 +9,9 @@ interface ModalProps {
 }
 
 const EditProperty = (props: ModalProps) => {
+    const [loading, setLoading] = useState(true);
+    const [noData, setNoData] = useState(false);
+    const [error, setError] = useState(false);
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const typeOptions = ['Factory', 'Commercial', 'Power station', 'Misc'];
@@ -16,54 +20,63 @@ const EditProperty = (props: ModalProps) => {
     const [city, setCity] = useState('');
     const [county, setCounty] = useState('');
     const [postcode, setPostcode] = useState('');
-    const [noData, setNoData] = useState(false);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
+        setError(false);
+        setNoData(false);
         getPropertyHandler();
     }, []);
 
     const getPropertyHandler = async () => {
-        const response = await axios.get(`http://localhost:3001/properties/${props.propertyNumber}`, {
-            headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-        });
-        if (response.data.length === 0) {
-            setNoData(true);
-        } else {
-            const data = response.data[0];
-            setId(data.id);
-            setName(data.name);
-            setType(data.type);
-            setAddress(data.address);
-            setCity(data.city);
-            setCounty(data.county);
-            setPostcode(data.postcode);
-            setNoData(false);
+        try {
+            const response = await axios.get(`http://localhost:3001/properties/${props.propertyNumber}`, {
+                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+            });
+            if (response.data.length === 0) {
+                setNoData(true);
+            } else {
+                const data = response.data[0];
+                setId(data.id);
+                setName(data.name);
+                setType(data.type);
+                setAddress(data.address);
+                setCity(data.city);
+                setCounty(data.county);
+                setPostcode(data.postcode);
+                setNoData(false);
+            }
+            setLoading(false);
+        } catch (err) {
+            setError(true);
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        const response = await axios.put(
-            'http://localhost:3001/properties',
-            {
-                id: id,
-                name: name,
-                type: type,
-                address: address,
-                city: city,
-                county: county,
-                postcode: postcode,
-            },
-            {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+        try {
+            const response = await axios.put(
+                'http://localhost:3001/properties',
+                {
+                    id: id,
+                    name: name,
+                    type: type,
+                    address: address,
+                    city: city,
+                    county: county,
+                    postcode: postcode,
+                },
+                {
+                    headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+                }
+            );
+            if (response.data.created) {
+                props.closeModal();
+            } else {
+                alert('There has been an issue editing this Property, please try again.');
             }
-        );
-        if (response.data.created) {
-            props.closeModal();
-        } else {
+        } catch (err) {
             alert('There has been an issue editing this Property, please try again.');
         }
     };
@@ -74,6 +87,8 @@ const EditProperty = (props: ModalProps) => {
                 <Loading />
             ) : noData ? (
                 <div>There has been an error getting your property</div>
+            ) : error ? (
+                <RetrieveError />
             ) : (
                 <div className="h-full w-full rounded-lg relative border-4 border-blue-600">
                     <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200 border-b-4 border-blue-600">Edit Property</h1>

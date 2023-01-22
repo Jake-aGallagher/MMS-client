@@ -27,20 +27,24 @@ const CreateUser = (props: ModalProps) => {
 
     const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        const response = await axios.post(
-            'http://localhost:3001/users',
-            {
-                username: username,
-                first: first,
-                last: last,
-                password: password,
-                auth: auth,
-            },
-            { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
-        );
-        if (response.data.created) {
-            props.closeModal();
-        } else {
+        try {
+            const response = await axios.post(
+                'http://localhost:3001/users',
+                {
+                    username: username,
+                    first: first,
+                    last: last,
+                    password: password,
+                    auth: auth,
+                },
+                { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
+            );
+            if (response.data.created) {
+                props.closeModal();
+            } else {
+                alert('There has been an issue creating this User, please try again.');
+            }
+        } catch (err) {
             alert('There has been an issue creating this User, please try again.');
         }
     };

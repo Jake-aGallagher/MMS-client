@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../../components/loading/loading';
+import RetrieveError from '../../components/error/retrieveError';
 
 interface ModalProps {
     closeModal: () => void;
@@ -17,33 +18,41 @@ interface UsersList {
 }
 
 const AssignUsers = (props: ModalProps) => {
+    const [loading, setLoading] = useState(true);
+    const [noData, setNoData] = useState(false);
+    const [error, setError] = useState(false);
     const [users, setUsers] = useState<UsersList[]>([]);
     const [assignedUsers, setAssignedUsers] = useState<number[]>([]);
-    const [noUsers, setNoUsers] = useState(false);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
+        setError(false);
+        setNoData(false);
         getUsersForAssign();
     }, []);
 
     const getUsersForAssign = async () => {
-        const response = await axios.get(`http://localhost:3001/properties/${props.propertyNumber}/users-for-assigning`, {
-            headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-        });
-        if (response.data.length === 0) {
-            setNoUsers(true);
-        } else {
-            setUsers(response.data);
-            let alreadyAssigned = [...assignedUsers];
-            response.data.map((user: UsersList) => {
-                if (user.assigned == true) {
-                    alreadyAssigned.push(user.id);
-                }
+        try {
+            const response = await axios.get(`http://localhost:3001/properties/${props.propertyNumber}/users-for-assigning`, {
+                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            setAssignedUsers(alreadyAssigned);
+            if (response.data.length === 0) {
+                setNoData(true);
+            } else {
+                setUsers(response.data);
+                let alreadyAssigned = [...assignedUsers];
+                response.data.map((user: UsersList) => {
+                    if (user.assigned == true) {
+                        alreadyAssigned.push(user.id);
+                    }
+                });
+                setAssignedUsers(alreadyAssigned);
+            }
+            setLoading(false);
+        } catch (err) {
+            setError(true);
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const inputChangeHandler = (id: number) => {
@@ -57,19 +66,23 @@ const AssignUsers = (props: ModalProps) => {
 
     const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        const response = await axios.put(
-            'http://localhost:3001/properties/assign-users',
-            {
-                propertyNo: props.propertyNumber,
-                assignedUsers,
-            },
-            {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+        try {
+            const response = await axios.put(
+                'http://localhost:3001/properties/assign-users',
+                {
+                    propertyNo: props.propertyNumber,
+                    assignedUsers,
+                },
+                {
+                    headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+                }
+            );
+            if (response.data.created) {
+                props.closeModal();
+            } else {
+                alert('There has been an issue Assigning Users to this Property, please try again.');
             }
-        );
-        if (response.data.created) {
-            props.closeModal();
-        } else {
+        } catch (err) {
             alert('There has been an issue Assigning Users to this Property, please try again.');
         }
     };
@@ -93,11 +106,15 @@ const AssignUsers = (props: ModalProps) => {
         <>
             {loading ? (
                 <Loading />
+            ) : noData ? (
+                <div>There is no data</div>
+            ) : error ? (
+                <RetrieveError />
             ) : (
                 <div className="h-full w-full rounded-lg relative border-4 border-blue-600">
                     <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200 border-b-4 border-blue-600">Assign Users</h1>
                     <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        {noUsers ? <div>There are no users</div> : <div className="w-full flex flex-col justify-start pt-2 ">{inputs}</div>}
+                        {noData ? <div>There are no users</div> : <div className="w-full flex flex-col justify-start pt-2 ">{inputs}</div>}
                         <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full border-t-4 border-blue-600 bg-blue-200">
                             <button
                                 className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent w-32"
@@ -105,7 +122,7 @@ const AssignUsers = (props: ModalProps) => {
                             >
                                 Cancel
                             </button>
-                            {noUsers ? (
+                            {noData ? (
                                 ''
                             ) : (
                                 <button
@@ -125,11 +142,9 @@ const AssignUsers = (props: ModalProps) => {
 
 export default AssignUsers;
 
-
 <div className="h-full w-full rounded-lg relative border-4 border-blue-600">
     <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200 border-b-4 border-blue-600">Title Here</h1>
     <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-
         <label htmlFor="username">Username</label>
         <input id="username" type="text" className="mb-2 rounded-sm bg-blue-200" />
 
@@ -138,4 +153,4 @@ export default AssignUsers;
             <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent w-32">Submit</button>
         </div>
     </form>
-</div>
+</div>;
