@@ -41,7 +41,6 @@ const JobView = () => {
 
     const getJobHandler = async () => {
         const response = await axios.get(`http://localhost:3001/jobs/${params.asPath.split('/')[2]}`, { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } });
-        console.log(response.data)
         if (response.data.length === 0) {
             setNoData(true);
         } else {

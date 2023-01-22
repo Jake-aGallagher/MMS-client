@@ -1,6 +1,7 @@
 import CreateUser from '../../pages/settings/createUser';
 import CreateProperty from '../../pages/properties/createProperty'
 import EditProperty from '../../pages/properties/editProperty';
+import AssignUsers from '../../pages/properties/assignUsers';
 
 interface ModalProps {
     modalType: string;
@@ -17,14 +18,14 @@ const ModalBase = (props: ModalProps) => {
                 return <CreateProperty closeModal={props.closeModal} />;
             case 'editProperty':
                 return <EditProperty closeModal={props.closeModal} propertyNumber={props.payload} />;
+            case 'assignUsers':
+                return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
             /* case 'createJob':
                 return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId}/>;
             case 'updateJob':
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
             case 'completeJob':
                 return <CompleteJob closeModal={props.closeModal} jobId={props.payload} />;
-            case 'assignUsers':
-                return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
             case 'addAsset':
                 return <AddAsset closeModal={props.closeModal} payload={props.payload}/>
             case 'renameAsset':
