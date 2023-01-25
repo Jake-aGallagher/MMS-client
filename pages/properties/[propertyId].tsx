@@ -151,7 +151,6 @@ const PropertyView = () => {
             ) : (
                 <div>
                     <div className="w-full h-14 flex flex-row items-center">
-                        <div className="flex flex-row w-full mr-10 md:mr-14 2xl:mr-32">
                             <button
                                 className="rounded-3xl ml-10 bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
                                 onClick={() => [setViewModal(true), setModalType('editProperty')]}
@@ -164,7 +163,6 @@ const PropertyView = () => {
                             >
                                 Assign Users
                             </button>
-                        </div>
                     </div>
                     <div className="flex flex-col xl:flex-row">
                         {details}

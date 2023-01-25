@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 .icon-filter {
-    filter: invert(90%) sepia(7%) saturate(621%) hue-rotate(189deg) brightness(106%) contrast(103%);
+    filter: invert(0%) sepia(0%) saturate(1%) hue-rotate(81deg) brightness(96%) contrast(101%);
 }
 
 .icon-filter:hover {
-    filter: invert(59%) sepia(87%) saturate(1340%) hue-rotate(170deg) brightness(103%) contrast(95%);
+    filter: invert(48%) sepia(81%) saturate(6267%) hue-rotate(216deg) brightness(93%) contrast(99%);
 }

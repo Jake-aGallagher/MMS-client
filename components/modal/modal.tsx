@@ -2,6 +2,9 @@ import CreateUser from '../../pages/settings/createUser';
 import CreateProperty from '../../pages/properties/createProperty'
 import EditProperty from '../../pages/properties/editProperty';
 import AssignUsers from '../../pages/properties/assignUsers';
+import RenameAsset from '../../pages/assets/rename';
+import DeleteAsset from '../../pages/assets/delete';
+import AddAsset from '../../pages/assets/create';
 
 interface ModalProps {
     modalType: string;
@@ -20,18 +23,19 @@ const ModalBase = (props: ModalProps) => {
                 return <EditProperty closeModal={props.closeModal} propertyNumber={props.payload} />;
             case 'assignUsers':
                 return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
+            case 'renameAsset':
+                return <RenameAsset closeModal={props.closeModal} payload={props.payload} />
+            case 'deleteAsset':
+                return <DeleteAsset closeModal={props.closeModal} payload={props.payload} />
+            case 'addAsset':
+                return <AddAsset closeModal={props.closeModal} payload={props.payload}/>
             /* case 'createJob':
                 return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId}/>;
             case 'updateJob':
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
             case 'completeJob':
-                return <CompleteJob closeModal={props.closeModal} jobId={props.payload} />;
-            case 'addAsset':
-                return <AddAsset closeModal={props.closeModal} payload={props.payload}/>
-            case 'renameAsset':
-                return <RenameAsset closeModal={props.closeModal} payload={props.payload} />
-            case 'deleteAsset':
-                return <DeleteAsset closeModal={props.closeModal} payload={props.payload} /> */
+                return <CompleteJob closeModal={props.closeModal} jobId={props.payload} />;            
+             */
         }
     };
     return (

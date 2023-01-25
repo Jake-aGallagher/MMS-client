@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../components/store/store';
 import { useState } from 'react'
 import Head from 'next/head';
-import NavBar from '../navigation/navbar';
+import NavBar from '../components/navigation/navbar';
 import Login from '../components/login/login';
 
 export default function App({ Component, pageProps }: AppProps) {
