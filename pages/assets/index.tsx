@@ -111,11 +111,8 @@ const Assets = () => {
                     ) : (
                         <div className="absolute right-2">
                             {node.parentId != 0 ? (
-                                <button
-                                    onClick={() => [setViewModal(true), setModalType('renameAsset'), setModalProps({ id: node.id, oldName: node.name })]}
-                                    className="rounded-xl ml-5 text-sm bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
-                                >
-                                    <Link href={'/asset-tree/' + node.id}>View Component Details</Link>
+                                <button className="rounded-xl ml-5 text-sm bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent">
+                                    <Link href={'/assets/' + node.id}>View Component Details</Link>
                                 </button>
                             ) : null}
 

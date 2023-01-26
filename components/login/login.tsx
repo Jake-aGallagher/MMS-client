@@ -102,7 +102,7 @@ const Login = (props: Props) => {
                 <button
                     type="submit"
                     onClick={loginHandler}
-                    className="bg-gray-200 hover:bg-blue-600 h-8 w-1/3 mx-auto px-2 border-2 border-blue-600 hover:border-transparent"
+                    className="rounded-3xl bg-gray-200 hover:bg-blue-600 h-8 w-1/3 mx-auto px-2 border-2 border-blue-600 hover:border-transparent"
                 >
                     Login
                 </button>
