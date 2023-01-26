@@ -3,6 +3,8 @@ import Link from 'next/link';
 import axios from 'axios';
 import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/store/store';
 
 interface Job {
     id: number;
@@ -26,6 +28,7 @@ const Jobs = () => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
+    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [jobs, setJobs] = useState<Job[]>([]);
 
     useEffect(() => {
@@ -33,11 +36,13 @@ const Jobs = () => {
         setError(false);
         setNoData(false);
         getHandler();
-    }, []);
+    }, [currentProperty]);
 
     const getHandler = async () => {
         try {
-            const jobsList = await axios.get('http://localhost:3001/jobs/all-jobs', { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } });
+            const jobsList = await axios.get(`http://localhost:3001/jobs/all-jobs/${currentProperty}`, {
+                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+            });
             if (jobsList.data.length === 0) {
                 setNoData(true);
             } else {
@@ -81,6 +86,10 @@ const Jobs = () => {
                 <RetrieveError />
             ) : (
                 <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
+                    <div className="flex flex-row ml-8 my-4 items-center">
+                        <label htmlFor="search">Search:</label>
+                        <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
+                    </div>
                     <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
                         <thead>
                             <tr className="bg-gray-200">
