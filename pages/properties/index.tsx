@@ -24,11 +24,15 @@ const Properties = () => {
     const [modalType, setmodalType] = useState('');
 
     useEffect(() => {
+        reload()
+    }, []);
+
+    const reload = () => {
         setLoading(true);
         setError(false);
         setNoData(false);
         getHandler();
-    }, []);
+    }
 
     const getHandler = async () => {
         try {
@@ -66,7 +70,7 @@ const Properties = () => {
 
     return (
         <>
-            {viewModal ? <ModalBase modalType={modalType} closeModal={() => setViewModal(false)} /> : null}
+            {viewModal ? <ModalBase modalType={modalType} closeModal={() => [setViewModal(false), reload()]} /> : null}
             {loading ? (
                 <Loading />
             ) : noData ? (
