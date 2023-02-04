@@ -6,6 +6,9 @@ import { useRouter } from 'next/router';
 import { RootState } from '../../components/store/store';
 import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
+import ModalBase from '../../components/modal/modal';
+import Link from 'next/link';
+import GreaterThan from '../../public/GreaterThan.png';
 
 interface Job {
     id: number;
@@ -25,6 +28,13 @@ interface Job {
     title: string;
 }
 
+interface TimeDetails {
+    id: number;
+    time: number;
+    first: string;
+    last: string;
+}
+
 const JobView = () => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
@@ -32,6 +42,7 @@ const JobView = () => {
     const params = useRouter();
     const authLevel = useSelector((state: RootState) => state.user.value.authority);
     const [jobDetails, setJobDetails] = useState<Job[]>([]);
+    const [timeDetails, setTimeDetails] = useState<TimeDetails[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [status, setStatus] = useState('');
@@ -48,10 +59,13 @@ const JobView = () => {
             const response = await axios.get(`http://localhost:3001/jobs/${params.asPath.split('/')[2]}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (response.data.length === 0) {
+            if (response.data.jobDetails.length === 0) {
                 setNoData(true);
             } else {
-                setJobDetails(response.data);
+                setJobDetails(response.data.jobDetails);
+                if (response.data.timeDetails) {
+                    setTimeDetails(response.data.timeDetails);
+                }
             }
             setLoading(false);
         } catch (err) {
@@ -60,33 +74,22 @@ const JobView = () => {
         }
     };
 
-    const completeJob = () => {
-        setViewModal(true);
-        setModalType('completeJob');
-    };
-
     const one = jobDetails.map((j) => (
         <div key={Math.random()} className="box row-start-1 row-end-2 col-start-1 col-end-6 pl-6 flex flex-row items-center relative">
-            <div>
+            <div className="flex flex-col">
+                <div className="mb-2">
+                    <Link href="/jobs" className="icon-filter  hover:text-blue-600 flex flex-row items-center">
+                        <img className="h-4 rotate-180 mr-2" src={GreaterThan.src} />
+                        <p className="pb-1">Return to all Jobs</p>
+                    </Link>
+                </div>
                 <b>{j.property_name}</b>
             </div>
-
-            {(jobDetails[0].status === 'Attended - Fixed' || jobDetails[0].status === 'Attended - Found no Issues') && jobDetails[0].completed !== 1 ? (
-                <button
-                    onClick={() => completeJob()}
-                    className="absolute right-28 md:right-36 2xl:right-56 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent"
-                >
-                    Complete
-                </button>
-            ) : (
-                ''
-            )}
-
             <button
                 onClick={() => [setViewModal(true), setModalType('updateJob')]}
                 className="absolute right-5 md:right-14 2xl:right-32 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent"
             >
-                Update
+                {j.completed == 1 ? 'Update' : 'Update & Complete'}
             </button>
         </div>
     ));
@@ -138,6 +141,13 @@ const JobView = () => {
         </div>
     ));
 
+    const timeDetailsShow = timeDetails.map((detail) => (
+        <div key={detail.id + detail.last} className="flex flex-row">
+            <div className='mr-4'>{detail.first + ' ' + detail.last}</div>
+            <div>{detail.time} mins</div>
+        </div>
+    ));
+
     const five = jobDetails.map((j) => (
         <div key={Math.random()} className="box row-start-5 row-end-13 col-start-4 col-end-6 pl-6 flex flex-col justify-evenly">
             <div>
@@ -169,8 +179,9 @@ const JobView = () => {
                 {j.reporter}
             </div>
             <div>
-                <b>Time Logged (mins): </b>
+                <b>Total Time Logged (mins): </b>
                 {j.logged_time === null ? 'none' : j.logged_time}
+                {timeDetailsShow}
             </div>
         </div>
     ));
@@ -184,13 +195,16 @@ const JobView = () => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="w-full h-full grid overflow-hidden  grid-cols-5 grid-rows-12 gap-0.5">
-                    {one}
-                    {two}
-                    {three}
-                    {four}
-                    {five}
-                </div>
+                <>
+                    {viewModal ? <ModalBase modalType={modalType} payload={jobDetails[0].id} closeModal={() => [setViewModal(false), getJobHandler()]} /> : ''}
+                    <div className="w-full h-full grid overflow-hidden  grid-cols-5 grid-rows-12 gap-0.5">
+                        {one}
+                        {two}
+                        {three}
+                        {four}
+                        {five}
+                    </div>
+                </>
             )}
         </>
     );

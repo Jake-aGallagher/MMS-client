@@ -7,6 +7,8 @@ import { RootState } from '../../components/store/store';
 import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
 import RetrieveError from '../../components/error/retrieveError';
+import Link from 'next/link';
+import GreaterThan from '../../public/GreaterThan.png';
 
 interface Property {
     id: number;
@@ -151,18 +153,24 @@ const PropertyView = () => {
             ) : (
                 <div>
                     <div className="w-full h-14 flex flex-row items-center">
-                            <button
-                                className="rounded-3xl ml-10 bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
-                                onClick={() => [setViewModal(true), setModalType('editProperty')]}
-                            >
-                                Edit Property
-                            </button>
-                            <button
-                                className="rounded-3xl ml-4 bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
-                                onClick={() => [setViewModal(true), setModalType('assignUsers')]}
-                            >
-                                Assign Users
-                            </button>
+                        <div>
+                            <Link href="/properties" className="icon-filter  hover:text-blue-600 flex flex-row items-center">
+                                <img className="h-4 rotate-180 mr-2" src={GreaterThan.src} />
+                                <p className="pb-1">Return to all Properties</p>
+                            </Link>
+                        </div>
+                        <button
+                            className="rounded-3xl ml-10 bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
+                            onClick={() => [setViewModal(true), setModalType('editProperty')]}
+                        >
+                            Edit Property
+                        </button>
+                        <button
+                            className="rounded-3xl ml-4 bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
+                            onClick={() => [setViewModal(true), setModalType('assignUsers')]}
+                        >
+                            Assign Users
+                        </button>
                     </div>
                     <div className="flex flex-col xl:flex-row">
                         {details}

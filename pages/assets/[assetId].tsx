@@ -164,6 +164,12 @@ const AssetView = () => {
                 <RetrieveError />
             ) : (
                 <div className="w-full">
+                    <div>
+                        <Link href="/assets" className="icon-filter  hover:text-blue-600 flex flex-row items-center">
+                            <img className="h-4 rotate-180 mr-2" src={GreaterThan.src} />
+                            <p className="pb-1">Return to all Assets</p>
+                        </Link>
+                    </div>
                     {details}
                     {recentJobs.length > 0 ? (
                         <div className="w-full overflow-x-auto flex flex-col items-center mt-4 pb-10 border-b-2 border-blue-600 ">

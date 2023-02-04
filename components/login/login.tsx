@@ -89,15 +89,15 @@ const Login = (props: Props) => {
     };
 
     return (
-        <div className="container h-screen flex flex-col justify-center items-center">
-            <form className=" w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-gray-200 font-bold flex flex-col justify-center px-2 space-y-4 border-2 border-blue-600 p-5">
+        <div className="container mx-auto h-screen w-screen flex flex-col justify-center items-center">
+            <form className="rounded-xl w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-gray-200 font-bold flex flex-col justify-center px-4 space-y-4 border-2 border-blue-600 p-5">
                 <label htmlFor="usernameLogin" className=" ">
                     Username
                 </label>
-                <input type="text" name="username" id="usernameLogin" onChange={(e) => setUsername(e.target.value)} className="" />
+                <input type="text" name="username" id="usernameLogin" onChange={(e) => setUsername(e.target.value)} className="rounded-sm" />
 
                 <label htmlFor="passwordLogin">Password</label>
-                <input type="password" name="password" id="passwordLogin" value={password} onChange={(e) => setPassword(e.target.value)} className="" />
+                <input type="password" name="password" id="passwordLogin" value={password} onChange={(e) => setPassword(e.target.value)} className="rounded-sm" />
 
                 <button
                     type="submit"

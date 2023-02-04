@@ -1,10 +1,12 @@
 import CreateUser from '../../pages/settings/createUser';
-import CreateProperty from '../../pages/properties/createProperty'
+import CreateProperty from '../../pages/properties/createProperty';
 import EditProperty from '../../pages/properties/editProperty';
 import AssignUsers from '../../pages/properties/assignUsers';
 import RenameAsset from '../../pages/assets/rename';
 import DeleteAsset from '../../pages/assets/delete';
 import AddAsset from '../../pages/assets/create';
+import CreateJob from '../../pages/jobs/createJob';
+import UpdateJob from '../../pages/jobs/update';
 
 interface ModalProps {
     modalType: string;
@@ -15,27 +17,27 @@ interface ModalProps {
 const ModalBase = (props: ModalProps) => {
     const modalToDisplay = (modalType: string) => {
         switch (modalType) {
-            case 'createUser':
-                return <CreateUser closeModal={props.closeModal} />;
             case 'createProperty':
                 return <CreateProperty closeModal={props.closeModal} />;
             case 'editProperty':
                 return <EditProperty closeModal={props.closeModal} propertyNumber={props.payload} />;
             case 'assignUsers':
                 return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
-            case 'renameAsset':
-                return <RenameAsset closeModal={props.closeModal} payload={props.payload} />
-            case 'deleteAsset':
-                return <DeleteAsset closeModal={props.closeModal} payload={props.payload} />
+
             case 'addAsset':
-                return <AddAsset closeModal={props.closeModal} payload={props.payload}/>
-            /* case 'createJob':
-                return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId}/>;
+                return <AddAsset closeModal={props.closeModal} payload={props.payload} />;
+            case 'renameAsset':
+                return <RenameAsset closeModal={props.closeModal} payload={props.payload} />;
+            case 'deleteAsset':
+                return <DeleteAsset closeModal={props.closeModal} payload={props.payload} />;
+
+            case 'createJob':
+                return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId} />;
             case 'updateJob':
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
-            case 'completeJob':
-                return <CompleteJob closeModal={props.closeModal} jobId={props.payload} />;            
-             */
+            
+            case 'createUser':
+                return <CreateUser closeModal={props.closeModal} />;
         }
     };
     return (
@@ -50,16 +52,16 @@ export default ModalBase;
 
 // Modal layout
 /* 
-<div className="h-full w-full rounded-lg relative border-4 border-blue-600">
-    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200 border-b-4 border-blue-600">Title Here</h1>
+<div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Title Here</h1>
     <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
 
         <label htmlFor="username">Username</label>
         <input id="username" type="text" className="mb-2 rounded-sm bg-blue-200" />
 
-        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full border-t-4 border-blue-600 bg-blue-200">
-            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent w-32">Cancel</button>
-            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent w-32">Submit</button>
+        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
+            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32">Cancel</button>
+            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32">Submit</button>
         </div>
     </form>
 </div>
