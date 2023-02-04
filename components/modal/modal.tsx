@@ -12,6 +12,7 @@ interface ModalProps {
     modalType: string;
     payload?: any;
     closeModal: () => void;
+    fullSize?: boolean;
 }
 
 const ModalBase = (props: ModalProps) => {
@@ -35,15 +36,28 @@ const ModalBase = (props: ModalProps) => {
                 return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId} />;
             case 'updateJob':
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
-            
+
             case 'createUser':
                 return <CreateUser closeModal={props.closeModal} />;
         }
     };
     return (
         <>
-            <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
-            <div className="absolute mx-auto mt-10 rounded-lg left-0 right-0 h-5/6 w-4/5 lg:w-3/5 bg-blue-50 z-50 ">{modalToDisplay(props.modalType)}</div>
+            {props.fullSize ? (
+                <>
+                    <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
+                    <div className="absolute mx-auto rounded-lg left-0 right-0 h-full w-full bg-blue-50 z-50 ">
+                        {modalToDisplay(props.modalType)}
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
+                    <div className="absolute mx-auto mt-10 rounded-lg left-0 right-0 h-5/6 w-4/5 lg:w-3/5 bg-blue-50 z-50 ">
+                        {modalToDisplay(props.modalType)}
+                    </div>
+                </>
+            )}
         </>
     );
 };

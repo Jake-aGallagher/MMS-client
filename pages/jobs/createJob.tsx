@@ -4,6 +4,7 @@ import { RootState } from '../../components/store/store';
 import axios from 'axios';
 import Loading from '../../components/loading/loading';
 import RetrieveError from '../../components/error/retrieveError';
+import ModalBase from '../../components/modal/modal';
 
 interface ModalProps {
     closeModal: () => void;
@@ -40,6 +41,9 @@ const CreateJob = (props: ModalProps) => {
     const [description, setDescription] = useState('');
     const [reqCompDate, setReqCompDate] = useState('0000-00-00 00:00:00');
     const [compNow, setCompNow] = useState('No');
+    const [viewModal, setViewModal] = useState(false);
+    const [modalType, setModalType] = useState('');
+    const [modalPayload, setModalPayload] = useState(0);
 
     useEffect(() => {
         setLoading(true);
@@ -66,7 +70,6 @@ const CreateJob = (props: ModalProps) => {
 
     const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-
         try {
             const response = await axios.post(
                 'http://localhost:3001/jobs',
@@ -87,7 +90,9 @@ const CreateJob = (props: ModalProps) => {
             if (response.data.created && compNow == 'No') {
                 props.closeModal();
             } else if (response.data.created && compNow == 'Yes') {
-                console.log('comping');
+                setModalPayload(response.data.jobId);
+                setModalType('updateJob');
+                setViewModal(true);
             }
         } catch (err) {
             alert('There has been an issue creating this Job, please try again.');
@@ -103,64 +108,68 @@ const CreateJob = (props: ModalProps) => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-                    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Create New Job</h1>
-                    <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        <label htmlFor="type">Job Type</label>
-                        <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setSelectedType(e.target.value)}>
-                            {typeOptions.map((typeOption) => (
-                                <option value={typeOption.value} key={typeOption.value}>
-                                    {typeOption.value}
-                                </option>
-                            ))}
-                        </select>
+                <>
+                    {viewModal ? <ModalBase modalType={modalType} payload={modalPayload} fullSize={true} closeModal={() => [setViewModal(false), props.closeModal()]} /> : ''}
+                    <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+                        <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Create New Job</h1>
+                        <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                            <label htmlFor="type">Job Type</label>
+                            <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setSelectedType(e.target.value)}>
+                                {typeOptions.map((typeOption) => (
+                                    <option value={typeOption.value} key={typeOption.value}>
+                                        {typeOption.value}
+                                    </option>
+                                ))}
+                            </select>
 
-                        <label htmlFor="title">Title</label>
-                        <input id="title" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setTitle(e.target.value)} />
+                            <label htmlFor="title">Title</label>
+                            <input id="title" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setTitle(e.target.value)} />
 
-                        <label htmlFor="description">Job Description</label>
-                        <textarea
-                            id="description"
-                            rows={5}
-                            className="mb-2 rounded-sm bg-blue-200 resize-none"
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
+                            <label htmlFor="description">Job Description</label>
+                            <textarea
+                                id="description"
+                                rows={5}
+                                className="mb-2 rounded-sm bg-blue-200 resize-none"
+                                onChange={(e) => setDescription(e.target.value)}
+                            />
 
-                        <label htmlFor="type">Urgency</label>
-                        <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setSelectedUrgency(e.target.value)}>
-                            {urgencyOptions.map((urgencyOption) => (
-                                <option value={urgencyOption.value} key={urgencyOption.value}>
-                                    {urgencyOption.value}
-                                </option>
-                            ))}
-                        </select>
+                            <label htmlFor="type">Urgency</label>
+                            <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setSelectedUrgency(e.target.value)}>
+                                {urgencyOptions.map((urgencyOption) => (
+                                    <option value={urgencyOption.value} key={urgencyOption.value}>
+                                        {urgencyOption.value}
+                                    </option>
+                                ))}
+                            </select>
 
-                        <div>Would you like to update and/or complete this Job immediately?</div>
-                        <div className="flex flex-row justify-start items-center pl-2 gap-3 py-1">
-                            <label htmlFor="no">No</label>
-                            <input type="radio" id="no" name="comp_immediately" value="No" checked={compNow == 'No'} onChange={() => setCompNow('No')} />
-                        </div>
-                        <div className="flex flex-row justify-start items-center pl-2 gap-3 py-1">
-                            <label htmlFor="yes">Yes</label>
-                            <input type="radio" id="yes" name="comp_immediately" value="Yes" checked={compNow == 'Yes'} onChange={() => setCompNow('Yes')} />
-                        </div>
+                            <div>Would you like to update and/or complete this Job immediately?</div>
+                            <div className="flex flex-row justify-start items-center pl-2 gap-3 py-1">
+                                <label htmlFor="no">No</label>
+                                <input type="radio" id="no" name="comp_immediately" value="No" checked={compNow == 'No'} onChange={() => setCompNow('No')} />
+                            </div>
+                            <div className="flex flex-row justify-start items-center pl-2 gap-3 py-1">
+                                <label htmlFor="yes">Yes</label>
+                                <input
+                                    type="radio"
+                                    id="yes"
+                                    name="comp_immediately"
+                                    value="Yes"
+                                    checked={compNow == 'Yes'}
+                                    onChange={() => setCompNow('Yes')}
+                                />
+                            </div>
 
-                        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                            <button
-                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
-                                onClick={props.closeModal}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
-                                onClick={submitHandler}
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                            <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
+                                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
+                                    Cancel
+                                </button>
+                                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={submitHandler}>
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </>
             )}
             ;
         </>

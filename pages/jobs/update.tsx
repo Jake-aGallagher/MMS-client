@@ -45,6 +45,7 @@ const UpdateJob = (props: ModalProps) => {
     const [loggedTimeId, setLoggedTimeId] = useState(0);
     const [loggedTimeNum, setLoggedTimeNum] = useState(0);
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
+    console.log(props)
 
     useEffect(() => {
         setLoading(true);
@@ -53,9 +54,16 @@ const UpdateJob = (props: ModalProps) => {
         getJobUpdate();
     }, []);
 
+    let idToSearch = 0;
+    if (params.asPath.split('/')[2] === undefined) {
+        idToSearch = props.jobId
+    } else {
+        idToSearch = parseInt(params.asPath.split('/')[2])
+    }
+
     const getJobUpdate = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/jobs/${currentProperty}/${params.asPath.split('/')[2]}/update`, {
+            const response = await axios.get(`http://localhost:3001/jobs/${currentProperty}/${idToSearch}/update`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.jobDetails === 0) {
