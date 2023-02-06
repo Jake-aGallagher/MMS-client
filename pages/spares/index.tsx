@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import RetrieveError from "../../components/error/retrieveError";
-import Loading from "../../components/loading/loading";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import RetrieveError from '../../components/error/retrieveError';
+import Loading from '../../components/loading/loading';
 import { RootState } from '../../components/store/store';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
@@ -29,7 +29,7 @@ const Spares = () => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const [spares, setSpares] = useState<Spare[]>([])
+    const [spares, setSpares] = useState<Spare[]>([]);
 
     useEffect(() => {
         setLoading(true);
@@ -43,11 +43,11 @@ const Spares = () => {
             const response = await axios.get(`http://localhost:3001/all-spares/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            console.log(response.data)
+            console.log(response.data);
             if (response.data.length === 0) {
                 setNoData(true);
             } else {
-                setSpares(response.data)
+                setSpares(response.data);
             }
             setLoading(false);
         } catch (err) {
@@ -61,21 +61,28 @@ const Spares = () => {
         <tr key={spare.id} className="">
             <td className="border border-solid border-gray-500 px-2 text-center p-2">
                 <Link href={'/spares/' + spare.id} className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600">
-                {spare.part_no}
+                    {spare.part_no}
                 </Link>
             </td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.man_part_no}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.name}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.man_name}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.location}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2 flex flex-row justify-center">
-                {spare.quant_remain === 0 ? <div>&#10060;</div> : (spare.avg_usage != 0 && spare.quant_remain / spare.avg_usage > 1) ? <div>&#10004;</div> : <div>&#9888;</div> }
-                {spare.quant_remain}
-                </td>
+            <td className="border border-solid border-gray-500 px-2 text-center p-2">
+                <div className="flex flex-row justify-center">
+                    {spare.quant_remain === 0 ? (
+                        <div>&#10060;</div>
+                    ) : spare.avg_usage != 0 && spare.quant_remain / spare.avg_usage > 1 ? (
+                        <div>&#10004;</div>
+                    ) : (
+                        <div>&#9888;</div>
+                    )}
+                    {spare.quant_remain}
+                </div>
+            </td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.avg_usage}</td>
         </tr>
     ));
-
 
     return (
         <>
@@ -89,14 +96,15 @@ const Spares = () => {
                 <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
                     <div className="flex flex-row ml-8 my-4 items-center">
                         <label htmlFor="search">Search:</label>
-                        <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
-                        <div className='absolute right-10 top-3 flex flex-row items-center border-2 border-gray-500 p-1'>
+                        <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" /></div>
+                        <div className="flex flex-row justify-end ml-8 my-4 items-center">
+                        <div className="flex flex-row items-center border-2 border-gray-500 p-1 mr-4">
                             <div>&#10004;</div>
-                            <div className='mr-5 ml-1 text-sm'>Greater than 1 Months supply</div>
+                            <div className="mr-5 ml-1 text-sm">Greater than 1 Months supply</div>
                             <div>&#9888;</div>
-                            <div className='mr-5 ml-1 text-sm'>Less than 1 Months supply</div>
+                            <div className="mr-5 ml-1 text-sm">Less than 1 Months supply</div>
                             <div>&#10060;</div>
-                            <div className='mr-5 ml-1 text-sm'>Nil stock remaining</div>
+                            <div className="mr-5 ml-1 text-sm">Nil stock remaining</div>
                         </div>
                     </div>
                     <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
@@ -116,7 +124,7 @@ const Spares = () => {
                 </div>
             )}
         </>
-    )
+    );
 };
 
 export default Spares;

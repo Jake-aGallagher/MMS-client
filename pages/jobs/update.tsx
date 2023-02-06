@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import RetrieveError from '../../components/error/retrieveError';
 import { RootState } from '../../components/store/store';
 import { useSelector } from 'react-redux';
+import ModalBase from '../../components/modal/modal';
 
 interface ModalProps {
     closeModal: () => void;
@@ -21,6 +22,13 @@ interface User {
     first_name: string;
     last_name: string;
     authority: number;
+}
+
+interface SparesUsed {
+    id: number;
+    part_no: string;
+    name: string;
+    num_used: number;
 }
 
 interface LoggedTime {
@@ -40,12 +48,13 @@ const UpdateJob = (props: ModalProps) => {
     const [status, setStatus] = useState('');
     const [description, setDescription] = useState('');
     const [notes, setNotes] = useState('');
+    const [sparesUsed, setSparesUsed] = useState<SparesUsed[]>([])
     const [time, setTime] = useState(0);
     const [completed, setCompleted] = useState(0);
     const [loggedTimeId, setLoggedTimeId] = useState(0);
     const [loggedTimeNum, setLoggedTimeNum] = useState(0);
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
-    console.log(props)
+    const [viewModal, setViewModal] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -56,9 +65,9 @@ const UpdateJob = (props: ModalProps) => {
 
     let idToSearch = 0;
     if (params.asPath.split('/')[2] === undefined) {
-        idToSearch = props.jobId
+        idToSearch = props.jobId;
     } else {
-        idToSearch = parseInt(params.asPath.split('/')[2])
+        idToSearch = parseInt(params.asPath.split('/')[2]);
     }
 
     const getJobUpdate = async () => {
@@ -100,6 +109,17 @@ const UpdateJob = (props: ModalProps) => {
             setError(true);
             setLoading(false);
         }
+    };
+
+    const addSparesHandler = (
+        spares: {
+            id: number;
+            part_no: string;
+            name: string;
+            num_used: number;
+        }[]
+    ) => {
+        setSparesUsed(spares)
     };
 
     const addTimeHandler = (e: React.MouseEvent<HTMLElement>) => {
@@ -190,100 +210,123 @@ const UpdateJob = (props: ModalProps) => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-                    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Update Job</h1>
-                    <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        {completed !== 1 ? (
-                            <>
-                                <label htmlFor="status">Current Status</label>
-                                <select id="status" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setStatus(e.target.value)} value={status}>
-                                    {statusOptions.map((statusOption) => (
-                                        <option value={statusOption.value} key={statusOption.value}>
-                                            {statusOption.value}
-                                        </option>
-                                    ))}
-                                </select>
-
-                                <label htmlFor="description">Description</label>
-                                <textarea
-                                    id="description"
-                                    rows={5}
-                                    className="mb-2 rounded-sm bg-blue-200 resize-none"
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    value={description}
-                                />
-                            </>
-                        ) : null}
-                        <label htmlFor="notes">Notes</label>
-                        <textarea
-                            id="notes"
-                            rows={5}
-                            className="mb-2 rounded-sm bg-blue-200 resize-none"
-                            onChange={(e) => setNotes(e.target.value)}
-                            value={notes}
+                <>
+                    {viewModal ? (
+                        <ModalBase
+                            modalType="sparesUsed"
+                            payload={idToSearch}
+                            fullSize={true}
+                            passbackDeatails={addSparesHandler}
+                            closeModal={() => setViewModal(false)}
                         />
-                        {completed !== 1 ? (
-                            <>
-                                <label htmlFor="time">Logged Time (mins)</label>
-                                <div className="flex flex-row">
-                                    <select className="bg-blue-200" value={loggedTimeId} onChange={(e) => setLoggedTimeId(parseInt(e.target.value))}>
-                                        <option value={0} key="0"></option>
-                                        {users.map((user) => (
-                                            <option value={user.id} key={user.id}>
-                                                {user.first_name + ' ' + user.last_name}
+                    ) : (
+                        ''
+                    )}
+                    <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+                        <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Update Job</h1>
+                        <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                            {completed !== 1 ? (
+                                <>
+                                    <label htmlFor="status">Current Status</label>
+                                    <select id="status" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setStatus(e.target.value)} value={status}>
+                                        {statusOptions.map((statusOption) => (
+                                            <option value={statusOption.value} key={statusOption.value}>
+                                                {statusOption.value}
                                             </option>
                                         ))}
                                     </select>
-                                    <input
-                                        className="ml-4 bg-blue-200"
-                                        type="number"
-                                        value={loggedTimeNum}
-                                        onChange={(e) => setLoggedTimeNum(parseInt(e.target.value))}
+
+                                    <label htmlFor="description">Description</label>
+                                    <textarea
+                                        id="description"
+                                        rows={5}
+                                        className="mb-2 rounded-sm bg-blue-200 resize-none"
+                                        onChange={(e) => setDescription(e.target.value)}
+                                        value={description}
                                     />
-                                    <button className="text-green-600 text-xl ml-4" onClick={addTimeHandler}>
-                                        &#10010;
+                                </>
+                            ) : null}
+                            <label htmlFor="notes">Notes</label>
+                            <textarea
+                                id="notes"
+                                rows={5}
+                                className="mb-2 rounded-sm bg-blue-200 resize-none"
+                                onChange={(e) => setNotes(e.target.value)}
+                                value={notes}
+                            />
+                            {completed !== 1 ? (
+                                <>
+                                    <button
+                                        className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 my-2 border-2 border-blue-600"
+                                        onClick={(e) => [e.preventDefault(), setViewModal(true)]}
+                                    >
+                                        Log Spares Used
                                     </button>
-                                </div>
-                                <div>
-                                    {loggedTimeDetails.map((pair) => {
-                                        const data = users.find((x) => x.id === pair.id);
-                                        return (
-                                            <div key={pair.id} className="flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2">
-                                                <div className="mr-4">{data?.first_name + ' ' + data?.last_name}</div>
-                                                <div className="mr-4">{pair.time} mins</div>
-                                                <button
-                                                    onClick={() => {
-                                                        setLoggedTimeDetails((prev) => prev.filter((item) => item.id != pair.id));
-                                                        setTime((prev) => prev - pair.time);
-                                                    }}
-                                                >
-                                                    &#10060;
-                                                </button>
+                                    <div>
+                                        {sparesUsed.map((spare) => (
+                                            <div key={spare.id} className="flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2">
+                                                <div className='mr-4'>{spare.part_no}</div>
+                                                <div className='mr-4'>{spare.name}</div>
+                                                <div>Quantity Used: {spare.num_used}</div>
+                                                
                                             </div>
-                                        );
-                                    })}
-                                </div>
-                                <div className="text-center mb-2">
-                                    Note: A job must be set to 'Attended - Found no Issues' or 'Attended - Fixed' in order to complete the job
-                                </div>
-                            </>
-                        ) : null}
-                        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                            <button
-                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
-                                onClick={props.closeModal}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
-                                onClick={submitHandler}
-                            >
-                                {(status === 'Attended - Fixed' || status === 'Attended - Found no Issues') && completed !== 1 ? 'Complete' : 'Update'}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                                        ))}
+                                    </div>
+                                    <label htmlFor="time">Logged Time (mins)</label>
+                                    <div className="flex flex-row">
+                                        <select className="bg-blue-200" value={loggedTimeId} onChange={(e) => setLoggedTimeId(parseInt(e.target.value))}>
+                                            <option value={0} key="0"></option>
+                                            {users.map((user) => (
+                                                <option value={user.id} key={user.id}>
+                                                    {user.first_name + ' ' + user.last_name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <input
+                                            className="ml-4 bg-blue-200"
+                                            type="number"
+                                            value={loggedTimeNum}
+                                            onChange={(e) => setLoggedTimeNum(parseInt(e.target.value))}
+                                        />
+                                        <button className="text-green-600 text-xl ml-4" onClick={addTimeHandler}>
+                                            &#10010;
+                                        </button>
+                                    </div>
+                                    <div>
+                                        {loggedTimeDetails.map((pair) => {
+                                            const data = users.find((x) => x.id === pair.id);
+                                            return (
+                                                <div key={pair.id} className="flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2">
+                                                    <div className="mr-4">{data?.first_name + ' ' + data?.last_name}</div>
+                                                    <div className="mr-4">{pair.time} mins</div>
+                                                    <button
+                                                        onClick={() => {
+                                                            setLoggedTimeDetails((prev) => prev.filter((item) => item.id != pair.id));
+                                                            setTime((prev) => prev - pair.time);
+                                                        }}
+                                                    >
+                                                        &#10060;
+                                                    </button>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    <div className="text-center mb-2">
+                                        Note: A job must be set to 'Attended - Found no Issues' or 'Attended - Fixed' in order to complete the job
+                                    </div>
+                                </>
+                            ) : null}
+                            <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
+                                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
+                                    Cancel
+                                </button>
+                                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={submitHandler}>
+                                    {(status === 'Attended - Fixed' || status === 'Attended - Found no Issues') && completed !== 1 ? 'Complete' : 'Update'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </>
             )}
         </>
     );

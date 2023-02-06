@@ -7,12 +7,14 @@ import DeleteAsset from '../../pages/assets/delete';
 import AddAsset from '../../pages/assets/create';
 import CreateJob from '../../pages/jobs/createJob';
 import UpdateJob from '../../pages/jobs/update';
+import SparesUsed from '../../pages/spares/sparesUsed';
 
 interface ModalProps {
+    closeModal: () => void;
     modalType: string;
     payload?: any;
-    closeModal: () => void;
     fullSize?: boolean;
+    passbackDeatails?: any;
 }
 
 const ModalBase = (props: ModalProps) => {
@@ -36,6 +38,8 @@ const ModalBase = (props: ModalProps) => {
                 return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId} />;
             case 'updateJob':
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
+            case 'sparesUsed':
+                return <SparesUsed closeModal={props.closeModal} jobId={props.payload} passbackDetails={props.passbackDeatails} />;
 
             case 'createUser':
                 return <CreateUser closeModal={props.closeModal} />;
