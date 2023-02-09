@@ -7,8 +7,8 @@ import { JsxElement } from 'typescript';
 
 interface ModalProps {
     closeModal: () => void;
-    jobId: number;
-    passbackDetails: (usedSparesArray: Spare[]) => void
+    payload: { jobId: number; sparesUsed: SparesUsed[] };
+    passbackDetails: (usedSparesArray: Spare[]) => void;
 }
 
 interface Spare {
@@ -29,7 +29,8 @@ const SparesUsed = (props: ModalProps) => {
     const [sparesFullList, setSparesFullList] = useState<Spare[]>([]);
     const [sparesFiltered, setSparesFiltered] = useState<SparesUsed[]>([]);
     const [sparesUsed, setSparesUsed] = useState<SparesUsed[]>([]);
-    const [chosenFilter, setChosenFilter] = useState();
+    const [chosenFilter, setChosenFilter] = useState(0);
+    const [searchTerm, setSearchTerm] = useState('');
     const [showRes, setShowRes] = useState(false);
     const [numResults, setNumResults] = useState(0);
 
@@ -37,16 +38,17 @@ const SparesUsed = (props: ModalProps) => {
         setLoading(true);
         setError(false);
         setNoData(false);
+        setSparesUsed(props.payload.sparesUsed);
         getHandler();
     }, []);
 
     useEffect(() => {
         filterResults();
-    }, [sparesFullList, chosenFilter]);
+    }, [sparesFullList, chosenFilter, searchTerm]);
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares-for-use/${currentProperty}/${props.jobId}`, {
+            const response = await axios.get(`http://localhost:3001/spares-for-use/${currentProperty}/${props.payload.jobId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setNumResults(response.data.spares.length);
@@ -67,10 +69,25 @@ const SparesUsed = (props: ModalProps) => {
 
     const filterResults = () => {
         let fList: SparesUsed[] = [];
-        sparesFullList.forEach((spare) => {
-            fList.push({ ...spare, num_used: 0 });
-        });
+        if (searchTerm.length === 0) {
+            sparesFullList.forEach((spare) => {
+                fList.push({ ...spare, num_used: 0 });
+            });
+        } else if (chosenFilter === 0) {
+            sparesFullList.forEach((spare) => {
+                if (spare.part_no.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    fList.push({ ...spare, num_used: 0 });
+                }
+            });
+        } else {
+            sparesFullList.forEach((spare) => {
+                if (spare.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    fList.push({ ...spare, num_used: 0 });
+                }
+            });
+        }
         setSparesFiltered(fList);
+        setNumResults(fList.length);
     };
 
     const usedInputHandler = (inputValue: number, index: number) => {
@@ -79,23 +96,29 @@ const SparesUsed = (props: ModalProps) => {
         setSparesFiltered(updatedSparesFiltered);
     };
 
+    const removeUsedHandler = (e: React.MouseEvent<HTMLElement>, id: number) => {
+        e.preventDefault();
+        // change spares used to have 0 of this item
+        const i = sparesUsed.findIndex((x) => x.id === id);
+        const filtered = sparesUsed.filter((item) => item.id != id);
+        setSparesUsed(() => [...filtered, { id: sparesUsed[i].id, name: sparesUsed[i].name, part_no: sparesUsed[i].part_no, num_used: 0 }]);
+    };
+
     const usedInputClick = (index: number, e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         const spareToUpdate = sparesFiltered[index];
         const indexOfMatch = sparesUsed.findIndex((x) => x.id === spareToUpdate.id);
         if (indexOfMatch != -1) {
-            setSparesUsed((prev) => {
-                const filtered = prev.filter((item) => item.id != spareToUpdate.id);
-                return [
-                    ...filtered,
-                    {
-                        id: spareToUpdate.id,
-                        part_no: spareToUpdate.part_no,
-                        name: spareToUpdate.name,
-                        num_used: prev[indexOfMatch].num_used + spareToUpdate.num_used,
-                    },
-                ];
-            });
+            const filtered = sparesUsed.filter((item) => item.id != spareToUpdate.id);
+            setSparesUsed((prev) => [
+                ...filtered,
+                {
+                    id: spareToUpdate.id,
+                    part_no: spareToUpdate.part_no,
+                    name: spareToUpdate.name,
+                    num_used: prev[indexOfMatch].num_used + spareToUpdate.num_used,
+                },
+            ]);
         } else {
             setSparesUsed((prev) => [
                 ...prev,
@@ -109,30 +132,38 @@ const SparesUsed = (props: ModalProps) => {
     };
 
     const SubmitHandler = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault()
-        props.passbackDetails(sparesUsed)
-        props.closeModal()
-    }
+        e.preventDefault();
+        props.passbackDetails(sparesUsed);
+        props.closeModal();
+    };
 
     let showSparesUsed: JSX.Element[] | JSX.Element;
-    if (sparesUsed.length === 0) {
+    if (sparesUsed === undefined || sparesUsed.length === 0) {
         showSparesUsed = <div>None</div>;
     } else {
         showSparesUsed = sparesUsed.map((i) => (
-            <div key={i.id}>
-                {i.part_no}
-                {i.name}
-                {i.num_used}
+            <div key={i.id} className={`flex flex-row border-2 border-blue-600 rounded-md mb-2 w-fit px-2 ${i.num_used < 1 ? 'hidden' : ''}`}>
+                <div className="mr-4">{i.part_no}</div>
+                <div className="mr-4">{i.name}</div>
+                <div className="mr-4">Quantity Used: {i.num_used}</div>
+                <button
+                    onClick={(e) => {
+                        removeUsedHandler(e, i.id);
+                    }}
+                >
+                    &#10060;
+                </button>
             </div>
         ));
     }
 
     const showSparesFiltered = sparesFiltered.map((i, index) => (
-        <div key={index} className="flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2">
+        <div key={Math.random()} className="flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2">
             <div className="mr-4">{i.part_no}</div>
             <div className="mr-4">{i.name}</div>
             <input
                 type="number"
+                min="0"
                 className="rounded-sm bg-blue-200 my-1 border-2 border-blue-600"
                 value={i.num_used}
                 onChange={(e) => usedInputHandler(parseInt(e.target.value), index)}
@@ -151,12 +182,28 @@ const SparesUsed = (props: ModalProps) => {
                     Spares Search
                 </label>
                 <div className="flex flex-row mb-5">
-                    <select id="selectBy" className="rounded-sm bg-blue-200 mr-2">
-                        <option>Part Number / ID</option>
-                        <option>Part Name</option>
+                    <select
+                        id="selectBy"
+                        className="rounded-sm bg-blue-200 mr-2"
+                        value={chosenFilter}
+                        onChange={(e) => setChosenFilter(parseInt(e.target.value))}
+                    >
+                        <option value={0}>Part Number / ID</option>
+                        <option value={1}>Part Name</option>
                     </select>
-                    <input id="searchInput" type="text" className="rounded-sm bg-blue-200 w-full" />
-                    <div className="ml-2 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent">Search</div>
+                    <input
+                        id="searchInput"
+                        type="text"
+                        className="rounded-sm bg-blue-200 w-full"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <div
+                        className="ml-2 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
+                        onClick={(e) => [e.preventDefault(), setSearchTerm('')]}
+                    >
+                        Clear
+                    </div>
                 </div>
                 <div>Spares Used:</div>
                 <div className="mb-5 mt-1">{showSparesUsed}</div>
@@ -173,8 +220,15 @@ const SparesUsed = (props: ModalProps) => {
                     {showRes ? <div>{showSparesFiltered}</div> : null}
                 </div>
                 <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                    <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={(e) => [e.preventDefault(), props.closeModal()]}>Cancel</button>
-                    <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={(e) => SubmitHandler(e)}>Submit</button>
+                    <button
+                        className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
+                        onClick={(e) => [e.preventDefault(), props.closeModal()]}
+                    >
+                        Cancel
+                    </button>
+                    <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={(e) => SubmitHandler(e)}>
+                        Submit
+                    </button>
                 </div>
             </form>
         </div>

@@ -80,6 +80,9 @@ const UpdateJob = (props: ModalProps) => {
             } else {
                 setStatusOptions(response.data.statusOptions);
                 setUsers(response.data.users);
+                if (response.data.usedSpares) {
+                    setSparesUsed(response.data.usedSpares)
+                }
                 if (response.data.timeDetails) {
                     setLoggedTimeDetails(response.data.timeDetails);
                     let totalTime = 0;
@@ -171,6 +174,8 @@ const UpdateJob = (props: ModalProps) => {
                 logged_time: time,
                 logged_time_details: loggedTimeDetails,
                 complete,
+                sparesUsed,
+                propertyId: currentProperty
             },
             {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
@@ -214,7 +219,7 @@ const UpdateJob = (props: ModalProps) => {
                     {viewModal ? (
                         <ModalBase
                             modalType="sparesUsed"
-                            payload={idToSearch}
+                            payload={{idToSearch, sparesUsed}}
                             fullSize={true}
                             passbackDeatails={addSparesHandler}
                             closeModal={() => setViewModal(false)}
@@ -264,7 +269,7 @@ const UpdateJob = (props: ModalProps) => {
                                     </button>
                                     <div>
                                         {sparesUsed.map((spare) => (
-                                            <div key={spare.id} className="flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2">
+                                            <div key={spare.id} className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.num_used < 1 ? 'hidden' : ''}`}>
                                                 <div className='mr-4'>{spare.part_no}</div>
                                                 <div className='mr-4'>{spare.name}</div>
                                                 <div>Quantity Used: {spare.num_used}</div>
@@ -285,6 +290,7 @@ const UpdateJob = (props: ModalProps) => {
                                         <input
                                             className="ml-4 bg-blue-200"
                                             type="number"
+                                            min="0"
                                             value={loggedTimeNum}
                                             onChange={(e) => setLoggedTimeNum(parseInt(e.target.value))}
                                         />

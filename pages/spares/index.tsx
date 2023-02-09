@@ -43,7 +43,6 @@ const Spares = () => {
             const response = await axios.get(`http://localhost:3001/all-spares/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            console.log(response.data);
             if (response.data.length === 0) {
                 setNoData(true);
             } else {

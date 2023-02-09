@@ -39,7 +39,7 @@ const ModalBase = (props: ModalProps) => {
             case 'updateJob':
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
             case 'sparesUsed':
-                return <SparesUsed closeModal={props.closeModal} jobId={props.payload} passbackDetails={props.passbackDeatails} />;
+                return <SparesUsed closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
 
             case 'createUser':
                 return <CreateUser closeModal={props.closeModal} />;
