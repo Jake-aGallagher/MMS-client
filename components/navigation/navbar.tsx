@@ -147,12 +147,12 @@ const NavBar = (props: Props) => {
             <Link href="/spares" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('spares') ? 'text-blue-600' : '')}>
                 Spares
             </Link>
-            <Link href="/forecast" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('forecast') ? 'text-blue-600' : '')}>
+            {/*<Link href="/forecast" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('forecast') ? 'text-blue-600' : '')}>
                 Forecast
-            </Link>
-            <Link href="/matrix" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('matrix') ? 'text-blue-600' : '')}>
+            </Link> */}
+            {/*<Link href="/matrix" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('matrix') ? 'text-blue-600' : '')}>
                 Matrix
-            </Link>
+            </Link> */}
             <Link href="/notifications" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('notifications') ? 'text-blue-600' : '')}>
                 Notifications
             </Link>
