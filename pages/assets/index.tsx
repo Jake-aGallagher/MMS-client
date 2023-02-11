@@ -67,14 +67,14 @@ const Assets = () => {
                 <div className="rounded-lg px-2 h-8 flex flex-row items-center relative hover:outline-blue-600 hover:outline-2 hover:outline">
                     <div
                         onClick={() => toggle(node.id)}
-                        className={`hover:text-blue-600 icon-filter flex flex-row items-center select-none  ${
-                            Array.isArray(node.children) ? 'cursor-pointer' : 'cursor-default'
+                        className={`flex flex-row items-center select-none  ${
+                            Array.isArray(node.children) && node.children.length > 0  ? 'cursor-pointer hover:text-blue-600 icon-filter' : 'cursor-default'
                         }`}
                     >
-                        {Array.isArray(node.children) ? (
+                        {Array.isArray(node.children) && node.children.length > 0  ? (
                             <>
                                 <button className={`mr-1 h-5 w-5 font-bold text-2xl duration-150 ${openBranches.includes(node.id) ? 'rotate-90' : null}`}>
-                                    <img className="icon-filter" src={GreaterThan.src} />
+                                    <img src={GreaterThan.src} />
                                 </button>
                             </>
                         ) : (
