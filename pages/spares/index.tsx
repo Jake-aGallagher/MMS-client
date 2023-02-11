@@ -95,8 +95,14 @@ const Spares = () => {
                 <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
                     <div className="flex flex-row ml-8 my-4 items-center">
                         <label htmlFor="search">Search:</label>
-                        <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" /></div>
-                        <div className="flex flex-row justify-end ml-8 my-4 items-center">
+                        <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
+                        <Link href="/spares/sparesManagement">
+                            <button className='ml-10 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"'>
+                                Spares Management
+                            </button>
+                        </Link>
+                    </div>
+                    <div className="flex flex-row justify-end ml-8 my-4 items-center">
                         <div className="flex flex-row items-center border-2 border-gray-500 p-1 mr-4">
                             <div>&#10004;</div>
                             <div className="mr-5 ml-1 text-sm">Greater than 1 Months supply</div>
