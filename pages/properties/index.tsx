@@ -16,8 +16,8 @@ interface Property {
 }
 
 interface SortBy {
-    column: 'id'|'name'|'type'|'address'|'city'|'county'|'postcode';
-    order: 'ASC'|'DESC';
+    column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode';
+    order: 'ASC' | 'DESC';
 }
 
 const Properties = () => {
@@ -25,6 +25,8 @@ const Properties = () => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [properties, setProperties] = useState<Property[]>([]);
+    const [searchBy, setSearchBy] = useState('id')
+    const [searchTerm, setSearchTerm] = useState('');
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setmodalType] = useState('');
     const [sortBy, setSortBy] = useState<SortBy>({ column: 'id', order: 'ASC' });
@@ -58,25 +60,25 @@ const Properties = () => {
         }
     };
 
-    const sortHandler = (column: 'id'|'name'|'type'|'address'|'city'|'county'|'postcode') => {
+    const sortHandler = (column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode') => {
         if (sortBy.column === column && sortBy.order === 'ASC') {
             setSortBy({ column: column, order: 'DESC' });
-            sortFunction(column, 'DESC')
+            sortFunction(column, 'DESC');
         } else {
             setSortBy({ column: column, order: 'ASC' });
-            sortFunction(column, 'ASC')
+            sortFunction(column, 'ASC');
         }
     };
 
-    const sortFunction = (column: 'id'|'name'|'type'|'address'|'city'|'county'|'postcode', order: 'ASC'|'DESC') => {
+    const sortFunction = (column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode', order: 'ASC' | 'DESC') => {
         let unorderedProps: Property[] = properties;
         if (order === 'ASC') {
-            unorderedProps.sort((a, b) => (a[column] > b[column]) ? 1 : ((a[column] < b[column]) ? -1 : 0));
+            unorderedProps.sort((a, b) => (a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0));
         } else {
-            unorderedProps.sort((a, b) => (b[column] > a[column]) ? 1 : ((b[column] < a[column]) ? -1 : 0));
+            unorderedProps.sort((a, b) => (b[column] > a[column] ? 1 : b[column] < a[column] ? -1 : 0));
         }
         const orderedProperties = unorderedProps;
-        setProperties(orderedProperties)
+        setProperties(orderedProperties);
     };
 
     var propertiesList;
@@ -109,8 +111,27 @@ const Properties = () => {
                 <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
                     <div className="flex flex-row my-4 items-center">
                         <div className="ml-8">
-                            <label htmlFor="search">Search:</label>
-                            <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
+                            <div className='grid grid-cols-2 grid-rows-2 gap-2'>
+                                <label htmlFor="searchBy" className='justify-self-center'>Search By:</label>
+                                <select id="searchBy" name="searchBy" value={searchBy} onChange={(e) => setSearchBy(e. target.value)}>
+                                    <option value="id">Property Number</option>
+                                    <option value="name">Name</option>
+                                    <option value="type">Type</option>
+                                    <option value="address">Address</option>
+                                    <option value="city">City</option>
+                                    <option value="county">County</option>
+                                    <option value="postcode">Postcode</option>
+                                </select>
+                                <label htmlFor="search" className='justify-self-center'>Search For:</label>
+                                <input
+                                    type="text"
+                                    id="search"
+                                    name="search"
+                                    className="bg-blue-200 rounded-sm"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                            </div>
                         </div>
                         <button
                             onClick={() => [setViewModal(true), setmodalType('createProperty')]}
