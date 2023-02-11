@@ -89,9 +89,11 @@ const Jobs = () => {
                     <div className="flex flex-row ml-8 my-4 items-center">
                         <label htmlFor="search">Search:</label>
                         <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
-                        <button className="rounded-3xl ml-10 bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent">
-                            <Link href="/assets">Create Job</Link>
-                        </button>
+                        <Link href="/assets">
+                            <button className="rounded-3xl ml-10 bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent">
+                                Create Job
+                            </button>
+                        </Link>
                     </div>
                     <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
                         <thead>
