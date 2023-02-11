@@ -15,6 +15,11 @@ interface Property {
     postcode: string;
 }
 
+interface SortBy {
+    column: 'id'|'name'|'type'|'address'|'city'|'county'|'postcode';
+    order: 'ASC'|'DESC';
+}
+
 const Properties = () => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
@@ -22,9 +27,10 @@ const Properties = () => {
     const [properties, setProperties] = useState<Property[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setmodalType] = useState('');
+    const [sortBy, setSortBy] = useState<SortBy>({ column: 'id', order: 'ASC' });
 
     useEffect(() => {
-        reload()
+        reload();
     }, []);
 
     const reload = () => {
@@ -32,7 +38,7 @@ const Properties = () => {
         setError(false);
         setNoData(false);
         getHandler();
-    }
+    };
 
     const getHandler = async () => {
         try {
@@ -42,6 +48,7 @@ const Properties = () => {
             if (propertiesList.data.length === 0) {
                 setNoData(true);
             } else {
+                propertiesList.data.sort((a: Property, b: Property) => a.id - b.id);
                 setProperties(propertiesList.data);
             }
             setLoading(false);
@@ -49,6 +56,27 @@ const Properties = () => {
             setError(true);
             setLoading(false);
         }
+    };
+
+    const sortHandler = (column: 'id'|'name'|'type'|'address'|'city'|'county'|'postcode') => {
+        if (sortBy.column === column && sortBy.order === 'ASC') {
+            setSortBy({ column: column, order: 'DESC' });
+            sortFunction(column, 'DESC')
+        } else {
+            setSortBy({ column: column, order: 'ASC' });
+            sortFunction(column, 'ASC')
+        }
+    };
+
+    const sortFunction = (column: 'id'|'name'|'type'|'address'|'city'|'county'|'postcode', order: 'ASC'|'DESC') => {
+        let unorderedProps: Property[] = properties;
+        if (order === 'ASC') {
+            unorderedProps.sort((a, b) => (a[column] > b[column]) ? 1 : ((a[column] < b[column]) ? -1 : 0));
+        } else {
+            unorderedProps.sort((a, b) => (b[column] > a[column]) ? 1 : ((b[column] < a[column]) ? -1 : 0));
+        }
+        const orderedProperties = unorderedProps;
+        setProperties(orderedProperties)
     };
 
     var propertiesList;
@@ -94,13 +122,76 @@ const Properties = () => {
                     <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
                         <thead>
                             <tr className="bg-gray-200">
-                                <th className="border-2 border-solid border-gray-500 px-2">Property Number</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Name</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Type</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Address</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">City</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">County</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Postcode</th>
+                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('id')}>
+                                    <div className=" flex flex-row justify-center items-center">
+                                        Property Number{' '}
+                                        {sortBy.column != 'id' ? null : sortBy.order === 'ASC' ? (
+                                            <div className="ml-2 text-2xl">&#8595;</div>
+                                        ) : (
+                                            <div className="ml-2 text-2xl">&#8593;</div>
+                                        )}
+                                    </div>
+                                </th>
+                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('name')}>
+                                    <div className=" flex flex-row justify-center items-center">
+                                        Name{' '}
+                                        {sortBy.column != 'name' ? null : sortBy.order === 'ASC' ? (
+                                            <div className="ml-2 text-2xl">&#8595;</div>
+                                        ) : (
+                                            <div className="ml-2 text-2xl">&#8593;</div>
+                                        )}
+                                    </div>
+                                </th>
+                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('type')}>
+                                    <div className=" flex flex-row justify-center items-center">
+                                        Type{' '}
+                                        {sortBy.column != 'type' ? null : sortBy.order === 'ASC' ? (
+                                            <div className="ml-2 text-2xl">&#8595;</div>
+                                        ) : (
+                                            <div className="ml-2 text-2xl">&#8593;</div>
+                                        )}
+                                    </div>
+                                </th>
+                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('address')}>
+                                    <div className=" flex flex-row justify-center items-center">
+                                        Address{' '}
+                                        {sortBy.column != 'address' ? null : sortBy.order === 'ASC' ? (
+                                            <div className="ml-2 text-2xl">&#8595;</div>
+                                        ) : (
+                                            <div className="ml-2 text-2xl">&#8593;</div>
+                                        )}
+                                    </div>
+                                </th>
+                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('city')}>
+                                    <div className=" flex flex-row justify-center items-center">
+                                        City{' '}
+                                        {sortBy.column != 'city' ? null : sortBy.order === 'ASC' ? (
+                                            <div className="ml-2 text-2xl">&#8595;</div>
+                                        ) : (
+                                            <div className="ml-2 text-2xl">&#8593;</div>
+                                        )}
+                                    </div>
+                                </th>
+                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('county')}>
+                                    <div className=" flex flex-row justify-center items-center">
+                                        County{' '}
+                                        {sortBy.column != 'county' ? null : sortBy.order === 'ASC' ? (
+                                            <div className="ml-2 text-2xl">&#8595;</div>
+                                        ) : (
+                                            <div className="ml-2 text-2xl">&#8593;</div>
+                                        )}
+                                    </div>
+                                </th>
+                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('postcode')}>
+                                    <div className=" flex flex-row justify-center items-center">
+                                        Postcode{' '}
+                                        {sortBy.column != 'postcode' ? null : sortBy.order === 'ASC' ? (
+                                            <div className="ml-2 text-2xl">&#8595;</div>
+                                        ) : (
+                                            <div className="ml-2 text-2xl">&#8593;</div>
+                                        )}
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>{propertiesList}</tbody>
