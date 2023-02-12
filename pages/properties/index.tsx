@@ -24,12 +24,14 @@ const Properties = () => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
+    const [allProperties, setAllProperties] = useState<Property[]>([]);
     const [properties, setProperties] = useState<Property[]>([]);
-    const [searchBy, setSearchBy] = useState('id')
+    const [searchBy, setSearchBy] = useState('id');
     const [searchTerm, setSearchTerm] = useState('');
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setmodalType] = useState('');
     const [sortBy, setSortBy] = useState<SortBy>({ column: 'id', order: 'ASC' });
+    //console.log('search by: ', searchBy, 'term: ', searchTerm);
 
     useEffect(() => {
         reload();
@@ -42,6 +44,10 @@ const Properties = () => {
         getHandler();
     };
 
+    useEffect(() => {
+        searchFilter();
+    }, [searchBy, searchTerm]);
+
     const getHandler = async () => {
         try {
             const propertiesList = await axios.get('http://localhost:3001/properties/all-properties', {
@@ -51,6 +57,7 @@ const Properties = () => {
                 setNoData(true);
             } else {
                 propertiesList.data.sort((a: Property, b: Property) => a.id - b.id);
+                setAllProperties(propertiesList.data);
                 setProperties(propertiesList.data);
             }
             setLoading(false);
@@ -58,6 +65,20 @@ const Properties = () => {
             setError(true);
             setLoading(false);
         }
+    };
+
+    const searchFilter = () => {
+        let filtered = allProperties
+        if (searchTerm.length > 0) {
+            filtered = allProperties.filter((prop) => {
+                // @ts-ignore
+                return prop[searchBy].toString().toLowerCase().includes(searchTerm.toLowerCase());
+            });
+            setProperties(filtered);
+        } else {
+            setProperties(filtered)
+        }
+        sortFunction(sortBy.column, sortBy.order, filtered)
     };
 
     const sortHandler = (column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode') => {
@@ -70,8 +91,8 @@ const Properties = () => {
         }
     };
 
-    const sortFunction = (column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode', order: 'ASC' | 'DESC') => {
-        let unorderedProps: Property[] = properties;
+    const sortFunction = (column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode', order: 'ASC' | 'DESC', propertiesGiven: Property[] = properties) => {
+        let unorderedProps: Property[] = propertiesGiven;
         if (order === 'ASC') {
             unorderedProps.sort((a, b) => (a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0));
         } else {
@@ -111,9 +132,11 @@ const Properties = () => {
                 <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
                     <div className="flex flex-row my-4 items-center">
                         <div className="ml-8">
-                            <div className='grid grid-cols-2 grid-rows-2 gap-2'>
-                                <label htmlFor="searchBy" className='justify-self-center'>Search By:</label>
-                                <select id="searchBy" name="searchBy" value={searchBy} onChange={(e) => setSearchBy(e. target.value)}>
+                            <div className="grid grid-cols-2 grid-rows-2 gap-2">
+                                <label htmlFor="searchBy" className="justify-self-center">
+                                    Search By:
+                                </label>
+                                <select id="searchBy" name="searchBy" value={searchBy} onChange={(e) => [setSearchBy(e.target.value), setSearchTerm('')]}>
                                     <option value="id">Property Number</option>
                                     <option value="name">Name</option>
                                     <option value="type">Type</option>
@@ -122,7 +145,9 @@ const Properties = () => {
                                     <option value="county">County</option>
                                     <option value="postcode">Postcode</option>
                                 </select>
-                                <label htmlFor="search" className='justify-self-center'>Search For:</label>
+                                <label htmlFor="search" className="justify-self-center">
+                                    Search For:
+                                </label>
                                 <input
                                     type="text"
                                     id="search"
