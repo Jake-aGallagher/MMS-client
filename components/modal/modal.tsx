@@ -8,6 +8,8 @@ import AddAsset from '../../pages/assets/create';
 import CreateJob from '../../pages/jobs/createJob';
 import UpdateJob from '../../pages/jobs/update';
 import SparesUsed from '../../pages/spares/sparesUsed';
+import AddSparesNote from '../../pages/spares/sparesManagement/addSparesNote';
+import DeleteSparesNote from '../../pages/spares/sparesManagement/deleteSparesNote';
 
 interface ModalProps {
     closeModal: () => void;
@@ -41,6 +43,11 @@ const ModalBase = (props: ModalProps) => {
             case 'sparesUsed':
                 return <SparesUsed closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
 
+            case 'addSparesNote':
+                return <AddSparesNote closeModal={props.closeModal} payload={props.payload}/>
+            case 'deleteSparesNote':
+                return <DeleteSparesNote closeModal={props.closeModal} payload={props.payload} />;
+
             case 'createUser':
                 return <CreateUser closeModal={props.closeModal} />;
         }
@@ -57,7 +64,7 @@ const ModalBase = (props: ModalProps) => {
             ) : (
                 <>
                     <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
-                    <div className="absolute mx-auto mt-10 rounded-lg left-0 right-0 h-5/6 w-4/5 lg:w-3/5 bg-blue-50 z-50 ">
+                    <div className="fixed mx-auto mt-10 rounded-lg left-0 right-0 h-5/6 w-4/5 lg:w-3/5 bg-blue-50 z-50 ">
                         {modalToDisplay(props.modalType)}
                     </div>
                 </>
