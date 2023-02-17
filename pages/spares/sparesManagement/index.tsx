@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../components/store/store';
 import ModalBase from '../../../components/modal/modal';
+import StockWarnings from '../../../components/spares/currentStockWarnings';
 
 interface Note {
     id: number;
@@ -94,16 +95,7 @@ const SparesManagement = () => {
                 />
             ) : null}
             <div className="bg-gray-100">
-                <div className="px-10 pt-10">
-                    <div className="bg-white p-6 rounded-lg shadow-lg">
-                        <h2 className="text-xl font-semibold mb-2">Current Stock Warnings:</h2>
-                        <p className="text-yellow-600 text-lg font-semibold">5 Low Stock</p>
-                        <p className="text-red-800 text-lg font-semibold">0 Out of Stock</p>
-                        <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 mt-4 border-2 border-blue-600 hover:border-transparent">
-                            <Link href="/spares/sparesManagement/stockWarnings">view breakdown of stock warnigns</Link>
-                        </button>
-                    </div>
-                </div>
+                <StockWarnings />
                 <div className="px-10 pt-5">
                     <div className="bg-white p-6 rounded-lg shadow-lg">
                         <h2 className="text-xl font-semibold mb-2">Inventory</h2>
