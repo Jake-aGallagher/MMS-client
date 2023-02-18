@@ -45,8 +45,8 @@ const SparesManagement = () => {
     const noteTitles = notes.map((note) => (
         <div key={note.id + 'title'} className="flex flex-row rounded-md pl-6 mt-1 hover:outline-2 hover:outline hover:outline-blue-600 p-1">
             <div className="mr-5">{note.title}</div>
-            <div className='flex flex-row justify-end ml-auto'>
-            <div>{note.created_date}</div>
+            <div className="flex flex-row justify-end ml-auto">
+                <div>{note.created_date}</div>
                 <button
                     onClick={() => setViewNote(note.id)}
                     className="rounded-xl ml-5 text-sm font-normal bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
@@ -77,7 +77,12 @@ const SparesManagement = () => {
                     <div className="flex flex-row mb-2 font-semibold">
                         <div className="mr-5">{focusedNote.title}</div>
                         <div>{focusedNote.created_date}</div>
-                        <button className="rounded-xl ml-auto text-sm font-normal bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent" onClick={() => setViewNote(0)}>Close Note</button>
+                        <button
+                            className="rounded-xl ml-auto text-sm font-normal bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
+                            onClick={() => setViewNote(0)}
+                        >
+                            Close Note
+                        </button>
                     </div>
                     <div>{focusedNote.content}</div>
                 </div>
@@ -94,6 +99,10 @@ const SparesManagement = () => {
                     closeModal={() => [setViewModal(false), setModalType(''), setEditNoteData({ id: 0, title: '' })]}
                 />
             ) : null}
+            <Link href="/spares" className="icon-filter  hover:text-blue-600 flex flex-row items-center">
+                <img className="h-4 rotate-180 mr-2" src={GreaterThan.src} />
+                <p className="pb-1">Return to Spares</p>
+            </Link>
             <div className="bg-gray-100">
                 <StockWarnings />
                 <div className="px-10 pt-5">

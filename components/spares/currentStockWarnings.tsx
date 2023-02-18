@@ -83,7 +83,7 @@ const StockWarnings = () => {
     );
 
     return (
-        <div className="px-10 pt-10">
+        <div className="px-10 pt-5">
             <div className="bg-white p-6 rounded-lg shadow-lg">
                 <h2 className="text-xl font-semibold mb-2">Current Stock Warnings:</h2>
                 <button className="flex flex-row items-center hover:text-blue-600 select-none " onClick={() => setShowLow((prev) => !prev)}>
