@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../components/store/store';
+import { RootState } from '../../../../components/store/store';
 
 interface ModalProps {
     closeModal: () => void;

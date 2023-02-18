@@ -8,8 +8,8 @@ import AddAsset from '../../pages/assets/create';
 import CreateJob from '../../pages/jobs/createJob';
 import UpdateJob from '../../pages/jobs/update';
 import SparesUsed from '../../pages/spares/sparesUsed';
-import AddSparesNote from '../../pages/spares/sparesManagement/addSparesNote';
-import DeleteSparesNote from '../../pages/spares/sparesManagement/deleteSparesNote';
+import AddSparesNote from '../../pages/spares/sparesManagement/sparesNotes/addSparesNote';
+import DeleteSparesNote from '../../pages/spares/sparesManagement/sparesNotes/deleteSparesNote';
 import AddEditSupplier from '../../pages/spares/sparesManagement/suppliers/addEditSupplier';
 import DeleteSupplier from '../../pages/spares/sparesManagement/suppliers/deleteSupplier';
 
@@ -68,14 +68,14 @@ const ModalBase = (props: ModalProps) => {
             {props.fullSize ? (
                 <>
                     <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
-                    <div className="absolute mx-auto rounded-lg left-0 right-0 h-full w-full bg-blue-50 z-50 ">
+                    <div className="absolute top-0 mx-auto rounded-lg left-0 right-0 h-full w-full bg-blue-50 z-50 ">
                         {modalToDisplay(props.modalType)}
                     </div>
                 </>
             ) : (
                 <>
                     <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
-                    <div className="fixed mx-auto mt-10 rounded-lg left-0 right-0 h-5/6 w-4/5 lg:w-3/5 bg-blue-50 z-50 ">
+                    <div className="fixed top-0 mx-auto mt-10 rounded-lg left-0 right-0 h-5/6 w-4/5 lg:w-3/5 bg-blue-50 z-50 ">
                         {modalToDisplay(props.modalType)}
                     </div>
                 </>
