@@ -10,6 +10,8 @@ import UpdateJob from '../../pages/jobs/update';
 import SparesUsed from '../../pages/spares/sparesUsed';
 import AddSparesNote from '../../pages/spares/sparesManagement/addSparesNote';
 import DeleteSparesNote from '../../pages/spares/sparesManagement/deleteSparesNote';
+import AddEditSupplier from '../../pages/spares/sparesManagement/suppliers/addEditSupplier';
+import DeleteSupplier from '../../pages/spares/sparesManagement/suppliers/deleteSupplier';
 
 interface ModalProps {
     closeModal: () => void;
@@ -22,6 +24,7 @@ interface ModalProps {
 const ModalBase = (props: ModalProps) => {
     const modalToDisplay = (modalType: string) => {
         switch (modalType) {
+            // Property
             case 'createProperty':
                 return <CreateProperty closeModal={props.closeModal} />;
             case 'editProperty':
@@ -29,6 +32,7 @@ const ModalBase = (props: ModalProps) => {
             case 'assignUsers':
                 return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
 
+            // Asset
             case 'addAsset':
                 return <AddAsset closeModal={props.closeModal} payload={props.payload} />;
             case 'renameAsset':
@@ -36,18 +40,25 @@ const ModalBase = (props: ModalProps) => {
             case 'deleteAsset':
                 return <DeleteAsset closeModal={props.closeModal} payload={props.payload} />;
 
+            // Job
             case 'createJob':
                 return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId} />;
             case 'updateJob':
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
+            
+            //Spare
             case 'sparesUsed':
                 return <SparesUsed closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
-
+            case 'addEditSupplier':
+                return <AddEditSupplier closeModal={props.closeModal} payload={props.payload}/>
+            case 'deleteSupplier':
+                return <DeleteSupplier closeModal={props.closeModal} payload={props.payload}/>
             case 'addSparesNote':
                 return <AddSparesNote closeModal={props.closeModal} payload={props.payload}/>
             case 'deleteSparesNote':
                 return <DeleteSparesNote closeModal={props.closeModal} payload={props.payload} />;
 
+            // Settings
             case 'createUser':
                 return <CreateUser closeModal={props.closeModal} />;
         }
