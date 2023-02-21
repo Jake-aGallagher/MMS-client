@@ -5,6 +5,7 @@ import Loading from '../../components/loading/loading';
 import { RootState } from '../../components/store/store';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import ModalBase from '../../components/modal/modal';
 
 interface Spare {
     id: number;
@@ -30,6 +31,9 @@ const Spares = () => {
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [spares, setSpares] = useState<Spare[]>([]);
+    const [viewModal, setViewModal] = useState(false);
+    const [modalType, setmodalType] = useState('');
+    const [modalProps, setModalProps] = useState({id: 0, name: ''})
 
     useEffect(() => {
         setLoading(true);
@@ -54,6 +58,16 @@ const Spares = () => {
             setLoading(false);
         }
     };
+
+    const editStock = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
+        setmodalType('addSparesItem')
+        setModalProps({id, name})
+        setViewModal(true)
+    }
+
+    const deleteItem = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
+        
+    }
 
     var sparesList;
     sparesList = spares.map((spare) => (
@@ -80,11 +94,24 @@ const Spares = () => {
                 </div>
             </td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.avg_usage}</td>
+            <td
+                className="border border-solid border-gray-500 px-2 text-center p-2 rotate-90 hover:cursor-pointer select-none"
+                onClick={(e) => editStock(e, spare.id, spare.name)}
+            >
+                &#9998;
+            </td>
+            <td
+                className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
+                onClick={(e) => deleteItem(e, spare.id, spare.name)}
+            >
+                &#10060;
+            </td>
         </tr>
     ));
 
     return (
         <>
+            {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), setModalProps({id: 0, name: ''}), setmodalType('')]} /> : null}
             {loading ? (
                 <Loading />
             ) : noData ? (
@@ -101,6 +128,12 @@ const Spares = () => {
                                 Spares Management
                             </button>
                         </Link>
+                        <button
+                            onClick={() => [setViewModal(true), setmodalType('addSparesItem')]}
+                            className='ml-10 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"'
+                        >
+                            Add Spares Item
+                        </button>
                     </div>
                     <div className="flex flex-row justify-end ml-8 my-4 items-center">
                         <div className="flex flex-row items-center border-2 border-gray-500 p-1 mr-4">
@@ -122,6 +155,8 @@ const Spares = () => {
                                 <th className="border-2 border-solid border-gray-500 px-2">Location</th>
                                 <th className="border-2 border-solid border-gray-500 px-2">Remaining Stock</th>
                                 <th className="border-2 border-solid border-gray-500 px-2">Usage (Avg per Month)</th>
+                                <th className="border-2 border-solid border-gray-500 px-2">Edit Stock</th>
+                                <th className="border-2 border-solid border-gray-500 px-2">Delete</th>
                             </tr>
                         </thead>
                         <tbody>{sparesList}</tbody>
