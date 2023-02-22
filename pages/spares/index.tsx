@@ -25,6 +25,12 @@ interface Spare {
     cost: number;
 }
 
+interface PropsForModal {
+    id: number;
+    name: string;
+    quantityRemaining?: number;
+}
+
 const Spares = () => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
@@ -33,14 +39,18 @@ const Spares = () => {
     const [spares, setSpares] = useState<Spare[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setmodalType] = useState('');
-    const [modalProps, setModalProps] = useState({id: 0, name: ''})
+    const [modalProps, setModalProps] = useState<PropsForModal>({ id: 0, name: '' });
 
     useEffect(() => {
+        reload()
+    }, [currentProperty]);
+
+    const reload = () => {
         setLoading(true);
         setError(false);
         setNoData(false);
         getHandler();
-    }, [currentProperty]);
+    }
 
     const getHandler = async () => {
         try {
@@ -59,15 +69,17 @@ const Spares = () => {
         }
     };
 
-    const editStock = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
-        setmodalType('addSparesItem')
-        setModalProps({id, name})
-        setViewModal(true)
-    }
+    const editStock = (e: React.MouseEvent<HTMLElement>, id: number, name: string, quantityRemaining: number) => {
+        setmodalType('adjustSparesStock');
+        setModalProps({ id, name, quantityRemaining});
+        setViewModal(true);
+    };
 
     const deleteItem = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
-        
-    }
+        setmodalType('deleteSparesItem');
+        setModalProps({ id, name, quantityRemaining: 0  });
+        setViewModal(true);
+    };
 
     var sparesList;
     sparesList = spares.map((spare) => (
@@ -96,7 +108,7 @@ const Spares = () => {
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.avg_usage}</td>
             <td
                 className="border border-solid border-gray-500 px-2 text-center p-2 rotate-90 hover:cursor-pointer select-none"
-                onClick={(e) => editStock(e, spare.id, spare.name)}
+                onClick={(e) => editStock(e, spare.id, spare.name, spare.quant_remain)}
             >
                 &#9998;
             </td>
@@ -111,7 +123,13 @@ const Spares = () => {
 
     return (
         <>
-            {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), setModalProps({id: 0, name: ''}), setmodalType('')]} /> : null}
+            {viewModal ? (
+                <ModalBase
+                    modalType={modalType}
+                    payload={modalProps}
+                    closeModal={() => [setViewModal(false), setModalProps({ id: 0, name: '', quantityRemaining: 0 }), setmodalType(''), reload()]}
+                />
+            ) : null}
             {loading ? (
                 <Loading />
             ) : noData ? (
@@ -129,7 +147,7 @@ const Spares = () => {
                             </button>
                         </Link>
                         <button
-                            onClick={() => [setViewModal(true), setmodalType('addSparesItem')]}
+                            onClick={() => [setViewModal(true), setmodalType('addEditSparesItem')]}
                             className='ml-10 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"'
                         >
                             Add Spares Item
@@ -155,7 +173,7 @@ const Spares = () => {
                                 <th className="border-2 border-solid border-gray-500 px-2">Location</th>
                                 <th className="border-2 border-solid border-gray-500 px-2">Remaining Stock</th>
                                 <th className="border-2 border-solid border-gray-500 px-2">Usage (Avg per Month)</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Edit Stock</th>
+                                <th className="border-2 border-solid border-gray-500 px-2">Adjust Stock</th>
                                 <th className="border-2 border-solid border-gray-500 px-2">Delete</th>
                             </tr>
                         </thead>

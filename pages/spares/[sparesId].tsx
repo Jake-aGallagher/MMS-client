@@ -36,17 +36,23 @@ const SparesView = () => {
     const [sparesDetails, setSparesDetails] = useState<Spare[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
+    const [modalProps, setModalProps] = useState({ id: 0, name: '' });
+    const spareId = parseInt(params.asPath.split('/')[2]);
 
     useEffect(() => {
+        reload();
+    }, []);
+
+    const reload = () => {
         setLoading(true);
         setError(false);
         setNoData(false);
         getPropertyHandler();
-    }, []);
+    };
 
     const getPropertyHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/${params.asPath.split('/')[2]}`, {
+            const response = await axios.get(`http://localhost:3001/spares/${spareId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {
@@ -61,9 +67,15 @@ const SparesView = () => {
         }
     };
 
+    const editStock = () => {
+        setModalType('addEditSparesItem');
+        setModalProps({ id: spareId, name: sparesDetails[0].name });
+        setViewModal(true);
+    };
+
     const details = sparesDetails.map((spare) => (
-        <div className='w-full h-full flex flex-row' key={spare.id}>
-            <div className="ml-10 mb-4 w-4/5 max-w-lg" >
+        <div className="w-full h-full flex flex-row" key={spare.id}>
+            <div className="ml-10 mb-4 w-4/5 max-w-lg">
                 <div className="flex flex-row h-6 mb-3">
                     <div className="w-1/2 pl-1 border-b-2">Part Number: </div>
                     <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.part_no}</div>
@@ -119,31 +131,25 @@ const SparesView = () => {
                 </div>
             </div>
             <div key={Math.random()} className=" p-6 flex flex-col w-full">
-            <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
-                <p>
-                    <b>Description: </b>
-                </p>
-                {spare.description}
+                <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
+                    <p>
+                        <b>Description: </b>
+                    </p>
+                    {spare.description}
+                </div>
+                <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
+                    <p>
+                        <b>Notes: </b>
+                    </p>
+                    {spare.notes}
+                </div>
             </div>
-            <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
-                <p>
-                    <b>Notes: </b>
-                </p>
-                {spare.notes}
-            </div>
-        </div>
         </div>
     ));
 
     return (
         <>
-            {viewModal ? (
-                <ModalBase
-                    modalType={modalType}
-                    payload={parseInt(params.asPath.split('/')[2])}
-                    closeModal={() => [setViewModal(false), getPropertyHandler()]}
-                />
-            ) : null}
+            {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
             {loading ? (
                 <Loading />
             ) : noData ? (
@@ -153,17 +159,21 @@ const SparesView = () => {
             ) : (
                 <div>
                     <div className="w-full h-14 flex flex-row items-center">
-                        <div>
+                        <div className='flex flex-row'>
                             <Link href="/spares" className="icon-filter  hover:text-blue-600 flex flex-row items-center">
                                 <img className="h-4 rotate-180 mr-2" src={GreaterThan.src} />
                                 <p className="pb-1">Return to all Spares</p>
                             </Link>
+                            <button
+                                onClick={() => editStock()}
+                                className='ml-10 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"'
+                            >
+                                Edit Spares Item
+                            </button>
                         </div>
                     </div>
                     <div className="flex flex-col xl:flex-row">{details}</div>
-                    <div>
-                        5 most recent jobs that used one
-                    </div>
+                    <div>5 most recent jobs that used one</div>
                 </div>
             )}
         </>

@@ -13,6 +13,8 @@ import DeleteSparesNote from '../../pages/spares/sparesManagement/sparesNotes/de
 import AddEditSupplier from '../../pages/spares/sparesManagement/suppliers/addEditSupplier';
 import DeleteSupplier from '../../pages/spares/sparesManagement/suppliers/deleteSupplier';
 import AddSparesItem from '../../pages/spares/sparesManagement/addSparesItem';
+import DeleteSparesItem from '../spares/deleteSparesItem';
+import AdjustSparesStock from '../spares/adjustSparesStock';
 
 interface ModalProps {
     closeModal: () => void;
@@ -54,8 +56,12 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditSupplier closeModal={props.closeModal} payload={props.payload}/>
             case 'deleteSupplier':
                 return <DeleteSupplier closeModal={props.closeModal} payload={props.payload}/>
-            case 'addSparesItem':
+            case 'addEditSparesItem':
                 return <AddSparesItem closeModal={props.closeModal} payload={props.payload}/>
+            case 'adjustSparesStock':
+                return <AdjustSparesStock closeModal={props.closeModal} payload={props.payload}/>
+            case 'deleteSparesItem':
+                return <DeleteSparesItem closeModal={props.closeModal} payload={props.payload}/>
             case 'addSparesNote':
                 return <AddSparesNote closeModal={props.closeModal} payload={props.payload}/>
             case 'deleteSparesNote':
