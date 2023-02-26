@@ -23,8 +23,12 @@ const SparesNotes = () => {
     const [editNoteData, setEditNoteData] = useState<{ id: number; title: string }>({ id: 0, title: '' });
 
     useEffect(() => {
-        getHandler();
+        reload();
     }, [currentProperty]);
+
+    const reload = () => {
+        getHandler();
+    };
 
     const getHandler = async () => {
         try {
@@ -92,7 +96,7 @@ const SparesNotes = () => {
                 <ModalBase
                     modalType={modalType}
                     payload={editNoteData}
-                    closeModal={() => [setViewModal(false), setModalType(''), setEditNoteData({ id: 0, title: '' })]}
+                    closeModal={() => [setViewModal(false), setModalType(''), setEditNoteData({ id: 0, title: '' }), reload()]}
                 />
             ) : null}
             <div className="px-10 p-5">
