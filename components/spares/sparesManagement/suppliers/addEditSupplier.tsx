@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import RetrieveError from '../../../../components/error/retrieveError';
-import Loading from '../../../../components/loading/loading';
+import RetrieveError from '../../../error/retrieveError';
+import Loading from '../../../loading/loading';
 import axios from 'axios';
-import { RootState } from '../../../../components/store/store';
+import { RootState } from '../../../store/store';
 import { useSelector } from 'react-redux';
 
 interface ModalProps {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Loading from '../../components/loading/loading';
-import RetrieveError from '../../components/error/retrieveError';
+import Loading from '../loading/loading';
+import RetrieveError from '../error/retrieveError';
 
 interface ModalProps {
     closeModal: () => void;

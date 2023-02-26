@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Loading from '../../components/loading/loading';
+import Loading from '../loading/loading';
 import { useRouter } from 'next/router';
-import RetrieveError from '../../components/error/retrieveError';
-import { RootState } from '../../components/store/store';
+import RetrieveError from '../error/retrieveError';
+import { RootState } from '../store/store';
 import { useSelector } from 'react-redux';
-import ModalBase from '../../components/modal/modal';
+import ModalBase from '../modal/modal';
 
 interface ModalProps {
     closeModal: () => void;

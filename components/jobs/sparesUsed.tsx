@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GreaterThan from '../../public/GreaterThan.png';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../components/store/store';
+import { RootState } from '../store/store';
 import { JsxElement } from 'typescript';
 
 interface ModalProps {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../components/store/store';
+import { RootState } from '../store/store';
 import axios from 'axios';
 
 interface ModalProps {

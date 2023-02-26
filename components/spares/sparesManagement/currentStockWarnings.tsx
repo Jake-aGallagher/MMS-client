@@ -2,8 +2,8 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import GreaterThan from '../../public/GreaterThan.png';
-import { RootState } from '../store/store';
+import GreaterThan from '../../../public/GreaterThan.png';
+import { RootState } from '../../store/store';
 
 interface LowWarnings {
     id: number;

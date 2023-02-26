@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import GreaterThan from '../../../public/GreaterThan.png';
-import StockWarnings from '../../../components/spares/currentStockWarnings';
+import StockWarnings from '../../../components/spares/sparesManagement/currentStockWarnings';
 import SparesNotes from '../../../components/spares/sparesManagement/sparesNotes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
