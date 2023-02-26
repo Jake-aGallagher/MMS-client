@@ -48,7 +48,7 @@ const CreateProperty = (props: ModalProps) => {
                 <label htmlFor="name">Property Name:</label>
                 <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setName(e.target.value)} />
 
-                <label htmlFor="type">property Type:</label>
+                <label htmlFor="type">Property Type:</label>
                 <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setType(e.target.value)} defaultValue={type}>
                     {typeOptions.map((typeOption) => (
                         <option value={typeOption} key={typeOption}>

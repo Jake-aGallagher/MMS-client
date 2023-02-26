@@ -33,10 +33,10 @@ const DeleteAsset = (props: ModalProps) => {
             </h1>
             <form className="flex flex-col justify-center items-center px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                 <div className="px-10 font-semibold text-center mb-10">
-                    You are about to Delete this Asset/Component, this will also Delete All Child Components.
+                    You are about to delete this Asset/Component, this will also delete all child components.
                 </div>
                 <div className="px-10 font-semibold text-center">
-                    Please select if you would like to Delete All Jobs linked with the Assets that are deleted.
+                    Please select if you would like to delete all Jobs linked with the Assets that are deleted.
                 </div>
 
                 <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">

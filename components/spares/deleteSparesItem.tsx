@@ -35,7 +35,7 @@ const DeleteSparesItem = (props: ModalProps) => {
                     Name: {props.payload.name}
                 </div>
                 <div className="px-10 font-semibold text-center mb-10">
-                    You are about to Delete this Spares Item, please click Delete to confirm.
+                    You are about to delete this spares Item, please click delete to confirm.
                 </div>
 
                 <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
@@ -46,7 +46,7 @@ const DeleteSparesItem = (props: ModalProps) => {
                         className="rounded-3xl bg-blue-50 hover:bg-red-600 h-8 px-4 min-w-fit border-2 border-red-600 hover:border-transparent hover:text-white w-32"
                         onClick={(e) => submitHandler(e)}
                     >
-                        Delete Spares Item
+                        Delete
                     </button>
                 </div>
             </form>
