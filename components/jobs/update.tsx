@@ -232,7 +232,7 @@ const UpdateJob = (props: ModalProps) => {
                         <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                             {completed !== 1 ? (
                                 <>
-                                    <label htmlFor="status">Current Status</label>
+                                    <label htmlFor="status">Current Status:</label>
                                     <select id="status" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setStatus(e.target.value)} value={status}>
                                         {statusOptions.map((statusOption) => (
                                             <option value={statusOption.value} key={statusOption.value}>
@@ -241,7 +241,7 @@ const UpdateJob = (props: ModalProps) => {
                                         ))}
                                     </select>
 
-                                    <label htmlFor="description">Description</label>
+                                    <label htmlFor="description">Description:</label>
                                     <textarea
                                         id="description"
                                         rows={5}
@@ -251,7 +251,7 @@ const UpdateJob = (props: ModalProps) => {
                                     />
                                 </>
                             ) : null}
-                            <label htmlFor="notes">Notes</label>
+                            <label htmlFor="notes">Notes:</label>
                             <textarea
                                 id="notes"
                                 rows={5}
@@ -277,7 +277,7 @@ const UpdateJob = (props: ModalProps) => {
                                             </div>
                                         ))}
                                     </div>
-                                    <label htmlFor="time">Logged Time (mins)</label>
+                                    <label htmlFor="time">Logged Time (mins):</label>
                                     <div className="flex flex-row">
                                         <select className="bg-blue-200" value={loggedTimeId} onChange={(e) => setLoggedTimeId(parseInt(e.target.value))}>
                                             <option value={0} key="0"></option>

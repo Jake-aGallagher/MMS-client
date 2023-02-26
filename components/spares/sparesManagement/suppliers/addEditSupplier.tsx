@@ -109,10 +109,10 @@ const AddEditSupplier = (props: ModalProps) => {
                         {props.payload?.name ? 'Edit ' + props.payload.name : 'Add Supplier'}
                     </h1>
                     <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">Name:</label>
                         <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={name} onChange={(e) => setName(e.target.value)} />
 
-                        <label htmlFor="website">Website</label>
+                        <label htmlFor="website">Website:</label>
                         <input
                             id="website"
                             type="text"
@@ -122,10 +122,10 @@ const AddEditSupplier = (props: ModalProps) => {
                             onChange={(e) => setWebsite(e.target.value)}
                         />
 
-                        <label htmlFor="phone">Phone</label>
+                        <label htmlFor="phone">Phone:</label>
                         <input id="phone" type="text" className="mb-2 rounded-sm bg-blue-200" value={phone} onChange={(e) => setPhone(e.target.value)} />
 
-                        <label htmlFor="primContact">Primary Contact</label>
+                        <label htmlFor="primContact">Primary Contact:</label>
                         <input
                             id="primContact"
                             type="text"
@@ -134,7 +134,7 @@ const AddEditSupplier = (props: ModalProps) => {
                             onChange={(e) => setPrimContact(e.target.value)}
                         />
 
-                        <label htmlFor="primContactPhone">Primary Contact Phone</label>
+                        <label htmlFor="primContactPhone">Primary Contact Phone:</label>
                         <input
                             id="primContactPhone"
                             type="text"
@@ -143,16 +143,16 @@ const AddEditSupplier = (props: ModalProps) => {
                             onChange={(e) => setPrimContactPhone(e.target.value)}
                         />
 
-                        <label htmlFor="address">Address</label>
+                        <label htmlFor="address">Address:</label>
                         <input id="address" type="text" className="mb-2 rounded-sm bg-blue-200" value={address} onChange={(e) => setAddress(e.target.value)} />
 
-                        <label htmlFor="city">City</label>
+                        <label htmlFor="city">City:</label>
                         <input id="city" type="text" className="mb-2 rounded-sm bg-blue-200" value={city} onChange={(e) => setCity(e.target.value)} />
 
-                        <label htmlFor="county">County</label>
+                        <label htmlFor="county">County:</label>
                         <input id="county" type="text" className="mb-2 rounded-sm bg-blue-200" value={county} onChange={(e) => setCounty(e.target.value)} />
 
-                        <label htmlFor="postcode">Postcode</label>
+                        <label htmlFor="postcode">Postcode:</label>
                         <input
                             id="postcode"
                             type="text"
@@ -161,7 +161,7 @@ const AddEditSupplier = (props: ModalProps) => {
                             onChange={(e) => setPostcode(e.target.value)}
                         />
 
-                        <label htmlFor="supplies">Supplies</label>
+                        <label htmlFor="supplies">Supplies:</label>
                         <input
                             id="supplies"
                             type="text"

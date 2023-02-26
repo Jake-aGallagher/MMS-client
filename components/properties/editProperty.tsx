@@ -93,10 +93,10 @@ const EditProperty = (props: ModalProps) => {
                 <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
                     <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Edit Property</h1>
                     <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        <label htmlFor="name">Property Name</label>
+                        <label htmlFor="name">Property Name:</label>
                         <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setName(e.target.value)} value={name} />
 
-                        <label htmlFor="type">Property Type</label>
+                        <label htmlFor="type">Property Type:</label>
                         <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setType(e.target.value)} defaultValue={type}>
                             {typeOptions.map((typeOption) => (
                                 <option value={typeOption} key={typeOption}>
@@ -105,16 +105,16 @@ const EditProperty = (props: ModalProps) => {
                             ))}
                         </select>
 
-                        <label htmlFor="address">Address</label>
+                        <label htmlFor="address">Address:</label>
                         <input id="address" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setAddress(e.target.value)} value={address} />
 
-                        <label htmlFor="city">City</label>
+                        <label htmlFor="city">City:</label>
                         <input id="city" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setCity(e.target.value)} value={city} />
 
-                        <label htmlFor="county">County</label>
+                        <label htmlFor="county">County:</label>
                         <input id="county" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setCounty(e.target.value)} value={county} />
 
-                        <label htmlFor="postcode">Postcode</label>
+                        <label htmlFor="postcode">Postcode:</label>
                         <input
                             id="postcode"
                             type="text"

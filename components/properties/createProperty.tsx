@@ -63,10 +63,10 @@ const CreateProperty = (props: ModalProps) => {
                 <label htmlFor="city">City: </label>
                 <input id="city" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setCity(e.target.value)} />
 
-                <label htmlFor="county">County</label>
+                <label htmlFor="county">County:</label>
                 <input id="county" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setCounty(e.target.value)} />
 
-                <label htmlFor="postcode">Postcode</label>
+                <label htmlFor="postcode">Postcode:</label>
                 <input id="postcode" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setPostcode(e.target.value)} />
 
                 <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">

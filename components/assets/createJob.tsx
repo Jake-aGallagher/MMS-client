@@ -113,7 +113,7 @@ const CreateJob = (props: ModalProps) => {
                     <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
                         <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Create New Job</h1>
                         <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                            <label htmlFor="type">Job Type</label>
+                            <label htmlFor="type">Job Type:</label>
                             <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setSelectedType(e.target.value)}>
                                 {typeOptions.map((typeOption) => (
                                     <option value={typeOption.value} key={typeOption.value}>
@@ -122,10 +122,10 @@ const CreateJob = (props: ModalProps) => {
                                 ))}
                             </select>
 
-                            <label htmlFor="title">Title</label>
+                            <label htmlFor="title">Title:</label>
                             <input id="title" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setTitle(e.target.value)} />
 
-                            <label htmlFor="description">Job Description</label>
+                            <label htmlFor="description">Job Description:</label>
                             <textarea
                                 id="description"
                                 rows={5}
@@ -133,7 +133,7 @@ const CreateJob = (props: ModalProps) => {
                                 onChange={(e) => setDescription(e.target.value)}
                             />
 
-                            <label htmlFor="type">Urgency</label>
+                            <label htmlFor="type">Urgency:</label>
                             <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setSelectedUrgency(e.target.value)}>
                                 {urgencyOptions.map((urgencyOption) => (
                                     <option value={urgencyOption.value} key={urgencyOption.value}>
