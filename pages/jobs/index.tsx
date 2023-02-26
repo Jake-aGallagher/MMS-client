@@ -77,7 +77,12 @@ const Jobs = () => {
     ));
 
     return (
-        <>
+        <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
+            <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+                <Link href="/assets" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <div className="text-2xl mr-1 pb-1">+</div>Create Job
+                </Link>
+            </div>
             {loading ? (
                 <Loading />
             ) : noData ? (
@@ -85,16 +90,9 @@ const Jobs = () => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
-                    <div className="flex flex-row ml-8 my-4 items-center">
-                        <label htmlFor="search">Search:</label>
-                        <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
-                        <Link href="/assets">
-                            <button className="rounded-3xl ml-10 bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent">
-                                Create Job
-                            </button>
-                        </Link>
-                    </div>
+                <>
+                    <label htmlFor="search">Search:</label>
+                    <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
                     <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
                         <thead>
                             <tr className="bg-gray-200">
@@ -113,9 +111,9 @@ const Jobs = () => {
                         </thead>
                         <tbody>{jobsList}</tbody>
                     </table>
-                </div>
+                </>
             )}
-        </>
+        </div>
     );
 };
 

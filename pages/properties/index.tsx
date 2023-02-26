@@ -68,7 +68,7 @@ const Properties = () => {
     };
 
     const searchFilter = () => {
-        let filtered = allProperties
+        let filtered = allProperties;
         if (searchTerm.length > 0) {
             filtered = allProperties.filter((prop) => {
                 // @ts-ignore
@@ -76,9 +76,9 @@ const Properties = () => {
             });
             setProperties(filtered);
         } else {
-            setProperties(filtered)
+            setProperties(filtered);
         }
-        sortFunction(sortBy.column, sortBy.order, filtered)
+        sortFunction(sortBy.column, sortBy.order, filtered);
     };
 
     const sortHandler = (column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode') => {
@@ -91,7 +91,11 @@ const Properties = () => {
         }
     };
 
-    const sortFunction = (column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode', order: 'ASC' | 'DESC', propertiesGiven: Property[] = properties) => {
+    const sortFunction = (
+        column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode',
+        order: 'ASC' | 'DESC',
+        propertiesGiven: Property[] = properties
+    ) => {
         let unorderedProps: Property[] = propertiesGiven;
         if (order === 'ASC') {
             unorderedProps.sort((a, b) => (a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0));
@@ -121,129 +125,140 @@ const Properties = () => {
 
     return (
         <>
-            {viewModal ? <ModalBase modalType={modalType} closeModal={() => [setViewModal(false), reload()]} /> : null}
-            {loading ? (
-                <Loading />
-            ) : noData ? (
-                <div>There is no data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
-                <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
-                    <div className="flex flex-row my-4 items-center">
-                        <div className="ml-8">
-                            <div className="grid grid-cols-2 grid-rows-2 gap-2">
-                                <label htmlFor="searchBy" className="justify-self-center">
-                                    Search By:
-                                </label>
-                                <select id="searchBy" name="searchBy" value={searchBy} onChange={(e) => [setSearchBy(e.target.value), setSearchTerm('')]}>
-                                    <option value="id">Property Number</option>
-                                    <option value="name">Name</option>
-                                    <option value="type">Type</option>
-                                    <option value="address">Address</option>
-                                    <option value="city">City</option>
-                                    <option value="county">County</option>
-                                    <option value="postcode">Postcode</option>
-                                </select>
-                                <label htmlFor="search" className="justify-self-center">
-                                    Search For:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="search"
-                                    name="search"
-                                    className="bg-blue-200 rounded-sm"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
+            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
+                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+                    <button
+                        onClick={() => [setViewModal(true), setmodalType('createProperty')]}
+                        className="ml-8 hover:text-blue-600 flex flex-row items-center"
+                    >
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Create Property
+                    </button>
+                </div>
+                {viewModal ? <ModalBase modalType={modalType} closeModal={() => [setViewModal(false), reload()]} /> : null}
+                {loading ? (
+                    <Loading />
+                ) : noData ? (
+                    <div>There is no data</div>
+                ) : error ? (
+                    <RetrieveError />
+                ) : (
+                    <>
+                        <div className="flex flex-row my-4 items-center">
+                            <div className="ml-8">
+                                <div className="grid grid-cols-2 grid-rows-2 gap-2">
+                                    <label htmlFor="searchBy" className="justify-self-center">
+                                        Search By:
+                                    </label>
+                                    <select id="searchBy" name="searchBy" value={searchBy} onChange={(e) => [setSearchBy(e.target.value), setSearchTerm('')]}>
+                                        <option value="id">Property Number</option>
+                                        <option value="name">Name</option>
+                                        <option value="type">Type</option>
+                                        <option value="address">Address</option>
+                                        <option value="city">City</option>
+                                        <option value="county">County</option>
+                                        <option value="postcode">Postcode</option>
+                                    </select>
+                                    <label htmlFor="search" className="justify-self-center">
+                                        Search For:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="search"
+                                        name="search"
+                                        className="bg-blue-200 rounded-sm"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <button
-                            onClick={() => [setViewModal(true), setmodalType('createProperty')]}
-                            className='ml-10 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"'
-                        >
-                            Create Property
-                        </button>
-                    </div>
-                    <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-                        <thead>
-                            <tr className="bg-gray-200">
-                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('id')}>
-                                    <div className=" flex flex-row justify-center items-center">
-                                        Property Number{' '}
-                                        {sortBy.column != 'id' ? null : sortBy.order === 'ASC' ? (
-                                            <div className="ml-2 text-2xl">&#8595;</div>
-                                        ) : (
-                                            <div className="ml-2 text-2xl">&#8593;</div>
-                                        )}
-                                    </div>
-                                </th>
-                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('name')}>
-                                    <div className=" flex flex-row justify-center items-center">
-                                        Name{' '}
-                                        {sortBy.column != 'name' ? null : sortBy.order === 'ASC' ? (
-                                            <div className="ml-2 text-2xl">&#8595;</div>
-                                        ) : (
-                                            <div className="ml-2 text-2xl">&#8593;</div>
-                                        )}
-                                    </div>
-                                </th>
-                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('type')}>
-                                    <div className=" flex flex-row justify-center items-center">
-                                        Type{' '}
-                                        {sortBy.column != 'type' ? null : sortBy.order === 'ASC' ? (
-                                            <div className="ml-2 text-2xl">&#8595;</div>
-                                        ) : (
-                                            <div className="ml-2 text-2xl">&#8593;</div>
-                                        )}
-                                    </div>
-                                </th>
-                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('address')}>
-                                    <div className=" flex flex-row justify-center items-center">
-                                        Address{' '}
-                                        {sortBy.column != 'address' ? null : sortBy.order === 'ASC' ? (
-                                            <div className="ml-2 text-2xl">&#8595;</div>
-                                        ) : (
-                                            <div className="ml-2 text-2xl">&#8593;</div>
-                                        )}
-                                    </div>
-                                </th>
-                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('city')}>
-                                    <div className=" flex flex-row justify-center items-center">
-                                        City{' '}
-                                        {sortBy.column != 'city' ? null : sortBy.order === 'ASC' ? (
-                                            <div className="ml-2 text-2xl">&#8595;</div>
-                                        ) : (
-                                            <div className="ml-2 text-2xl">&#8593;</div>
-                                        )}
-                                    </div>
-                                </th>
-                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('county')}>
-                                    <div className=" flex flex-row justify-center items-center">
-                                        County{' '}
-                                        {sortBy.column != 'county' ? null : sortBy.order === 'ASC' ? (
-                                            <div className="ml-2 text-2xl">&#8595;</div>
-                                        ) : (
-                                            <div className="ml-2 text-2xl">&#8593;</div>
-                                        )}
-                                    </div>
-                                </th>
-                                <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('postcode')}>
-                                    <div className=" flex flex-row justify-center items-center">
-                                        Postcode{' '}
-                                        {sortBy.column != 'postcode' ? null : sortBy.order === 'ASC' ? (
-                                            <div className="ml-2 text-2xl">&#8595;</div>
-                                        ) : (
-                                            <div className="ml-2 text-2xl">&#8593;</div>
-                                        )}
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>{propertiesList}</tbody>
-                    </table>
-                </div>
-            )}
+                        <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
+                            <thead>
+                                <tr className="bg-gray-200">
+                                    <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('id')}>
+                                        <div className=" flex flex-row justify-center items-center">
+                                            Property Number{' '}
+                                            {sortBy.column != 'id' ? null : sortBy.order === 'ASC' ? (
+                                                <div className="ml-2 text-2xl">&#8595;</div>
+                                            ) : (
+                                                <div className="ml-2 text-2xl">&#8593;</div>
+                                            )}
+                                        </div>
+                                    </th>
+                                    <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('name')}>
+                                        <div className=" flex flex-row justify-center items-center">
+                                            Name{' '}
+                                            {sortBy.column != 'name' ? null : sortBy.order === 'ASC' ? (
+                                                <div className="ml-2 text-2xl">&#8595;</div>
+                                            ) : (
+                                                <div className="ml-2 text-2xl">&#8593;</div>
+                                            )}
+                                        </div>
+                                    </th>
+                                    <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('type')}>
+                                        <div className=" flex flex-row justify-center items-center">
+                                            Type{' '}
+                                            {sortBy.column != 'type' ? null : sortBy.order === 'ASC' ? (
+                                                <div className="ml-2 text-2xl">&#8595;</div>
+                                            ) : (
+                                                <div className="ml-2 text-2xl">&#8593;</div>
+                                            )}
+                                        </div>
+                                    </th>
+                                    <th
+                                        className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none"
+                                        onClick={() => sortHandler('address')}
+                                    >
+                                        <div className=" flex flex-row justify-center items-center">
+                                            Address{' '}
+                                            {sortBy.column != 'address' ? null : sortBy.order === 'ASC' ? (
+                                                <div className="ml-2 text-2xl">&#8595;</div>
+                                            ) : (
+                                                <div className="ml-2 text-2xl">&#8593;</div>
+                                            )}
+                                        </div>
+                                    </th>
+                                    <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('city')}>
+                                        <div className=" flex flex-row justify-center items-center">
+                                            City{' '}
+                                            {sortBy.column != 'city' ? null : sortBy.order === 'ASC' ? (
+                                                <div className="ml-2 text-2xl">&#8595;</div>
+                                            ) : (
+                                                <div className="ml-2 text-2xl">&#8593;</div>
+                                            )}
+                                        </div>
+                                    </th>
+                                    <th className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => sortHandler('county')}>
+                                        <div className=" flex flex-row justify-center items-center">
+                                            County{' '}
+                                            {sortBy.column != 'county' ? null : sortBy.order === 'ASC' ? (
+                                                <div className="ml-2 text-2xl">&#8595;</div>
+                                            ) : (
+                                                <div className="ml-2 text-2xl">&#8593;</div>
+                                            )}
+                                        </div>
+                                    </th>
+                                    <th
+                                        className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none"
+                                        onClick={() => sortHandler('postcode')}
+                                    >
+                                        <div className=" flex flex-row justify-center items-center">
+                                            Postcode{' '}
+                                            {sortBy.column != 'postcode' ? null : sortBy.order === 'ASC' ? (
+                                                <div className="ml-2 text-2xl">&#8595;</div>
+                                            ) : (
+                                                <div className="ml-2 text-2xl">&#8593;</div>
+                                            )}
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>{propertiesList}</tbody>
+                        </table>
+                    </>
+                )}
+            </div>
         </>
     );
 };

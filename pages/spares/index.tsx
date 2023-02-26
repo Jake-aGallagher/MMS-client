@@ -6,6 +6,8 @@ import { RootState } from '../../components/store/store';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import ModalBase from '../../components/modal/modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 
 interface Spare {
     id: number;
@@ -42,7 +44,7 @@ const Spares = () => {
     const [modalProps, setModalProps] = useState<PropsForModal>({ id: 0, name: '' });
 
     useEffect(() => {
-        reload()
+        reload();
     }, [currentProperty]);
 
     const reload = () => {
@@ -50,7 +52,7 @@ const Spares = () => {
         setError(false);
         setNoData(false);
         getHandler();
-    }
+    };
 
     const getHandler = async () => {
         try {
@@ -71,13 +73,13 @@ const Spares = () => {
 
     const editStock = (e: React.MouseEvent<HTMLElement>, id: number, name: string, quantityRemaining: number) => {
         setmodalType('adjustSparesStock');
-        setModalProps({ id, name, quantityRemaining});
+        setModalProps({ id, name, quantityRemaining });
         setViewModal(true);
     };
 
     const deleteItem = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
         setmodalType('deleteSparesItem');
-        setModalProps({ id, name, quantityRemaining: 0  });
+        setModalProps({ id, name, quantityRemaining: 0 });
         setViewModal(true);
     };
 
@@ -123,64 +125,68 @@ const Spares = () => {
 
     return (
         <>
-            {viewModal ? (
-                <ModalBase
-                    modalType={modalType}
-                    payload={modalProps}
-                    closeModal={() => [setViewModal(false), setModalProps({ id: 0, name: '', quantityRemaining: 0 }), setmodalType(''), reload()]}
-                />
-            ) : null}
-            {loading ? (
-                <Loading />
-            ) : noData ? (
-                <div>There is no data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
-                <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
-                    <div className="flex flex-row ml-8 my-4 items-center">
-                        <label htmlFor="search">Search:</label>
-                        <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
-                        <Link href="/spares/sparesManagement">
-                            <button className='ml-10 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"'>
-                                Spares Management
-                            </button>
-                        </Link>
-                        <button
-                            onClick={() => [setViewModal(true), setmodalType('addEditSparesItem')]}
-                            className='ml-10 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"'
-                        >
-                            Add Spares Item
-                        </button>
-                    </div>
-                    <div className="flex flex-row justify-end ml-8 my-4 items-center">
-                        <div className="flex flex-row items-center border-2 border-gray-500 p-1 mr-4">
-                            <div>&#10004;</div>
-                            <div className="mr-5 ml-1 text-sm">Greater than 1 Months supply</div>
-                            <div>&#9888;</div>
-                            <div className="mr-5 ml-1 text-sm">Less than 1 Months supply</div>
-                            <div>&#10060;</div>
-                            <div className="mr-5 ml-1 text-sm">Nil stock remaining</div>
-                        </div>
-                    </div>
-                    <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-                        <thead>
-                            <tr className="bg-gray-200">
-                                <th className="border-2 border-solid border-gray-500 px-2">Part Number</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Manufacturers Part Number</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Name</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Manufacturers Part Name</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Location</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Remaining Stock</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Usage (Avg per Month)</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Adjust Stock</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>{sparesList}</tbody>
-                    </table>
+            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
+                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+                    <Link href="/spares/sparesManagement" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                        <FontAwesomeIcon icon={faClipboard} className="mr-1 w-3" />
+                        Spares Management
+                    </Link>
+                    <button
+                        onClick={() => [setViewModal(true), setmodalType('addEditSparesItem')]}
+                        className="ml-8 hover:text-blue-600 flex flex-row items-center"
+                    >
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add Spares Item
+                    </button>
                 </div>
-            )}
+                {viewModal ? (
+                    <ModalBase
+                        modalType={modalType}
+                        payload={modalProps}
+                        closeModal={() => [setViewModal(false), setModalProps({ id: 0, name: '', quantityRemaining: 0 }), setmodalType(''), reload()]}
+                    />
+                ) : null}
+                {loading ? (
+                    <Loading />
+                ) : noData ? (
+                    <div>There is no data</div>
+                ) : error ? (
+                    <RetrieveError />
+                ) : (
+                    <>
+                        <div className="flex flex-row ml-8 my-4 items-center">
+                            <label htmlFor="search">Search:</label>
+                            <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
+                        </div>
+                        <div className="flex flex-row justify-end ml-8 my-4 items-center">
+                            <div className="flex flex-row items-center border-2 border-gray-500 p-1 mr-4">
+                                <div>&#10004;</div>
+                                <div className="mr-5 ml-1 text-sm">Greater than 1 Months supply</div>
+                                <div>&#9888;</div>
+                                <div className="mr-5 ml-1 text-sm">Less than 1 Months supply</div>
+                                <div>&#10060;</div>
+                                <div className="mr-5 ml-1 text-sm">Nil stock remaining</div>
+                            </div>
+                        </div>
+                        <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
+                            <thead>
+                                <tr className="bg-gray-200">
+                                    <th className="border-2 border-solid border-gray-500 px-2">Part Number</th>
+                                    <th className="border-2 border-solid border-gray-500 px-2">Manufacturers Part Number</th>
+                                    <th className="border-2 border-solid border-gray-500 px-2">Name</th>
+                                    <th className="border-2 border-solid border-gray-500 px-2">Manufacturers Part Name</th>
+                                    <th className="border-2 border-solid border-gray-500 px-2">Location</th>
+                                    <th className="border-2 border-solid border-gray-500 px-2">Remaining Stock</th>
+                                    <th className="border-2 border-solid border-gray-500 px-2">Usage (Avg per Month)</th>
+                                    <th className="border-2 border-solid border-gray-500 px-2">Adjust Stock</th>
+                                    <th className="border-2 border-solid border-gray-500 px-2">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>{sparesList}</tbody>
+                        </table>
+                    </>
+                )}
+            </div>
         </>
     );
 };

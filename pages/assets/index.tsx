@@ -7,6 +7,8 @@ import axios from 'axios';
 import ModalBase from '../../components/modal/modal';
 import Loading from '../../components/loading/loading';
 import RetrieveError from '../../components/error/retrieveError';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faWrench } from '@fortawesome/free-solid-svg-icons';
 
 interface AssetTreeItem {
     id: number;
@@ -68,10 +70,10 @@ const Assets = () => {
                     <div
                         onClick={() => toggle(node.id)}
                         className={`flex flex-row items-center select-none  ${
-                            Array.isArray(node.children) && node.children.length > 0  ? 'cursor-pointer hover:text-blue-600 icon-filter' : 'cursor-default'
+                            Array.isArray(node.children) && node.children.length > 0 ? 'cursor-pointer hover:text-blue-600 icon-filter' : 'cursor-default'
                         }`}
                     >
-                        {Array.isArray(node.children) && node.children.length > 0  ? (
+                        {Array.isArray(node.children) && node.children.length > 0 ? (
                             <>
                                 <button className={`mr-1 h-5 w-5 font-bold text-2xl duration-150 ${openBranches.includes(node.id) ? 'rotate-90' : null}`}>
                                     <img src={GreaterThan.src} />
@@ -133,34 +135,24 @@ const Assets = () => {
 
     return (
         <>
-            {viewModal ? (
-                <ModalBase
-                    modalType={modalType}
-                    payload={modalProps}
-                    closeModal={() => [setViewModal(false), setModalType(''), setModalProps(''), getAssetTree()]}
-                />
-            ) : (
-                ''
-            )}
-            {loading ? (
-                <Loading />
-            ) : noData ? (
-                <div>There is no data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
-                <div className="w-full h-full pr-10 overflow-x-auto overflow-y-auto bg-gray-100">
-                    <div className="w-full h-14 flex flex-row items-center">
-                        <button
-                            className="rounded-3xl ml-10 bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
-                            onClick={() => setEditMode((prev) => !prev)}
-                        >
-                            {editMode ? 'Work Mode' : 'Edit Mode'}
-                        </button>
-                    </div>
-                    <div className="ml-5">{allRoots}</div>
+            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
+                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={() => setEditMode((prev) => !prev)}>
+                        {editMode ? <FontAwesomeIcon icon={faWrench} className="mr-1 w-3" /> : <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />}
+                        {editMode ? 'Switch to Work Mode' : 'Switch to Edit Mode'}
+                    </button>
                 </div>
-            )}
+                {viewModal ? (
+                    <ModalBase
+                        modalType={modalType}
+                        payload={modalProps}
+                        closeModal={() => [setViewModal(false), setModalType(''), setModalProps(''), getAssetTree()]}
+                    />
+                ) : (
+                    ''
+                )}
+                {loading ? <Loading /> : noData ? <div>There is no data</div> : error ? <RetrieveError /> : <div className="ml-5">{allRoots}</div>}
+            </div>
         </>
     );
 };

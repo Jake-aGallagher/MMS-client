@@ -7,6 +7,8 @@ import GreaterThan from '../../public/GreaterThan.png';
 import axios from 'axios';
 import Link from 'next/link';
 import RetrieveError from '../../components/error/retrieveError';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 interface Asset {
     id: number;
@@ -127,7 +129,7 @@ const AssetView = () => {
                     <div
                         onClick={() => toggle(node.id)}
                         className={` flex flex-row items-center select-none  ${
-                            Array.isArray(node.children) && node.children.length > 0  ? 'cursor-pointer hover:text-blue-600 icon-filter' : 'cursor-default'
+                            Array.isArray(node.children) && node.children.length > 0 ? 'cursor-pointer hover:text-blue-600 icon-filter' : 'cursor-default'
                         }`}
                     >
                         {Array.isArray(node.children) && node.children.length > 0 ? (
@@ -156,53 +158,55 @@ const AssetView = () => {
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : noData ? (
-                <div>There has been an issue getting the Property Data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
-                <div className="w-full bg-gray-100">
-                    <div>
-                        <Link href="/assets" className="icon-filter  hover:text-blue-600 flex flex-row items-center">
-                            <img className="h-4 rotate-180 mr-2" src={GreaterThan.src} />
-                            <p className="pb-1">Return to all Assets</p>
-                        </Link>
-                    </div>
-                    {details}
-                    {recentJobs.length > 0 ? (
-                        <div className="w-full overflow-x-auto flex flex-col items-center mt-4 pb-10 border-b-2 border-blue-600 ">
-                            <div className="my-4">5 Most recent jobs for Components of {assetDetails[0].name}:</div>
-                            <table className="table-auto border-collapse border-2 border-solid border-blue-600 ">
-                                <thead>
-                                    <tr>
-                                        <th className="border-2 border-solid border-blue-600 px-2">Job Number</th>
-                                        <th className="border-2 border-solid border-blue-600 px-2">Asset</th>
-                                        <th className="border-2 border-solid border-blue-600 px-2">Type</th>
-                                        <th className="border-2 border-solid border-blue-600 px-2">Title</th>
-                                        <th className="border-2 border-solid border-blue-600 px-2">Job Number</th>
-                                        <th className="border-2 border-solid border-blue-600 px-2">Completed</th>
-                                    </tr>
-                                </thead>
-                                <tbody>{recents}</tbody>
-                            </table>
-                        </div>
-                    ) : null}
-                    {parentDetails[0] !== null ? (
-                        <div className="border-b-2 border-blue-600 w-full p-5 mt-5 pb-10">
-                            Parent:
-                            {parentDetails}
-                        </div>
-                    ) : null}
-                    {allChildren.length > 0 ? (
-                        <div className="border-b-2 border-blue-600  w-full p-5 my-5 pb-10">
-                            Children:
-                            {allChildren}
-                        </div>
-                    ) : null}
+            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
+                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+                    <Link href="/assets" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                        <p>Return to all Assets</p>
+                    </Link>
                 </div>
-            )}
+                {loading ? (
+                    <Loading />
+                ) : noData ? (
+                    <div>There has been an issue getting the Property Data</div>
+                ) : error ? (
+                    <RetrieveError />
+                ) : (
+                    <>
+                        {details}
+                        {recentJobs.length > 0 ? (
+                            <div className="w-full overflow-x-auto flex flex-col items-center mt-4 pb-10 border-b-2 border-blue-600 ">
+                                <div className="my-4">5 Most recent jobs for Components of {assetDetails[0].name}:</div>
+                                <table className="table-auto border-collapse border-2 border-solid border-blue-600 ">
+                                    <thead>
+                                        <tr>
+                                            <th className="border-2 border-solid border-blue-600 px-2">Job Number</th>
+                                            <th className="border-2 border-solid border-blue-600 px-2">Asset</th>
+                                            <th className="border-2 border-solid border-blue-600 px-2">Type</th>
+                                            <th className="border-2 border-solid border-blue-600 px-2">Title</th>
+                                            <th className="border-2 border-solid border-blue-600 px-2">Job Number</th>
+                                            <th className="border-2 border-solid border-blue-600 px-2">Completed</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>{recents}</tbody>
+                                </table>
+                            </div>
+                        ) : null}
+                        {parentDetails[0] !== null ? (
+                            <div className="border-b-2 border-blue-600 w-full p-5 mt-5 pb-10">
+                                Parent:
+                                {parentDetails}
+                            </div>
+                        ) : null}
+                        {allChildren.length > 0 ? (
+                            <div className="border-b-2 border-blue-600  w-full p-5 my-5 pb-10">
+                                Children:
+                                {allChildren}
+                            </div>
+                        ) : null}
+                    </>
+                )}
+            </div>
         </>
     );
 };

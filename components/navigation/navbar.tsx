@@ -114,7 +114,7 @@ const NavBar = (props: Props) => {
     ));
 
     return (
-        <div className="fixed left-0 top-0 h-screen w-52 z-30 bg-gray-200 flex flex-col pt-4 px-4">
+        <div className="fixed left-0 top-0 h-screen w-52 z-30 bg-gray-200 border-r-2 border-gray-300 flex flex-col pt-4 px-4">
             <div className="w-32 h-32 mx-auto mb-2">
                 <img src={CompanyLogo.src} />
             </div>

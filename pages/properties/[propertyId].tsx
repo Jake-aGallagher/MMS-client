@@ -9,6 +9,8 @@ import ModalBase from '../../components/modal/modal';
 import RetrieveError from '../../components/error/retrieveError';
 import Link from 'next/link';
 import GreaterThan from '../../public/GreaterThan.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faPencil, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 interface Property {
     id: number;
@@ -137,59 +139,55 @@ const PropertyView = () => {
 
     return (
         <>
-            {viewModal ? (
-                <ModalBase
-                    modalType={modalType}
-                    payload={parseInt(params.asPath.split('/')[2])}
-                    closeModal={() => [setViewModal(false), getPropertyHandler(), getAssignedUsersHandler()]}
-                />
-            ) : null}
-            {loading ? (
-                <Loading />
-            ) : noData ? (
-                <div>There has been an issue getting the Property Data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
-                <div>
-                    <div className="w-full h-14 flex flex-row items-center">
-                        <div>
-                            <Link href="/properties" className="icon-filter  hover:text-blue-600 flex flex-row items-center">
-                                <img className="h-4 rotate-180 mr-2" src={GreaterThan.src} />
-                                <p className="pb-1">Return to all Properties</p>
-                            </Link>
-                        </div>
-                        <button
-                            className="rounded-3xl ml-10 bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
-                            onClick={() => [setViewModal(true), setModalType('editProperty')]}
-                        >
-                            Edit Property
-                        </button>
-                        <button
-                            className="rounded-3xl ml-4 bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
-                            onClick={() => [setViewModal(true), setModalType('assignUsers')]}
-                        >
-                            Assign Users
-                        </button>
-                    </div>
-                    <div className="flex flex-col xl:flex-row">
-                        {details}
-                        <div className="ml-10">
-                            <p className="xl:text-center text-left mb-2 font-semibold">Assigned Users</p>
-                            <table>
-                                <thead>
-                                    <tr className="bg-gray-200">
-                                        <th className="border-2 border-solid border-gray-500 px-2">Username</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Name</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Authority</th>
-                                    </tr>
-                                </thead>
-                                <tbody>{users}</tbody>
-                            </table>
-                        </div>
-                    </div>
+            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
+                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+                    <Link href="/properties" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                        <p>Return to all Properties</p>
+                    </Link>
+                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('editProperty')]}>
+                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                        Edit Property
+                    </button>
+                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('assignUsers')]}>
+                        <FontAwesomeIcon icon={faUserPlus} className="mr-1 w-3" />
+                        Assign Users
+                    </button>
                 </div>
-            )}
+                {viewModal ? (
+                    <ModalBase
+                        modalType={modalType}
+                        payload={parseInt(params.asPath.split('/')[2])}
+                        closeModal={() => [setViewModal(false), getPropertyHandler(), getAssignedUsersHandler()]}
+                    />
+                ) : null}
+                {loading ? (
+                    <Loading />
+                ) : noData ? (
+                    <div>There has been an issue getting the Property Data</div>
+                ) : error ? (
+                    <RetrieveError />
+                ) : (
+                    <>
+                        <div className="flex flex-col xl:flex-row">
+                            {details}
+                            <div className="ml-10">
+                                <p className="xl:text-center text-left mb-2 font-semibold">Assigned Users</p>
+                                <table>
+                                    <thead>
+                                        <tr className="bg-gray-200">
+                                            <th className="border-2 border-solid border-gray-500 px-2">Username</th>
+                                            <th className="border-2 border-solid border-gray-500 px-2">Name</th>
+                                            <th className="border-2 border-solid border-gray-500 px-2">Authority</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>{users}</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
         </>
     );
 };

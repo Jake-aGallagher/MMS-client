@@ -8,7 +8,8 @@ import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
 import RetrieveError from '../../components/error/retrieveError';
 import Link from 'next/link';
-import GreaterThan from '../../public/GreaterThan.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 
 interface Spare {
     id: number;
@@ -149,33 +150,32 @@ const SparesView = () => {
 
     return (
         <>
-            {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
-            {loading ? (
-                <Loading />
-            ) : noData ? (
-                <div>There has been an issue getting the Property Data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
-                <div>
-                    <div className="w-full h-14 flex flex-row items-center">
-                        <div className='flex flex-row'>
-                            <Link href="/spares" className="icon-filter  hover:text-blue-600 flex flex-row items-center">
-                                <img className="h-4 rotate-180 mr-2" src={GreaterThan.src} />
-                                <p className="pb-1">Return to all Spares</p>
-                            </Link>
-                            <button
-                                onClick={() => editStock()}
-                                className='ml-10 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"'
-                            >
-                                Edit Spares Item
-                            </button>
-                        </div>
-                    </div>
-                    <div className="flex flex-col xl:flex-row">{details}</div>
-                    <div>5 most recent jobs that used one</div>
+            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
+                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+                    <Link href="/spares" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                        <p>Return to all Spares</p>
+                    </Link>
+                    <button onClick={() => editStock()} className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                        Edit Spares Item
+                    </button>
                 </div>
-            )}
+
+                {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
+                {loading ? (
+                    <Loading />
+                ) : noData ? (
+                    <div>There has been an issue getting the Property Data</div>
+                ) : error ? (
+                    <RetrieveError />
+                ) : (
+                    <>
+                        <div className="flex flex-col xl:flex-row">{details}</div>
+                        <div>5 most recent jobs that used one</div>
+                    </>
+                )}
+            </div>
         </>
     );
 };

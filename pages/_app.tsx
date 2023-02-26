@@ -8,6 +8,7 @@ import { useState } from 'react'
 import Head from 'next/head';
 import NavBar from '../components/navigation/navbar';
 import Login from '../components/login/login';
+import Script from 'next/script';
 
 export default function App({ Component, pageProps }: AppProps) {
     const [loggedIn, setLoggedIn] = useState(false)
@@ -33,6 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <meta name="theme-color" content="#ffffff" />
                 <meta name="description" content="A Maintenance Management System" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <Script src="https://kit.fontawesome.com/5e0bf4683d.js" crossOrigin="anonymous" />
             </Head>
             <main className="h-screen font-sans bg-gray-100">
                 <Provider store={store}>
