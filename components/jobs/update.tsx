@@ -72,7 +72,7 @@ const UpdateJob = (props: ModalProps) => {
 
     const getJobUpdate = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/jobs/${currentProperty}/${idToSearch}/update`, {
+            const response = await axios.get(`http://localhost:3001/jobs/update/${currentProperty}/${idToSearch}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.jobDetails === 0) {

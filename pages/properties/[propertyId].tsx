@@ -66,7 +66,7 @@ const PropertyView = () => {
 
     const getAssignedUsersHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/properties/${params.asPath.split('/')[2]}/assigned-users`, {
+            const response = await axios.get(`http://localhost:3001/properties/assigned-users/${params.asPath.split('/')[2]}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {

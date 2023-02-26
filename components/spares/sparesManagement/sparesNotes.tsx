@@ -28,7 +28,7 @@ const SparesNotes = () => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/${currentProperty}/notes`, {
+            const response = await axios.get(`http://localhost:3001/spares/notes/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setNotes(response.data);

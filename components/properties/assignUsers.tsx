@@ -33,7 +33,7 @@ const AssignUsers = (props: ModalProps) => {
 
     const getUsersForAssign = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/properties/${props.propertyNumber}/users-for-assigning`, {
+            const response = await axios.get(`http://localhost:3001/properties/users-for-assigning/${props.propertyNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {

@@ -29,7 +29,7 @@ const StockWarnings = () => {
 
     const getStockWarnings = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/${currentProperty}/warnings`, {
+            const response = await axios.get(`http://localhost:3001/spares/warnings/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setLow(response.data.warningsArray);
