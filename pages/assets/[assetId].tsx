@@ -8,7 +8,8 @@ import axios from 'axios';
 import Link from 'next/link';
 import RetrieveError from '../../components/error/retrieveError';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
+import ModalBase from '../../components/modal/modal';
 
 interface Asset {
     id: number;
@@ -49,15 +50,20 @@ const AssetView = () => {
     const [openBranches, setOpenBranches] = useState<number[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
+    const [modalProps, setModalProps] = useState({ id: 0, note: ''})
     const [status, setStatus] = useState('');
     const [notes, setNotes] = useState('');
 
     useEffect(() => {
+        reload()
+    }, [params]);
+
+    const reload = () => {
         setLoading(true);
         setError(false);
         setNoData(false);
         getAssetHandler();
-    }, [params]);
+    }
 
     const getAssetHandler = async () => {
         try {
@@ -68,6 +74,7 @@ const AssetView = () => {
                 setNoData(true);
             } else {
                 setAssetDetails(response.data.assetDetails);
+                setModalProps({id :response.data.assetDetails[0].id, note: response.data.assetDetails[0].notes })
                 setRecentJobs(response.data.recentJobs);
                 setChildren(response.data.tree);
             }
@@ -164,7 +171,12 @@ const AssetView = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Assets</p>
                     </Link>
+                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('addEditAssetNotes')]}>
+                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                        Edit Notes
+                    </button>
                 </div>
+                {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 {loading ? (
                     <Loading />
                 ) : noData ? (

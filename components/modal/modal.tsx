@@ -14,6 +14,7 @@ import DeleteSupplier from '../spares/sparesManagement/suppliers/deleteSupplier'
 import AddSparesItem from '../spares/addEditSparesItem';
 import DeleteSparesItem from '../spares/deleteSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock';
+import AddEditAssetNotes from '../assets/addEditAssetNotes';
 
 interface ModalProps {
     closeModal: () => void;
@@ -37,6 +38,8 @@ const ModalBase = (props: ModalProps) => {
                 return <AddAsset closeModal={props.closeModal} payload={props.payload} />;
             case 'renameAsset':
                 return <RenameAsset closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditAssetNotes':
+                return <AddEditAssetNotes closeModal={props.closeModal} payload={props.payload} />
             case 'deleteAsset':
                 return <DeleteAsset closeModal={props.closeModal} payload={props.payload} />;
 
