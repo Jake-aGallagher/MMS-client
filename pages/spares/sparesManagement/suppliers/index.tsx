@@ -57,14 +57,7 @@ const Suppliers = () => {
         }
     };
 
-    const addSupplier = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        setSupplierId({ id: 0, name: '' });
-        setModalType('addEditSupplier');
-        setViewModal(true);
-    };
-
-    const editSupplier = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
+    const addEditSupplier = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
         e.preventDefault();
         setSupplierId({ id, name });
         setModalType('addEditSupplier');
@@ -96,7 +89,7 @@ const Suppliers = () => {
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.supplies}</td>
             <td
                 className="border border-solid border-gray-500 px-2 text-center p-2 rotate-90 hover:cursor-pointer select-none"
-                onClick={(e) => editSupplier(e, i.id, i.name)}
+                onClick={(e) => addEditSupplier(e, i.id, i.name)}
             >
                 &#9998;
             </td>
@@ -117,10 +110,7 @@ const Suppliers = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Spares Management</p>
                     </Link>
-                    <button
-                        className="ml-8 hover:text-blue-600 flex flex-row items-center"
-                        onClick={(e) => addSupplier(e)}
-                    >
+                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={(e) => addEditSupplier(e, 0, '')}>
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Supplier
                     </button>

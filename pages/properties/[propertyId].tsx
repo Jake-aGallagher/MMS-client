@@ -145,7 +145,7 @@ const PropertyView = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Properties</p>
                     </Link>
-                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('editProperty')]}>
+                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('addEditProperty')]}>
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit Property
                     </button>

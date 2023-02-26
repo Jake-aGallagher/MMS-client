@@ -1,6 +1,5 @@
 import CreateUser from '../settings/createUser';
-import CreateProperty from '../properties/createProperty';
-import EditProperty from '../properties/editProperty';
+import AddEditProperty from '../properties/addEditProperty';
 import AssignUsers from '../properties/assignUsers';
 import RenameAsset from '../assets/rename';
 import DeleteAsset from '../assets/delete';
@@ -8,11 +7,11 @@ import AddAsset from '../assets/create';
 import CreateJob from '../assets/createJob';
 import UpdateJob from '../jobs/update';
 import SparesUsed from '../jobs/sparesUsed';
-import AddSparesNote from '../spares/sparesManagement/addSparesNote';
+import AddEditSparesNote from '../spares/sparesManagement/addEditSparesNote';
 import DeleteSparesNote from '../spares/sparesManagement/deleteSparesNote';
 import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier';
 import DeleteSupplier from '../spares/sparesManagement/suppliers/deleteSupplier';
-import AddSparesItem from '../spares/addSparesItem';
+import AddSparesItem from '../spares/addEditSparesItem';
 import DeleteSparesItem from '../spares/deleteSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock';
 
@@ -28,10 +27,8 @@ const ModalBase = (props: ModalProps) => {
     const modalToDisplay = (modalType: string) => {
         switch (modalType) {
             // Property
-            case 'createProperty':
-                return <CreateProperty closeModal={props.closeModal} />;
-            case 'editProperty':
-                return <EditProperty closeModal={props.closeModal} propertyNumber={props.payload} />;
+            case 'addEditProperty':
+                return <AddEditProperty closeModal={props.closeModal} propertyNumber={props.payload}/>;
             case 'assignUsers':
                 return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
 
@@ -62,8 +59,8 @@ const ModalBase = (props: ModalProps) => {
                 return <AdjustSparesStock closeModal={props.closeModal} payload={props.payload}/>
             case 'deleteSparesItem':
                 return <DeleteSparesItem closeModal={props.closeModal} payload={props.payload}/>
-            case 'addSparesNote':
-                return <AddSparesNote closeModal={props.closeModal} payload={props.payload}/>
+            case 'addEditSparesNote':
+                return <AddEditSparesNote closeModal={props.closeModal} payload={props.payload}/>
             case 'deleteSparesNote':
                 return <DeleteSparesNote closeModal={props.closeModal} payload={props.payload} />;
 

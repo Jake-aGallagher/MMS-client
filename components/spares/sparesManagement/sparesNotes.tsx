@@ -50,7 +50,7 @@ const SparesNotes = () => {
                     View
                 </button>
                 <button
-                    onClick={() => [setViewModal(true), setModalType('addSparesNote'), setEditNoteData({ id: note.id, title: note.title })]}
+                    onClick={() => [setViewModal(true), setModalType('addEditSparesNote'), setEditNoteData({ id: note.id, title: note.title })]}
                     className="rounded-xl ml-5 text-sm font-normal bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
                 >
                     Edit
@@ -100,7 +100,7 @@ const SparesNotes = () => {
                     <h2 className="text-xl font-semibold mb-2">
                         Notes
                         <button
-                            onClick={() => [setViewModal(true), setModalType('addSparesNote')]}
+                            onClick={() => [setViewModal(true), setModalType('addEditSparesNote'), setEditNoteData({ id: 0, title: '' })]}
                             className="rounded-xl ml-5 text-sm font-normal bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
                         >
                             Add Note

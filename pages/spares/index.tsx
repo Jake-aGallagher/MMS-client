@@ -132,7 +132,7 @@ const Spares = () => {
                         Spares Management
                     </Link>
                     <button
-                        onClick={() => [setViewModal(true), setmodalType('addEditSparesItem')]}
+                        onClick={() => [setViewModal(true), setmodalType('addEditSparesItem'), setModalProps({ id: 0, name: '' })]}
                         className="ml-8 hover:text-blue-600 flex flex-row items-center"
                     >
                         <div className="text-2xl mr-1 pb-1">+</div>

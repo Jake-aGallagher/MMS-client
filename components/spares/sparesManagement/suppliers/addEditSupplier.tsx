@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 interface ModalProps {
     closeModal: () => void;
-    payload?: { id: number; name: string };
+    payload: { id: number; name: string };
 }
 
 const AddEditSupplier = (props: ModalProps) => {
@@ -63,14 +63,14 @@ const AddEditSupplier = (props: ModalProps) => {
     };
 
     const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault()
+        e.preventDefault();
         if (name.length > 0) {
             try {
                 const response = await axios.put(
                     'http://localhost:3001/spares/supplier',
                     {
                         propertyId: currentProperty,
-                        id: (props.payload?.id ? props.payload.id : 0),
+                        id: props.payload.id,
                         name,
                         website,
                         phone,
@@ -80,7 +80,7 @@ const AddEditSupplier = (props: ModalProps) => {
                         city,
                         county,
                         postcode,
-                        supplies
+                        supplies,
                     },
                     {
                         headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
@@ -89,13 +89,21 @@ const AddEditSupplier = (props: ModalProps) => {
                 if (response.data.created) {
                     props.closeModal();
                 } else {
-                    alert('There has been an issue creating this Note, please try again.');
+                    {
+                        props.payload.id > 0
+                            ? alert('There has been an issue editing this Note, please try again.')
+                            : alert('There has been an issue creating this Note, please try again.');
+                    }
                 }
             } catch (err) {
-                alert('There has been an issue creating this Note, please try again.');
+                {
+                    props.payload.id > 0
+                        ? alert('There has been an issue editing this Note, please try again.')
+                        : alert('There has been an issue creating this Note, please try again.');
+                }
             }
         }
-    }
+    };
 
     return (
         <>
@@ -106,7 +114,7 @@ const AddEditSupplier = (props: ModalProps) => {
             ) : (
                 <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
                     <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">
-                        {props.payload?.name ? 'Edit ' + props.payload.name : 'Add Supplier'}
+                        {props.payload.name.length > 0 ? 'Edit ' + props.payload.name : 'Add Supplier'}
                     </h1>
                     <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                         <label htmlFor="name">Name:</label>
@@ -172,8 +180,15 @@ const AddEditSupplier = (props: ModalProps) => {
                         />
 
                         <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>Cancel</button>
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={(e) => submitHandler(e)}>Submit</button>
+                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
+                                Cancel
+                            </button>
+                            <button
+                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
+                                onClick={(e) => submitHandler(e)}
+                            >
+                                Submit
+                            </button>
                         </div>
                     </form>
                 </div>

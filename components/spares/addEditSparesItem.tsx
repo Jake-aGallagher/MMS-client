@@ -7,7 +7,7 @@ import RetrieveError from '../error/retrieveError';
 
 interface ModalProps {
     closeModal: () => void;
-    payload?: { id: number; name: string };
+    payload: { id: number; name: string };
 }
 
 interface Spare {
@@ -28,7 +28,7 @@ interface Spare {
     cost: number;
 }
 
-const AddSparesItem = (props: ModalProps) => {
+const AddEditSparesItem = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
@@ -44,7 +44,7 @@ const AddSparesItem = (props: ModalProps) => {
     const [cost, setCost] = useState(0);
 
     useEffect(() => {
-        if (props.payload?.id && props.payload?.id > 0) {
+        if (props.payload.id > 0) {
             setLoading(true);
             setError(false);
             getHandler();
@@ -55,22 +55,20 @@ const AddSparesItem = (props: ModalProps) => {
 
     const getHandler = async () => {
         try {
-            const spare = await axios.get(`http://localhost:3001/spares/${props.payload?.id}`, {
+            const spare = await axios.get(`http://localhost:3001/spares/${props.payload.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            const s: Spare = spare.data[0]
-
-            setPartNo(s.part_no)
-            setManPartNo(s.man_part_no)
-            setName(s.name)
-            setManName(s.man_name)
-            setDescription(s.description)
-            setNotes(s.notes)
-            setLocation(s.location)
-            setQuantRemaining(s.quant_remain)
-            setSupplier(s.supplier)
-            setCost(s.cost)
-
+            const s: Spare = spare.data[0];
+            setPartNo(s.part_no);
+            setManPartNo(s.man_part_no);
+            setName(s.name);
+            setManName(s.man_name);
+            setDescription(s.description);
+            setNotes(s.notes);
+            setLocation(s.location);
+            setQuantRemaining(s.quant_remain);
+            setSupplier(s.supplier);
+            setCost(s.cost);
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -95,17 +93,25 @@ const AddSparesItem = (props: ModalProps) => {
                     supplier,
                     cost,
                     propertyId: currentProperty,
-                    id: props.payload?.id ? props.payload.id : 0,
+                    id: props.payload.id,
                 },
                 { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
             );
             if (response.data.created) {
                 props.closeModal();
             } else {
-                alert('There has been an issue creating this Spares Item, please try again.');
+                {
+                    props.payload?.name && props.payload?.name.length > 0
+                        ? alert('There has been an issue editing this Spares Item, please try again.')
+                        : alert('There has been an issue creating this Spares Item, please try again.');
+                }
             }
         } catch (err) {
-            alert('There has been an issue creating this Spares Item, please try again.');
+            {
+                props.payload?.name && props.payload?.name.length > 0
+                    ? alert('There has been an issue editing this Spares Item, please try again.')
+                    : alert('There has been an issue creating this Spares Item, please try again.');
+            }
         }
     };
 
@@ -118,7 +124,7 @@ const AddSparesItem = (props: ModalProps) => {
             ) : (
                 <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
                     <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">
-                        {props.payload?.name && props.payload?.name.length > 0 ? props.payload.name : 'Create Spares Item'}
+                        {props.payload.name.length > 0 ? props.payload.name : 'Add Spares Item'}
                     </h1>
                     <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                         <label htmlFor="name">Part Number:</label>
@@ -134,7 +140,13 @@ const AddSparesItem = (props: ModalProps) => {
                         <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={manName} onChange={(e) => setManName(e.target.value)} />
 
                         <label htmlFor="name">Description:</label>
-                        <textarea id="name" rows={4} className="mb-2 rounded-sm bg-blue-200" value={description} onChange={(e) => setDescription(e.target.value)} />
+                        <textarea
+                            id="name"
+                            rows={4}
+                            className="mb-2 rounded-sm bg-blue-200"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
 
                         <label htmlFor="name">Notes:</label>
                         <textarea id="name" rows={4} className="mb-2 rounded-sm bg-blue-200" value={notes} onChange={(e) => setNotes(e.target.value)} />
@@ -143,13 +155,27 @@ const AddSparesItem = (props: ModalProps) => {
                         <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={location} onChange={(e) => setLocation(e.target.value)} />
 
                         <label htmlFor="name">Quantity in Stock:</label>
-                        <input id="name" type="number" min={0} className="mb-2 rounded-sm bg-blue-200" value={quantRemaining} onChange={(e) => setQuantRemaining(parseInt(e.target.value))} />
+                        <input
+                            id="name"
+                            type="number"
+                            min={0}
+                            className="mb-2 rounded-sm bg-blue-200"
+                            value={quantRemaining}
+                            onChange={(e) => setQuantRemaining(parseInt(e.target.value))}
+                        />
 
                         <label htmlFor="name">Supplier:</label>
                         <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={supplier} onChange={(e) => setSupplier(e.target.value)} />
 
                         <label htmlFor="name">Cost per Item:</label>
-                        <input id="name" type="number" min={0} className="mb-6 rounded-sm bg-blue-200" value={cost} onChange={(e) => setCost(parseInt(e.target.value))} />
+                        <input
+                            id="name"
+                            type="number"
+                            min={0}
+                            className="mb-6 rounded-sm bg-blue-200"
+                            value={cost}
+                            onChange={(e) => setCost(parseInt(e.target.value))}
+                        />
 
                         <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
                             <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
@@ -166,4 +192,4 @@ const AddSparesItem = (props: ModalProps) => {
     );
 };
 
-export default AddSparesItem;
+export default AddEditSparesItem;
