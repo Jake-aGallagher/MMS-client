@@ -3,11 +3,10 @@ import axios from 'axios';
 import GreaterThan from '../../public/GreaterThan.png';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { JsxElement } from 'typescript';
 
 interface ModalProps {
     closeModal: () => void;
-    payload: { jobId: number; sparesUsed: SparesUsed[] };
+    payload: { sparesUsed: SparesUsed[], type: string };
     passbackDetails: (usedSparesArray: Spare[]) => void;
 }
 
@@ -48,7 +47,7 @@ const SparesUsed = (props: ModalProps) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares-for-use/${currentProperty}/${props.payload.jobId}`, {
+            const response = await axios.get(`http://localhost:3001/spares-for-use/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setNumResults(response.data.spares.length);
@@ -56,9 +55,6 @@ const SparesUsed = (props: ModalProps) => {
                 setNoData(true);
             } else {
                 setSparesFullList(response.data.spares);
-                if (response.data.usedSpares.length > 0) {
-                    setSparesUsed(response.data.usedSpares);
-                }
             }
             setLoading(false);
         } catch (err) {
@@ -145,7 +141,7 @@ const SparesUsed = (props: ModalProps) => {
             <div key={i.id} className={`flex flex-row border-2 border-blue-600 rounded-md mb-2 w-fit px-2 ${i.num_used < 1 ? 'hidden' : ''}`}>
                 <div className="mr-4">{i.part_no}</div>
                 <div className="mr-4">{i.name}</div>
-                <div className="mr-4">Quantity Used: {i.num_used}</div>
+                <div className="mr-4">{props.payload.type === 'delivery' ? 'Quantity Ordered:' : 'Quantity Used:'} {i.num_used}</div>
                 <button
                     onClick={(e) => {
                         removeUsedHandler(e, i.id);
@@ -176,7 +172,7 @@ const SparesUsed = (props: ModalProps) => {
 
     return (
         <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-            <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Spares Used</h1>
+            <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">{props.payload.type === 'delivery' ? 'Add to Delivery' : 'Spares Used'}</h1>
             <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                 <label htmlFor="searchInput" className="mb-2">
                     Spares Search
@@ -205,7 +201,7 @@ const SparesUsed = (props: ModalProps) => {
                         Clear
                     </div>
                 </div>
-                <div>Spares Used:</div>
+                <div>{props.payload.type === 'delivery' ? 'Items Ordered:' : 'Spares Used:'}</div>
                 <div className="mb-5 mt-1">{showSparesUsed}</div>
 
                 <div className="mb-5">
