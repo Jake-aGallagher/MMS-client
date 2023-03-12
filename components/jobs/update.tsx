@@ -219,7 +219,7 @@ const UpdateJob = (props: ModalProps) => {
                     {viewModal ? (
                         <ModalBase
                             modalType="sparesUsed"
-                            payload={{idToSearch, sparesUsed}}
+                            payload={{sparesUsed, type: 'used'}}
                             fullSize={true}
                             passbackDeatails={addSparesHandler}
                             closeModal={() => setViewModal(false)}
