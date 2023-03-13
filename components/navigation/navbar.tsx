@@ -132,9 +132,9 @@ const NavBar = (props: Props) => {
                 <div className="w-32 h-8 mx-auto mb-6 text-blue-600 border-b-2 border-blue-600">{availProps[0] && availProps[0].name}</div>
             )}
 
-            <Link href="/" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute === '/' ? 'text-blue-600' : '')}>
+            {/* <Link href="/" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute === '/' ? 'text-blue-600' : '')}>
                 Dashboard
-            </Link>
+            </Link> */}
             <Link href="/properties" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('properties') ? 'text-blue-600' : '')}>
                 Properties
             </Link>
