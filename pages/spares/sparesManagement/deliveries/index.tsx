@@ -36,7 +36,7 @@ const Deliveries = () => {
     const [deliveriesList, setDeliveriesList] = useState<Delivery[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [deliveryId, setDeliveryId] = useState({ id: 0, name: '' });
+    const [payload, setPayload] = useState<{contents: Contents[], name: string} | {id: number, name: string}>()
 
     useEffect(() => {
         reload()
@@ -66,9 +66,8 @@ const Deliveries = () => {
         }
     };
 
-    const addEditDelivery = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
-        e.preventDefault();
-        setDeliveryId({ id, name });
+    const addEditDelivery = (id: number, name: string) => {
+        setPayload({ id, name });
         setModalType('addEditDelivery');
         setViewModal(true);
     };
@@ -77,6 +76,12 @@ const Deliveries = () => {
         const list = contents.map((i) => <li>{i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}</li>);
         return list;
     };
+
+    const viewTooManyItems = (contents: Contents[], name: string) => {
+        setPayload({contents, name})
+        setModalType('viewExtraSpares')
+        setViewModal(true)
+    }
 
     const deliveries = deliveriesList.map((i) => (
         <tr key={'supplier' + i.id} className="">
@@ -87,7 +92,7 @@ const Deliveries = () => {
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.placed}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.due}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">
-                {i.contents.length > 1 ? <button>&#x1F50D;</button> : i.contents.length > 0 ? <ul>{items(i.contents)}</ul> : 'None'}
+                {i.contents.length > 5 ? <button onClick={() => viewTooManyItems(i.contents, i.name)}>&#x1F50D;</button> : i.contents.length > 0 ? <ul>{items(i.contents)}</ul> : 'None'}
             </td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.arrived == 1 ? <div>&#10004;</div> : <div>&#10060;</div>}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">
@@ -104,12 +109,12 @@ const Deliveries = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Spares Management</p>
                     </Link>
-                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={(e) => addEditDelivery(e, 0, '')}>
+                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={(e) => addEditDelivery(0, '')}>
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Delivery
                     </button>
                 </div>
-                {viewModal ? <ModalBase modalType={modalType} payload={deliveryId} closeModal={() => [setViewModal(false), setModalType(''), reload()]} /> : null}
+                {viewModal ? <ModalBase modalType={modalType} payload={payload} closeModal={() => [setViewModal(false), setModalType(''), reload()]} /> : null}
                 {loading ? (
                     <Loading />
                 ) : noData ? (
