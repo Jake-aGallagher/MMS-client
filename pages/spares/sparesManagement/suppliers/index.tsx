@@ -88,7 +88,7 @@ const Suppliers = () => {
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.postcode}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.supplies}</td>
             <td
-                className="border border-solid border-gray-500 px-2 text-center p-2 rotate-90 hover:cursor-pointer select-none"
+                className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
                 onClick={(e) => addEditSupplier(e, i.id, i.name)}
             >
                 &#9998;

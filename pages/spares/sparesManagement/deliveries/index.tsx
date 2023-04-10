@@ -51,7 +51,7 @@ const Deliveries = () => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/deliveries/${currentProperty}`, {
+            const response = await axios.get(`http://localhost:3001/spares/deliveries/${currentProperty}/0`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {
@@ -93,6 +93,12 @@ const Deliveries = () => {
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.due}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">
                 {i.contents.length > 5 ? <button onClick={() => viewTooManyItems(i.contents, i.name)}>&#x1F50D;</button> : i.contents.length > 0 ? <ul>{items(i.contents)}</ul> : 'None'}
+            </td>
+            <td
+                className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
+                onClick={() => addEditDelivery(i.id, i.name)}
+            >
+                &#9998;
             </td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.arrived == 1 ? <div>&#10004;</div> : <div>&#10060;</div>}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">
@@ -138,6 +144,7 @@ const Deliveries = () => {
                                         <th className="border-2 border-solid border-gray-500 px-2">Date Placed</th>
                                         <th className="border-2 border-solid border-gray-500 px-2">Date Due</th>
                                         <th className="border-2 border-solid border-gray-500 px-2">Contents</th>
+                                        <th className="border-2 border-solid border-gray-500 px-2">Edit</th>
                                         <th className="border-2 border-solid border-gray-500 px-2">Arrived</th>
                                         <th className="border-2 border-solid border-gray-500 px-2">Delete</th>
                                     </tr>

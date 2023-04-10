@@ -71,13 +71,13 @@ const Spares = () => {
         }
     };
 
-    const editStock = (e: React.MouseEvent<HTMLElement>, id: number, name: string, quantityRemaining: number) => {
+    const editStock = (id: number, name: string, quantityRemaining: number) => {
         setmodalType('adjustSparesStock');
         setModalProps({ id, name, quantityRemaining });
         setViewModal(true);
     };
 
-    const deleteItem = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
+    const deleteItem = (id: number, name: string) => {
         setmodalType('deleteSparesItem');
         setModalProps({ id, name, quantityRemaining: 0 });
         setViewModal(true);
@@ -109,14 +109,14 @@ const Spares = () => {
             </td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.avg_usage}</td>
             <td
-                className="border border-solid border-gray-500 px-2 text-center p-2 rotate-90 hover:cursor-pointer select-none"
-                onClick={(e) => editStock(e, spare.id, spare.name, spare.quant_remain)}
+                className="border border-solid border-gray-500 px-2 text-center p-2  hover:cursor-pointer select-none"
+                onClick={(e) => editStock(spare.id, spare.name, spare.quant_remain)}
             >
                 &#9998;
             </td>
             <td
                 className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
-                onClick={(e) => deleteItem(e, spare.id, spare.name)}
+                onClick={(e) => deleteItem(spare.id, spare.name)}
             >
                 &#10060;
             </td>
