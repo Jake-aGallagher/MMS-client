@@ -99,6 +99,8 @@ const Spares = () => {
                 <div className="flex flex-row justify-center">
                     {spare.quant_remain === 0 ? (
                         <div>&#10060;</div>
+                    ) : spare.avg_usage === 0 ? (
+                        <div>&#10004;</div>
                     ) : spare.avg_usage != 0 && spare.quant_remain / spare.avg_usage > 1 ? (
                         <div>&#10004;</div>
                     ) : (
