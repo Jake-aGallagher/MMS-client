@@ -23,6 +23,13 @@ interface Contents {
     num_used: number;
 }
 
+interface RetrievedContents {
+    spare_id: number;
+    part_no: string;
+    name: string;
+    quantity: number;
+}
+
 interface Delivery {
     id: number;
     name: string;
@@ -75,14 +82,36 @@ const AddEditDelivery = (props: ModalProps) => {
 
     const getHandlerFull = async () => {
         try {
-            const spare = await axios.get(`http://localhost:3001/spares/${props.payload.id}`, {
+            const response = await axios.get(`http://localhost:3001/spares/deliveries/${currentProperty}/${props.payload.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            const suppliers = response.data.suppliers
+            setSuppliersList(suppliers);
+            const delivery = response.data.deliverywithContents[0]
+            setId(delivery.id);
+            setName(delivery.name);
+            setSupplier(delivery.supplier);
+            setCourier(delivery.courier);
+            setPlaced(delivery.placed);
+            setDue(delivery.due);
+            formatContents(delivery.contents);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
+    };
+
+    // todo adjust architecture of used spares to use quantity so that the following function can be removed
+    // This is a stop gap function required due to tight coupling but incorrect typings of the used spares modal helper
+    const formatContents = (deliveryItems: RetrievedContents[]) => {
+        const adjustedContentsArr: Contents[] = [];
+
+        deliveryItems.forEach((deliveryItem) => {
+            adjustedContentsArr.push({ id: deliveryItem.spare_id, part_no: deliveryItem.part_no, name: deliveryItem.name, num_used: deliveryItem.quantity });
+        });
+
+        setContents(adjustedContentsArr);
     };
 
     const addSparesHandler = (
