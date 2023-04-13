@@ -45,12 +45,13 @@ const AddEditDelivery = (props: ModalProps) => {
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [suppliersList, setSuppliersList] = useState<Supplier[]>();
-    const [id, setId] = useState('');
+    const [id, setId] = useState(0);
     const [name, setName] = useState('');
     const [supplier, setSupplier] = useState(0);
     const [courier, setCourier] = useState('');
     const [placed, setPlaced] = useState('');
     const [due, setDue] = useState('');
+    const [arrived, setArrived] = useState(false);
     const [contents, setContents] = useState<Contents[]>([]);
     const [viewModal, setViewModal] = useState(false);
 
@@ -85,15 +86,16 @@ const AddEditDelivery = (props: ModalProps) => {
             const response = await axios.get(`http://localhost:3001/spares/deliveries/${currentProperty}/${props.payload.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            const suppliers = response.data.suppliers
+            const suppliers = response.data.suppliers;
             setSuppliersList(suppliers);
-            const delivery = response.data.deliverywithContents[0]
+            const delivery = response.data.deliverywithContents[0];
             setId(delivery.id);
             setName(delivery.name);
             setSupplier(delivery.supplier);
             setCourier(delivery.courier);
             setPlaced(delivery.placed);
             setDue(delivery.due);
+            setArrived(delivery.arrived);
             formatContents(delivery.contents);
             setLoading(false);
         } catch (err) {
@@ -127,35 +129,40 @@ const AddEditDelivery = (props: ModalProps) => {
 
     const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        try {
-            const response = await axios.put(
-                'http://localhost:3001/spares/delivery/add-edit',
-                {
-                    name,
-                    supplier,
-                    courier,
-                    placed,
-                    due,
-                    contents,
-                    propertyId: currentProperty,
-                    deliveryId: props.payload.id,
-                },
-                { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
-            );
-            if (response.data.created) {
-                props.closeModal();
-            } else {
+        const contentsRemovedNone = contents.filter((item) => item.num_used > 0);
+        if (contentsRemovedNone.length > 0) {
+            try {
+                const response = await axios.put(
+                    'http://localhost:3001/spares/delivery/add-edit',
+                    {
+                        id,
+                        name,
+                        supplier,
+                        courier,
+                        placed,
+                        due,
+                        arrived,
+                        contents: contentsRemovedNone,
+                        propertyId: currentProperty,
+                        deliveryId: props.payload.id,
+                    },
+                    { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
+                );
+                if (response.data.created) {
+                    props.closeModal();
+                } else {
+                    {
+                        props.payload?.name && props.payload?.name.length > 0
+                            ? alert('There has been an issue editing this Delivery, please try again.')
+                            : alert('There has been an issue creating this Delivery, please try again.');
+                    }
+                }
+            } catch (err) {
                 {
                     props.payload?.name && props.payload?.name.length > 0
                         ? alert('There has been an issue editing this Delivery, please try again.')
                         : alert('There has been an issue creating this Delivery, please try again.');
                 }
-            }
-        } catch (err) {
-            {
-                props.payload?.name && props.payload?.name.length > 0
-                    ? alert('There has been an issue editing this Delivery, please try again.')
-                    : alert('There has been an issue creating this Delivery, please try again.');
             }
         }
     };
@@ -233,6 +240,13 @@ const AddEditDelivery = (props: ModalProps) => {
                                         <div>Quantity Ordered: {spare.num_used}</div>
                                     </div>
                                 ))}
+                            </div>
+
+                            <div className="rounded-md my-2 p-2 border-2 border-blue-600 w-full flex flex-row">
+                                <label htmlFor="arrived" className="w-full">
+                                    Delivery Arrived, Selecting this Will automatically add the Spares items to stock{' '}
+                                </label>
+                                <input id="arrived" type="checkbox" className="mx-2" onChange={() => setArrived((prev) => !prev)} />
                             </div>
 
                             <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">

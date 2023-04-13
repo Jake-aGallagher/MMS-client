@@ -36,10 +36,10 @@ const Deliveries = () => {
     const [deliveriesList, setDeliveriesList] = useState<Delivery[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [payload, setPayload] = useState<{contents: Contents[], name: string} | {id: number, name: string}>()
+    const [payload, setPayload] = useState<{ contents: Contents[]; name: string } | { id: number; name: string }>();
 
     useEffect(() => {
-        reload()
+        reload();
     }, []);
 
     const reload = () => {
@@ -47,7 +47,7 @@ const Deliveries = () => {
         setError(false);
         setNoData(false);
         getHandler();
-    }
+    };
 
     const getHandler = async () => {
         try {
@@ -72,16 +72,22 @@ const Deliveries = () => {
         setViewModal(true);
     };
 
+    const deleteDelvery = (id: number, name: string) => {
+        setPayload({ id, name });
+        setModalType('deleteDelivery');
+        setViewModal(true);
+    };
+
     const items = (contents: Contents[]) => {
         const list = contents.map((i) => <li>{i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}</li>);
         return list;
     };
 
     const viewTooManyItems = (contents: Contents[], name: string) => {
-        setPayload({contents, name})
-        setModalType('viewExtraSpares')
-        setViewModal(true)
-    }
+        setPayload({ contents, name });
+        setModalType('viewExtraSpares');
+        setViewModal(true);
+    };
 
     const deliveries = deliveriesList.map((i) => (
         <tr key={'supplier' + i.id} className="">
@@ -92,18 +98,36 @@ const Deliveries = () => {
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.placed}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.due}</td>
             <td className="border border-solid border-gray-500 px-2 text-center p-2">
-                {i.contents.length > 5 ? <button onClick={() => viewTooManyItems(i.contents, i.name)}>&#x1F50D;</button> : i.contents.length > 0 ? <ul>{items(i.contents)}</ul> : 'None'}
+                {i.contents.length > 5 ? (
+                    <button onClick={() => viewTooManyItems(i.contents, i.name)}>&#x1F50D;</button>
+                ) : i.contents.length > 0 ? (
+                    <ul>{items(i.contents)}</ul>
+                ) : (
+                    'None'
+                )}
             </td>
-            <td
-                className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
-                onClick={() => addEditDelivery(i.id, i.name)}
-            >
-                &#9998;
-            </td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.arrived == 1 ? <div>&#10004;</div> : <div>&#10060;</div>}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">
-                <button>&#10060;</button>
-            </td>
+            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.arrived == 1 ? <div>&#10004;</div> : null}</td>
+            {!i.arrived ? (
+                <>
+                    <td
+                        className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
+                        onClick={() => addEditDelivery(i.id, i.name)}
+                    >
+                        &#9998;
+                    </td>
+                    <td
+                        className="border border-solid border-gray-500 px-2 text-center p-2"
+                        onClick={(e) => deleteDelvery(i.id, i.name)}
+                    >
+                        <button>&#10060;</button>
+                    </td>
+                </>
+            ) : (
+                <>
+                    <td className="border border-solid border-gray-500 px-2 text-center p-2"></td>
+                    <td className="border border-solid border-gray-500 px-2 text-center p-2"></td>
+                </>
+            )}
         </tr>
     ));
 
@@ -144,8 +168,8 @@ const Deliveries = () => {
                                         <th className="border-2 border-solid border-gray-500 px-2">Date Placed</th>
                                         <th className="border-2 border-solid border-gray-500 px-2">Date Due</th>
                                         <th className="border-2 border-solid border-gray-500 px-2">Contents</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Edit</th>
                                         <th className="border-2 border-solid border-gray-500 px-2">Arrived</th>
+                                        <th className="border-2 border-solid border-gray-500 px-2">Edit</th>
                                         <th className="border-2 border-solid border-gray-500 px-2">Delete</th>
                                     </tr>
                                 </thead>
