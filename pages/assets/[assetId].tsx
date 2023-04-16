@@ -10,6 +10,7 @@ import RetrieveError from '../../components/error/retrieveError';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 import ModalBase from '../../components/modal/modal';
+import SortableTable from '../../components/sortableTable/sortableTable';
 
 interface Asset {
     id: number;
@@ -38,6 +39,18 @@ interface Children {
     children: [];
 }
 
+const recentJobTableConfig = {
+    headers: [
+        { id: 'id', name: 'Job Number', type: 'link', search: true, order: true },
+        { id: 'asset_name', name: 'Asset', type: 'string', search: true, order: true },
+        { id: 'type', name: 'Type', type: 'string', search: true, order: true },
+        { id: 'created', name: 'Created', type: 'date', search: true, order: true },
+        { id: 'completed', name: 'Completed', type: 'completed', search: true, order: true },
+    ],
+    searchable: false,
+    linkColPrefix: '/jobs/',
+};
+
 const AssetView = () => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
@@ -50,12 +63,12 @@ const AssetView = () => {
     const [openBranches, setOpenBranches] = useState<number[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [modalProps, setModalProps] = useState({ id: 0, note: ''})
+    const [modalProps, setModalProps] = useState({ id: 0, note: '' });
     const [status, setStatus] = useState('');
     const [notes, setNotes] = useState('');
 
     useEffect(() => {
-        reload()
+        reload();
     }, [params]);
 
     const reload = () => {
@@ -63,7 +76,7 @@ const AssetView = () => {
         setError(false);
         setNoData(false);
         getAssetHandler();
-    }
+    };
 
     const getAssetHandler = async () => {
         try {
@@ -74,7 +87,7 @@ const AssetView = () => {
                 setNoData(true);
             } else {
                 setAssetDetails(response.data.assetDetails);
-                setModalProps({id :response.data.assetDetails[0].id, note: response.data.assetDetails[0].notes })
+                setModalProps({ id: response.data.assetDetails[0].id, note: response.data.assetDetails[0].notes });
                 setRecentJobs(response.data.recentJobs);
                 setChildren(response.data.tree);
             }
@@ -99,21 +112,6 @@ const AssetView = () => {
             <div className="mb-2">Name: {asset.name}</div>
             <div>Notes: {asset.notes ? asset.notes : 'None'}</div>
         </div>
-    ));
-
-    const recents = recentJobs.map((job: RecentJobs) => (
-        <tr key={job.id}>
-            <td className="border border-solid border-blue-600 px-2 text-center p-2">
-                <Link href={'/jobs/' + job.id} className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600">
-                    {job.id}
-                </Link>
-            </td>
-            <td className="border border-solid border-blue-600 px-2 text-center p-2">{job.asset_name}</td>
-            <td className="border border-solid border-blue-600 px-2 text-center p-2">{job.type}</td>
-            <td className="border border-solid border-blue-600 px-2 text-center p-2">{job.title}</td>
-            <td className="border border-solid border-blue-600 px-2 text-center p-2">{job.type}</td>
-            <td className="border border-solid border-blue-600 px-2 text-center p-2">{job.completed == 1 ? <div>&#10004;</div> : <div>&#10060;</div>}</td>
-        </tr>
     ));
 
     const parentDetails = assetDetails.map((asset: Asset) => {
@@ -171,7 +169,10 @@ const AssetView = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Assets</p>
                     </Link>
-                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('addEditAssetNotes')]}>
+                    <button
+                        className="ml-8 hover:text-blue-600 flex flex-row items-center"
+                        onClick={() => [setViewModal(true), setModalType('addEditAssetNotes')]}
+                    >
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit Notes
                     </button>
@@ -189,19 +190,7 @@ const AssetView = () => {
                         {recentJobs.length > 0 ? (
                             <div className="w-full overflow-x-auto flex flex-col items-center mt-4 pb-10 border-b-2 border-blue-600 ">
                                 <div className="my-4">5 Most recent jobs for Components of {assetDetails[0].name}:</div>
-                                <table className="table-auto border-collapse border-2 border-solid border-blue-600 ">
-                                    <thead>
-                                        <tr>
-                                            <th className="border-2 border-solid border-blue-600 px-2">Job Number</th>
-                                            <th className="border-2 border-solid border-blue-600 px-2">Asset</th>
-                                            <th className="border-2 border-solid border-blue-600 px-2">Type</th>
-                                            <th className="border-2 border-solid border-blue-600 px-2">Title</th>
-                                            <th className="border-2 border-solid border-blue-600 px-2">Job Number</th>
-                                            <th className="border-2 border-solid border-blue-600 px-2">Completed</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>{recents}</tbody>
-                                </table>
+                                <SortableTable config={recentJobTableConfig} data={recentJobs} />
                             </div>
                         ) : null}
                         {parentDetails[0] !== null ? (

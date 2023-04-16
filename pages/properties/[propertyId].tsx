@@ -1,16 +1,13 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-//import ModalBase from '../../Components/Modal/ModalBase';
-import { RootState } from '../../components/store/store';
 import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
 import RetrieveError from '../../components/error/retrieveError';
 import Link from 'next/link';
-import GreaterThan from '../../public/GreaterThan.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import SortableTable from '../../components/sortableTable/sortableTable';
 
 interface Property {
     id: number;
@@ -28,6 +25,17 @@ interface User {
     last_name: string;
     authority: number;
 }
+
+const userTableConfig = {
+    headers: [
+        { id: 'username', name: 'Username', type: 'string', search: true, order: true },
+        { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
+        { id: 'last_name', name: 'Surname', type: 'string', search: true, order: true },
+        { id: 'authority', name: 'Authority', type: 'authSwitch', search: true, order: true },
+        
+    ],
+    searchable: true,
+};
 
 const PropertyView = () => {
     const [loading, setLoading] = useState(true);
@@ -81,19 +89,6 @@ const PropertyView = () => {
         }
     };
 
-    const authSwitch = (auth: number) => {
-        switch (auth) {
-            case 4:
-                return 'Admin';
-            case 3:
-                return 'Manager';
-            case 2:
-                return 'Engineer';
-            default:
-                return 'Staff';
-        }
-    };
-
     const details = propertyDetails.map((property) => (
         <div className="ml-10 mb-4 w-4/5 max-w-lg" key={property.id}>
             <div className="flex flex-row h-6 mb-3">
@@ -126,16 +121,6 @@ const PropertyView = () => {
             </div>
         </div>
     ));
-
-    const users = assignedUsers.map((user) => {
-        return (
-            <tr key={user.username}>
-                <td className="border-2 border-solid border-gray-500 px-2">{user.username}</td>
-                <td className="border-2 border-solid border-gray-500 px-2">{user.first_name + ' ' + user.last_name}</td>
-                <td className="border-2 border-solid border-gray-500 px-2">{authSwitch(user.authority)}</td>
-            </tr>
-        );
-    });
 
     return (
         <>
@@ -173,16 +158,7 @@ const PropertyView = () => {
                             {details}
                             <div className="ml-10">
                                 <p className="xl:text-center text-left mb-2 font-semibold">Assigned Users</p>
-                                <table>
-                                    <thead>
-                                        <tr className="bg-gray-200">
-                                            <th className="border-2 border-solid border-gray-500 px-2">Username</th>
-                                            <th className="border-2 border-solid border-gray-500 px-2">Name</th>
-                                            <th className="border-2 border-solid border-gray-500 px-2">Authority</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>{users}</tbody>
-                                </table>
+                                <SortableTable config={userTableConfig} data={assignedUsers} />
                             </div>
                         </div>
                     </>

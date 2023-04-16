@@ -8,6 +8,7 @@ import ModalBase from '../../../../components/modal/modal';
 import { RootState } from '../../../../components/store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import SortableTable from '../../../../components/sortableTable/sortableTable';
 
 interface Contents {
     delivery_id: number;
@@ -27,6 +28,22 @@ interface Delivery {
     arrived: number;
     contents: Contents[];
 }
+
+const deliveriesTableConfig = {
+    headers: [
+        { id: 'id', name: 'ID', type: 'string', search: true, order: true },
+        { id: 'name', name: 'Name', type: 'string', search: true, order: true },
+        { id: 'supplier', name: 'Supplier', type: 'string', search: true, order: true },
+        { id: 'courier', name: 'Courier', type: 'string', search: true, order: true },
+        { id: 'placed', name: 'Date Placed', type: 'date', search: true, order: true },
+        { id: 'due', name: 'Date Due', type: 'date', search: true, order: true },
+        { id: 'contents', name: 'Contents', type: 'contents', search: false, order: false, functionNamePointer: 'name' },
+        { id: 'arrived', name: 'Arrived', type: 'arrived', search: true, order: true },
+        { id: 'edit', name: 'Edit', type: 'editWithHide', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name', hidePointer: 'arrived' },
+        { id: 'delete', name: 'Delete', type: 'deleteWithHide', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name', hidePointer: 'arrived' },
+    ],
+    searchable: true,
+};
 
 const Deliveries = () => {
     const [loading, setLoading] = useState(true);
@@ -78,58 +95,11 @@ const Deliveries = () => {
         setViewModal(true);
     };
 
-    const items = (contents: Contents[]) => {
-        const list = contents.map((i) => <li>{i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}</li>);
-        return list;
-    };
-
     const viewTooManyItems = (contents: Contents[], name: string) => {
         setPayload({ contents, name });
         setModalType('viewExtraSpares');
         setViewModal(true);
     };
-
-    const deliveries = deliveriesList.map((i) => (
-        <tr key={'supplier' + i.id} className="">
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.id}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.name}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.supplier}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.courier}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.placed}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.due}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">
-                {i.contents.length > 5 ? (
-                    <button onClick={() => viewTooManyItems(i.contents, i.name)}>&#x1F50D;</button>
-                ) : i.contents.length > 0 ? (
-                    <ul>{items(i.contents)}</ul>
-                ) : (
-                    'None'
-                )}
-            </td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.arrived == 1 ? <div>&#10004;</div> : null}</td>
-            {!i.arrived ? (
-                <>
-                    <td
-                        className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
-                        onClick={() => addEditDelivery(i.id, i.name)}
-                    >
-                        &#9998;
-                    </td>
-                    <td
-                        className="border border-solid border-gray-500 px-2 text-center p-2"
-                        onClick={(e) => deleteDelvery(i.id, i.name)}
-                    >
-                        <button>&#10060;</button>
-                    </td>
-                </>
-            ) : (
-                <>
-                    <td className="border border-solid border-gray-500 px-2 text-center p-2"></td>
-                    <td className="border border-solid border-gray-500 px-2 text-center p-2"></td>
-                </>
-            )}
-        </tr>
-    ));
 
     return (
         <>
@@ -158,23 +128,7 @@ const Deliveries = () => {
                             <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
                         </div>
                         <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100 mt-6">
-                            <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-                                <thead>
-                                    <tr className="bg-gray-200">
-                                        <th className="border-2 border-solid border-gray-500 px-2">ID</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Name</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Supplier</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Courier</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Date Placed</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Date Due</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Contents</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Arrived</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Edit</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>{deliveries}</tbody>
-                            </table>
+                            <SortableTable config={deliveriesTableConfig} data={deliveriesList} editFunction={addEditDelivery} deleteFunction={deleteDelvery} viewTooManyItems={viewTooManyItems}/>
                         </div>
                     </>
                 )}

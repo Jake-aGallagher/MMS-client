@@ -5,6 +5,7 @@ import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
+import SortableTable from '../../components/sortableTable/sortableTable';
 
 interface Job {
     id: number;
@@ -23,6 +24,24 @@ interface Job {
     urgency: string;
     title: string;
 }
+
+const jobTableConfig = {
+    headers: [
+        { id: 'id', name: 'Job Number', type: 'link', search: true, order: true },
+        { id: 'asset_name', name: 'Asset', type: 'string', search: true, order: true },
+        { id: 'type', name: 'Type', type: 'string', search: true, order: true },
+        { id: 'title', name: 'Title', type: 'string', search: true, order: true },
+        { id: 'created', name: 'Created', type: 'date', search: true, order: true },
+        { id: 'urgency', name: 'Urgency', type: 'string', search: true, order: true },
+        { id: 'required_comp_date', name: 'Required Completion Date', type: 'date', search: true, order: true },
+        { id: 'status', name: 'Current Status', type: 'string', search: true, order: true },
+        { id: 'completed', name: 'Completed', type: 'completed', search: true, order: true },
+        { id: 'comp_date', name: 'Completed Date', type: 'date', search: true, order: true },
+        { id: 'reporter', name: 'Reporter', type: 'string', search: true, order: true },
+    ],
+    searchable: true,
+    linkColPrefix: '/jobs/'
+};
 
 const Jobs = () => {
     const [loading, setLoading] = useState(true);
@@ -55,27 +74,6 @@ const Jobs = () => {
         }
     };
 
-    var jobsList;
-    jobsList = jobs.map((job) => (
-        <tr key={job.id} className="">
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">
-                <Link href={'/jobs/' + job.id} className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600">
-                    {job.id}
-                </Link>
-            </td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.asset_name}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.type}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.title}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.created}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.urgency}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.required_comp_date}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.status}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.completed == 1 ? <div>&#10004;</div> : <div>&#10060;</div>}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.comp_date == '00/00/00' ? '' : job.comp_date}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{job.reporter}</td>
-        </tr>
-    ));
-
     return (
         <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
             <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
@@ -93,24 +91,7 @@ const Jobs = () => {
                 <>
                     <label htmlFor="search">Search:</label>
                     <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
-                    <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-                        <thead>
-                            <tr className="bg-gray-200">
-                                <th className="border-2 border-solid border-gray-500 px-2">Job Number</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Asset</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Type</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Title</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Created</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Urgency</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Required completion date</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Current status</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Completed</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Completed date</th>
-                                <th className="border-2 border-solid border-gray-500 px-2">Reporter</th>
-                            </tr>
-                        </thead>
-                        <tbody>{jobsList}</tbody>
-                    </table>
+                    <SortableTable config={jobTableConfig} data={jobs}/>
                 </>
             )}
         </div>

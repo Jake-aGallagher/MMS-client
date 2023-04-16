@@ -8,6 +8,7 @@ import Link from 'next/link';
 import ModalBase from '../../components/modal/modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
+import SortableTable from '../../components/sortableTable/sortableTable';
 
 interface Spare {
     id: number;
@@ -32,6 +33,22 @@ interface PropsForModal {
     name: string;
     quantityRemaining?: number;
 }
+
+const sparesTableConfig = {
+    headers: [
+        { id: 'id', name: 'Part Number', type: 'linkWithName', nameParam: 'part_no', search: true, order: true },
+        { id: 'man_part_no', name: 'Manufacturers Part Number', type: 'string', search: true, order: true },
+        { id: 'name', name: 'Name', type: 'string', search: true, order: true },
+        { id: 'man_name', name: 'Manufacturers Part Name', type: 'string', search: true, order: true },
+        { id: 'location', name: 'Location', type: 'string', search: true, order: true },
+        { id: 'quant_remain', name: 'Remaining Stock', type: 'remaining_stock', search: true, order: true, avgUsagePointer: 'avg_usage' },
+        { id: 'avg_usage', name: 'Usage (AVG per Month)', type: 'string', search: true, order: true },
+        { id: 'adjust_stock', name: 'Adjust Stock', type: 'adjust_stock', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name', quantRemainPonter: 'quant_remain' },
+        { id: 'delete', name: 'Delete', type: 'delete', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name' },
+    ],
+    searchable: true,
+    linkColPrefix: '/spares/'
+};
 
 const Spares = () => {
     const [loading, setLoading] = useState(true);
@@ -83,48 +100,6 @@ const Spares = () => {
         setViewModal(true);
     };
 
-    var sparesList;
-    sparesList = spares.map((spare) => (
-        <tr key={spare.id} className="">
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">
-                <Link href={'/spares/' + spare.id} className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600">
-                    {spare.part_no}
-                </Link>
-            </td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.man_part_no}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.name}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.man_name}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.location}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">
-                <div className="flex flex-row justify-center">
-                    {spare.quant_remain === 0 ? (
-                        <div>&#10060;</div>
-                    ) : spare.avg_usage === 0 ? (
-                        <div>&#10004;</div>
-                    ) : spare.avg_usage != 0 && spare.quant_remain / spare.avg_usage > 1 ? (
-                        <div>&#10004;</div>
-                    ) : (
-                        <div>&#9888;</div>
-                    )}
-                    {spare.quant_remain}
-                </div>
-            </td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{spare.avg_usage}</td>
-            <td
-                className="border border-solid border-gray-500 px-2 text-center p-2  hover:cursor-pointer select-none"
-                onClick={(e) => editStock(spare.id, spare.name, spare.quant_remain)}
-            >
-                &#9998;
-            </td>
-            <td
-                className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
-                onClick={(e) => deleteItem(spare.id, spare.name)}
-            >
-                &#10060;
-            </td>
-        </tr>
-    ));
-
     return (
         <>
             <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
@@ -170,22 +145,7 @@ const Spares = () => {
                                 <div className="mr-5 ml-1 text-sm">Nil stock remaining</div>
                             </div>
                         </div>
-                        <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-                            <thead>
-                                <tr className="bg-gray-200">
-                                    <th className="border-2 border-solid border-gray-500 px-2">Part Number</th>
-                                    <th className="border-2 border-solid border-gray-500 px-2">Manufacturers Part Number</th>
-                                    <th className="border-2 border-solid border-gray-500 px-2">Name</th>
-                                    <th className="border-2 border-solid border-gray-500 px-2">Manufacturers Part Name</th>
-                                    <th className="border-2 border-solid border-gray-500 px-2">Location</th>
-                                    <th className="border-2 border-solid border-gray-500 px-2">Remaining Stock</th>
-                                    <th className="border-2 border-solid border-gray-500 px-2">Usage (Avg per Month)</th>
-                                    <th className="border-2 border-solid border-gray-500 px-2">Adjust Stock</th>
-                                    <th className="border-2 border-solid border-gray-500 px-2">Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>{sparesList}</tbody>
-                        </table>
+                        <SortableTable config={sparesTableConfig} data={spares} adjustStockFunction={editStock} deleteFunction={deleteItem}/>
                     </>
                 )}
             </div>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
+import SortableTable from '../../components/sortableTable/sortableTable';
 
 interface Property {
     id: number;
@@ -19,6 +20,20 @@ interface SortBy {
     column: 'id' | 'name' | 'type' | 'address' | 'city' | 'county' | 'postcode';
     order: 'ASC' | 'DESC';
 }
+
+const propertiesTableConfig = {
+    headers: [
+        { id: 'id', name: 'Property Number', type: 'link', search: true, order: true },
+        { id: 'name', name: 'Name', type: 'string', search: true, order: true },
+        { id: 'type', name: 'Type', type: 'string', search: true, order: true },
+        { id: 'address', name: 'Address', type: 'string', search: true, order: true },
+        { id: 'city', name: 'City', type: 'date', search: true, order: true },
+        { id: 'county', name: 'County', type: 'string', search: true, order: true },
+        { id: 'postcode', name: 'Postcode', type: 'string', search: true, order: true },
+    ],
+    searchable: true,
+    linkColPrefix: '/properties/'
+};
 
 const Properties = () => {
     const [loading, setLoading] = useState(true);
@@ -256,6 +271,9 @@ const Properties = () => {
                             </thead>
                             <tbody>{propertiesList}</tbody>
                         </table>
+                        <br />
+                        <br />
+                        <SortableTable config={propertiesTableConfig} data={allProperties} /> 
                     </>
                 )}
             </div>

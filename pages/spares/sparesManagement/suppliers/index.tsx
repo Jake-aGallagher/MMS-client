@@ -8,6 +8,7 @@ import ModalBase from '../../../../components/modal/modal';
 import { RootState } from '../../../../components/store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import SortableTable from '../../../../components/sortableTable/sortableTable';
 
 interface Suppliers {
     id: number;
@@ -22,6 +23,24 @@ interface Suppliers {
     postcode: string;
     supplies: string;
 }
+
+const suppliersTableConfig = {
+    headers: [
+        { id: 'name', name: 'Name', type: 'string', search: true, order: true },
+        { id: 'website', name: 'Website', type: 'url', search: true, order: true },
+        { id: 'phone', name: 'Phone', type: 'string', search: true, order: true },
+        { id: 'prim_contact', name: 'Primary Contact', type: 'string', search: true, order: true },
+        { id: 'prim_contact_phone', name: 'Primary Contact Phone', type: 'string', search: true, order: true },
+        { id: 'address', name: 'Address', type: 'string', search: true, order: true },
+        { id: 'city', name: 'City', type: 'string', search: true, order: true },
+        { id: 'county', name: 'County', type: 'string', search: true, order: true },
+        { id: 'postcode', name: 'Postcode', type: 'string', search: true, order: true },
+        { id: 'supplies', name: 'Supplies', type: 'string', search: true, order: true },
+        { id: 'edit', name: 'Edit', type: 'edit', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name' },
+        { id: 'delete', name: 'Delete', type: 'delete', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name' },
+    ],
+    searchable: true,
+};
 
 const Suppliers = () => {
     const [loading, setLoading] = useState(true);
@@ -57,50 +76,17 @@ const Suppliers = () => {
         }
     };
 
-    const addEditSupplier = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
-        e.preventDefault();
+    const addEditSupplier = (id: number, name: string) => {
         setSupplierId({ id, name });
         setModalType('addEditSupplier');
         setViewModal(true);
     };
 
-    const deleteSupplier = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
-        e.preventDefault();
+    const deleteSupplier = (id: number, name: string) => {
         setSupplierId({ id, name });
         setModalType('deleteSupplier');
         setViewModal(true);
     };
-
-    const suppliers = suppliersList.map((i) => (
-        <tr key={'supplier' + i.id} className="">
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.name}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">
-                <a className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600" href={'https://' + i.website} target="_blank">
-                    {i.website}
-                </a>
-            </td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.phone}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.prim_contact}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.prim_contact_phone}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.address}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.city}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.county}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.postcode}</td>
-            <td className="border border-solid border-gray-500 px-2 text-center p-2">{i.supplies}</td>
-            <td
-                className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
-                onClick={(e) => addEditSupplier(e, i.id, i.name)}
-            >
-                &#9998;
-            </td>
-            <td
-                className="border border-solid border-gray-500 px-2 text-center p-2 hover:cursor-pointer select-none"
-                onClick={(e) => deleteSupplier(e, i.id, i.name)}
-            >
-                &#10060;
-            </td>
-        </tr>
-    ));
 
     return (
         <>
@@ -110,7 +96,7 @@ const Suppliers = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Spares Management</p>
                     </Link>
-                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={(e) => addEditSupplier(e, 0, '')}>
+                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={() => addEditSupplier(0, '')}>
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Supplier
                     </button>
@@ -129,25 +115,7 @@ const Suppliers = () => {
                             <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
                         </div>
                         <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100 mt-6">
-                            <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-                                <thead>
-                                    <tr className="bg-gray-200">
-                                        <th className="border-2 border-solid border-gray-500 px-2">Name</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Website</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Phone</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Primary Contact</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Primary Contact Phone</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Address</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">City</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">County</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Postcode</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Supplies</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Edit</th>
-                                        <th className="border-2 border-solid border-gray-500 px-2">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>{suppliers}</tbody>
-                            </table>
+                            <SortableTable config={suppliersTableConfig} data={suppliersList} deleteFunction={deleteSupplier} editFunction={addEditSupplier} />
                         </div>
                     </>
                 )}
