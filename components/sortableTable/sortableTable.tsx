@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
     adjustStockType,
     arrivedType,
@@ -48,14 +49,69 @@ interface Contents {
 }
 
 const SortableTable = (props: Props) => {
+    const [sortedData, setSortedData] = useState<{}[]>();
+    const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: 'DSC'});
+    const [loading, setLoading] = useState(true)
+    console.log(props.data)
 
-    const buildTableHead = props.config.headers.map((item) => (
-        <th key={'head.' + item.id} className="border-2 border-solid border-gray-500 px-2">
-            {item.name}
-        </th>
-    ));
+    const sortFunction = (chosenSort: string) => {
+        if (chosenSort === currentSort.col) {
+            if (currentSort.dir === 'DSC') {
+                setCurrentSort({ col: currentSort.col, dir: 'ASC' });
+                sortData(currentSort.col, 'ASC')
+            } else {
+                setCurrentSort({ col: currentSort.col, dir: 'DSC' });
+                sortData(currentSort.col, 'DSC')
+            }
+        } else {
+            setCurrentSort({ col: chosenSort, dir: 'DSC' });
+            sortData(chosenSort, 'DSC')
+
+        }
+    };
+
+    const sortData = (col: string, dir: string) => {
+        let unorderedData = props.data
+        if (dir === 'DSC') {
+            /// @ts-ignore
+            unorderedData.sort((a, b) => (b[col] > a[col] ? 1 : b[col] < a[col] ? -1 : 0));
+        } else {
+            /// @ts-ignore
+            unorderedData.sort((a, b) => (a[col] > b[col] ? 1 : a[col] < b[col] ? -1 : 0));
+        }
+        setSortedData(unorderedData)
+        setLoading(false)
+    }
+
+    const buildTableHead = props.config.headers.map((item) => {
+        if (item.order) {
+            return (
+                <th
+                    key={'head.' + item.id}
+                    className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none"
+                    onClick={() => sortFunction(item.id)}
+                >
+                    <div className=" flex flex-row justify-center items-center">
+                        {item.name}
+                        {currentSort.col != item.id ? null : currentSort.dir === 'DSC' ? (
+                            <div className="ml-2 text-2xl">&#8595;</div>
+                        ) : (
+                            <div className="ml-2 text-2xl">&#8593;</div>
+                        )}
+                    </div>
+                </th>
+            );
+        } else {
+            return (
+                <th key={'head.' + item.id} className="border-2 border-solid border-gray-500 px-2 select-none">
+                    {item.name}
+                </th>
+            );
+        }
+    });
+
     const buildTableBody = () => {
-        const table = props.data.map((rowInfo) => (
+        const table = sortedData!.map((rowInfo) => (
             /// @ts-ignore
             <tr key={'body' + rowInfo[props.config.headers[0].id]}>{buildTableRow(rowInfo)}</tr>
         ));
@@ -69,19 +125,19 @@ const SortableTable = (props: Props) => {
                 case 'string':
                     inner = rowInfo[header.id];
                     break;
-                    
+
                 case 'link':
                     inner = linkType(rowInfo[header.id], props.config.linkColPrefix!, rowInfo[header.id]);
                     break;
-                
+
                 case 'linkWithName':
                     inner = linkType(rowInfo[header.nameParam!], props.config.linkColPrefix!, rowInfo[header.id]);
                     break;
 
-                 case 'url':
+                case 'url':
                     inner = urlType(rowInfo[header.id]);
                     break;
-                
+
                 case 'date':
                     inner = dateType(rowInfo[header.id]);
                     break;
@@ -89,7 +145,7 @@ const SortableTable = (props: Props) => {
                 case 'authSwitch':
                     inner = authorityType(rowInfo[header.id]);
                     break;
-               
+
                 case 'completed':
                     inner = completedType(rowInfo[header.id]);
                     break;
@@ -151,12 +207,12 @@ const SortableTable = (props: Props) => {
     };
 
     return (
-        <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
+        {loading ? (loading) : (<table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
             <thead>
                 <tr className="bg-gray-200">{buildTableHead}</tr>
             </thead>
             <tbody>{buildTableBody()}</tbody>
-        </table>
+        </table>)}
     );
 };
 
