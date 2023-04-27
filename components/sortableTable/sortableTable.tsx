@@ -14,6 +14,7 @@ import {
     remainingStockType,
     urlType,
 } from './rowTypeFunctions';
+import Loading from '../loading/loading';
 
 interface Props {
     config: {
@@ -50,28 +51,27 @@ interface Contents {
 
 const SortableTable = (props: Props) => {
     const [sortedData, setSortedData] = useState<{}[]>();
-    const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: 'DSC'});
-    const [loading, setLoading] = useState(true)
-    console.log(props.data)
+    const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: 'DSC' });
+    const [loading, setLoading] = useState(true);
+    console.log(props.data);
 
     const sortFunction = (chosenSort: string) => {
         if (chosenSort === currentSort.col) {
             if (currentSort.dir === 'DSC') {
                 setCurrentSort({ col: currentSort.col, dir: 'ASC' });
-                sortData(currentSort.col, 'ASC')
+                sortData(currentSort.col, 'ASC');
             } else {
                 setCurrentSort({ col: currentSort.col, dir: 'DSC' });
-                sortData(currentSort.col, 'DSC')
+                sortData(currentSort.col, 'DSC');
             }
         } else {
             setCurrentSort({ col: chosenSort, dir: 'DSC' });
-            sortData(chosenSort, 'DSC')
-
+            sortData(chosenSort, 'DSC');
         }
     };
 
     const sortData = (col: string, dir: string) => {
-        let unorderedData = props.data
+        let unorderedData = props.data;
         if (dir === 'DSC') {
             /// @ts-ignore
             unorderedData.sort((a, b) => (b[col] > a[col] ? 1 : b[col] < a[col] ? -1 : 0));
@@ -79,9 +79,9 @@ const SortableTable = (props: Props) => {
             /// @ts-ignore
             unorderedData.sort((a, b) => (a[col] > b[col] ? 1 : a[col] < b[col] ? -1 : 0));
         }
-        setSortedData(unorderedData)
-        setLoading(false)
-    }
+        setSortedData(unorderedData);
+        setLoading(false);
+    };
 
     const buildTableHead = props.config.headers.map((item) => {
         if (item.order) {
@@ -207,12 +207,18 @@ const SortableTable = (props: Props) => {
     };
 
     return (
-        {loading ? (loading) : (<table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-            <thead>
-                <tr className="bg-gray-200">{buildTableHead}</tr>
-            </thead>
-            <tbody>{buildTableBody()}</tbody>
-        </table>)}
+        <div>
+            {loading ? (
+                <Loading />
+            ) : (
+                <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
+                    <thead>
+                        <tr className="bg-gray-200">{buildTableHead}</tr>
+                    </thead>
+                    <tbody>{buildTableBody()}</tbody>
+                </table>
+            )}
+        </div>
     );
 };
 
