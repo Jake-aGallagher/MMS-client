@@ -49,7 +49,7 @@ const StockWarnings = () => {
 
     useEffect(() => {
         getStockWarnings();
-    }, []);
+    }, [currentProperty]);
 
     const getStockWarnings = async () => {
         try {

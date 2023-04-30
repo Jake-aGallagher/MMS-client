@@ -57,7 +57,7 @@ const Deliveries = () => {
 
     useEffect(() => {
         reload();
-    }, []);
+    }, [currentProperty]);
 
     const reload = () => {
         setLoading(true);

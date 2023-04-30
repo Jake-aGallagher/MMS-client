@@ -53,11 +53,15 @@ const Suppliers = () => {
     const [supplierId, setSupplierId] = useState({ id: 0, name: '' });
 
     useEffect(() => {
+        reload()
+    }, [currentProperty]);
+
+    const reload = () => {
         setLoading(true);
         setError(false);
         setNoData(false);
         getHandler();
-    }, []);
+    }
 
     const getHandler = async () => {
         try {
@@ -101,7 +105,7 @@ const Suppliers = () => {
                         Add Supplier
                     </button>
                 </div>
-                {viewModal ? <ModalBase modalType={modalType} payload={supplierId} closeModal={() => [setViewModal(false), setModalType('')]} /> : null}
+                {viewModal ? <ModalBase modalType={modalType} payload={supplierId} closeModal={() => [setViewModal(false), setModalType(''), reload()]} /> : null}
                 {loading ? (
                     <Loading />
                 ) : noData ? (
