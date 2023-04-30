@@ -114,7 +114,7 @@ const Suppliers = () => {
                     <RetrieveError />
                 ) : (
                     <>
-                        <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100 mt-6">
+                        <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
                             <SortableTable config={suppliersTableConfig} data={suppliersList} deleteFunction={deleteSupplier} editFunction={addEditSupplier} />
                         </div>
                     </>

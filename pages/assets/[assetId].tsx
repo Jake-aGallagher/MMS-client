@@ -188,7 +188,7 @@ const AssetView = () => {
                     <>
                         {details}
                         {recentJobs.length > 0 ? (
-                            <div className="w-full overflow-x-auto flex flex-col items-center mt-4 pb-10 border-b-2 border-blue-600 ">
+                            <div className="w-full overflow-x-auto flex flex-col items-center pb-10 border-b-2 border-blue-600 ">
                                 <div className="my-4">5 Most recent jobs for Components of {assetDetails[0].name}:</div>
                                 <SortableTable config={recentJobTableConfig} data={recentJobs} />
                             </div>

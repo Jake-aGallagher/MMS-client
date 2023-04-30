@@ -123,7 +123,7 @@ const Deliveries = () => {
                     <RetrieveError />
                 ) : (
                     <>
-                        <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100 mt-6">
+                        <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
                             <SortableTable config={deliveriesTableConfig} data={deliveriesList} editFunction={addEditDelivery} deleteFunction={deleteDelvery} viewTooManyItems={viewTooManyItems}/>
                         </div>
                     </>
