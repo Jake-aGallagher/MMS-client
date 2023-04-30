@@ -131,10 +131,6 @@ const Spares = () => {
                     <RetrieveError />
                 ) : (
                     <>
-                        <div className="flex flex-row ml-8 my-4 items-center">
-                            <label htmlFor="search">Search:</label>
-                            <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
-                        </div>
                         <div className="flex flex-row justify-end ml-8 my-4 items-center">
                             <div className="flex flex-row items-center border-2 border-gray-500 p-1 mr-4">
                                 <div>&#10004;</div>

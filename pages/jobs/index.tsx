@@ -40,7 +40,7 @@ const jobTableConfig = {
         { id: 'reporter', name: 'Reporter', type: 'string', search: true, order: true },
     ],
     searchable: true,
-    linkColPrefix: '/jobs/'
+    linkColPrefix: '/jobs/',
 };
 
 const Jobs = () => {
@@ -81,19 +81,7 @@ const Jobs = () => {
                     <div className="text-2xl mr-1 pb-1">+</div>Create Job
                 </Link>
             </div>
-            {loading ? (
-                <Loading />
-            ) : noData ? (
-                <div>There is no data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
-                <>
-                    <label htmlFor="search">Search:</label>
-                    <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
-                    <SortableTable config={jobTableConfig} data={jobs}/>
-                </>
-            )}
+            {loading ? <Loading /> : noData ? <div>There is no data</div> : error ? <RetrieveError /> : <SortableTable config={jobTableConfig} data={jobs} />}
         </div>
     );
 };

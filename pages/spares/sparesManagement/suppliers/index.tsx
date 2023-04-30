@@ -110,10 +110,6 @@ const Suppliers = () => {
                     <RetrieveError />
                 ) : (
                     <>
-                        <div className="flex flex-row ml-8 my-4 items-center">
-                            <label htmlFor="search">Search:</label>
-                            <input type="text" id="search" name="search" className=" ml-2 bg-blue-200 rounded-sm" />
-                        </div>
                         <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100 mt-6">
                             <SortableTable config={suppliersTableConfig} data={suppliersList} deleteFunction={deleteSupplier} editFunction={addEditSupplier} />
                         </div>

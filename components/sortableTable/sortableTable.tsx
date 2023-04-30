@@ -15,6 +15,7 @@ import {
     urlType,
 } from './rowTypeFunctions';
 import Loading from '../loading/loading';
+import SearchBar from './searchBar';
 
 interface Props {
     config: {
@@ -50,13 +51,35 @@ interface Contents {
 }
 
 const SortableTable = (props: Props) => {
+    const unfilteredData = props.data
+    const [filteredData, setFilteredData] = useState<{}[]>()
     const [sortedData, setSortedData] = useState<{}[]>();
-    const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: 'ASC' });
+    const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: 'DSC' });
+    const [searchType, setSearchType] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        sortFunction(props.config.headers[0].id)
-    }, [])
+        sortData(currentSort.col, currentSort.dir)
+    }, []);
+
+    useEffect(() => {
+        filterFunction()
+    }, [searchTerm])
+
+    useEffect(() => {
+        sortData(currentSort.col, currentSort.dir)
+    }, [filteredData])
+
+    const filterFunction = () => {
+        if (searchTerm.length > 0) {
+            /// @ts-ignore
+        const filtered = unfilteredData.filter((item) => item[searchType].toUpperCase().includes(searchTerm.toUpperCase()))
+        setFilteredData(filtered)
+        } else {
+            setFilteredData(unfilteredData)
+        }
+    }
 
     const sortFunction = (chosenSort: string) => {
         if (chosenSort === currentSort.col) {
@@ -74,13 +97,15 @@ const SortableTable = (props: Props) => {
     };
 
     const sortData = (col: string, dir: string) => {
-        let unorderedData = props.data;
-        if (dir === 'DSC') {
-            /// @ts-ignore
-            unorderedData.sort((a, b) => (b[col] > a[col] ? 1 : b[col] < a[col] ? -1 : 0));
-        } else {
-            /// @ts-ignore
-            unorderedData.sort((a, b) => (a[col] > b[col] ? 1 : a[col] < b[col] ? -1 : 0));
+        let unorderedData = (filteredData ? filteredData : props.data)
+        if (unorderedData.length > 0) {
+            if (dir === 'DSC') {
+                /// @ts-ignore
+                unorderedData.sort((a, b) => (b[col] > a[col] ? 1 : b[col] < a[col] ? -1 : 0));
+            } else {
+                /// @ts-ignore
+                unorderedData.sort((a, b) => (a[col] > b[col] ? 1 : a[col] < b[col] ? -1 : 0));
+            }
         }
         setSortedData(unorderedData);
         setLoading(false);
@@ -114,11 +139,13 @@ const SortableTable = (props: Props) => {
     });
 
     const buildTableBody = () => {
-        const table = sortedData!.map((rowInfo) => (
-            /// @ts-ignore
-            <tr key={'body' + rowInfo[props.config.headers[0].id]}>{buildTableRow(rowInfo)}</tr>
-        ));
-        return table;
+        if (sortedData && sortedData?.length > 0) {
+            const table = sortedData!.map((rowInfo) => (
+                /// @ts-ignore
+                <tr key={'body' + rowInfo[props.config.headers[0].id]}>{buildTableRow(rowInfo)}</tr>
+            ));
+            return table;
+        } else return;
     };
 
     const buildTableRow = (rowInfo: any) => {
@@ -214,12 +241,17 @@ const SortableTable = (props: Props) => {
             {loading ? (
                 <Loading />
             ) : (
-                <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-                    <thead>
-                        <tr className="bg-gray-200">{buildTableHead}</tr>
-                    </thead>
-                    <tbody>{buildTableBody()}</tbody>
-                </table>
+                <>
+                    {props.config.searchable && props.config.headers.length > 0 ? (
+                        <SearchBar headers={props.config.headers} searchType={searchType} searchTerm={searchTerm} setSearchType={setSearchType} setSearchTerm={setSearchTerm} />
+                    ) : null}
+                    <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
+                        <thead>
+                            <tr className="bg-gray-200">{buildTableHead}</tr>
+                        </thead>
+                        <tbody>{buildTableBody()}</tbody>
+                    </table>
+                </>
             )}
         </div>
     );
