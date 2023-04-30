@@ -51,9 +51,12 @@ interface Contents {
 
 const SortableTable = (props: Props) => {
     const [sortedData, setSortedData] = useState<{}[]>();
-    const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: 'DSC' });
+    const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: 'ASC' });
     const [loading, setLoading] = useState(true);
-    console.log(props.data);
+
+    useEffect(() => {
+        sortFunction(props.config.headers[0].id)
+    }, [])
 
     const sortFunction = (chosenSort: string) => {
         if (chosenSort === currentSort.col) {
