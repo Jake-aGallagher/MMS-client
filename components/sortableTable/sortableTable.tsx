@@ -121,7 +121,7 @@ const SortableTable = (props: Props) => {
                 >
                     <div className=" flex flex-row justify-center items-center">
                         {item.name}
-                        {currentSort.col != item.id ? null : currentSort.dir === 'DSC' ? (
+                        {currentSort.col != item.id ? null : currentSort.dir === 'ASC' ? (
                             <div className="ml-2 text-2xl">&#8595;</div>
                         ) : (
                             <div className="ml-2 text-2xl">&#8593;</div>
@@ -231,7 +231,7 @@ const SortableTable = (props: Props) => {
                     inner = rowInfo[header.id];
                     break;
             }
-            return <td className="border border-solid border-gray-500 px-2 text-center p-2">{inner}</td>;
+            return <td key={'cell.' + header.id} className="border border-solid border-gray-500 px-2 text-center p-2">{inner}</td>;
         });
         return rowData;
     };

@@ -47,7 +47,6 @@ const deliveriesTableConfig = {
 
 const Deliveries = () => {
     const [loading, setLoading] = useState(true);
-    const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [deliveriesList, setDeliveriesList] = useState<Delivery[]>([]);
@@ -62,7 +61,6 @@ const Deliveries = () => {
     const reload = () => {
         setLoading(true);
         setError(false);
-        setNoData(false);
         getHandler();
     };
 
@@ -71,11 +69,7 @@ const Deliveries = () => {
             const response = await axios.get(`http://localhost:3001/spares/deliveries/${currentProperty}/0`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (response.data.length === 0) {
-                setNoData(true);
-            } else {
-                setDeliveriesList(response.data);
-            }
+            setDeliveriesList(response.data);
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -117,7 +111,7 @@ const Deliveries = () => {
                 {viewModal ? <ModalBase modalType={modalType} payload={payload} closeModal={() => [setViewModal(false), setModalType(''), reload()]} /> : null}
                 {loading ? (
                     <Loading />
-                ) : noData ? (
+                ) : deliveriesList.length === 0 ? (
                     <div>There is no data</div>
                 ) : error ? (
                     <RetrieveError />

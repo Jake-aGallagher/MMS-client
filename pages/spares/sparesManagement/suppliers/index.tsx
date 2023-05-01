@@ -44,7 +44,6 @@ const suppliersTableConfig = {
 
 const Suppliers = () => {
     const [loading, setLoading] = useState(true);
-    const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [suppliersList, setSuppliersList] = useState<Suppliers[]>([]);
@@ -59,7 +58,6 @@ const Suppliers = () => {
     const reload = () => {
         setLoading(true);
         setError(false);
-        setNoData(false);
         getHandler();
     }
 
@@ -68,11 +66,7 @@ const Suppliers = () => {
             const response = await axios.get(`http://localhost:3001/spares/suppliers/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (response.data.length === 0) {
-                setNoData(true);
-            } else {
-                setSuppliersList(response.data);
-            }
+            setSuppliersList(response.data);
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -108,7 +102,7 @@ const Suppliers = () => {
                 {viewModal ? <ModalBase modalType={modalType} payload={supplierId} closeModal={() => [setViewModal(false), setModalType(''), reload()]} /> : null}
                 {loading ? (
                     <Loading />
-                ) : noData ? (
+                ) : suppliersList.length === 0 ? (
                     <div>There is no data</div>
                 ) : error ? (
                     <RetrieveError />

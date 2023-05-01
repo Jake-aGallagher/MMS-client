@@ -45,7 +45,6 @@ const jobTableConfig = {
 
 const Jobs = () => {
     const [loading, setLoading] = useState(true);
-    const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [jobs, setJobs] = useState<Job[]>([]);
@@ -53,20 +52,16 @@ const Jobs = () => {
     useEffect(() => {
         setLoading(true);
         setError(false);
-        setNoData(false);
         getHandler();
     }, [currentProperty]);
 
     const getHandler = async () => {
         try {
+            console.log('current property number:', currentProperty);
             const jobsList = await axios.get(`http://localhost:3001/jobs/all-jobs/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (jobsList.data.length === 0) {
-                setNoData(true);
-            } else {
-                setJobs(jobsList.data);
-            }
+            setJobs(jobsList.data);
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -81,7 +76,15 @@ const Jobs = () => {
                     <div className="text-2xl mr-1 pb-1">+</div>Create Job
                 </Link>
             </div>
-            {loading ? <Loading /> : noData ? <div>There is no data</div> : error ? <RetrieveError /> : <SortableTable config={jobTableConfig} data={jobs} />}
+            {loading ? (
+                <Loading />
+            ) : jobs.length === 0 ? (
+                <div>There is no data</div>
+            ) : error ? (
+                <RetrieveError />
+            ) : (
+                <SortableTable config={jobTableConfig} data={jobs} />
+            )}
         </div>
     );
 };

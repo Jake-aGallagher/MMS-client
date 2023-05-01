@@ -52,7 +52,6 @@ const sparesTableConfig = {
 
 const Spares = () => {
     const [loading, setLoading] = useState(true);
-    const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [spares, setSpares] = useState<Spare[]>([]);
@@ -67,7 +66,6 @@ const Spares = () => {
     const reload = () => {
         setLoading(true);
         setError(false);
-        setNoData(false);
         getHandler();
     };
 
@@ -76,11 +74,7 @@ const Spares = () => {
             const response = await axios.get(`http://localhost:3001/all-spares/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (response.data.length === 0) {
-                setNoData(true);
-            } else {
-                setSpares(response.data);
-            }
+            setSpares(response.data);
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -125,7 +119,7 @@ const Spares = () => {
                 ) : null}
                 {loading ? (
                     <Loading />
-                ) : noData ? (
+                ) : spares.length === 0 ? (
                     <div>There is no data</div>
                 ) : error ? (
                     <RetrieveError />

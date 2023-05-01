@@ -31,7 +31,6 @@ const propertiesTableConfig = {
 
 const Properties = () => {
     const [loading, setLoading] = useState(true);
-    const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [allProperties, setAllProperties] = useState<Property[]>([]);
     const [viewModal, setViewModal] = useState(false);
@@ -44,7 +43,6 @@ const Properties = () => {
     const reload = () => {
         setLoading(true);
         setError(false);
-        setNoData(false);
         getHandler();
     };
 
@@ -53,12 +51,7 @@ const Properties = () => {
             const propertiesList = await axios.get('http://localhost:3001/properties/all-properties', {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (propertiesList.data.length === 0) {
-                setNoData(true);
-            } else {
-                propertiesList.data.sort((a: Property, b: Property) => a.id - b.id);
-                setAllProperties(propertiesList.data);
-            }
+            setAllProperties(propertiesList.data);
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -81,7 +74,7 @@ const Properties = () => {
                 {viewModal ? <ModalBase modalType={modalType} payload={0} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 {loading ? (
                     <Loading />
-                ) : noData ? (
+                ) : allProperties.length === 0 ? (
                     <div>There is no data</div>
                 ) : error ? (
                     <RetrieveError />

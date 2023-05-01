@@ -20,7 +20,6 @@ interface AssetTreeItem {
 
 const Assets = () => {
     const [loading, setLoading] = useState(true);
-    const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [assetTree, setAssetTree] = useState<AssetTreeItem[]>([]);
@@ -33,7 +32,6 @@ const Assets = () => {
     useEffect(() => {
         setLoading(true);
         setError(false);
-        setNoData(false);
         getAssetTree();
     }, [currentProperty]);
 
@@ -42,11 +40,7 @@ const Assets = () => {
             const response = await axios.get(`http://localhost:3001/asset-tree/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (response.data.length === 0) {
-                setNoData(true);
-            } else {
-                setAssetTree(response.data);
-            }
+            setAssetTree(response.data);
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -151,7 +145,7 @@ const Assets = () => {
                 ) : (
                     ''
                 )}
-                {loading ? <Loading /> : noData ? <div>There is no data</div> : error ? <RetrieveError /> : <div className="ml-5">{allRoots}</div>}
+                {loading ? <Loading /> : assetTree.length === 0 ? <div>There is no data</div> : error ? <RetrieveError /> : <div className="ml-5">{allRoots}</div>}
             </div>
         </>
     );

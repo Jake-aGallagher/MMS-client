@@ -34,7 +34,7 @@ const SearchBar = (props: Props) => {
     };
 
     const searchOptions = (options: Props['headers']) => {
-        return options.map((item) => <option value={item.id}>{item.name}</option>);
+        return options.map((item) => <option key={item.id + '_searchOption'} value={item.id}>{item.name}</option>);
     };
 
     const searchOptionHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
