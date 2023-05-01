@@ -57,7 +57,6 @@ const Jobs = () => {
 
     const getHandler = async () => {
         try {
-            console.log('current property number:', currentProperty);
             const jobsList = await axios.get(`http://localhost:3001/jobs/all-jobs/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
