@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import ModalBase from '../../components/modal/modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faClipboard, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../components/sortableTable/sortableTable';
 
 interface Spare {
@@ -127,11 +127,11 @@ const Spares = () => {
                     <>
                         <div className="flex flex-row justify-end ml-8 my-4 items-center">
                             <div className="flex flex-row items-center border-2 border-gray-500 p-1 mr-4">
-                                <div>&#10004;</div>
+                                <div><FontAwesomeIcon icon={faCheck} className="mr-1 w-5 text-green-500" /></div>
                                 <div className="mr-5 ml-1 text-sm">Greater than 1 Months supply</div>
-                                <div>&#9888;</div>
+                                <div><FontAwesomeIcon icon={faTriangleExclamation} className="mr-1 w-5 text-yellow-500" /></div>
                                 <div className="mr-5 ml-1 text-sm">Less than 1 Months supply</div>
-                                <div>&#10060;</div>
+                                <div><FontAwesomeIcon icon={faXmark} className="mr-1 w-5 text-red-600" /></div>
                                 <div className="mr-5 ml-1 text-sm">Nil stock remaining</div>
                             </div>
                         </div>

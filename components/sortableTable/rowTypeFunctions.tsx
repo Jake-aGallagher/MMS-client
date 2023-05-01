@@ -1,4 +1,6 @@
-import Link from "next/link";
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faPenToSquare, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export const linkType = (name: string | number, linkColPrefix: string, link: string) => {
     return (
@@ -25,8 +27,8 @@ export const completedType = (completed: number) => {
 };
 
 export const arrivedType = (arrived: number) => {
-    return arrived === 1 ? <div>&#10004;</div> : null
-}
+    return arrived === 1 ? <div>&#10004;</div> : null;
+};
 
 export const authorityType = (level: number) => {
     switch (level) {
@@ -43,21 +45,36 @@ export const authorityType = (level: number) => {
 
 export const remainingStockType = (remainingStock: number, usage: number) => {
     if (remainingStock === 0) {
-        return <div>&#10060; {remainingStock}</div>;
-    } else if (usage === 0) {
-        return <div>&#10004; {remainingStock}</div>;
-    } else if (remainingStock / usage > 1) {
-        return <div>&#10004; {remainingStock}</div>;
+        return (
+            <div className="flex flex-row justify-center items-center">
+                <FontAwesomeIcon icon={faXmark} className="mr-1 w-5 text-red-600" /> {remainingStock}
+            </div>
+        );
+    } else if (usage === 0 || remainingStock / usage > 1) {
+        return (
+            <div className="flex flex-row justify-center items-center">
+                <FontAwesomeIcon icon={faCheck} className="mr-1 w-5 text-green-500" /> {remainingStock}
+            </div>
+        );
     } else {
-        return <div>&#9888; {remainingStock}</div>;
+        return (
+            <div className="flex flex-row justify-center items-center">
+                <FontAwesomeIcon icon={faTriangleExclamation} className="mr-1 w-5 text-yellow-500" /> {remainingStock}
+            </div>
+        );
     }
 };
 
-export const adjustStockType = (id: number, name: string, remaining_quantity: number, adjustStockFunction: (id: number, name: string, quantityRemaining: number) => void) => {
+export const adjustStockType = (
+    id: number,
+    name: string,
+    remaining_quantity: number,
+    adjustStockFunction: (id: number, name: string, quantityRemaining: number) => void
+) => {
     if (adjustStockFunction) {
         return (
-            <div className="hover:cursor-pointer select-none" onClick={() => adjustStockFunction!(id, name, remaining_quantity)}>
-                &#9998;
+            <div className="flex flex-row justify-center items-center hover:cursor-pointer select-none" onClick={() => adjustStockFunction!(id, name, remaining_quantity)}>
+                <FontAwesomeIcon icon={faPenToSquare} className="mr-1 w-5" />
             </div>
         );
     }
@@ -76,15 +93,15 @@ export const contentsType = (contents: Contents[], name: string, viewTooManyItem
         const list = contents.map((i) => <li>{i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}</li>);
         return <ul>{list}</ul>;
     } else if (viewTooManyItems) {
-        return <button onClick={() => viewTooManyItems!(contents, name)}>&#x1F50D;</button>
+        return <button onClick={() => viewTooManyItems!(contents, name)}>&#x1F50D;</button>;
     }
-}
+};
 
 export const editType = (id: number, name: string, editFunction: (id: number, name: string) => void) => {
     if (editFunction) {
         return (
-            <div className="hover:cursor-pointer select-none" onClick={() => editFunction!(id, name)}>
-                &#9998;
+            <div className="flex flex-row justify-center items-center hover:cursor-pointer select-none" onClick={() => editFunction!(id, name)}>
+                <FontAwesomeIcon icon={faPenToSquare} className="mr-1 w-5" />
             </div>
         );
     }
@@ -93,18 +110,20 @@ export const editType = (id: number, name: string, editFunction: (id: number, na
 export const editWithHideType = (id: number, name: string, hide: number, editFunction: (id: number, name: string) => void) => {
     if (editFunction && hide != 1) {
         return (
-            <div className="hover:cursor-pointer select-none" onClick={() => editFunction!(id, name)}>
-                &#9998;
+            <div className="flex flex-row justify-center items-center hover:cursor-pointer select-none" onClick={() => editFunction!(id, name)}>
+                <FontAwesomeIcon icon={faPenToSquare} className="mr-1 w-5" />
             </div>
         );
-    } else {return}
+    } else {
+        return;
+    }
 };
 
 export const deleteType = (id: number, name: string, deleteFunction: (id: number, name: string) => void) => {
     if (deleteFunction) {
         return (
-            <div className="hover:cursor-pointer select-none" onClick={() => deleteFunction!(id, name)}>
-                &#10060;
+            <div className="flex flex-row justify-center items-center hover:cursor-pointer select-none" onClick={() => deleteFunction!(id, name)}>
+                <FontAwesomeIcon icon={faXmark} className="mr-1 w-5 text-red-600" />
             </div>
         );
     }
@@ -113,9 +132,11 @@ export const deleteType = (id: number, name: string, deleteFunction: (id: number
 export const deleteWithHideType = (id: number, name: string, hide: number, deleteFunction: (id: number, name: string) => void) => {
     if (deleteFunction && hide != 1) {
         return (
-            <div className="hover:cursor-pointer select-none" onClick={() => deleteFunction!(id, name)}>
-                &#10060;
+            <div className="flex flex-row justify-center items-center hover:cursor-pointer select-none" onClick={() => deleteFunction!(id, name)}>
+                <FontAwesomeIcon icon={faXmark} className="mr-1 w-5 text-red-600" />
             </div>
         );
-    } else {return}
+    } else {
+        return;
+    }
 };
