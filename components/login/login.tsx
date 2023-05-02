@@ -5,6 +5,7 @@ import axios from 'axios';
 
 interface Props {
     loginHandler: () => void;
+    refreshExpiry: () => void
 }
 
 const Login = (props: Props) => {
@@ -70,9 +71,7 @@ const Login = (props: Props) => {
                     );
                     setWarning(false);
                     localStorage.setItem('token', response.data.response.token);
-                    const remainingMilliseconds = 60 * 60 * 1000;
-                    const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
-                    localStorage.setItem('expiryDate', expiryDate.toISOString());
+                    props.refreshExpiry()
                     props.loginHandler();
                 } else {
                     setPassword('');

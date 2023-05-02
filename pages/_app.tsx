@@ -21,14 +21,25 @@ export default function App({ Component, pageProps }: AppProps) {
 
     const forceLogoutHandler = () => {
         if (loggedIn) {
-            /// @ts-ignore
-            let expiry: any = new Date(localStorage.getItem('expiryDate'));
-            expiry = expiry.getTime();
-            if (Date.now() > expiry) {
-                logoutHandler();
+            let expiry = localStorage.getItem('expiryDate');
+            if (expiry) {
+                if (Date.now() < parseInt(expiry)) {
+                    refreshExpiry();
+                } else {
+                    logoutHandler();
+                }
             }
         }
         return null;
+    };
+
+    const refreshExpiry = () => {
+        if (localStorage.getItem('expiryDate')) {
+            localStorage.removeItem('expiryDate');
+        }
+        const remainingMilliseconds = 30 * 60 * 1000;
+        const expiryDate = new Date().getTime() + remainingMilliseconds;
+        localStorage.setItem('expiryDate', expiryDate.toString());
     };
 
     return (
@@ -57,7 +68,7 @@ export default function App({ Component, pageProps }: AppProps) {
                             </div>
                         </>
                     ) : (
-                        <Login loginHandler={loginHandler} />
+                        <Login loginHandler={loginHandler} refreshExpiry={refreshExpiry} />
                     )}
                 </Provider>
             </main>
