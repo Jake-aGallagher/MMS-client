@@ -18,9 +18,6 @@ const Login = (props: Props) => {
     }, []);
 
     const checkLogin = async () => {
-        /* if (localStorage.getItem('token') && localStorage.getItem('expiryDate')) {
-            if (localStorage.getItem('expiryDate').getTime)
-        } */
         try {
             const response = await axios.get('http://localhost:3001/check-auth', {
                 headers: {

@@ -2,24 +2,34 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { store } from '../components/store/store';
 import { Provider } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { RootState } from '../components/store/store';
-import { useState } from 'react'
+import { useState } from 'react';
 import Head from 'next/head';
 import NavBar from '../components/navigation/navbar';
 import Login from '../components/login/login';
 import Script from 'next/script';
 
 export default function App({ Component, pageProps }: AppProps) {
-    const [loggedIn, setLoggedIn] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const loginHandler = () => {
-        setLoggedIn(true)
-    }
+        setLoggedIn(true);
+    };
 
     const logoutHandler = () => {
-        setLoggedIn(false)
-    }
+        setLoggedIn(false);
+    };
+
+    const forceLogoutHandler = () => {
+        if (loggedIn) {
+            /// @ts-ignore
+            let expiry: any = new Date(localStorage.getItem('expiryDate'));
+            expiry = expiry.getTime();
+            if (Date.now() > expiry) {
+                logoutHandler();
+            }
+        }
+        return null;
+    };
 
     return (
         <>
@@ -38,15 +48,16 @@ export default function App({ Component, pageProps }: AppProps) {
             </Head>
             <main className="h-screen font-sans bg-gray-100">
                 <Provider store={store}>
+                    {forceLogoutHandler()}
                     {loggedIn ? (
                         <>
-                            <NavBar logoutHandler={logoutHandler}/>
+                            <NavBar logoutHandler={logoutHandler} />
                             <div className="pl-52 h-screen">
                                 <Component {...pageProps} />
                             </div>
                         </>
                     ) : (
-                        <Login loginHandler={loginHandler}/>
+                        <Login loginHandler={loginHandler} />
                     )}
                 </Provider>
             </main>
