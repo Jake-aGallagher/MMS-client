@@ -10,7 +10,7 @@ interface ModalProps {
     propertyNumber: number;
 }
 
-const addEditProperty = (props: ModalProps) => {
+const AddEditProperty = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [id, setId] = useState(props.propertyNumber);
@@ -143,4 +143,4 @@ const addEditProperty = (props: ModalProps) => {
     );
 };
 
-export default addEditProperty;
+export default AddEditProperty;

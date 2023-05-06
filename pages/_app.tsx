@@ -55,8 +55,8 @@ export default function App({ Component, pageProps }: AppProps) {
                 <meta name="theme-color" content="#ffffff" />
                 <meta name="description" content="A Maintenance Management System" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <Script src="https://kit.fontawesome.com/5e0bf4683d.js" crossOrigin="anonymous" />
             </Head>
+            <Script src="https://kit.fontawesome.com/5e0bf4683d.js" crossOrigin="anonymous" />
             <main className="h-screen font-sans bg-gray-100">
                 <Provider store={store}>
                     {forceLogoutHandler()}

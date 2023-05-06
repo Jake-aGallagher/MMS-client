@@ -16,7 +16,7 @@ export const dateType = (dateString: string) => {
 
 export const urlType = (urlString: string) => {
     return (
-        <a className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600" href={'https://' + urlString} target="_blank">
+        <a className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600" href={'https://' + urlString} target="_blank" rel='noreferrer'>
             {urlString}
         </a>
     );
@@ -90,7 +90,7 @@ interface Contents {
 
 export const contentsType = (contents: Contents[], name: string, viewTooManyItems: (contents: Contents[], name: string) => void) => {
     if (contents.length < 5) {
-        const list = contents.map((i) => <li>{i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}</li>);
+        const list = contents.map((i) => <li key={'contentsItem' + i.spare_id}>{i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}</li>);
         return <ul>{list}</ul>;
     } else if (viewTooManyItems) {
         return <button onClick={() => viewTooManyItems!(contents, name)}>&#x1F50D;</button>;

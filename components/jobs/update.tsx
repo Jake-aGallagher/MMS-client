@@ -318,7 +318,7 @@ const UpdateJob = (props: ModalProps) => {
                                         })}
                                     </div>
                                     <div className="text-center mb-2">
-                                        Note: A job must be set to 'Attended - Found no Issues' or 'Attended - Fixed' in order to complete the job
+                                        Note: A job must be set to &#39;Attended - Found no Issues&#39; or &#39;Attended - Fixed&#39; in order to complete the job
                                     </div>
                                 </>
                             ) : null}
