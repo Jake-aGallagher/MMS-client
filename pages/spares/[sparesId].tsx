@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-//import ModalBase from '../../Components/Modal/ModalBase';
-import { RootState } from '../../components/store/store';
 import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
 import RetrieveError from '../../components/error/retrieveError';
