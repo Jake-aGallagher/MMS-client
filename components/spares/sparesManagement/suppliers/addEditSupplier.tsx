@@ -4,6 +4,7 @@ import Loading from '../../../loading/loading';
 import axios from 'axios';
 import { RootState } from '../../../store/store';
 import { useSelector } from 'react-redux';
+import { SERVER_URL } from '../../../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -37,7 +38,7 @@ const AddEditSupplier = (props: ModalProps) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/supplier/${props.payload?.id}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/supplier/${props.payload?.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             const supply = response.data[0];
@@ -67,7 +68,7 @@ const AddEditSupplier = (props: ModalProps) => {
         if (name.length > 0) {
             try {
                 const response = await axios.put(
-                    'http://localhost:3001/spares/supplier',
+                    `${SERVER_URL}/spares/supplier`,
                     {
                         propertyId: currentProperty,
                         id: props.payload.id,

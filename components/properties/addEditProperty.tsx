@@ -4,6 +4,7 @@ import { RootState } from '../store/store';
 import axios from 'axios';
 import Loading from '../loading/loading';
 import RetrieveError from '../error/retrieveError';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -34,7 +35,7 @@ const AddEditProperty = (props: ModalProps) => {
 
     const getPropertyHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/properties/${props.propertyNumber}`, {
+            const response = await axios.get(`${SERVER_URL}/properties/${props.propertyNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             const data = response.data[0];
@@ -56,7 +57,7 @@ const AddEditProperty = (props: ModalProps) => {
         e.preventDefault();
         try {
             const response = await axios.put(
-                'http://localhost:3001/properties',
+                `${SERVER_URL}/properties`,
                 {
                     id: id,
                     name: name,

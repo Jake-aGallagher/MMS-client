@@ -9,6 +9,7 @@ import { RootState } from '../../../../components/store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../../../components/sortableTable/sortableTable';
+import { SERVER_URL } from '../../../../components/routing/addressAPI';
 
 interface Contents {
     delivery_id: number;
@@ -66,7 +67,7 @@ const Deliveries = () => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/deliveries/${currentProperty}/0`, {
+            const response = await axios.get(`${SERVER_URL}/spares/deliveries/${currentProperty}/0`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setDeliveriesList(response.data);

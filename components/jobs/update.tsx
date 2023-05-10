@@ -6,6 +6,7 @@ import RetrieveError from '../error/retrieveError';
 import { RootState } from '../store/store';
 import { useSelector } from 'react-redux';
 import ModalBase from '../modal/modal';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -72,7 +73,7 @@ const UpdateJob = (props: ModalProps) => {
 
     const getJobUpdate = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/jobs/update/${currentProperty}/${idToSearch}`, {
+            const response = await axios.get(`${SERVER_URL}/jobs/update/${currentProperty}/${idToSearch}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.jobDetails === 0) {
@@ -165,7 +166,7 @@ const UpdateJob = (props: ModalProps) => {
 
     const submitFull = async (complete: boolean) => {
         const response = await axios.put(
-            'http://localhost:3001/jobs/update',
+            `${SERVER_URL}/jobs/update`,
             {
                 id: id,
                 status: status,
@@ -190,7 +191,7 @@ const UpdateJob = (props: ModalProps) => {
 
     const submitNotes = async () => {
         const response = await axios.put(
-            'http://localhost:3001/jobs/notes',
+            `${SERVER_URL}/jobs/notes`,
             {
                 id: id,
                 notes: notes,

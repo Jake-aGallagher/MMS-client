@@ -4,6 +4,7 @@ import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
 import SortableTable from '../../components/sortableTable/sortableTable';
+import { SERVER_URL } from '../../components/routing/addressAPI';
 
 interface Property {
     id: number;
@@ -48,7 +49,7 @@ const Properties = () => {
 
     const getHandler = async () => {
         try {
-            const propertiesList = await axios.get('http://localhost:3001/properties/all-properties', {
+            const propertiesList = await axios.get(`${SERVER_URL}/properties/all-properties`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setAllProperties(propertiesList.data);

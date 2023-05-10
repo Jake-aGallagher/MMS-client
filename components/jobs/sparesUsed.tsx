@@ -3,6 +3,7 @@ import axios from 'axios';
 import GreaterThan from '../../public/GreaterThan.png';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -47,7 +48,7 @@ const SparesUsed = (props: ModalProps) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares-for-use/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spares-for-use/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setNumResults(response.data.spares.length);

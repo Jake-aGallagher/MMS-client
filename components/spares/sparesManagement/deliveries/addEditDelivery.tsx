@@ -5,6 +5,7 @@ import axios from 'axios';
 import Loading from '../../../loading/loading';
 import RetrieveError from '../../../error/retrieveError';
 import ModalBase from '../../../modal/modal';
+import { SERVER_URL } from '../../../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -69,7 +70,7 @@ const AddEditDelivery = (props: ModalProps) => {
 
     const getHandlerLimited = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/suppliers/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/suppliers/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setSuppliersList(response.data);
@@ -83,7 +84,7 @@ const AddEditDelivery = (props: ModalProps) => {
 
     const getHandlerFull = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/deliveries/${currentProperty}/${props.payload.id}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/deliveries/${currentProperty}/${props.payload.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             const suppliers = response.data.suppliers;
@@ -133,7 +134,7 @@ const AddEditDelivery = (props: ModalProps) => {
         if (contentsRemovedNone.length > 0) {
             try {
                 const response = await axios.put(
-                    'http://localhost:3001/spares/delivery/add-edit',
+                    `${SERVER_URL}/spares/delivery/add-edit`,
                     {
                         id,
                         name,

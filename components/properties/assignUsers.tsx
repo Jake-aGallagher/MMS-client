@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../loading/loading';
 import RetrieveError from '../error/retrieveError';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -33,7 +34,7 @@ const AssignUsers = (props: ModalProps) => {
 
     const getUsersForAssign = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/properties/users-for-assigning/${props.propertyNumber}`, {
+            const response = await axios.get(`${SERVER_URL}/properties/users-for-assigning/${props.propertyNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {
@@ -68,7 +69,7 @@ const AssignUsers = (props: ModalProps) => {
         e.preventDefault();
         try {
             const response = await axios.put(
-                'http://localhost:3001/properties/assign-users',
+                `${SERVER_URL}/properties/assign-users`,
                 {
                     propertyNo: props.propertyNumber,
                     assignedUsers,

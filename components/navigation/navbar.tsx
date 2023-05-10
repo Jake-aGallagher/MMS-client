@@ -7,6 +7,7 @@ import { setUser } from '../store/userSlice';
 import { setCurrentProperty } from '../store/propertySlice';
 import CompanyLogo from '../../public/CompanyLogo.png';
 import axios from 'axios';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface Props {
     logoutHandler: () => void;
@@ -34,7 +35,7 @@ const NavBar = (props: Props) => {
 
     const retrieveProperty = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/properties/last-property/${userId}`, {
+            const response = await axios.get(`${SERVER_URL}/properties/last-property/${userId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {
@@ -69,7 +70,7 @@ const NavBar = (props: Props) => {
         try {
             const newPropId = parseInt(newPropIdString);
             const response = await axios.put(
-                'http://localhost:3001/properties/Last-property',
+                `${SERVER_URL}/properties/Last-property`,
                 {
                     userId: userId,
                     propertyId: newPropId,

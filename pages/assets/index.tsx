@@ -9,6 +9,7 @@ import Loading from '../../components/loading/loading';
 import RetrieveError from '../../components/error/retrieveError';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faWrench } from '@fortawesome/free-solid-svg-icons';
+import { SERVER_URL } from '../../components/routing/addressAPI';
 
 interface AssetTreeItem {
     id: number;
@@ -37,7 +38,7 @@ const Assets = () => {
 
     const getAssetTree = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/asset-tree/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/asset-tree/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setAssetTree(response.data);

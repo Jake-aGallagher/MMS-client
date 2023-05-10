@@ -9,6 +9,7 @@ import { RootState } from '../../../../components/store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../../../components/sortableTable/sortableTable';
+import { SERVER_URL } from '../../../../components/routing/addressAPI';
 
 interface Suppliers {
     id: number;
@@ -63,7 +64,7 @@ const Suppliers = () => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/suppliers/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/suppliers/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setSuppliersList(response.data);

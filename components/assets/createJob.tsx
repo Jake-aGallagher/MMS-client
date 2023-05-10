@@ -5,6 +5,7 @@ import axios from 'axios';
 import Loading from '../loading/loading';
 import RetrieveError from '../error/retrieveError';
 import ModalBase from '../modal/modal';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -54,7 +55,7 @@ const CreateJob = (props: ModalProps) => {
 
     const getEnums = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/enums/create-job`, {
+            const response = await axios.get(`${SERVER_URL}/enums/create-job`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setTypeOptions(response.data.types);
@@ -72,7 +73,7 @@ const CreateJob = (props: ModalProps) => {
         e.preventDefault();
         try {
             const response = await axios.post(
-                'http://localhost:3001/jobs',
+                `${SERVER_URL}/jobs`,
                 {
                     propertyNumber: currentProperty,
                     assetNumber: props.assetId,

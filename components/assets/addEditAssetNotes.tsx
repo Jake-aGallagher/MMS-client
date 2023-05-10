@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { SERVER_URL } from "../routing/addressAPI";
 
 interface ModalProps {
     closeModal: () => void;
@@ -13,7 +14,7 @@ const AddEditAssetNotes = (props: ModalProps) => {
         e.preventDefault();
         try {
             const response = await axios.put(
-                'http://localhost:3001/asset/notes',
+                `${SERVER_URL}/asset/notes`,
                 {
                     id: props.payload.id,
                     note

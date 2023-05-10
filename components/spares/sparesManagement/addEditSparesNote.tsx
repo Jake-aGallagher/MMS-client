@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import RetrieveError from '../../error/retrieveError';
 import Loading from '../../loading/loading';
 import { RootState } from '../../store/store';
+import { SERVER_URL } from '../../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -31,7 +32,7 @@ const AddEditSparesNote = (props: ModalProps) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/note/${props.payload?.id}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/note/${props.payload?.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setTitle(response.data[0].title);
@@ -49,7 +50,7 @@ const AddEditSparesNote = (props: ModalProps) => {
         if (title.length > 0 && note.length > 0) {
             try {
                 const response = await axios.put(
-                    'http://localhost:3001/spares/notes',
+                    `${SERVER_URL}/spares/notes`,
                     {
                         propertyId: currentProperty,
                         title,

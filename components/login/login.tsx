@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../store/userSlice';
 import axios from 'axios';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface Props {
     loginHandler: () => void;
@@ -20,7 +21,7 @@ const Login = (props: Props) => {
 
     const checkLogin = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/check-auth', {
+            const response = await axios.get(`${SERVER_URL}/check-auth`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorisation: 'Bearer ' + localStorage.getItem('token'),
@@ -46,7 +47,7 @@ const Login = (props: Props) => {
         if (username.length > 0 && password.length > 7) {
             try {
                 const response = await axios.post(
-                    'http://localhost:3001/users/login',
+                    `${SERVER_URL}/users/login`,
                     {
                         username: username,
                         password: password,

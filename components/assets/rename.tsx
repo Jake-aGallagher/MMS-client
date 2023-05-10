@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -14,7 +15,7 @@ const RenameAsset = (props: ModalProps) => {
         if (name.length > 0) {
             try {
                 const response = await axios.put(
-                    'http://localhost:3001/asset',
+                    `${SERVER_URL}/asset`,
                     {
                         id: props.payload.id,
                         name: name,

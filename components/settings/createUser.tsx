@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axios from 'axios';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -29,7 +30,7 @@ const CreateUser = (props: ModalProps) => {
         e.preventDefault();
         try {
             const response = await axios.post(
-                'http://localhost:3001/users',
+                `${SERVER_URL}/users`,
                 {
                     username: username,
                     first: first,
