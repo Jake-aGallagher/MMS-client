@@ -1,1 +1,1 @@
-export const SERVER_URL = process.env.NEXT_PUBLIC_DEVELOPMENT === 'TRUE' ? 'http://localhost:3001' : 'https://jakebackend.azurewebsites.net/';
+export const SERVER_URL = process.env.NEXT_PUBLIC_DEVELOPMENT === 'TRUE' ? 'http://localhost:3001' : 'https://jakebackend.azurewebsites.net';
