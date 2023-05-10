@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../components/sortableTable/sortableTable';
+import { SERVER_URL } from '../../components/routing/addressAPI';
 
 interface Property {
     id: number;
@@ -57,7 +58,7 @@ const PropertyView = () => {
 
     const getPropertyHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/properties/${params.asPath.split('/')[2]}`, {
+            const response = await axios.get(`${SERVER_URL}/properties/${params.asPath.split('/')[2]}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {
@@ -74,7 +75,7 @@ const PropertyView = () => {
 
     const getAssignedUsersHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/properties/assigned-users/${params.asPath.split('/')[2]}`, {
+            const response = await axios.get(`${SERVER_URL}/properties/assigned-users/${params.asPath.split('/')[2]}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {

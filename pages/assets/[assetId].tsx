@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 import ModalBase from '../../components/modal/modal';
 import SortableTable from '../../components/sortableTable/sortableTable';
+import { SERVER_URL } from '../../components/routing/addressAPI';
 
 interface Asset {
     id: number;
@@ -80,7 +81,7 @@ const AssetView = () => {
 
     const getAssetHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/asset/${params.asPath.split('/')[2]}`, {
+            const response = await axios.get(`${SERVER_URL}/asset/${params.asPath.split('/')[2]}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {

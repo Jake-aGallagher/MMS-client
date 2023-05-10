@@ -4,6 +4,7 @@ import { RootState } from '../store/store';
 import axios from 'axios';
 import Loading from '../loading/loading';
 import RetrieveError from '../error/retrieveError';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -55,7 +56,7 @@ const AddEditSparesItem = (props: ModalProps) => {
 
     const getHandler = async () => {
         try {
-            const spare = await axios.get(`http://localhost:3001/spares/${props.payload.id}`, {
+            const spare = await axios.get(`${SERVER_URL}/spares/${props.payload.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             const s: Spare = spare.data[0];
@@ -80,7 +81,7 @@ const AddEditSparesItem = (props: ModalProps) => {
         e.preventDefault();
         try {
             const response = await axios.put(
-                'http://localhost:3001/spares/add-edit',
+                `${SERVER_URL}/spares/add-edit`,
                 {
                     partNo,
                     manPartNo,

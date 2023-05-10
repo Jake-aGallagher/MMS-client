@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import GreaterThan from '../../../public/GreaterThan.png';
 import { RootState } from '../../store/store';
 import SortableTable from '../../sortableTable/sortableTable';
+import { SERVER_URL } from '../../routing/addressAPI';
 
 interface LowWarnings {
     id: number;
@@ -53,7 +54,7 @@ const StockWarnings = () => {
 
     const getStockWarnings = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/warnings/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/warnings/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setLow(response.data.warningsArray);

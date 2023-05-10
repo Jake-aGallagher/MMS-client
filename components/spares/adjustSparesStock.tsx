@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -33,7 +34,7 @@ const AdjustSparesStock = (props: ModalProps) => {
         if (newStock >= 0) {
             try {
                 const response = await axios.put(
-                    'http://localhost:3001/spares/adjust-stock',
+                    `${SERVER_URL}/spares/adjust-stock`,
                     {
                         id: props.payload.id,
                         newStock,

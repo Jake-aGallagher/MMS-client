@@ -6,6 +6,7 @@ import Loading from '../../components/loading/loading';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import SortableTable from '../../components/sortableTable/sortableTable';
+import { SERVER_URL } from '../../components/routing/addressAPI';
 
 interface Job {
     id: number;
@@ -57,7 +58,7 @@ const Jobs = () => {
 
     const getHandler = async () => {
         try {
-            const jobsList = await axios.get(`http://localhost:3001/jobs/all-jobs/${currentProperty}`, {
+            const jobsList = await axios.get(`${SERVER_URL}/jobs/all-jobs/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setJobs(jobsList.data);

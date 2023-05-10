@@ -9,6 +9,7 @@ import ModalBase from '../../components/modal/modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faClipboard, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../components/sortableTable/sortableTable';
+import { SERVER_URL } from '../../components/routing/addressAPI';
 
 interface Spare {
     id: number;
@@ -71,7 +72,7 @@ const Spares = () => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/all-spares/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/all-spares/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setSpares(response.data);

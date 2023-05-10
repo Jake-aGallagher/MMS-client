@@ -10,6 +10,7 @@ import RetrieveError from '../../components/error/retrieveError';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { SERVER_URL } from '../../components/routing/addressAPI';
 
 interface Spare {
     id: number;
@@ -53,7 +54,7 @@ const SparesView = () => {
 
     const getPropertyHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/${spareId}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/${spareId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.length === 0) {

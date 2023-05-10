@@ -7,6 +7,7 @@ import Head from 'next/head';
 import NavBar from '../components/navigation/navbar';
 import Login from '../components/login/login';
 import Script from 'next/script';
+import { SERVER_URL } from '../components/routing/addressAPI';
 
 export default function App({ Component, pageProps }: AppProps) {
     const [loggedIn, setLoggedIn] = useState(false);

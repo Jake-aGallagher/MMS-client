@@ -4,6 +4,7 @@ import { RootState } from '../../store/store';
 import GreaterThan from '../../../public/GreaterThan.png';
 import ModalBase from '../../modal/modal';
 import axios from 'axios';
+import { SERVER_URL } from '../../routing/addressAPI';
 
 interface Note {
     id: number;
@@ -32,7 +33,7 @@ const SparesNotes = () => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/spares/notes/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/notes/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setNotes(response.data);

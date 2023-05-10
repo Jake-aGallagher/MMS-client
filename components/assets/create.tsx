@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axios from 'axios';
+import { SERVER_URL } from '../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -17,7 +18,7 @@ const AddAsset = (props: ModalProps) => {
         if (name.length > 0) {
             try {
                 const response = await axios.post(
-                    'http://localhost:3001/asset',
+                    `${SERVER_URL}/asset`,
                     {
                         parentId: props.payload.parentId,
                         propertyId: currentProperty,

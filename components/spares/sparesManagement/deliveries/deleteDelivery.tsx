@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SERVER_URL } from '../../../routing/addressAPI';
 
 interface ModalProps {
     closeModal: () => void;
@@ -9,7 +10,7 @@ const DeleteDelivery = (props: ModalProps) => {
     const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.delete('http://localhost:3001/spares/delivery', {
+            const response = await axios.delete(`${SERVER_URL}/spares/delivery`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
                 data: {
                     id: props.payload.id,

@@ -9,6 +9,7 @@ import ModalBase from '../../components/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCheck, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { SERVER_URL } from '../../components/routing/addressAPI';
 
 interface Job {
     id: number;
@@ -56,7 +57,7 @@ const JobView = () => {
 
     const getJobHandler = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/jobs/${params.asPath.split('/')[2]}`, {
+            const response = await axios.get(`${SERVER_URL}/jobs/${params.asPath.split('/')[2]}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.jobDetails.length === 0) {
