@@ -8,6 +8,9 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { SERVER_URL } from '../../components/routing/addressAPI';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/store/store';
+import SortableTable from '../../components/sortableTable/sortableTable';
 
 interface Spare {
     id: number;
@@ -27,15 +30,39 @@ interface Spare {
     cost: number;
 }
 
+interface RecentJobs {
+    id: number;
+    asset_name: string;
+    type: string;
+    title: string;
+    created: string;
+    completed: boolean;
+}
+
+const jobTableConfig = {
+    headers: [
+        { id: 'id', name: 'Job Number', type: 'link', search: true, order: true },
+        { id: 'asset_name', name: 'Asset', type: 'string', search: true, order: true },
+        { id: 'type', name: 'Type', type: 'string', search: true, order: true },
+        { id: 'title', name: 'Title', type: 'string', search: true, order: true },
+        { id: 'created', name: 'Created', type: 'date', search: true, order: true },
+        { id: 'completed', name: 'Completed', type: 'completed', search: true, order: true },
+    ],
+    searchable: false,
+    linkColPrefix: '/jobs/',
+};
+
 const SparesView = () => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const params = useRouter();
+    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [sparesDetails, setSparesDetails] = useState<Spare[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [modalProps, setModalProps] = useState({ id: 0, name: '' });
+    const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([])
     const spareId = parseInt(params.asPath.split('/')[2]);
 
     useEffect(() => {
@@ -46,18 +73,21 @@ const SparesView = () => {
         setLoading(true);
         setError(false);
         setNoData(false);
-        getPropertyHandler();
+        getSpareItemHandler();
     };
 
-    const getPropertyHandler = async () => {
+    const getSpareItemHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/${spareId}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/${spareId}/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (response.data.length === 0) {
+            if (response.data.spares.length === 0) {
                 setNoData(true);
             } else {
-                setSparesDetails(response.data);
+                setSparesDetails(response.data.spares);
+                if (response.data.recentJobs.length > 0) {
+                    setRecentJobs(response.data.recentJobs)
+                }
             }
             setLoading(false);
         } catch (err) {
@@ -170,7 +200,9 @@ const SparesView = () => {
                 ) : (
                     <>
                         <div className="flex flex-col xl:flex-row">{details}</div>
-                        <div>5 most recent jobs that used one</div>
+                        {recentJobs.length > 0 ? (
+                            <SortableTable config={jobTableConfig} data={recentJobs} />
+                        ) : null}
                     </>
                 )}
             </div>
