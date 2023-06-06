@@ -11,6 +11,7 @@ import { SERVER_URL } from '../../components/routing/addressAPI';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import SortableTable from '../../components/sortableTable/sortableTable';
+import DetailsBox from '../../components/detailsBox/detailsBox';
 
 interface Spare {
     id: number;
@@ -58,11 +59,11 @@ const SparesView = () => {
     const [error, setError] = useState(false);
     const params = useRouter();
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const [sparesDetails, setSparesDetails] = useState<Spare[]>([]);
+    const [sparesDetails, setSparesDetails] = useState<Spare>();
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [modalProps, setModalProps] = useState({ id: 0, name: '' });
-    const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([])
+    const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const spareId = parseInt(params.asPath.split('/')[2]);
 
     useEffect(() => {
@@ -78,15 +79,15 @@ const SparesView = () => {
 
     const getSpareItemHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/${spareId}/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spare/${spareId}/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.spares.length === 0) {
                 setNoData(true);
             } else {
-                setSparesDetails(response.data.spares);
+                setSparesDetails(response.data.spares[0]);
                 if (response.data.recentJobs.length > 0) {
-                    setRecentJobs(response.data.recentJobs)
+                    setRecentJobs(response.data.recentJobs);
                 }
             }
             setLoading(false);
@@ -98,83 +99,44 @@ const SparesView = () => {
 
     const editStock = () => {
         setModalType('addEditSparesItem');
-        setModalProps({ id: spareId, name: sparesDetails[0].name });
+        setModalProps({ id: spareId, name: sparesDetails ? sparesDetails.name : '' });
         setViewModal(true);
     };
 
-    const details = sparesDetails.map((spare) => (
-        <div className="w-full h-full flex flex-row" key={spare.id}>
-            <div className="ml-10 mb-4 w-4/5 max-w-lg">
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Part Number: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.part_no}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Name: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.name}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Manufacturers Part Number: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.man_part_no}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Manufacturers Part Name: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.man_name}</div>
-                </div>
+    const spareConfig = {
+        id: sparesDetails?.id,
+        fields: [
+            { label: 'Part Number', value: sparesDetails?.part_no },
+            { label: 'Name', value: sparesDetails?.name },
+            { label: 'Manufacturers Part Number', value: sparesDetails?.man_part_no },
+            { label: 'Manufacturers Part Name', value: sparesDetails?.man_name },
+            { label: 'Location', value: sparesDetails?.location },
+            { label: 'Quantity Remaining', value: sparesDetails?.quant_remain },
+            { label: 'Supplier', value: sparesDetails?.supplier },
+            { label: 'Reorder Frequency', value: sparesDetails?.reorder_freq },
+            { label: 'Reorder Amount', value: sparesDetails?.reorder_num },
+            { label: 'Avg Usage per Month', value: sparesDetails?.avg_usage },
+            { label: 'Cost per Item', value: sparesDetails?.cost },
+            { label: 'Next Delivery Due', value: 'needs implimenting' },
+            { label: 'Next Delivery Quantity Expected', value: 'needs implimenting' },
+        ],
+    };
 
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Location: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.location}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Quantity Remaining: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.quant_remain}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Supplier: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.supplier}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Reorder Frequency: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.reorder_freq}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Reorder Amount: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.reorder_num}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Avg Usage per Month: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.avg_usage}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Cost per item: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">{spare.cost}</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Next Delivery Due: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">Wednesday</div>
-                </div>
-                <div className="flex flex-row h-6 mb-3">
-                    <div className="w-1/2 pl-1 border-b-2">Next Delivery Quantity Expected: </div>
-                    <div className="w-1/2 border-b-2 flex flex-row justify-center">15</div>
-                </div>
-            </div>
-            <div key={Math.random()} className=" p-6 flex flex-col w-full">
+    const details = (
+        <div className="w-full h-full flex flex-row">
+            <DetailsBox data={spareConfig} />
+            <div className=" p-6 flex flex-col w-full">
                 <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
-                    <p>
-                        <b>Description: </b>
-                    </p>
-                    {spare.description}
+                    <b>Description: </b>
+                    {sparesDetails?.description}
                 </div>
                 <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
-                    <p>
-                        <b>Notes: </b>
-                    </p>
-                    {spare.notes}
+                    <b>Notes: </b>
+                    {sparesDetails?.notes}
                 </div>
             </div>
         </div>
-    ));
+    );
 
     return (
         <>
@@ -200,9 +162,7 @@ const SparesView = () => {
                 ) : (
                     <>
                         <div className="flex flex-col xl:flex-row">{details}</div>
-                        {recentJobs.length > 0 ? (
-                            <SortableTable config={jobTableConfig} data={recentJobs} />
-                        ) : null}
+                        {recentJobs.length > 0 ? <SortableTable config={jobTableConfig} data={recentJobs} /> : null}
                     </>
                 )}
             </div>

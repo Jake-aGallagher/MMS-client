@@ -56,10 +56,10 @@ const AddEditSparesItem = (props: ModalProps) => {
 
     const getHandler = async () => {
         try {
-            const spare = await axios.get(`${SERVER_URL}/spares/${props.payload.id}`, {
+            const spare = await axios.get(`${SERVER_URL}/spare/${props.payload.id}/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            const s: Spare = spare.data[0];
+            const s: Spare = spare.data.spares[0];
             setPartNo(s.part_no);
             setManPartNo(s.man_part_no);
             setName(s.name);

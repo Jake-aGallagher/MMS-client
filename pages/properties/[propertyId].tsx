@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../components/sortableTable/sortableTable';
 import { SERVER_URL } from '../../components/routing/addressAPI';
+import DetailsBox from '../../components/detailsBox/detailsBox';
 
 interface Property {
     id: number;
@@ -43,7 +44,7 @@ const PropertyView = () => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const params = useRouter();
-    const [propertyDetails, setPropertyDetails] = useState<Property[]>([]);
+    const [propertyDetails, setPropertyDetails] = useState<Property>();
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
@@ -64,7 +65,7 @@ const PropertyView = () => {
             if (response.data.length === 0) {
                 setNoData(true);
             } else {
-                setPropertyDetails(response.data);
+                setPropertyDetails(response.data[0]);
             }
             setLoading(false);
         } catch (err) {
@@ -90,38 +91,18 @@ const PropertyView = () => {
         }
     };
 
-    const details = propertyDetails.map((property) => (
-        <div className="ml-10 mb-4 w-4/5 max-w-lg" key={property.id}>
-            <div className="flex flex-row h-6 mb-3">
-                <div className="w-1/2 pl-1 border-b-2">ID Number: </div>
-                <div className="w-1/2 border-b-2 flex flex-row justify-center">{property.id}</div>
-            </div>
-            <div className="flex flex-row h-6 mb-3">
-                <div className="w-1/2 pl-1 border-b-2">Name: </div>
-                <div className="w-1/2 border-b-2 flex flex-row justify-center">{property.name}</div>
-            </div>
-            <div className="flex flex-row h-6 mb-3">
-                <div className="w-1/2 pl-1 border-b-2">Type: </div>
-                <div className="w-1/2 border-b-2 flex flex-row justify-center">{property.type}</div>
-            </div>
-            <div className="flex flex-row h-6 mb-3">
-                <div className="w-1/2 pl-1 border-b-2">Address: </div>
-                <div className="w-1/2 border-b-2 flex flex-row justify-center">{property.address}</div>
-            </div>
-            <div className="flex flex-row h-6 mb-3">
-                <div className="w-1/2 pl-1 border-b-2">City: </div>
-                <div className="w-1/2 border-b-2 flex flex-row justify-center">{property.city}</div>
-            </div>
-            <div className="flex flex-row h-6 mb-3">
-                <div className="w-1/2 pl-1 border-b-2">County: </div>
-                <div className="w-1/2 border-b-2 flex flex-row justify-center">{property.county}</div>
-            </div>
-            <div className="flex flex-row h-6 mb-3">
-                <div className="w-1/2 pl-1 border-b-2">Postcode: </div>
-                <div className="w-1/2 border-b-2 flex flex-row justify-center">{property.postcode}</div>
-            </div>
-        </div>
-    ));
+    const propertyDetailsConfig = {
+        id: propertyDetails?.id,
+        fields: [
+            { label: 'ID Number', value: propertyDetails?.id },
+            { label: 'Name', value: propertyDetails?.name },
+            { label: 'Type', value: propertyDetails?.type },
+            { label: 'Address', value: propertyDetails?.address },
+            { label: 'City', value: propertyDetails?.city },
+            { label: 'County', value: propertyDetails?.county },
+            { label: 'Postcode', value: propertyDetails?.postcode },
+        ],
+    };
 
     return (
         <>
@@ -156,7 +137,7 @@ const PropertyView = () => {
                 ) : (
                     <>
                         <div className="flex flex-col xl:flex-row">
-                            {details}
+                            <DetailsBox data={propertyDetailsConfig} />
                             <div className="ml-10">
                                 <p className="xl:text-center text-left mb-2 font-semibold">Assigned Users</p>
                                 <SortableTable config={userTableConfig} data={assignedUsers} />
