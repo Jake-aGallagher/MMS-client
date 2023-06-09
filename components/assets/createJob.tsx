@@ -21,10 +21,12 @@ interface State {
 }
 
 interface TypeOptions {
+    id: number;
     value: string;
 }
 
 interface UrgencyOptions {
+    id: number;
     value: string;
 }
 
@@ -59,9 +61,9 @@ const CreateJob = (props: ModalProps) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setTypeOptions(response.data.types);
-            setSelectedType(response.data.types[0].value);
+            setSelectedType(response.data.types[0].id);
             setUrgencyOptions(response.data.urgency);
-            setSelectedUrgency(response.data.urgency[0].value);
+            setSelectedUrgency(response.data.urgency[0].id);
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -117,7 +119,7 @@ const CreateJob = (props: ModalProps) => {
                             <label htmlFor="type">Job Type:</label>
                             <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setSelectedType(e.target.value)}>
                                 {typeOptions.map((typeOption) => (
-                                    <option value={typeOption.value} key={typeOption.value}>
+                                    <option value={typeOption.id} key={'typeOption_' + typeOption.id}>
                                         {typeOption.value}
                                     </option>
                                 ))}
@@ -137,7 +139,7 @@ const CreateJob = (props: ModalProps) => {
                             <label htmlFor="type">Urgency:</label>
                             <select id="type" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setSelectedUrgency(e.target.value)}>
                                 {urgencyOptions.map((urgencyOption) => (
-                                    <option value={urgencyOption.value} key={urgencyOption.value}>
+                                    <option value={urgencyOption.id} key={'urgencyOption_' + urgencyOption.value}>
                                         {urgencyOption.value}
                                     </option>
                                 ))}
