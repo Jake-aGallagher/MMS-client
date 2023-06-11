@@ -126,7 +126,7 @@ const CreateJob = (props: ModalProps) => {
                             </select>
 
                             <label htmlFor="title">Title:</label>
-                            <input id="title" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setTitle(e.target.value)} />
+                            <input id="title" type="text" maxLength={255} className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setTitle(e.target.value)} />
 
                             <label htmlFor="description">Job Description:</label>
                             <textarea

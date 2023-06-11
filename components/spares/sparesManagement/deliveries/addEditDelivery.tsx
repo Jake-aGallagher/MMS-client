@@ -193,7 +193,7 @@ const AddEditDelivery = (props: ModalProps) => {
                         </h1>
                         <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                             <label htmlFor="name">Delivery Name:</label>
-                            <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={name} onChange={(e) => setName(e.target.value)} />
+                            <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={name} onChange={(e) => setName(e.target.value)} />
 
                             <label htmlFor="supplier">Supplier:</label>
                             <select
@@ -213,6 +213,7 @@ const AddEditDelivery = (props: ModalProps) => {
                             <input
                                 id="courier"
                                 type="text"
+                                maxLength={45}
                                 className="mb-2 rounded-sm bg-blue-200"
                                 value={courier}
                                 onChange={(e) => setCourier(e.target.value)}

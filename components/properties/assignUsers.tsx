@@ -136,16 +136,3 @@ const AssignUsers = (props: ModalProps) => {
 };
 
 export default AssignUsers;
-
-<div className="h-full w-full rounded-lg relative border-4 border-blue-600">
-    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200 border-b-4 border-blue-600">Title Here</h1>
-    <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-        <label htmlFor="username">Username</label>
-        <input id="username" type="text" className="mb-2 rounded-sm bg-blue-200" />
-
-        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full border-t-4 border-blue-600 bg-blue-200">
-            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent w-32">Cancel</button>
-            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent w-32">Submit</button>
-        </div>
-    </form>
-</div>;

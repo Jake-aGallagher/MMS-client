@@ -95,7 +95,7 @@ const AddEditSparesNote = (props: ModalProps) => {
                         <div className="text-center">This note will be visible to anyone who visits the Spares Management Page</div>
 
                         <label htmlFor="title">Title:</label>
-                        <input id="title" type="text" className="mb-2 rounded-sm bg-blue-200" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <input id="title" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={title} onChange={(e) => setTitle(e.target.value)} />
 
                         <label htmlFor="note">Note:</label>
                         <textarea

@@ -55,13 +55,13 @@ const CreateUser = (props: ModalProps) => {
             <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Create New User</h1>
             <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                 <label htmlFor="username">Username:</label>
-                <input id="username" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setUsername(e.target.value)} />
+                <input id="username" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setUsername(e.target.value)} />
 
                 <label htmlFor="firstname">First Name:</label>
-                <input id="firstname" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setFirst(e.target.value)} />
+                <input id="firstname" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setFirst(e.target.value)} />
 
                 <label htmlFor="lastname">Last Name:</label>
-                <input id="lastname" type="text" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setLast(e.target.value)} />
+                <input id="lastname" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setLast(e.target.value)} />
 
                 <label htmlFor="password">Password:</label>
                 <input id="password" type="password" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setPassword(e.target.value)} />

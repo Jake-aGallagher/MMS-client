@@ -91,10 +91,10 @@ const Login = (props: Props) => {
                 <label htmlFor="usernameLogin" className=" ">
                     Username
                 </label>
-                <input type="text" name="username" id="usernameLogin" onChange={(e) => setUsername(e.target.value)} className="rounded-sm" />
+                <input type="text" name="username" maxLength={45} id="usernameLogin" onChange={(e) => setUsername(e.target.value)} className="rounded-sm" />
 
                 <label htmlFor="passwordLogin">Password</label>
-                <input type="password" name="password" id="passwordLogin" value={password} onChange={(e) => setPassword(e.target.value)} className="rounded-sm" />
+                <input type="password" name="password" maxLength={255} id="passwordLogin" value={password} onChange={(e) => setPassword(e.target.value)} className="rounded-sm" />
 
                 <button
                     type="submit"

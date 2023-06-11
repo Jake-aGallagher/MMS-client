@@ -129,16 +129,16 @@ const AddEditSparesItem = (props: ModalProps) => {
                     </h1>
                     <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                         <label htmlFor="name">Part Number:</label>
-                        <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={partNo} onChange={(e) => setPartNo(e.target.value)} />
+                        <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={partNo} onChange={(e) => setPartNo(e.target.value)} />
 
                         <label htmlFor="name">Manufacturers Part Number:</label>
-                        <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={manPartNo} onChange={(e) => setManPartNo(e.target.value)} />
+                        <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={manPartNo} onChange={(e) => setManPartNo(e.target.value)} />
 
                         <label htmlFor="name">Item Name:</label>
-                        <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={name} onChange={(e) => setName(e.target.value)} />
+                        <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={name} onChange={(e) => setName(e.target.value)} />
 
                         <label htmlFor="name">Manufacturers Item Name:</label>
-                        <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={manName} onChange={(e) => setManName(e.target.value)} />
+                        <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={manName} onChange={(e) => setManName(e.target.value)} />
 
                         <label htmlFor="name">Description:</label>
                         <textarea
@@ -153,7 +153,7 @@ const AddEditSparesItem = (props: ModalProps) => {
                         <textarea id="name" rows={4} className="mb-2 rounded-sm bg-blue-200" value={notes} onChange={(e) => setNotes(e.target.value)} />
 
                         <label htmlFor="name">Location:</label>
-                        <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={location} onChange={(e) => setLocation(e.target.value)} />
+                        <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={location} onChange={(e) => setLocation(e.target.value)} />
 
                         <label htmlFor="name">Quantity in Stock:</label>
                         <input
@@ -166,7 +166,7 @@ const AddEditSparesItem = (props: ModalProps) => {
                         />
 
                         <label htmlFor="name">Supplier:</label>
-                        <input id="name" type="text" className="mb-2 rounded-sm bg-blue-200" value={supplier} onChange={(e) => setSupplier(e.target.value)} />
+                        <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={supplier} onChange={(e) => setSupplier(e.target.value)} />
 
                         <label htmlFor="name">Cost per Item:</label>
                         <input
