@@ -293,7 +293,7 @@ const UpdateJob = (props: ModalProps) => {
                                             type="number"
                                             min="0"
                                             value={loggedTimeNum}
-                                            onChange={(e) => setLoggedTimeNum(parseInt(e.target.value))}
+                                            onChange={(e) => setLoggedTimeNum(e.target.value ? parseInt(e.target.value) : 0)}
                                         />
                                         <button className="text-green-600 text-xl ml-4" onClick={addTimeHandler}>
                                             &#10010;
