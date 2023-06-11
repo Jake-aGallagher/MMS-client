@@ -31,7 +31,7 @@ const NavBar = (props: Props) => {
 
     useEffect(() => {
         retrieveProperty();
-    }, []);
+    }, [currentProperty]);
 
     const retrieveProperty = async () => {
         try {

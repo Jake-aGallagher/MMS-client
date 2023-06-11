@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axios from 'axios';
 import Loading from '../loading/loading';
 import RetrieveError from '../error/retrieveError';
 import { SERVER_URL } from '../routing/addressAPI';
+import { setCurrentProperty } from '../store/propertySlice';
 
 interface ModalProps {
     closeModal: () => void;
@@ -22,6 +23,7 @@ const AddEditProperty = (props: ModalProps) => {
     const [city, setCity] = useState('');
     const [county, setCounty] = useState('');
     const [postcode, setPostcode] = useState('');
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (props.propertyNumber > 0) {
@@ -70,6 +72,11 @@ const AddEditProperty = (props: ModalProps) => {
                 { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
             );
             if (response.data.created) {
+                dispatch(
+                    setCurrentProperty({
+                        currentProperty: response.data.newPropId,
+                    })
+                );
                 props.closeModal();
             } else {
                 {
