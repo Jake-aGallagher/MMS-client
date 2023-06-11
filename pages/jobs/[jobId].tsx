@@ -36,6 +36,13 @@ interface TimeDetails {
     last: string;
 }
 
+interface UsedSpares {
+    id: number;
+    num_used: number;
+    part_no: string;
+    name: string;
+}
+
 const JobView = () => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
@@ -44,6 +51,7 @@ const JobView = () => {
     const authLevel = useSelector((state: RootState) => state.user.value.authority);
     const [jobDetails, setJobDetails] = useState<Job[]>([]);
     const [timeDetails, setTimeDetails] = useState<TimeDetails[]>([]);
+    const [sparesDetails, setSparesDetails] = useState<UsedSpares[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [status, setStatus] = useState('');
@@ -66,6 +74,9 @@ const JobView = () => {
                 setJobDetails(response.data.jobDetails);
                 if (response.data.timeDetails) {
                     setTimeDetails(response.data.timeDetails);
+                }
+                if (response.data.usedSpares) {
+                    setSparesDetails(response.data.usedSpares);
                 }
             }
             setLoading(false);
@@ -169,6 +180,14 @@ const JobView = () => {
                 <b>Total Time Logged (mins): </b>
                 {j.logged_time === null ? 'none' : j.logged_time}
                 {timeDetailsShow}
+            </div>
+            <div>
+                <b>Used Spares: </b>
+                {sparesDetails.map((i) => (
+                    <div className="flex flex-row my-4 ml-4 w-fit px-2" key={'spares_item_' + i.id}>
+                        {i.part_no + ' / ' + i.name + ' / Quantity: ' + i.num_used}
+                    </div>
+                ))}
             </div>
         </div>
     ));
