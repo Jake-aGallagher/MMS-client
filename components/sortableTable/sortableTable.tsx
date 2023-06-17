@@ -16,6 +16,7 @@ import {
 } from './rowTypeFunctions';
 import Loading from '../loading/loading';
 import SearchBar from './searchBar';
+import SelectSearch from './selectSearch';
 
 interface Props {
     config: {
@@ -33,6 +34,9 @@ interface Props {
             quantRemainPonter?: string;
         }[];
         searchable: boolean;
+        selectSearch?: boolean;
+        selectSearchType?: string;
+        selectSearchOptions?: {type: string}[];
         linkColPrefix?: string;
     };
     data: {}[];
@@ -55,8 +59,8 @@ const SortableTable = (props: Props) => {
     const [filteredData, setFilteredData] = useState<{}[]>()
     const [sortedData, setSortedData] = useState<{}[]>();
     const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: 'DSC' });
-    const [searchType, setSearchType] = useState('');
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchType, setSearchType] = useState(props.config.selectSearchType ? props.config.selectSearchType : '');
+    const [searchTerm, setSearchTerm] = useState(props.config.selectSearchOptions ? props.config.selectSearchOptions[0].type : '');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -243,7 +247,9 @@ const SortableTable = (props: Props) => {
             ) : (
                 <>
                     {props.config.searchable && props.config.headers.length > 0 ? (
-                        <SearchBar headers={props.config.headers} searchType={searchType} searchTerm={searchTerm} setSearchType={setSearchType} setSearchTerm={setSearchTerm} />
+                        <SearchBar headers={props.config.headers} searchType={searchType} searchTerm={searchTerm} setSearchType={setSearchType} setSearchTerm={setSearchTerm}/>
+                    ) : props.config.selectSearch && props.config.selectSearchOptions ? (
+                        <SelectSearch searchOptions={props.config.selectSearchOptions} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
                     ) : null}
                     <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
                         <thead>
