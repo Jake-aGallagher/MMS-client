@@ -18,6 +18,7 @@ import AddEditAssetNotes from '../assets/addEditAssetNotes';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery';
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems';
 import DeleteDelivery from '../spares/sparesManagement/deliveries/deleteDelivery';
+import AddEditEnum from '../settings/addEditEnum';
 
 interface ModalProps {
     closeModal: () => void;
@@ -78,7 +79,11 @@ const ModalBase = (props: ModalProps) => {
 
             // Settings
             case 'createUser':
-                return <CreateUser closeModal={props.closeModal} />;
+                return <CreateUser closeModal={props.closeModal}/>;
+            case 'addEditEnum':
+                return <AddEditEnum closeModal={props.closeModal} payload={props.payload}/>
+            case 'deleteEnum':
+                return 
         }
     };
     return (
