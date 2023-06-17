@@ -19,6 +19,7 @@ import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelive
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems';
 import DeleteDelivery from '../spares/sparesManagement/deliveries/deleteDelivery';
 import AddEditEnum from '../settings/addEditEnum';
+import DeleteEnum from '../settings/deleteEnum';
 
 interface ModalProps {
     closeModal: () => void;
@@ -83,7 +84,7 @@ const ModalBase = (props: ModalProps) => {
             case 'addEditEnum':
                 return <AddEditEnum closeModal={props.closeModal} payload={props.payload}/>
             case 'deleteEnum':
-                return 
+                return <DeleteEnum closeModal={props.closeModal} payload={props.payload}/>
         }
     };
     return (
