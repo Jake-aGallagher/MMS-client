@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ModalBase from '../../components/modal/modal';
+import Link from 'next/link';
 
 const Settings = () => {
     const [viewModal, setViewModal] = useState(false);
@@ -11,10 +12,13 @@ const Settings = () => {
             <div>
                 <button
                     onClick={() => [setViewModal(true), setmodalType('createUser')]}
-                    className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 hover:border-transparent"
+                    className="ml-8 hover:text-blue-600 flex flex-row items-center"
                 >
                     Create User
                 </button>
+                <Link href="/settings/enums" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    Manage Enums
+                </Link>
             </div>
         </div>
     );
