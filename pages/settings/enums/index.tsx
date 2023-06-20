@@ -39,7 +39,6 @@ const Enums = () => {
     const [payload, setPayload] = useState<{ id: number; name: string }>({id: 0,name: ''})
     const [enums, setEnums] = useState<Enum[]>([]);
     const [enumTypes, setEnumTypes] = useState<EnumType[]>([]);
-    let test = 1;
 
     const enumsTableConfig = {
         headers: [
@@ -110,8 +109,6 @@ const Enums = () => {
             {viewModal ? <ModalBase modalType={modalType} payload={payload} closeModal={() => [setPayload({id: 0, name: ''}), setViewModal(false), reload()]} /> : null}
             {loading ? (
                 <Loading />
-            ) : test === 0 ? (
-                <div>There is no data</div>
             ) : error ? (
                 <RetrieveError />
             ) : (
