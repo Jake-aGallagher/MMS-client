@@ -49,13 +49,14 @@ const UpdateJob = (props: ModalProps) => {
     const [status, setStatus] = useState('');
     const [description, setDescription] = useState('');
     const [notes, setNotes] = useState('');
-    const [sparesUsed, setSparesUsed] = useState<SparesUsed[]>([])
+    const [sparesUsed, setSparesUsed] = useState<SparesUsed[]>([]);
     const [time, setTime] = useState(0);
     const [completed, setCompleted] = useState(0);
     const [loggedTimeId, setLoggedTimeId] = useState(0);
     const [loggedTimeNum, setLoggedTimeNum] = useState(0);
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
     const [viewModal, setViewModal] = useState(false);
+    const [files, setFiles] = useState<Blob[]>([]);
 
     useEffect(() => {
         setLoading(true);
@@ -82,7 +83,7 @@ const UpdateJob = (props: ModalProps) => {
                 setStatusOptions(response.data.statusOptions);
                 setUsers(response.data.users);
                 if (response.data.usedSpares) {
-                    setSparesUsed(response.data.usedSpares)
+                    setSparesUsed(response.data.usedSpares);
                 }
                 if (response.data.timeDetails) {
                     setLoggedTimeDetails(response.data.timeDetails);
@@ -123,7 +124,15 @@ const UpdateJob = (props: ModalProps) => {
             num_used: number;
         }[]
     ) => {
-        setSparesUsed(spares)
+        setSparesUsed(spares);
+    };
+
+    const addFile = (file: Blob) => {
+        if (files && files.length > 0) {
+            setFiles((prev) => [...prev, file]);
+        } else {
+            setFiles([file]);
+        }
     };
 
     const addTimeHandler = (e: React.MouseEvent<HTMLElement>) => {
@@ -165,9 +174,13 @@ const UpdateJob = (props: ModalProps) => {
     };
 
     const submitFull = async (complete: boolean) => {
-        const response = await axios.put(
-            `${SERVER_URL}/jobs/update`,
-            {
+        const formData = new FormData();
+        if (files.length > 0) {
+            files.forEach((file) => formData.append('files', file));
+        }
+        formData.append(
+            'data',
+            JSON.stringify({
                 id: id,
                 status: status,
                 description: description,
@@ -176,12 +189,12 @@ const UpdateJob = (props: ModalProps) => {
                 logged_time_details: loggedTimeDetails,
                 complete,
                 sparesUsed,
-                propertyId: currentProperty
-            },
-            {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            }
+                propertyId: currentProperty,
+            })
         );
+        const response = await axios.put(`${SERVER_URL}/jobs/update`, formData, {
+            headers: { Authorisation: 'Bearer ' + localStorage.getItem('token'), 'Content-Type': 'multipart/form-data' },
+        });
         if (response.data.created) {
             props.closeModal();
         } else {
@@ -220,7 +233,7 @@ const UpdateJob = (props: ModalProps) => {
                     {viewModal ? (
                         <ModalBase
                             modalType="sparesUsed"
-                            payload={{sparesUsed, type: 'used'}}
+                            payload={{ sparesUsed, type: 'used' }}
                             fullSize={true}
                             passbackDeatails={addSparesHandler}
                             closeModal={() => setViewModal(false)}
@@ -262,6 +275,13 @@ const UpdateJob = (props: ModalProps) => {
                             />
                             {completed !== 1 ? (
                                 <>
+                                    <label htmlFor="fileAttachment">Attach Files</label>
+                                    <input
+                                        type="file"
+                                        name="fileAttachment"
+                                        id="fileAttachment"
+                                        onChange={(e) => (e.target.files ? addFile(e.target.files[0]) : null)}
+                                    />
                                     <button
                                         className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 my-2 border-2 border-blue-600"
                                         onClick={(e) => [e.preventDefault(), setViewModal(true)]}
@@ -270,11 +290,15 @@ const UpdateJob = (props: ModalProps) => {
                                     </button>
                                     <div>
                                         {sparesUsed.map((spare) => (
-                                            <div key={spare.id} className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.num_used < 1 ? 'hidden' : ''}`}>
-                                                <div className='mr-4'>{spare.part_no}</div>
-                                                <div className='mr-4'>{spare.name}</div>
+                                            <div
+                                                key={spare.id}
+                                                className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${
+                                                    spare.num_used < 1 ? 'hidden' : ''
+                                                }`}
+                                            >
+                                                <div className="mr-4">{spare.part_no}</div>
+                                                <div className="mr-4">{spare.name}</div>
                                                 <div>Quantity Used: {spare.num_used}</div>
-                                                
                                             </div>
                                         ))}
                                     </div>
@@ -319,7 +343,8 @@ const UpdateJob = (props: ModalProps) => {
                                         })}
                                     </div>
                                     <div className="text-center mb-2">
-                                        Note: A job must be set to &#39;Attended - Found no Issues&#39; or &#39;Attended - Fixed&#39; in order to complete the job
+                                        Note: A job must be set to &#39;Attended - Found no Issues&#39; or &#39;Attended - Fixed&#39; in order to complete the
+                                        job
                                     </div>
                                 </>
                             ) : null}
