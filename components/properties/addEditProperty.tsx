@@ -17,6 +17,7 @@ interface ModalProps {
 const AddEditProperty = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const alertString = `There has been an issue ${props.propertyNumber > 0 ? 'editing' : 'creating'} this Property, please try again.`;
     const [id, setId] = useState(props.propertyNumber);
     const typeOptions = ['Factory', 'Commercial', 'Power station', 'Misc'];
     const dispatch = useDispatch();
@@ -86,6 +87,7 @@ const AddEditProperty = (props: ModalProps) => {
         }
     };
 
+
     const handleRegistration = async (data: any) => {
         try {
             const response = await axios.put(
@@ -109,18 +111,10 @@ const AddEditProperty = (props: ModalProps) => {
                 );
                 props.closeModal();
             } else {
-                {
-                    props.propertyNumber > 0
-                        ? alert('There has been an issue editing this Property, please try again.')
-                        : alert('There has been an issue creating this Property, please try again.');
-                }
+                alert(alertString);
             }
         } catch (err) {
-            {
-                props.propertyNumber > 0
-                    ? alert('There has been an issue editing this Property, please try again.')
-                    : alert('There has been an issue creating this Property, please try again.');
-            }
+            alert(alertString);
         }
     };
 
@@ -137,9 +131,17 @@ const AddEditProperty = (props: ModalProps) => {
                     </h1>
                     <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                         <label>Property Name</label>
-                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.propertyName && 'border-red-600 border-2'}`} {...register('propertyName', { required: true })} />
+                        <input
+                            type="text"
+                            className={`mb-2 rounded-sm bg-blue-200 ${errors.propertyName && 'border-red-600 border-2'}`}
+                            {...register('propertyName', { required: true })}
+                        />
                         <label>Type</label>
-                        <select id="type" className={`mb-2 rounded-sm bg-blue-200 ${errors.type && 'border-red-600 border-2'}`} {...register('type', { required: true })}>
+                        <select
+                            id="type"
+                            className={`mb-2 rounded-sm bg-blue-200 ${errors.type && 'border-red-600 border-2'}`}
+                            {...register('type', { required: true })}
+                        >
                             {typeOptions.map((typeOption) => (
                                 <option value={typeOption} key={typeOption}>
                                     {typeOption}
@@ -147,13 +149,29 @@ const AddEditProperty = (props: ModalProps) => {
                             ))}
                         </select>
                         <label>Address</label>
-                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.address && 'border-red-600 border-2'}`} {...register('address', { required: true })} />
+                        <input
+                            type="text"
+                            className={`mb-2 rounded-sm bg-blue-200 ${errors.address && 'border-red-600 border-2'}`}
+                            {...register('address', { required: true })}
+                        />
                         <label>City</label>
-                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.city && 'border-red-600 border-2'}`} {...register('city', { required: true })} />
+                        <input
+                            type="text"
+                            className={`mb-2 rounded-sm bg-blue-200 ${errors.city && 'border-red-600 border-2'}`}
+                            {...register('city', { required: true })}
+                        />
                         <label>County</label>
-                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.county && 'border-red-600 border-2'}`} {...register('county', { required: true })} />
+                        <input
+                            type="text"
+                            className={`mb-2 rounded-sm bg-blue-200 ${errors.county && 'border-red-600 border-2'}`}
+                            {...register('county', { required: true })}
+                        />
                         <label>Postcode</label>
-                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.postcode && 'border-red-600 border-2'}`} {...register('postcode', { required: true })} />
+                        <input
+                            type="text"
+                            className={`mb-2 rounded-sm bg-blue-200 ${errors.postcode && 'border-red-600 border-2'}`}
+                            {...register('postcode', { required: true })}
+                        />
                         <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
                             <button
                                 className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
