@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { useState, useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Loading from '../loading/loading';
 import RetrieveError from '../error/retrieveError';
 import { SERVER_URL } from '../routing/addressAPI';
 import { setCurrentProperty } from '../store/propertySlice';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 interface ModalProps {
     closeModal: () => void;
@@ -16,14 +18,37 @@ const AddEditProperty = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [id, setId] = useState(props.propertyNumber);
-    const [name, setName] = useState('');
     const typeOptions = ['Factory', 'Commercial', 'Power station', 'Misc'];
-    const [type, setType] = useState(typeOptions[0]);
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [county, setCounty] = useState('');
-    const [postcode, setPostcode] = useState('');
     const dispatch = useDispatch();
+    const [defaultValues, setDefaultValues] = useState({
+        propertyName: '',
+        type: 'Factory',
+        address: '',
+        city: '',
+        county: '',
+        postcode: '',
+    });
+
+    const formValidation = yup.object().shape({
+        propertyName: yup.string().required().max(45),
+        type: yup.string().required(),
+        address: yup.string().required().max(45),
+        city: yup.string().required().max(45),
+        county: yup.string().required().max(45),
+        postcode: yup.string().required().max(45),
+    });
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(formValidation),
+        defaultValues: useMemo(() => {
+            return defaultValues;
+        }, [defaultValues]),
+    });
 
     useEffect(() => {
         if (props.propertyNumber > 0) {
@@ -35,6 +60,10 @@ const AddEditProperty = (props: ModalProps) => {
         }
     }, []);
 
+    useEffect(() => {
+        reset(defaultValues);
+    }, [defaultValues]);
+
     const getPropertyHandler = async () => {
         try {
             const response = await axios.get(`${SERVER_URL}/properties/${props.propertyNumber}`, {
@@ -42,12 +71,14 @@ const AddEditProperty = (props: ModalProps) => {
             });
             const data = response.data[0];
             setId(parseInt(data.id));
-            setName(data.name);
-            setType(data.type);
-            setAddress(data.address);
-            setCity(data.city);
-            setCounty(data.county);
-            setPostcode(data.postcode);
+            setDefaultValues({
+                propertyName: data.name,
+                type: data.type,
+                address: data.address,
+                city: data.city,
+                county: data.county,
+                postcode: data.postcode,
+            });
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -55,19 +86,18 @@ const AddEditProperty = (props: ModalProps) => {
         }
     };
 
-    const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
+    const handleRegistration = async (data: any) => {
         try {
             const response = await axios.put(
                 `${SERVER_URL}/properties`,
                 {
                     id: id,
-                    name: name,
-                    type: type,
-                    address: address,
-                    city: city,
-                    county: county,
-                    postcode: postcode,
+                    name: data.propertyName,
+                    type: data.type,
+                    address: data.address,
+                    city: data.city,
+                    county: data.county,
+                    postcode: data.postcode,
                 },
                 { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
             );
@@ -105,45 +135,33 @@ const AddEditProperty = (props: ModalProps) => {
                     <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">
                         {props.propertyNumber > 0 ? 'Edit ' + name : 'Add Property'}
                     </h1>
-                    <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        <label htmlFor="name">Property Name:</label>
-                        <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={name} onChange={(e) => setName(e.target.value)} />
-
-                        <label htmlFor="type">Property Type:</label>
-                        <select id="type" className="mb-2 rounded-sm bg-blue-200" value={type} onChange={(e) => setType(e.target.value)} defaultValue={type}>
+                    <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                        <label>Property Name</label>
+                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.propertyName && 'border-red-600 border-2'}`} {...register('propertyName', { required: true })} />
+                        <label>Type</label>
+                        <select id="type" className={`mb-2 rounded-sm bg-blue-200 ${errors.type && 'border-red-600 border-2'}`} {...register('type', { required: true })}>
                             {typeOptions.map((typeOption) => (
                                 <option value={typeOption} key={typeOption}>
                                     {typeOption}
                                 </option>
                             ))}
                         </select>
-
-                        <label htmlFor="address">Address:</label>
-                        <input id="address" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={address} onChange={(e) => setAddress(e.target.value)} />
-
-                        <label htmlFor="city">City: </label>
-                        <input id="city" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={city} onChange={(e) => setCity(e.target.value)} />
-
-                        <label htmlFor="county">County:</label>
-                        <input id="county" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={county} onChange={(e) => setCounty(e.target.value)} />
-
-                        <label htmlFor="postcode">Postcode:</label>
-                        <input
-                            id="postcode"
-                            type="text"
-                            maxLength={45}
-                            className="mb-2 rounded-sm bg-blue-200"
-                            value={postcode}
-                            onChange={(e) => setPostcode(e.target.value)}
-                        />
-
+                        <label>Address</label>
+                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.address && 'border-red-600 border-2'}`} {...register('address', { required: true })} />
+                        <label>City</label>
+                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.city && 'border-red-600 border-2'}`} {...register('city', { required: true })} />
+                        <label>County</label>
+                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.county && 'border-red-600 border-2'}`} {...register('county', { required: true })} />
+                        <label>Postcode</label>
+                        <input type="text" className={`mb-2 rounded-sm bg-blue-200 ${errors.postcode && 'border-red-600 border-2'}`} {...register('postcode', { required: true })} />
                         <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
+                            <button
+                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
+                                onClick={(e) => [e.preventDefault(), props.closeModal()]}
+                            >
                                 Cancel
                             </button>
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={submitHandler}>
-                                Submit
-                            </button>
+                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32">Submit</button>
                         </div>
                     </form>
                 </div>
