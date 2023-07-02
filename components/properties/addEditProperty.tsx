@@ -87,7 +87,6 @@ const AddEditProperty = (props: ModalProps) => {
         }
     };
 
-
     const handleRegistration = async (data: any) => {
         try {
             const response = await axios.put(
@@ -104,11 +103,7 @@ const AddEditProperty = (props: ModalProps) => {
                 { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
             );
             if (response.data.created) {
-                dispatch(
-                    setCurrentProperty({
-                        currentProperty: response.data.newPropId,
-                    })
-                );
+                dispatch(setCurrentProperty({ currentProperty: response.data.newPropId }));
                 props.closeModal();
             } else {
                 alert(alertString);
@@ -127,16 +122,16 @@ const AddEditProperty = (props: ModalProps) => {
             ) : (
                 <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
                     <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">
-                        {props.propertyNumber > 0 ? 'Edit ' + name : 'Add Property'}
+                        {props.propertyNumber > 0 ? 'Edit ' + defaultValues.propertyName : 'Add Property'}
                     </h1>
                     <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        <label>Property Name</label>
+                        <label>Property Name: </label>
                         <input
                             type="text"
                             className={`mb-2 rounded-sm bg-blue-200 ${errors.propertyName && 'border-red-600 border-2'}`}
                             {...register('propertyName', { required: true })}
                         />
-                        <label>Type</label>
+                        <label>Type: </label>
                         <select
                             id="type"
                             className={`mb-2 rounded-sm bg-blue-200 ${errors.type && 'border-red-600 border-2'}`}
@@ -148,25 +143,25 @@ const AddEditProperty = (props: ModalProps) => {
                                 </option>
                             ))}
                         </select>
-                        <label>Address</label>
+                        <label>Address: </label>
                         <input
                             type="text"
                             className={`mb-2 rounded-sm bg-blue-200 ${errors.address && 'border-red-600 border-2'}`}
                             {...register('address', { required: true })}
                         />
-                        <label>City</label>
+                        <label>City: </label>
                         <input
                             type="text"
                             className={`mb-2 rounded-sm bg-blue-200 ${errors.city && 'border-red-600 border-2'}`}
                             {...register('city', { required: true })}
                         />
-                        <label>County</label>
+                        <label>County: </label>
                         <input
                             type="text"
                             className={`mb-2 rounded-sm bg-blue-200 ${errors.county && 'border-red-600 border-2'}`}
                             {...register('county', { required: true })}
                         />
-                        <label>Postcode</label>
+                        <label>Postcode: </label>
                         <input
                             type="text"
                             className={`mb-2 rounded-sm bg-blue-200 ${errors.postcode && 'border-red-600 border-2'}`}
