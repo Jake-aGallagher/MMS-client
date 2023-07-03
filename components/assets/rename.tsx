@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
 import * as yup from 'yup';
