@@ -8,6 +8,9 @@ import { setCurrentProperty } from '../store/propertySlice';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import GeneralFormSubmit from '../forms/generalFormSubmit';
+import GeneralFormInput from '../forms/generalFormInput';
+import FormHeader from '../forms/formHeader';
 
 interface ModalProps {
     closeModal: () => void;
@@ -19,7 +22,12 @@ const AddEditProperty = (props: ModalProps) => {
     const [error, setError] = useState(false);
     const alertString = `There has been an issue ${props.propertyNumber > 0 ? 'editing' : 'creating'} this Property, please try again.`;
     const [id, setId] = useState(props.propertyNumber);
-    const typeOptions = ['Factory', 'Commercial', 'Power station', 'Misc'];
+    const typeOptions = [
+        { id: 'Factory', value: 'Factory' },
+        { id: 'Commercial', value: 'Commercial' },
+        { id: 'Power station', value: 'Power station' },
+        { id: 'Misc', value: 'Misc' },
+    ];
     const dispatch = useDispatch();
     const [defaultValues, setDefaultValues] = useState({
         propertyName: '',
@@ -121,61 +129,15 @@ const AddEditProperty = (props: ModalProps) => {
                 <RetrieveError />
             ) : (
                 <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-                    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">
-                        {props.propertyNumber > 0 ? 'Edit ' + defaultValues.propertyName : 'Add Property'}
-                    </h1>
+                    <FormHeader label={props.propertyNumber > 0 ? 'Edit ' + defaultValues.propertyName : 'Add Property'} />
                     <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        <label>Property Name: </label>
-                        <input
-                            type="text"
-                            className={`mb-2 rounded-sm bg-blue-200 ${errors.propertyName && 'border-red-600 border-2'}`}
-                            {...register('propertyName', { required: true })}
-                        />
-                        <label>Type: </label>
-                        <select
-                            id="type"
-                            className={`mb-2 rounded-sm bg-blue-200 ${errors.type && 'border-red-600 border-2'}`}
-                            {...register('type', { required: true })}
-                        >
-                            {typeOptions.map((typeOption) => (
-                                <option value={typeOption} key={typeOption}>
-                                    {typeOption}
-                                </option>
-                            ))}
-                        </select>
-                        <label>Address: </label>
-                        <input
-                            type="text"
-                            className={`mb-2 rounded-sm bg-blue-200 ${errors.address && 'border-red-600 border-2'}`}
-                            {...register('address', { required: true })}
-                        />
-                        <label>City: </label>
-                        <input
-                            type="text"
-                            className={`mb-2 rounded-sm bg-blue-200 ${errors.city && 'border-red-600 border-2'}`}
-                            {...register('city', { required: true })}
-                        />
-                        <label>County: </label>
-                        <input
-                            type="text"
-                            className={`mb-2 rounded-sm bg-blue-200 ${errors.county && 'border-red-600 border-2'}`}
-                            {...register('county', { required: true })}
-                        />
-                        <label>Postcode: </label>
-                        <input
-                            type="text"
-                            className={`mb-2 rounded-sm bg-blue-200 ${errors.postcode && 'border-red-600 border-2'}`}
-                            {...register('postcode', { required: true })}
-                        />
-                        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                            <button
-                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
-                                onClick={(e) => [e.preventDefault(), props.closeModal()]}
-                            >
-                                Cancel
-                            </button>
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32">Submit</button>
-                        </div>
+                        <GeneralFormInput register={register} label="Property Name" type="text" formName="propertyName" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
+                        <GeneralFormInput register={register} label="Address" type="text" formName="address" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="City" type="text" formName="city" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="County" type="text" formName="county" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Postcode" type="text" formName="postcode" errors={errors} required={true} />
+                        <GeneralFormSubmit closeModal={props.closeModal} />
                     </form>
                 </div>
             )}
