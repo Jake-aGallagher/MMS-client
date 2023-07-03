@@ -6,6 +6,9 @@ import { SERVER_URL } from '../routing/addressAPI';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import GeneralFormSubmit from '../forms/generalFormSubmit';
+import GeneralFormInput from '../forms/generalFormInput';
+import FormHeader from '../forms/formHeader';
 
 interface ModalProps {
     closeModal: () => void;
@@ -16,6 +19,12 @@ const AddEditEnum = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const alertString = `There has been an issue ${props.payload.id > 0 ? 'editing' : 'creating'} this Enum, please try again.`;
+    const responsePeriods = [
+        { id: 'DAY', value: 'DAY' },
+        { id: 'WEEK', value: 'WEEK' },
+        { id: 'MONTH', value: 'MONTH' },
+        { id: 'YEAR', value: 'YEAR' },
+    ];
     const [allTypes, setAllTypes] = useState<{ id: number; type: string }[]>([]);
     const [defaultValues, setDefaultValues] = useState({
         name: '',
@@ -129,66 +138,30 @@ const AddEditEnum = (props: ModalProps) => {
                 <RetrieveError />
             ) : (
                 <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-                    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">
-                        {props.payload.id > 0 ? 'Edit ' + props.payload.name : 'Add Enum'}
-                    </h1>
+                    <FormHeader label={props.payload.id > 0 ? 'Edit ' + props.payload.name : 'Add Enum'} />
                     <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        <label>Name: </label>
-                        <input
-                            type="text"
-                            className={`mb-2 rounded-sm bg-blue-200 ${errors.name && 'border-red-600 border-2'}`}
-                            {...register('name', { required: true })}
-                        />
-                        <label>Type: </label>
-                        <select
-                            id="type"
-                            className={`mb-2 rounded-sm bg-blue-200 ${errors.type && 'border-red-600 border-2'}`}
-                            {...register('type', { required: true })}
-                        >
-                            {allTypes.map((item) => (
-                                <option value={item.id} key={item.id}>
-                                    {item.type}
-                                </option>
-                            ))}
-                        </select>
-                        <label>Order: </label>
-                        <input
-                            type="number"
-                            className={`mb-2 rounded-sm bg-blue-200 ${errors.order && 'border-red-600 border-2'}`}
-                            {...register('order', { required: true })}
-                        />
-
+                        <GeneralFormInput register={register} label="Name" type="text" formName="name" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Order" type="number" formName="order" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Type" type="select" formName="type" errors={errors} required={true} optionNameString="type" selectOptions={allTypes} />
                         {watchType[0] == 1 ? (
                             <>
                                 <label>Response Required Within: </label>
                                 <span className="flex flex-row justify-start">
-                                    <input
-                                        type="number"
-                                        className={`mb-2 rounded-sm bg-blue-200 ${errors.effectOne && 'border-red-600 border-2'}`}
-                                        {...register('effectOne', { required: true })}
+                                    <GeneralFormInput register={register} type="number" formName="effectOne" errors={errors} required={true} />
+                                    <GeneralFormInput
+                                        register={register}
+                                        type="select"
+                                        formName="effectTwo"
+                                        errors={errors}
+                                        required={true}
+                                        optionNameString="value"
+                                        selectOptions={responsePeriods}
+                                        extraClasses="ml-4 px-2"
                                     />
-                                    <select
-                                        className={`mb-2 ml-4 px-2 rounded-sm bg-blue-200 ${errors.effectTwo && 'border-red-600 border-2'}`}
-                                        {...register('effectTwo', { required: true })}
-                                    >
-                                        <option value={'DAY'}>DAY</option>
-                                        <option value={'WEEK'}>WEEK</option>
-                                        <option value={'MONTH'}>MONTH</option>
-                                        <option value={'YEAR'}>YEAR</option>
-                                    </select>
                                 </span>
                             </>
                         ) : null}
-
-                        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                            <button
-                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
-                                onClick={(e) => [e.preventDefault(), props.closeModal()]}
-                            >
-                                Cancel
-                            </button>
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32">Submit</button>
-                        </div>
+                        <GeneralFormSubmit closeModal={props.closeModal} />
                     </form>
                 </div>
             )}
