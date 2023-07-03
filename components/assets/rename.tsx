@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import FormHeader from '../forms/formHeader';
+import GeneralFormSubmit from '../forms/generalFormSubmit';
+import GeneralFormInput from '../forms/generalFormInput';
 
 interface ModalProps {
     closeModal: () => void;
@@ -8,48 +14,50 @@ interface ModalProps {
 }
 
 const RenameAsset = (props: ModalProps) => {
-    const [name, setName] = useState('');
+    const alertString = `There has been an issue renaming this Asset, please try again.`;
+    const defaultValues = { name: props.payload.oldName };
 
-    const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        if (name.length > 0) {
-            try {
-                const response = await axios.put(
-                    `${SERVER_URL}/asset`,
-                    {
-                        id: props.payload.id,
-                        name: name,
-                    },
-                    {
-                        headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-                    }
-                );
-                if (response.data.created) {
-                    props.closeModal();
-                } else {
-                    alert('There has been an issue creating this Property, please try again.');
+    const formValidation = yup.object().shape({
+        name: yup.string().required().max(45),
+    });
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(formValidation),
+        defaultValues: defaultValues,
+    });
+
+    const handleRegistration = async (data: any) => {
+        try {
+            const response = await axios.put(
+                `${SERVER_URL}/asset`,
+                {
+                    id: props.payload.id,
+                    name: data.name,
+                },
+                {
+                    headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
                 }
-            } catch (err) {
-                alert('There has been an issue creating this Property, please try again.');
+            );
+            if (response.data.created) {
+                props.closeModal();
+            } else {
+                alert(alertString);
             }
+        } catch (err) {
+            alert(alertString);
         }
     };
 
     return (
         <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-            <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Rename {props.payload.oldName}</h1>
-            <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                <label htmlFor="name">New Component Name:</label>
-                <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setName(e.target.value)} value={name} />
-
-                <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                    <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
-                        Cancel
-                    </button>
-                    <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={submitHandler}>
-                        Submit
-                    </button>
-                </div>
+            <FormHeader label={'Rename ' + props.payload.oldName} />
+            <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                <GeneralFormInput register={register} label="New Component Name" type="text" formName="name" errors={errors} required={true} />
+                <GeneralFormSubmit closeModal={props.closeModal} />
             </form>
         </div>
     );
