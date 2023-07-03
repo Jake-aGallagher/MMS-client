@@ -13,10 +13,13 @@ interface Props<T extends FieldValues> extends OptionNameString {
     required?: boolean;
     selectOptions?: any[];
     extraClasses?: string;
+    rows?: number;
+    min?: number;
 }
 
 const GeneralFormInput = (props: Props<any>) => {
     const singleTypes = ['text', 'number'];
+    const areaTypes = ['textarea'];
     const selectTypes = ['select'];
 
     return (
@@ -26,6 +29,15 @@ const GeneralFormInput = (props: Props<any>) => {
                 <input
                     id={props.formName}
                     type={props.type}
+                    min={props.min}
+                    className={`mb-2 rounded-sm bg-blue-200 ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red-600 border-2'}`}
+                    {...props.register(props.formName, { required: props.required })}
+                />
+            )}
+            {areaTypes.includes(props.type) && (
+                <textarea
+                    id={props.formName}
+                    rows={props.rows}
                     className={`mb-2 rounded-sm bg-blue-200 ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red-600 border-2'}`}
                     {...props.register(props.formName, { required: props.required })}
                 />

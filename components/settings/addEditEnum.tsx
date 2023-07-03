@@ -141,13 +141,13 @@ const AddEditEnum = (props: ModalProps) => {
                     <FormHeader label={props.payload.id > 0 ? 'Edit ' + props.payload.name : 'Add Enum'} />
                     <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                         <GeneralFormInput register={register} label="Name" type="text" formName="name" errors={errors} required={true} />
-                        <GeneralFormInput register={register} label="Order" type="number" formName="order" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Order" type="number" formName="order" errors={errors} required={true} min={0} />
                         <GeneralFormInput register={register} label="Type" type="select" formName="type" errors={errors} required={true} optionNameString="type" selectOptions={allTypes} />
                         {watchType[0] == 1 ? (
                             <>
                                 <label>Response Required Within: </label>
                                 <span className="flex flex-row justify-start">
-                                    <GeneralFormInput register={register} type="number" formName="effectOne" errors={errors} required={true} />
+                                    <GeneralFormInput register={register} type="number" formName="effectOne" errors={errors} required={true} min={0} />
                                     <GeneralFormInput
                                         register={register}
                                         type="select"
