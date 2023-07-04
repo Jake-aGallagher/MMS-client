@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import axios from 'axios';
@@ -6,6 +6,12 @@ import Loading from '../../../loading/loading';
 import RetrieveError from '../../../error/retrieveError';
 import ModalBase from '../../../modal/modal';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import FormHeader from '../../../forms/formHeader';
+import GeneralFormSubmit from '../../../forms/generalFormSubmit';
+import GeneralFormInput from '../../../forms/generalFormInput';
 
 interface ModalProps {
     closeModal: () => void;
@@ -45,16 +51,40 @@ const AddEditDelivery = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const alertString = `There has been an issue ${props.payload.name.length > 0 ? 'editing' : 'creating'} this Delivery, please try again.`;
     const [suppliersList, setSuppliersList] = useState<Supplier[]>();
     const [id, setId] = useState(0);
-    const [name, setName] = useState('');
-    const [supplier, setSupplier] = useState(0);
-    const [courier, setCourier] = useState('');
-    const [placed, setPlaced] = useState('');
-    const [due, setDue] = useState('');
-    const [arrived, setArrived] = useState(false);
     const [contents, setContents] = useState<Contents[]>([]);
     const [viewModal, setViewModal] = useState(false);
+    const [defaultValues, setDefaultValues] = useState({
+        name: '',
+        supplier: 0,
+        courier: '',
+        placed: '',
+        due: '',
+        arrived: false,
+    });
+
+    const formValidation = yup.object().shape({
+        name: yup.string().required().max(45),
+        supplier: yup.number().required().min(0),
+        courier: yup.string().required().max(45),
+        placed: yup.string().required().max(45),
+        due: yup.string().required().max(45),
+        arrived: yup.boolean().required(),
+    });
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(formValidation),
+        defaultValues: useMemo(() => {
+            return defaultValues;
+        }, [defaultValues]),
+    });
 
     useEffect(() => {
         if (props.payload.id > 0) {
@@ -68,13 +98,17 @@ const AddEditDelivery = (props: ModalProps) => {
         }
     }, []);
 
+    useEffect(() => {
+        reset(defaultValues);
+    }, [defaultValues]);
+
     const getHandlerLimited = async () => {
         try {
             const response = await axios.get(`${SERVER_URL}/spares/suppliers/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setSuppliersList(response.data);
-            setSupplier(response.data[0].id);
+            setDefaultValues({...defaultValues, supplier: response.data[0].id})
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -87,17 +121,18 @@ const AddEditDelivery = (props: ModalProps) => {
             const response = await axios.get(`${SERVER_URL}/spares/deliveries/${currentProperty}/${props.payload.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            const suppliers = response.data.suppliers;
-            setSuppliersList(suppliers);
+            setSuppliersList(response.data.suppliers);
             const delivery = response.data.deliverywithContents[0];
             setId(delivery.id);
-            setName(delivery.name);
-            setSupplier(delivery.supplier);
-            setCourier(delivery.courier);
-            setPlaced(delivery.placed);
-            setDue(delivery.due);
-            setArrived(delivery.arrived);
             formatContents(delivery.contents);
+            setDefaultValues({
+                name: delivery.name,
+                supplier: delivery.supplier,
+                courier: delivery.courier,
+                placed: delivery.placed,
+                due: delivery.due,
+                arrived: false,
+            });
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -128,8 +163,7 @@ const AddEditDelivery = (props: ModalProps) => {
         setContents(spares);
     };
 
-    const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
+    const handleRegistration = async (data: any) => {
         const contentsRemovedNone = contents.filter((item) => item.num_used > 0);
         if (contentsRemovedNone.length > 0) {
             try {
@@ -137,12 +171,12 @@ const AddEditDelivery = (props: ModalProps) => {
                     `${SERVER_URL}/spares/delivery/add-edit`,
                     {
                         id,
-                        name,
-                        supplier,
-                        courier,
-                        placed,
-                        due,
-                        arrived,
+                        name: data.name,
+                        supplier: data.supplier,
+                        courier: data.courier,
+                        placed: data.placed,
+                        due: data.due,
+                        arrived: data.arrived,
                         contents: contentsRemovedNone,
                         propertyId: currentProperty,
                         deliveryId: props.payload.id,
@@ -152,18 +186,10 @@ const AddEditDelivery = (props: ModalProps) => {
                 if (response.data.created) {
                     props.closeModal();
                 } else {
-                    {
-                        props.payload?.name && props.payload?.name.length > 0
-                            ? alert('There has been an issue editing this Delivery, please try again.')
-                            : alert('There has been an issue creating this Delivery, please try again.');
-                    }
+                    alert(alertString);
                 }
             } catch (err) {
-                {
-                    props.payload?.name && props.payload?.name.length > 0
-                        ? alert('There has been an issue editing this Delivery, please try again.')
-                        : alert('There has been an issue creating this Delivery, please try again.');
-                }
+                alert(alertString);
             }
         }
     };
@@ -188,55 +214,29 @@ const AddEditDelivery = (props: ModalProps) => {
                         ''
                     )}
                     <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-                        <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">
-                            {props.payload.name.length > 0 ? props.payload.name : 'Add Delivery'}
-                        </h1>
-                        <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                            <label htmlFor="name">Delivery Name:</label>
-                            <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={name} onChange={(e) => setName(e.target.value)} />
-
-                            <label htmlFor="supplier">Supplier:</label>
-                            <select
-                                id="supplier"
-                                className="mb-2 rounded-sm bg-blue-200"
-                                value={supplier}
-                                onChange={(e) => setSupplier(parseInt(e.target.value))}
-                            >
-                                {suppliersList?.map((i) => (
-                                    <option key={'supplier_' + i.id} value={i.id}>
-                                        {i.name}
-                                    </option>
-                                ))}
-                            </select>
-
-                            <label htmlFor="courier">Courier:</label>
-                            <input
-                                id="courier"
-                                type="text"
-                                maxLength={45}
-                                className="mb-2 rounded-sm bg-blue-200"
-                                value={courier}
-                                onChange={(e) => setCourier(e.target.value)}
+                        <FormHeader label={props.payload.name.length > 0 ? props.payload.name : 'Add Delivery'} />
+                        <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                            <GeneralFormInput register={register} label="Delivery Name" type="text" formName="name" errors={errors} required={true} />
+                            <GeneralFormInput
+                                register={register}
+                                label="Supplier"
+                                type="select"
+                                formName="supplier"
+                                errors={errors}
+                                required={true}
+                                optionNameString="name"
+                                selectOptions={suppliersList}
                             />
+                            <GeneralFormInput register={register} label="Courier" type="text" formName="courier" errors={errors} required={true} />
+                            <GeneralFormInput register={register} label="Placed" type="date" formName="placed" errors={errors} required={true} />
+                            <GeneralFormInput register={register} label="Due" type="date" formName="due" errors={errors} required={true} />
 
-                            <label htmlFor="placed">Placed:</label>
-                            <input id="placed" type="date" className="mb-2 rounded-sm bg-blue-200" value={placed} onChange={(e) => setPlaced(e.target.value)} />
-
-                            <label htmlFor="due">Due:</label>
-                            <input id="due" type="date" className="mb-2 rounded-sm bg-blue-200" value={due} onChange={(e) => setDue(e.target.value)} />
-
-                            <button
-                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 my-2 border-2 border-blue-600"
-                                onClick={(e) => [e.preventDefault(), setViewModal(true)]}
-                            >
+                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 my-2 border-2 border-blue-600" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
                                 Add Spares to Delivery
                             </button>
                             <div>
                                 {contents.map((spare) => (
-                                    <div
-                                        key={spare.id}
-                                        className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.num_used < 1 ? 'hidden' : ''}`}
-                                    >
+                                    <div key={spare.id} className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.num_used < 1 ? 'hidden' : ''}`}>
                                         <div className="mr-4">{spare.part_no}</div>
                                         <div className="mr-4">{spare.name}</div>
                                         <div>Quantity Ordered: {spare.num_used}</div>
@@ -244,21 +244,15 @@ const AddEditDelivery = (props: ModalProps) => {
                                 ))}
                             </div>
 
-                            <div className="rounded-md my-2 p-2 border-2 border-blue-600 w-full flex flex-row">
-                                <label htmlFor="arrived" className="w-full">
-                                    Delivery Arrived, Selecting this Will automatically add the Spares items to stock{' '}
-                                </label>
-                                <input id="arrived" type="checkbox" className="mx-2" onChange={() => setArrived((prev) => !prev)} />
-                            </div>
-
-                            <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
-                                    Cancel
-                                </button>
-                                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={submitHandler}>
-                                    Submit
-                                </button>
-                            </div>
+                            <GeneralFormInput
+                                register={register}
+                                label="Delivery Arrived, Selecting this Will automatically add the Spares items to stock"
+                                type="checkbox"
+                                formName="arrived"
+                                errors={errors}
+                                required={true}
+                            />
+                            <GeneralFormSubmit closeModal={props.closeModal} />
                         </form>
                     </div>
                 </>

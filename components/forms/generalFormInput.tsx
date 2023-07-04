@@ -1,7 +1,7 @@
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
 
 interface OptionNameString {
-    optionNameString?: string
+    optionNameString?: string;
 }
 
 interface Props<T extends FieldValues> extends OptionNameString {
@@ -18,13 +18,14 @@ interface Props<T extends FieldValues> extends OptionNameString {
 }
 
 const GeneralFormInput = (props: Props<any>) => {
-    const singleTypes = ['text', 'number'];
+    const singleTypes = ['text', 'number', 'date'];
     const areaTypes = ['textarea'];
     const selectTypes = ['select'];
+    const checkboxTypes = ['checkbox'];
 
     return (
         <>
-            {props.label ? (<label htmlFor={props.formName}>{props.label}: </label>) : null}
+            {props.label && props.type != 'checkbox' ? <label htmlFor={props.formName}>{props.label}: </label> : null}
             {singleTypes.includes(props.type) && (
                 <input
                     id={props.formName}
@@ -55,9 +56,15 @@ const GeneralFormInput = (props: Props<any>) => {
                     ))}
                 </select>
             )}
-            
+            {checkboxTypes.includes(props.type) && (
+                <div className={`rounded-md my-2 p-2 border-2 border-blue-600 w-full flex flex-row ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red-600 border-2'}`}>
+                    <label htmlFor={props.formName} className="w-full">
+                        {props.label}
+                    </label>
+                    <input id={props.formName} type="checkbox" className="mx-2" {...props.register(props.formName, { required: props.required })} />
+                </div>
+            )}
         </>
-
     );
 };
 
