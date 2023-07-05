@@ -3,6 +3,10 @@ import axios from 'axios';
 import Loading from '../loading/loading';
 import RetrieveError from '../error/retrieveError';
 import { SERVER_URL } from '../routing/addressAPI';
+import { useForm } from 'react-hook-form';
+import FormHeader from '../forms/formHeader';
+import GeneralFormSubmit from '../forms/generalFormSubmit';
+import GeneralFormInput from '../forms/generalFormInput';
 
 interface ModalProps {
     closeModal: () => void;
@@ -22,8 +26,14 @@ const AssignUsers = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
+    const alertString = `There has been an issue Assigning Users to this Property, please try again.`
     const [users, setUsers] = useState<UsersList[]>([]);
-    const [assignedUsers, setAssignedUsers] = useState<number[]>([]);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
     useEffect(() => {
         setLoading(true);
@@ -41,13 +51,6 @@ const AssignUsers = (props: ModalProps) => {
                 setNoData(true);
             } else {
                 setUsers(response.data);
-                let alreadyAssigned = [...assignedUsers];
-                response.data.map((user: UsersList) => {
-                    if (user.assigned == true) {
-                        alreadyAssigned.push(user.id);
-                    }
-                });
-                setAssignedUsers(alreadyAssigned);
             }
             setLoading(false);
         } catch (err) {
@@ -56,23 +59,18 @@ const AssignUsers = (props: ModalProps) => {
         }
     };
 
-    const inputChangeHandler = (id: number) => {
-        if (assignedUsers.includes(id)) {
-            const newArr = assignedUsers.filter((user) => user != id);
-            setAssignedUsers(newArr);
-        } else {
-            setAssignedUsers([...assignedUsers, id]);
+    const handleRegistration = async (data: any) => {
+        let assignedUsers: string[] = [];
+        const dataKeys = Object.keys(data);
+        if (dataKeys.length > 0) {
+            assignedUsers = dataKeys.filter(k => data[k])
         }
-    };
-
-    const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
         try {
             const response = await axios.put(
                 `${SERVER_URL}/properties/assign-users`,
                 {
                     propertyNo: props.propertyNumber,
-                    assignedUsers,
+                    assignedUsers: assignedUsers,
                 },
                 {
                     headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
@@ -81,27 +79,12 @@ const AssignUsers = (props: ModalProps) => {
             if (response.data.created) {
                 props.closeModal();
             } else {
-                alert('There has been an issue Assigning Users to this Property, please try again.');
+                alert(alertString);
             }
         } catch (err) {
-            alert('There has been an issue Assigning Users to this Property, please try again.');
+            alert(alertString);
         }
     };
-
-    const inputs = users.map((user) => {
-        return (
-            <label key={user.username} className="grid overflow-hidden grid-cols-10 grid-rows-1 border-b-2 mb-2">
-                <div className="box col-start-1 col-end-9">{user.first_name + ' ' + user.last_name}</div>
-                <input
-                    type="checkbox"
-                    defaultChecked={assignedUsers.includes(user.id)}
-                    value={user.id}
-                    className="box col-start-9 col-end-10"
-                    onChange={() => inputChangeHandler(user.id)}
-                />
-            </label>
-        );
-    });
 
     return (
         <>
@@ -113,21 +96,20 @@ const AssignUsers = (props: ModalProps) => {
                 <RetrieveError />
             ) : (
                 <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-                    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Assign Users</h1>
-                    <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        {noData ? <div>There are no users</div> : <div className="w-full flex flex-col justify-start pt-2 ">{inputs}</div>}
-                        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
-                                Cancel
-                            </button>
-                            {noData ? (
-                                ''
-                            ) : (
-                                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={submitHandler}>
-                                    Submit
-                                </button>
-                            )}
-                        </div>
+                    <FormHeader label={'Assign Users'} />
+                    <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                        {users.map((user) => (
+                            <GeneralFormInput
+                                key={user.id}
+                                register={register}
+                                label={user.first_name + ' ' + user.last_name}
+                                type="checkbox"
+                                formName={user.id.toString()}
+                                errors={errors}
+                                checked={user.assigned}
+                            />
+                        ))}
+                        <GeneralFormSubmit closeModal={props.closeModal} />
                     </form>
                 </div>
             )}

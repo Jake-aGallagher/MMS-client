@@ -15,6 +15,7 @@ interface Props<T extends FieldValues> extends OptionNameString {
     extraClasses?: string;
     rows?: number;
     min?: number;
+    checked?: boolean;
 }
 
 const GeneralFormInput = (props: Props<any>) => {
@@ -61,7 +62,7 @@ const GeneralFormInput = (props: Props<any>) => {
                     <label htmlFor={props.formName} className="w-full">
                         {props.label}
                     </label>
-                    <input id={props.formName} type="checkbox" className="mx-2" {...props.register(props.formName, { required: props.required })} />
+                    <input id={props.formName} type="checkbox" className="mx-2" {...props.register(props.formName, { required: props.required, value: props.checked})} />
                 </div>
             )}
         </>
