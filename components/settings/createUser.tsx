@@ -1,8 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import FormHeader from '../forms/formHeader';
+import GeneralFormSubmit from '../forms/generalFormSubmit';
+import GeneralFormInput from '../forms/generalFormInput';
 
 interface ModalProps {
     closeModal: () => void;
@@ -10,33 +16,68 @@ interface ModalProps {
 
 const CreateUser = (props: ModalProps) => {
     const authLevel = useSelector((state: RootState) => state.user.value.authority);
-    const [authOptions, setAuthOptions] = useState(['']);
-    const [auth, setAuth] = useState(authLevel == 4 ? 'Admin' : 'Engineer');
-    const [username, setUsername] = useState('');
-    const [first, setFirst] = useState('');
-    const [last, setLast] = useState('');
-    const [password, setPassword] = useState('');
-    const [retyped, setRetyped] = useState('');
+    const [authOptions, setAuthOptions] = useState([
+        { id: 'Engineer', name: 'Engineer' },
+        { id: 'Staff', name: 'Staff' },
+    ]);
+    const [defaultValues, setDefaultValues] = useState({
+        auth: authLevel == 4 ? 'Admin' : 'Engineer',
+        username: '',
+        first: '',
+        last: '',
+        password: '',
+        retyped: '',
+    });
+
+    const formValidation = yup.object().shape({
+        auth: yup.string().required(),
+        username: yup.string().required().max(45),
+        first: yup.string().required().max(45),
+        last: yup.string().required().max(45),
+        password: yup.string().required().min(8).max(45),
+        retyped: yup
+            .string()
+            .required()
+            .oneOf([yup.ref('password')]),
+    });
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(formValidation),
+        defaultValues: useMemo(() => {
+            return defaultValues;
+        }, [defaultValues]),
+    });
 
     useEffect(() => {
         if (authLevel == 4) {
-            setAuthOptions(['Admin', 'Manager', 'Engineer', 'Staff']);
-        } else {
-            setAuthOptions(['Engineer', 'Staff']);
+            setAuthOptions([
+                { id: 'Admin', name: 'Admin' },
+                { id: 'Manager', name: 'Manager' },
+                { id: 'Engineer', name: 'Engineer' },
+                { id: 'Staff', name: 'Staff' },
+            ]);
         }
     }, []);
 
-    const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
+    useEffect(() => {
+        reset(defaultValues);
+    }, [defaultValues]);
+
+    const handleRegistration = async (data: any) => {
         try {
             const response = await axios.post(
                 `${SERVER_URL}/users`,
                 {
-                    username: username,
-                    first: first,
-                    last: last,
-                    password: password,
-                    auth: auth,
+                    username: data.username,
+                    first: data.first,
+                    last: data.last,
+                    password: data.password,
+                    auth: data.auth,
                 },
                 { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } }
             );
@@ -52,46 +93,15 @@ const CreateUser = (props: ModalProps) => {
 
     return (
         <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-            <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Create New User</h1>
-            <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                <label htmlFor="username">Username:</label>
-                <input id="username" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setUsername(e.target.value)} />
-
-                <label htmlFor="firstname">First Name:</label>
-                <input id="firstname" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setFirst(e.target.value)} />
-
-                <label htmlFor="lastname">Last Name:</label>
-                <input id="lastname" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setLast(e.target.value)} />
-
-                <label htmlFor="password">Password:</label>
-                <input id="password" type="password" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setPassword(e.target.value)} />
-
-                <label htmlFor="retypepassword">Re-Enter Password:</label>
-                <input id="retypepassword" type="password" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setRetyped(e.target.value)} />
-
-                <label htmlFor="auth">User Authority Level:</label>
-                <select id="auth" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setAuth(e.target.value)} defaultValue={auth}>
-                    {authOptions.map((authOption) => (
-                        <option value={authOption} key={authOption}>
-                            {authOption}
-                        </option>
-                    ))}
-                </select>
-
-                <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                    <button
-                        className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
-                        onClick={props.closeModal}
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
-                        onClick={submitHandler}
-                    >
-                        Submit
-                    </button>
-                </div>
+            <FormHeader label={`Create New User`} />
+            <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                <GeneralFormInput register={register} label="Username" type="text" formName="username" errors={errors} required={true} />
+                <GeneralFormInput register={register} label="First Name" type="text" formName="first" errors={errors} required={true} />
+                <GeneralFormInput register={register} label="Last Name" type="text" formName="last" errors={errors} required={true} />
+                <GeneralFormInput register={register} label="Password" type="password" formName="password" errors={errors} required={true} />
+                <GeneralFormInput register={register} label="Re-Enter Password" type="password" formName="retyped" errors={errors} required={true} />
+                <GeneralFormInput register={register} label="User Authority Level" type="select" formName="auth" errors={errors} required={true} optionNameString="name" selectOptions={authOptions} />
+                <GeneralFormSubmit closeModal={props.closeModal} />
             </form>
         </div>
     );
