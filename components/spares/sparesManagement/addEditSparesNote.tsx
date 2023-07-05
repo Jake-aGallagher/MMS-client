@@ -46,7 +46,7 @@ const AddEditSparesNote = (props: ModalProps) => {
         }, [defaultValues]),
     });
 
-    const watchType = watch(['note']);
+    const watchNote = watch(['note']);
 
     useEffect(() => {
         if (props.payload.id > 0) {
@@ -113,7 +113,7 @@ const AddEditSparesNote = (props: ModalProps) => {
                         <div className="text-center">This note will be visible to anyone who visits the Spares Management Page</div>
                         <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
                         <GeneralFormInput register={register} label="Note" type="textarea" formName="note" errors={errors} rows={10} />
-                        <div className="text-center">{watchType[0].length} / 1000 Charachters</div>
+                        <div className="text-center">{watchNote[0].length} / 1000 Charachters</div>
                         <GeneralFormSubmit closeModal={props.closeModal} />
                     </form>
                 </div>

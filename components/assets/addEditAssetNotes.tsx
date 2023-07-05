@@ -23,11 +23,15 @@ const AddEditAssetNotes = (props: ModalProps) => {
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(formValidation),
         defaultValues: defaultValues,
     });
+
+    const watchNote = watch(['note']);
+
 
     const handleRegistration = async (data: any) => {
         try {
@@ -54,6 +58,7 @@ const AddEditAssetNotes = (props: ModalProps) => {
             <FormHeader label={props.payload.id > 0 ? 'Edit Notes' : 'Add Note'} />
             <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                 <GeneralFormInput register={register} label="Notes" type="textarea" formName="note" errors={errors} rows={10} />
+                <div className="text-center">{watchNote[0]?.length} / 1000 Charachters</div>
                 <GeneralFormSubmit closeModal={props.closeModal} />
             </form>
         </div>
