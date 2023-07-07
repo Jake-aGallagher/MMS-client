@@ -11,6 +11,8 @@ import { useForm } from 'react-hook-form';
 import FormHeader from '../forms/formHeader';
 import GeneralFormSubmit from '../forms/generalFormSubmit';
 import GeneralFormInput from '../forms/generalFormInput';
+import FormContainer from '../forms/formContainer';
+import GeneralForm from '../forms/generalForm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -150,9 +152,9 @@ const AddEditSparesItem = (props: ModalProps) => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+                <FormContainer>
                     <FormHeader label={props.payload.name.length > 0 ? props.payload.name : 'Add Spares Item'} />
-                    <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                         <GeneralFormInput register={register} label="Part Number" type="text" formName="partNo" errors={errors} required={true} />
                         <GeneralFormInput register={register} label="Manufacturers Part Number" type="text" formName="manPartNo" errors={errors} />
                         <GeneralFormInput register={register} label="Item Name" type="text" formName="name" errors={errors} required={true} />
@@ -164,8 +166,8 @@ const AddEditSparesItem = (props: ModalProps) => {
                         <GeneralFormInput register={register} label="Supplier" type="text" formName="supplier" errors={errors} />
                         <GeneralFormInput register={register} label="Cost per Item" type="number" formName="cost" errors={errors} min={0} />
                         <GeneralFormSubmit closeModal={props.closeModal} />
-                    </form>
-                </div>
+                    </GeneralForm>
+                </FormContainer>
             )}
         </>
     );

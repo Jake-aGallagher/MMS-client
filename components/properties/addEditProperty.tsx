@@ -11,6 +11,8 @@ import * as yup from 'yup';
 import GeneralFormSubmit from '../forms/generalFormSubmit';
 import GeneralFormInput from '../forms/generalFormInput';
 import FormHeader from '../forms/formHeader';
+import FormContainer from '../forms/formContainer';
+import GeneralForm from '../forms/generalForm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -128,9 +130,9 @@ const AddEditProperty = (props: ModalProps) => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+                <FormContainer>
                     <FormHeader label={props.propertyNumber > 0 ? 'Edit ' + defaultValues.propertyName : 'Add Property'} />
-                    <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                         <GeneralFormInput register={register} label="Property Name" type="text" formName="propertyName" errors={errors} required={true} />
                         <GeneralFormInput register={register} label="Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
                         <GeneralFormInput register={register} label="Address" type="text" formName="address" errors={errors} required={true} />
@@ -138,8 +140,8 @@ const AddEditProperty = (props: ModalProps) => {
                         <GeneralFormInput register={register} label="County" type="text" formName="county" errors={errors} required={true} />
                         <GeneralFormInput register={register} label="Postcode" type="text" formName="postcode" errors={errors} required={true} />
                         <GeneralFormSubmit closeModal={props.closeModal} />
-                    </form>
-                </div>
+                    </GeneralForm>
+                </FormContainer>
             )}
         </>
     );

@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form';
 import FormHeader from '../forms/formHeader';
 import GeneralFormSubmit from '../forms/generalFormSubmit';
 import GeneralFormInput from '../forms/generalFormInput';
+import FormContainer from '../forms/formContainer';
+import GeneralForm from '../forms/generalForm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -26,7 +28,7 @@ const AssignUsers = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
-    const alertString = `There has been an issue Assigning Users to this Property, please try again.`
+    const alertString = `There has been an issue Assigning Users to this Property, please try again.`;
     const [users, setUsers] = useState<UsersList[]>([]);
 
     const {
@@ -63,7 +65,7 @@ const AssignUsers = (props: ModalProps) => {
         let assignedUsers: string[] = [];
         const dataKeys = Object.keys(data);
         if (dataKeys.length > 0) {
-            assignedUsers = dataKeys.filter(k => data[k])
+            assignedUsers = dataKeys.filter((k) => data[k]);
         }
         try {
             const response = await axios.put(
@@ -95,9 +97,9 @@ const AssignUsers = (props: ModalProps) => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+                <FormContainer>
                     <FormHeader label={'Assign Users'} />
-                    <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                         {users.map((user) => (
                             <GeneralFormInput
                                 key={user.id}
@@ -110,8 +112,8 @@ const AssignUsers = (props: ModalProps) => {
                             />
                         ))}
                         <GeneralFormSubmit closeModal={props.closeModal} />
-                    </form>
-                </div>
+                    </GeneralForm>
+                </FormContainer>
             )}
         </>
     );

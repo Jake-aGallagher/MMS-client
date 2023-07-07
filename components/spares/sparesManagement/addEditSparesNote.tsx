@@ -11,6 +11,8 @@ import { useForm } from 'react-hook-form';
 import FormHeader from '../../forms/formHeader';
 import GeneralFormSubmit from '../../forms/generalFormSubmit';
 import GeneralFormInput from '../../forms/generalFormInput';
+import FormContainer from '../../forms/formContainer';
+import GeneralForm from '../../forms/generalForm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -26,7 +28,7 @@ const AddEditSparesNote = (props: ModalProps) => {
     const [note, setNote] = useState('');
     const [count, setcount] = useState(0);
     const noteId = props.payload.id;
-    const [defaultValues, setDefaultValues] = useState({title: '', note: ''})
+    const [defaultValues, setDefaultValues] = useState({ title: '', note: '' });
 
     const formValidation = yup.object().shape({
         title: yup.string().required().max(45),
@@ -67,7 +69,7 @@ const AddEditSparesNote = (props: ModalProps) => {
             const response = await axios.get(`${SERVER_URL}/spares/note/${props.payload?.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            setDefaultValues({title: response.data[0].title, note: response.data[0].content});
+            setDefaultValues({ title: response.data[0].title, note: response.data[0].content });
             setcount(response.data[0].content.length);
             setLoading(false);
         } catch (err) {
@@ -107,16 +109,16 @@ const AddEditSparesNote = (props: ModalProps) => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+                <FormContainer>
                     <FormHeader label={props.payload.title.length > 0 ? props.payload.title : 'Add Note'} />
-                    <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                         <div className="text-center">This note will be visible to anyone who visits the Spares Management Page</div>
                         <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
                         <GeneralFormInput register={register} label="Note" type="textarea" formName="note" errors={errors} rows={10} />
                         <div className="text-center">{watchNote[0].length} / 1000 Charachters</div>
                         <GeneralFormSubmit closeModal={props.closeModal} />
-                    </form>
-                </div>
+                    </GeneralForm>
+                </FormContainer>
             )}
         </>
     );

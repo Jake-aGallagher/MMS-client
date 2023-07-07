@@ -9,6 +9,8 @@ import * as yup from 'yup';
 import GeneralFormSubmit from '../forms/generalFormSubmit';
 import GeneralFormInput from '../forms/generalFormInput';
 import FormHeader from '../forms/formHeader';
+import GeneralForm from '../forms/generalForm';
+import FormContainer from '../forms/formContainer';
 
 interface ModalProps {
     closeModal: () => void;
@@ -137,9 +139,9 @@ const AddEditEnum = (props: ModalProps) => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+                <FormContainer>
                     <FormHeader label={props.payload.id > 0 ? 'Edit ' + props.payload.name : 'Add Enum'} />
-                    <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                         <GeneralFormInput register={register} label="Name" type="text" formName="name" errors={errors} required={true} />
                         <GeneralFormInput register={register} label="Order" type="number" formName="order" errors={errors} required={true} min={0} />
                         <GeneralFormInput register={register} label="Type" type="select" formName="type" errors={errors} required={true} optionNameString="type" selectOptions={allTypes} />
@@ -162,8 +164,8 @@ const AddEditEnum = (props: ModalProps) => {
                             </>
                         ) : null}
                         <GeneralFormSubmit closeModal={props.closeModal} />
-                    </form>
-                </div>
+                    </GeneralForm>
+                </FormContainer>
             )}
         </>
     );

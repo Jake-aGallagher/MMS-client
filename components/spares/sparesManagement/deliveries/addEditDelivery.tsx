@@ -12,6 +12,8 @@ import { useForm } from 'react-hook-form';
 import FormHeader from '../../../forms/formHeader';
 import GeneralFormSubmit from '../../../forms/generalFormSubmit';
 import GeneralFormInput from '../../../forms/generalFormInput';
+import FormContainer from '../../../forms/formContainer';
+import GeneralForm from '../../../forms/generalForm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -108,7 +110,7 @@ const AddEditDelivery = (props: ModalProps) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setSuppliersList(response.data);
-            setDefaultValues({...defaultValues, supplier: response.data[0].id})
+            setDefaultValues({ ...defaultValues, supplier: response.data[0].id });
             setLoading(false);
         } catch (err) {
             setError(true);
@@ -213,9 +215,9 @@ const AddEditDelivery = (props: ModalProps) => {
                     ) : (
                         ''
                     )}
-                    <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+                    <FormContainer>
                         <FormHeader label={props.payload.name.length > 0 ? props.payload.name : 'Add Delivery'} />
-                        <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                        <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                             <GeneralFormInput register={register} label="Delivery Name" type="text" formName="name" errors={errors} required={true} />
                             <GeneralFormInput
                                 register={register}
@@ -253,8 +255,8 @@ const AddEditDelivery = (props: ModalProps) => {
                                 required={true}
                             />
                             <GeneralFormSubmit closeModal={props.closeModal} />
-                        </form>
-                    </div>
+                        </GeneralForm>
+                    </FormContainer>
                 </>
             )}
         </>

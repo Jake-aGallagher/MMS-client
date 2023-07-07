@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 import FormHeader from '../forms/formHeader';
 import GeneralFormSubmit from '../forms/generalFormSubmit';
 import GeneralFormInput from '../forms/generalFormInput';
+import FormContainer from '../forms/formContainer';
+import GeneralForm from '../forms/generalForm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -92,9 +94,9 @@ const CreateUser = (props: ModalProps) => {
     };
 
     return (
-        <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+        <FormContainer>
             <FormHeader label={`Create New User`} />
-            <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+            <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                 <GeneralFormInput register={register} label="Username" type="text" formName="username" errors={errors} required={true} />
                 <GeneralFormInput register={register} label="First Name" type="text" formName="first" errors={errors} required={true} />
                 <GeneralFormInput register={register} label="Last Name" type="text" formName="last" errors={errors} required={true} />
@@ -102,8 +104,8 @@ const CreateUser = (props: ModalProps) => {
                 <GeneralFormInput register={register} label="Re-Enter Password" type="password" formName="retyped" errors={errors} required={true} />
                 <GeneralFormInput register={register} label="User Authority Level" type="select" formName="auth" errors={errors} required={true} optionNameString="name" selectOptions={authOptions} />
                 <GeneralFormSubmit closeModal={props.closeModal} />
-            </form>
-        </div>
+            </GeneralForm>
+        </FormContainer>
     );
 };
 

@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import FormHeader from '../forms/formHeader';
 import GeneralFormSubmit from '../forms/generalFormSubmit';
 import GeneralFormInput from '../forms/generalFormInput';
+import FormContainer from '../forms/formContainer';
+import GeneralForm from '../forms/generalForm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -52,13 +54,13 @@ const RenameAsset = (props: ModalProps) => {
     };
 
     return (
-        <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+        <FormContainer>
             <FormHeader label={'Rename ' + props.payload.oldName} />
-            <form onSubmit={handleSubmit(handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+            <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                 <GeneralFormInput register={register} label="New Component Name" type="text" formName="name" errors={errors} required={true} />
                 <GeneralFormSubmit closeModal={props.closeModal} />
-            </form>
-        </div>
+            </GeneralForm>
+        </FormContainer>
     );
 };
 
