@@ -8,18 +8,14 @@ import CreateJob from '../assets/createJob';
 import UpdateJob from '../jobs/update';
 import SparesUsed from '../jobs/sparesUsed';
 import AddEditSparesNote from '../spares/sparesManagement/addEditSparesNote';
-import DeleteSparesNote from '../spares/sparesManagement/deleteSparesNote';
 import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier';
-import DeleteSupplier from '../spares/sparesManagement/suppliers/deleteSupplier';
 import AddSparesItem from '../spares/addEditSparesItem';
-import DeleteSparesItem from '../spares/deleteSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock';
 import AddEditAssetNotes from '../assets/addEditAssetNotes';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery';
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems';
-import DeleteDelivery from '../spares/sparesManagement/deliveries/deleteDelivery';
 import AddEditEnum from '../settings/addEditEnum';
-import DeleteEnum from '../settings/deleteEnum';
+import DeleteForm from '../forms/DeleteForm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -34,7 +30,7 @@ const ModalBase = (props: ModalProps) => {
         switch (modalType) {
             // Property
             case 'addEditProperty':
-                return <AddEditProperty closeModal={props.closeModal} propertyNumber={props.payload}/>;
+                return <AddEditProperty closeModal={props.closeModal} propertyNumber={props.payload} />;
             case 'assignUsers':
                 return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
 
@@ -44,7 +40,7 @@ const ModalBase = (props: ModalProps) => {
             case 'renameAsset':
                 return <RenameAsset closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditAssetNotes':
-                return <AddEditAssetNotes closeModal={props.closeModal} payload={props.payload} />
+                return <AddEditAssetNotes closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteAsset':
                 return <DeleteAsset closeModal={props.closeModal} payload={props.payload} />;
 
@@ -53,76 +49,50 @@ const ModalBase = (props: ModalProps) => {
                 return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId} />;
             case 'updateJob':
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
-            
+
             //Spare
             case 'sparesUsed':
                 return <SparesUsed closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
             case 'addEditDelivery':
-                return <AddEditDelivery  closeModal={props.closeModal} payload={props.payload}/>
+                return <AddEditDelivery closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteDelivery':
-                return <DeleteDelivery closeModal={props.closeModal} payload={props.payload} />
+                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'viewExtraSpares':
-                return <ViewExtraItems closeModal={props.closeModal} payload={props.payload}/>
+                return <ViewExtraItems closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditSupplier':
-                return <AddEditSupplier closeModal={props.closeModal} payload={props.payload}/>
+                return <AddEditSupplier closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteSupplier':
-                return <DeleteSupplier closeModal={props.closeModal} payload={props.payload}/>
+                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditSparesItem':
-                return <AddSparesItem closeModal={props.closeModal} payload={props.payload}/>
+                return <AddSparesItem closeModal={props.closeModal} payload={props.payload} />;
             case 'adjustSparesStock':
-                return <AdjustSparesStock closeModal={props.closeModal} payload={props.payload}/>
+                return <AdjustSparesStock closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteSparesItem':
-                return <DeleteSparesItem closeModal={props.closeModal} payload={props.payload}/>
+                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditSparesNote':
-                return <AddEditSparesNote closeModal={props.closeModal} payload={props.payload}/>
+                return <AddEditSparesNote closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteSparesNote':
-                return <DeleteSparesNote closeModal={props.closeModal} payload={props.payload} />;
+                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
 
             // Settings
             case 'createUser':
-                return <CreateUser closeModal={props.closeModal}/>;
+                return <CreateUser closeModal={props.closeModal} />;
             case 'addEditEnum':
-                return <AddEditEnum closeModal={props.closeModal} payload={props.payload}/>
+                return <AddEditEnum closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteEnum':
-                return <DeleteEnum closeModal={props.closeModal} payload={props.payload}/>
+                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
         }
     };
     return (
         <>
+            <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
             {props.fullSize ? (
-                <>
-                    <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
-                    <div className="absolute top-0 mx-auto rounded-lg left-0 right-0 h-full w-full bg-blue-50 z-50 ">
-                        {modalToDisplay(props.modalType)}
-                    </div>
-                </>
+                <div className="absolute top-0 mx-auto rounded-lg left-0 right-0 h-full w-full bg-blue-50 z-50 ">{modalToDisplay(props.modalType)}</div>
             ) : (
-                <>
-                    <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
-                    <div className="fixed top-0 mx-auto mt-10 rounded-lg left-0 right-0 h-5/6 w-4/5 lg:w-3/5 bg-blue-50 z-50 ">
-                        {modalToDisplay(props.modalType)}
-                    </div>
-                </>
+                <div className="fixed top-0 mx-auto mt-10 rounded-lg left-0 right-0 h-5/6 w-4/5 lg:w-3/5 bg-blue-50 z-50 ">{modalToDisplay(props.modalType)}</div>
             )}
         </>
     );
 };
 
 export default ModalBase;
-
-// Modal layout
-/* 
-<div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Title Here</h1>
-    <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-
-        <label htmlFor="username">Username</label>
-        <input id="username" type="text" className="mb-2 rounded-sm bg-blue-200" />
-
-        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32">Cancel</button>
-            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32">Submit</button>
-        </div>
-    </form>
-</div>
- */

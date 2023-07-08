@@ -33,6 +33,7 @@ interface PropsForModal {
     id: number;
     name: string;
     quantityRemaining?: number;
+    url?: string;
 }
 
 const sparesTableConfig = {
@@ -48,7 +49,7 @@ const sparesTableConfig = {
         { id: 'delete', name: 'Delete', type: 'delete', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name' },
     ],
     searchable: true,
-    linkColPrefix: '/spares/'
+    linkColPrefix: '/spares/',
 };
 
 const Spares = () => {
@@ -91,7 +92,7 @@ const Spares = () => {
 
     const deleteItem = (id: number, name: string) => {
         setmodalType('deleteSparesItem');
-        setModalProps({ id, name, quantityRemaining: 0 });
+        setModalProps({ id, name, quantityRemaining: 0, url: 'spares/spares-item' });
         setViewModal(true);
     };
 
@@ -103,10 +104,7 @@ const Spares = () => {
                         <FontAwesomeIcon icon={faClipboard} className="mr-1 w-3" />
                         Spares Management
                     </Link>
-                    <button
-                        onClick={() => [setViewModal(true), setmodalType('addEditSparesItem'), setModalProps({ id: 0, name: '' })]}
-                        className="ml-8 hover:text-blue-600 flex flex-row items-center"
-                    >
+                    <button onClick={() => [setViewModal(true), setmodalType('addEditSparesItem'), setModalProps({ id: 0, name: '' })]} className="ml-8 hover:text-blue-600 flex flex-row items-center">
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Spares Item
                     </button>
@@ -128,15 +126,21 @@ const Spares = () => {
                     <>
                         <div className="flex flex-row justify-end ml-8 my-4 items-center">
                             <div className="flex flex-row items-center border-2 border-gray-500 p-1 mr-4">
-                                <div><FontAwesomeIcon icon={faCheck} className="mr-1 w-5 text-green-500" /></div>
+                                <div>
+                                    <FontAwesomeIcon icon={faCheck} className="mr-1 w-5 text-green-500" />
+                                </div>
                                 <div className="mr-5 ml-1 text-sm">Greater than 1 Months supply</div>
-                                <div><FontAwesomeIcon icon={faTriangleExclamation} className="mr-1 w-5 text-yellow-500" /></div>
+                                <div>
+                                    <FontAwesomeIcon icon={faTriangleExclamation} className="mr-1 w-5 text-yellow-500" />
+                                </div>
                                 <div className="mr-5 ml-1 text-sm">Less than 1 Months supply</div>
-                                <div><FontAwesomeIcon icon={faXmark} className="mr-1 w-5 text-red-600" /></div>
+                                <div>
+                                    <FontAwesomeIcon icon={faXmark} className="mr-1 w-5 text-red-600" />
+                                </div>
                                 <div className="mr-5 ml-1 text-sm">Nil stock remaining</div>
                             </div>
                         </div>
-                        <SortableTable config={sparesTableConfig} data={spares} adjustStockFunction={editStock} deleteFunction={deleteItem}/>
+                        <SortableTable config={sparesTableConfig} data={spares} adjustStockFunction={editStock} deleteFunction={deleteItem} />
                     </>
                 )}
             </div>

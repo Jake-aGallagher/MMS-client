@@ -36,7 +36,7 @@ const Enums = () => {
     const [error, setError] = useState(false);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [payload, setPayload] = useState<{ id: number; name: string }>({id: 0,name: ''})
+    const [payload, setPayload] = useState<{ id: number; name: string }>({ id: 0, name: '' });
     const [enums, setEnums] = useState<Enum[]>([]);
     const [enumTypes, setEnumTypes] = useState<EnumType[]>([]);
 
@@ -56,7 +56,6 @@ const Enums = () => {
         selectSearchType: 'typeString',
         selectSearchOptions: enumTypes,
     };
-
 
     useEffect(() => {
         reload();
@@ -106,14 +105,8 @@ const Enums = () => {
                     Add Enum Value
                 </button>
             </div>
-            {viewModal ? <ModalBase modalType={modalType} payload={payload} closeModal={() => [setPayload({id: 0, name: ''}), setViewModal(false), reload()]} /> : null}
-            {loading ? (
-                <Loading />
-            ) : error ? (
-                <RetrieveError />
-            ) : (
-                <SortableTable config={enumsTableConfig} data={enums} editFunction={addEditEnum} deleteFunction={deleteEnum}/>
-            )}
+            {viewModal ? <ModalBase modalType={modalType} payload={{ ...payload, url: 'enum' }} closeModal={() => [setPayload({ id: 0, name: '' }), setViewModal(false), reload()]} /> : null}
+            {loading ? <Loading /> : error ? <RetrieveError /> : <SortableTable config={enumsTableConfig} data={enums} editFunction={addEditEnum} deleteFunction={deleteEnum} />}
         </div>
     );
 };

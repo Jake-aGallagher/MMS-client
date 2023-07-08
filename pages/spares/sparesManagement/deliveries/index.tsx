@@ -53,7 +53,7 @@ const Deliveries = () => {
     const [deliveriesList, setDeliveriesList] = useState<Delivery[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [payload, setPayload] = useState<{ contents: Contents[]; name: string } | { id: number; name: string }>();
+    const [payload, setPayload] = useState<{ contents: Contents[]; name: string } | { id: number; name: string; url?: string }>();
 
     useEffect(() => {
         reload();
@@ -85,7 +85,7 @@ const Deliveries = () => {
     };
 
     const deleteDelvery = (id: number, name: string) => {
-        setPayload({ id, name });
+        setPayload({ id, name, url: 'spares/delivery' });
         setModalType('deleteDelivery');
         setViewModal(true);
     };
@@ -119,7 +119,7 @@ const Deliveries = () => {
                 ) : (
                     <>
                         <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
-                            <SortableTable config={deliveriesTableConfig} data={deliveriesList} editFunction={addEditDelivery} deleteFunction={deleteDelvery} viewTooManyItems={viewTooManyItems}/>
+                            <SortableTable config={deliveriesTableConfig} data={deliveriesList} editFunction={addEditDelivery} deleteFunction={deleteDelvery} viewTooManyItems={viewTooManyItems} />
                         </div>
                     </>
                 )}

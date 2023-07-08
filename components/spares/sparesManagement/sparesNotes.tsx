@@ -48,10 +48,7 @@ const SparesNotes = () => {
             <div className="mr-5">{note.title}</div>
             <div className="flex flex-row justify-end ml-auto">
                 <div>{note.created_date}</div>
-                <button
-                    onClick={() => setViewNote(note.id)}
-                    className="rounded-xl ml-5 text-sm font-normal bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
-                >
+                <button onClick={() => setViewNote(note.id)} className="rounded-xl ml-5 text-sm font-normal bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent">
                     View
                 </button>
                 <button
@@ -96,7 +93,7 @@ const SparesNotes = () => {
             {viewModal ? (
                 <ModalBase
                     modalType={modalType}
-                    payload={editNoteData}
+                    payload={modalType == 'addEditSparesNote' ? editNoteData : { id: editNoteData.id, name: editNoteData.title, url: 'spares/note' }}
                     closeModal={() => [setViewModal(false), setModalType(''), setEditNoteData({ id: 0, title: '' }), reload()]}
                 />
             ) : null}

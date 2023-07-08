@@ -50,17 +50,17 @@ const Suppliers = () => {
     const [suppliersList, setSuppliersList] = useState<Suppliers[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [supplierId, setSupplierId] = useState({ id: 0, name: '' });
+    const [supplierId, setSupplierId] = useState<{ id: number; name: string; url?: string }>({ id: 0, name: '' });
 
     useEffect(() => {
-        reload()
+        reload();
     }, [currentProperty]);
 
     const reload = () => {
         setLoading(true);
         setError(false);
         getHandler();
-    }
+    };
 
     const getHandler = async () => {
         try {
@@ -82,7 +82,7 @@ const Suppliers = () => {
     };
 
     const deleteSupplier = (id: number, name: string) => {
-        setSupplierId({ id, name });
+        setSupplierId({ id, name, url: 'spares/supplier' });
         setModalType('deleteSupplier');
         setViewModal(true);
     };
