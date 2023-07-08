@@ -1,10 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import RetrieveError from '../../../error/retrieveError';
 import Loading from '../../../loading/loading';
 import axios from 'axios';
 import { RootState } from '../../../store/store';
 import { useSelector } from 'react-redux';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import FormHeader from '../../../forms/formHeader';
+import GeneralFormSubmit from '../../../forms/generalFormSubmit';
+import GeneralFormInput from '../../../forms/generalFormInput';
+import FormContainer from '../../../forms/formContainer';
+import GeneralForm from '../../../forms/generalForm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -14,17 +22,46 @@ interface ModalProps {
 const AddEditSupplier = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const alertString = `There has been an issue ${props.payload.id > 0 ? 'editing' : 'creating'} this Note, please try again.`;
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [name, setName] = useState('');
-    const [website, setWebsite] = useState('');
-    const [phone, setPhone] = useState('');
-    const [primContact, setPrimContact] = useState('');
-    const [primContactPhone, setPrimContactPhone] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [county, setCounty] = useState('');
-    const [postcode, setPostcode] = useState('');
-    const [supplies, setSupplies] = useState('');
+    const [defaultValues, setDefaultValues] = useState({
+        name: '',
+        website: '',
+        phone: '',
+        primContact: '',
+        primContactPhone: '',
+        address: '',
+        city: '',
+        county: '',
+        postcode: '',
+        supplies: '',
+    });
+
+    const formValidation = yup.object().shape({
+        name: yup.string().required().max(255),
+        website: yup.string().url(),
+        phone: yup.string().max(25),
+        primContact: yup.string().max(255),
+        primContactPhone: yup.string().max(25),
+        address: yup.string().max(255),
+        city: yup.string().max(255),
+        county: yup.string().max(255),
+        postcode: yup.string().max(255),
+        supplies: yup.string().max(255),
+    });
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(formValidation),
+        defaultValues: useMemo(() => {
+            return defaultValues;
+        }, [defaultValues]),
+    });
 
     useEffect(() => {
         if (props.payload && props.payload.id > 0) {
@@ -36,6 +73,10 @@ const AddEditSupplier = (props: ModalProps) => {
         }
     }, []);
 
+    useEffect(() => {
+        reset(defaultValues);
+    }, [defaultValues]);
+
     const getHandler = async () => {
         try {
             const response = await axios.get(`${SERVER_URL}/spares/supplier/${props.payload?.id}`, {
@@ -45,16 +86,18 @@ const AddEditSupplier = (props: ModalProps) => {
             if (supply.length === 0) {
                 setError(true);
             } else {
-                setName(supply.name);
-                setWebsite(supply.website);
-                setPhone(supply.phone);
-                setPrimContact(supply.prim_contact);
-                setPrimContactPhone(supply.prim_contact_phone);
-                setAddress(supply.address);
-                setCity(supply.city);
-                setCounty(supply.county);
-                setPostcode(supply.postcode);
-                setSupplies(supply.supplies);
+                setDefaultValues({
+                    name: supply.name,
+                    website: supply.website,
+                    phone: supply.phone,
+                    primContact: supply.prim_contact,
+                    primContactPhone: supply.prim_contact_phone,
+                    address: supply.address,
+                    city: supply.city,
+                    county: supply.county,
+                    postcode: supply.postcode,
+                    supplies: supply.supplies,
+                });
             }
             setLoading(false);
         } catch (err) {
@@ -63,46 +106,35 @@ const AddEditSupplier = (props: ModalProps) => {
         }
     };
 
-    const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        if (name.length > 0) {
-            try {
-                const response = await axios.put(
-                    `${SERVER_URL}/spares/supplier`,
-                    {
-                        propertyId: currentProperty,
-                        id: props.payload.id,
-                        name,
-                        website,
-                        phone,
-                        primContact,
-                        primContactPhone,
-                        address,
-                        city,
-                        county,
-                        postcode,
-                        supplies,
-                    },
-                    {
-                        headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-                    }
-                );
-                if (response.data.created) {
-                    props.closeModal();
-                } else {
-                    {
-                        props.payload.id > 0
-                            ? alert('There has been an issue editing this Note, please try again.')
-                            : alert('There has been an issue creating this Note, please try again.');
-                    }
-                }
-            } catch (err) {
+    const handleRegistration = async (data: any) => {
+        try {
+            const response = await axios.put(
+                `${SERVER_URL}/spares/supplier`,
                 {
-                    props.payload.id > 0
-                        ? alert('There has been an issue editing this Note, please try again.')
-                        : alert('There has been an issue creating this Note, please try again.');
+                    propertyId: currentProperty,
+                    id: props.payload.id,
+                    name: data.name,
+                    website: data.website,
+                    phone: data.phone,
+                    primContact: data.primContact,
+                    primContactPhone: data.primContactPhone,
+                    address: data.address,
+                    city: data.city,
+                    county: data.county,
+                    postcode: data.postcode,
+                    supplies: data.supplies,
+                },
+                {
+                    headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
                 }
+            );
+            if (response.data.created) {
+                props.closeModal();
+            } else {
+                alert(alertString);
             }
+        } catch (err) {
+            alert(alertString);
         }
     };
 
@@ -113,89 +145,22 @@ const AddEditSupplier = (props: ModalProps) => {
             ) : error ? (
                 <RetrieveError />
             ) : (
-                <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-                    <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">
-                        {props.payload.name.length > 0 ? 'Edit ' + props.payload.name : 'Add Supplier'}
-                    </h1>
-                    <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                        <label htmlFor="name">Name:</label>
-                        <input id="name" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={name} onChange={(e) => setName(e.target.value)} />
-
-                        <label htmlFor="website">Website:</label>
-                        <input
-                            id="website"
-                            type="text"
-                            className="mb-2 rounded-sm bg-blue-200"
-                            maxLength={100}
-                            value={website}
-                            onChange={(e) => setWebsite(e.target.value)}
-                        />
-
-                        <label htmlFor="phone">Phone:</label>
-                        <input id="phone" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={phone} onChange={(e) => setPhone(e.target.value)} />
-
-                        <label htmlFor="primContact">Primary Contact:</label>
-                        <input
-                            id="primContact"
-                            type="text"
-                            maxLength={45}
-                            className="mb-2 rounded-sm bg-blue-200"
-                            value={primContact}
-                            onChange={(e) => setPrimContact(e.target.value)}
-                        />
-
-                        <label htmlFor="primContactPhone">Primary Contact Phone:</label>
-                        <input
-                            id="primContactPhone"
-                            type="text"
-                            maxLength={45}
-                            className="mb-2 rounded-sm bg-blue-200"
-                            value={primContactPhone}
-                            onChange={(e) => setPrimContactPhone(e.target.value)}
-                        />
-
-                        <label htmlFor="address">Address:</label>
-                        <input id="address" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={address} onChange={(e) => setAddress(e.target.value)} />
-
-                        <label htmlFor="city">City:</label>
-                        <input id="city" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={city} onChange={(e) => setCity(e.target.value)} />
-
-                        <label htmlFor="county">County:</label>
-                        <input id="county" type="text" maxLength={45} className="mb-2 rounded-sm bg-blue-200" value={county} onChange={(e) => setCounty(e.target.value)} />
-
-                        <label htmlFor="postcode">Postcode:</label>
-                        <input
-                            id="postcode"
-                            type="text"
-                            maxLength={45}
-                            className="mb-2 rounded-sm bg-blue-200"
-                            value={postcode}
-                            onChange={(e) => setPostcode(e.target.value)}
-                        />
-
-                        <label htmlFor="supplies">Supplies:</label>
-                        <input
-                            id="supplies"
-                            type="text"
-                            className="mb-2 rounded-sm bg-blue-200"
-                            maxLength={100}
-                            value={supplies}
-                            onChange={(e) => setSupplies(e.target.value)}
-                        />
-
-                        <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
-                                Cancel
-                            </button>
-                            <button
-                                className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32"
-                                onClick={(e) => submitHandler(e)}
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                <FormContainer>
+                    <FormHeader label={props.payload.name.length > 0 ? 'Edit ' + props.payload.name : 'Add Supplier'} />
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                        <GeneralFormInput register={register} label="Name" type="text" formName="name" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Website" type="text" formName="website" errors={errors} />
+                        <GeneralFormInput register={register} label="Phone" type="text" formName="phone" errors={errors} />
+                        <GeneralFormInput register={register} label="Primary Contact" type="text" formName="primContact" errors={errors} />
+                        <GeneralFormInput register={register} label="Primary Contact Phone" type="text" formName="primContactPhone" errors={errors} />
+                        <GeneralFormInput register={register} label="Address" type="text" formName="address" errors={errors} />
+                        <GeneralFormInput register={register} label="City" type="text" formName="city" errors={errors} />
+                        <GeneralFormInput register={register} label="County" type="text" formName="county" errors={errors} />
+                        <GeneralFormInput register={register} label="Postcode" type="text" formName="postcode" errors={errors} />
+                        <GeneralFormInput register={register} label="Supplies" type="text" formName="supplies" errors={errors} />
+                        <GeneralFormSubmit closeModal={props.closeModal} />
+                    </GeneralForm>
+                </FormContainer>
             )}
         </>
     );
