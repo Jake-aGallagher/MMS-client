@@ -1,5 +1,6 @@
 interface Props {
     closeModal: () => void;
+    submitLabel?: string
 }
 
 const GeneralFormSubmit = (props: Props) => {
@@ -11,7 +12,7 @@ const GeneralFormSubmit = (props: Props) => {
             >
                 Cancel
             </button>
-            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32">Submit</button>
+            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32">{props.submitLabel ? props.submitLabel : 'Submit'}</button>
         </div>
     );
 };

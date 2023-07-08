@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import Loading from '../loading/loading';
 import { useRouter } from 'next/router';
@@ -7,6 +7,15 @@ import { RootState } from '../store/store';
 import { useSelector } from 'react-redux';
 import ModalBase from '../modal/modal';
 import { SERVER_URL } from '../routing/addressAPI';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import FormHeader from '../forms/formHeader';
+import GeneralFormSubmit from '../forms/generalFormSubmit';
+import GeneralFormInput from '../forms/generalFormInput';
+import FormContainer from '../forms/formContainer';
+import GeneralForm from '../forms/generalForm';
+import FormTextCenter from '../forms/formTextCenter';
 
 interface ModalProps {
     closeModal: () => void;
@@ -14,6 +23,7 @@ interface ModalProps {
 }
 
 interface StatusOptions {
+    id: string;
     value: string;
 }
 
@@ -46,9 +56,6 @@ const UpdateJob = (props: ModalProps) => {
     const [statusOptions, setStatusOptions] = useState<StatusOptions[]>([]);
     const [users, setUsers] = useState<User[]>([]);
     const [id, setId] = useState(0);
-    const [status, setStatus] = useState('');
-    const [description, setDescription] = useState('');
-    const [notes, setNotes] = useState('');
     const [sparesUsed, setSparesUsed] = useState<SparesUsed[]>([]);
     const [time, setTime] = useState(0);
     const [completed, setCompleted] = useState(0);
@@ -57,6 +64,34 @@ const UpdateJob = (props: ModalProps) => {
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [files, setFiles] = useState<Blob[]>([]);
+    const [defaultValues, setDefaultValues] = useState({
+        status: 0,
+        description: '',
+        notes: '',
+        completed: 0,
+    });
+
+    const formValidation = yup.object().shape({
+        status: yup.number().required(),
+        description: yup.string().max(1000),
+        notes: yup.string().max(1000),
+        completed: yup.number().required(),
+    });
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        watch,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(formValidation),
+        defaultValues: useMemo(() => {
+            return defaultValues;
+        }, [defaultValues]),
+    });
+
+    const statusWatch = watch(['status']);
 
     useEffect(() => {
         setLoading(true);
@@ -64,6 +99,10 @@ const UpdateJob = (props: ModalProps) => {
         setNoData(false);
         getJobUpdate();
     }, []);
+
+    useEffect(() => {
+        reset(defaultValues);
+    }, [defaultValues]);
 
     let idToSearch = 0;
     if (params.asPath.split('/')[2] === undefined) {
@@ -95,18 +134,13 @@ const UpdateJob = (props: ModalProps) => {
                 }
                 const data = response.data.jobDetails[0];
                 setId(data.id);
-                setStatus(data.status);
-                if (data.description === null) {
-                    setDescription('');
-                } else {
-                    setDescription(data.description);
-                }
-                if (data.notes === null) {
-                    setNotes('');
-                } else {
-                    setNotes(data.notes);
-                }
                 setCompleted(data.completed);
+                setDefaultValues({
+                    status: data.status,
+                    description: data.description ? data.description : '',
+                    notes: data.notes ? data.notes : '',
+                    completed: 0,
+                });
                 setNoData(false);
             }
             setLoading(false);
@@ -157,23 +191,19 @@ const UpdateJob = (props: ModalProps) => {
         }
     };
 
-    const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        if ((status === 'Attended - Fixed' || status === 'Attended - Found no Issues') && completed !== 1) {
-            if (
-                confirm('You are about to Complete this Job, once completed the only editable section will be the Notes, are you sure you want to continue') ===
-                true
-            ) {
-                submitFull(true);
+    const handleRegistration = async (data: any) => {
+        if ((statusWatch[0] == 19 || statusWatch[0] == 20) && completed !== 1) {
+            if (confirm('You are about to Complete this Job, once completed the only editable section will be the Notes, are you sure you want to continue') === true) {
+                submitFull(true, data);
             }
         } else if (completed !== 1) {
-            submitFull(false);
+            submitFull(false, data);
         } else {
-            submitNotes();
+            submitNotes(data);
         }
     };
 
-    const submitFull = async (complete: boolean) => {
+    const submitFull = async (complete: boolean, data: any) => {
         const formData = new FormData();
         if (files.length > 0) {
             files.forEach((file) => formData.append('files', file));
@@ -182,9 +212,9 @@ const UpdateJob = (props: ModalProps) => {
             'data',
             JSON.stringify({
                 id: id,
-                status: status,
-                description: description,
-                notes: notes,
+                status: data.status,
+                description: data.description,
+                notes: data.notes,
                 logged_time: time,
                 logged_time_details: loggedTimeDetails,
                 complete,
@@ -202,12 +232,12 @@ const UpdateJob = (props: ModalProps) => {
         }
     };
 
-    const submitNotes = async () => {
+    const submitNotes = async (data: any) => {
         const response = await axios.put(
             `${SERVER_URL}/jobs/notes`,
             {
                 id: id,
-                notes: notes,
+                notes: data.notes,
             },
             {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
@@ -231,71 +261,38 @@ const UpdateJob = (props: ModalProps) => {
             ) : (
                 <>
                     {viewModal ? (
-                        <ModalBase
-                            modalType="sparesUsed"
-                            payload={{ sparesUsed, type: 'used' }}
-                            fullSize={true}
-                            passbackDeatails={addSparesHandler}
-                            closeModal={() => setViewModal(false)}
-                        />
-                    ) : (
-                        ''
-                    )}
-                    <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-                        <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">Update Job</h1>
-                        <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+                        <ModalBase modalType="sparesUsed" payload={{ sparesUsed, type: 'used' }} fullSize={true} passbackDeatails={addSparesHandler} closeModal={() => setViewModal(false)} />
+                    ) : null}
+                    <FormContainer>
+                        <FormHeader label={'Update Job'} />
+                        <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                             {completed !== 1 ? (
                                 <>
-                                    <label htmlFor="status">Current Status:</label>
-                                    <select id="status" className="mb-2 rounded-sm bg-blue-200" onChange={(e) => setStatus(e.target.value)} value={status}>
-                                        {statusOptions.map((statusOption) => (
-                                            <option value={statusOption.value} key={statusOption.value}>
-                                                {statusOption.value}
-                                            </option>
-                                        ))}
-                                    </select>
-
-                                    <label htmlFor="description">Description:</label>
-                                    <textarea
-                                        id="description"
-                                        rows={5}
-                                        className="mb-2 rounded-sm bg-blue-200 resize-none"
-                                        onChange={(e) => setDescription(e.target.value)}
-                                        value={description}
+                                    <GeneralFormInput
+                                        register={register}
+                                        label="Current Status"
+                                        type="select"
+                                        formName="status"
+                                        errors={errors}
+                                        required={true}
+                                        optionNameString="value"
+                                        selectOptions={statusOptions}
                                     />
+                                    <GeneralFormInput register={register} label="Description" type="textarea" formName="description" errors={errors} rows={5} />
                                 </>
                             ) : null}
-                            <label htmlFor="notes">Notes:</label>
-                            <textarea
-                                id="notes"
-                                rows={5}
-                                className="mb-2 rounded-sm bg-blue-200 resize-none"
-                                onChange={(e) => setNotes(e.target.value)}
-                                value={notes}
-                            />
+                            <GeneralFormInput register={register} label="Notes" type="textarea" formName="notes" errors={errors} rows={5} />
+
                             {completed !== 1 ? (
                                 <>
                                     <label htmlFor="fileAttachment">Attach Files</label>
-                                    <input
-                                        type="file"
-                                        name="fileAttachment"
-                                        id="fileAttachment"
-                                        onChange={(e) => (e.target.files ? addFile(e.target.files[0]) : null)}
-                                    />
-                                    <button
-                                        className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 my-2 border-2 border-blue-600"
-                                        onClick={(e) => [e.preventDefault(), setViewModal(true)]}
-                                    >
+                                    <input type="file" name="fileAttachment" id="fileAttachment" onChange={(e) => (e.target.files ? addFile(e.target.files[0]) : null)} />
+                                    <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 my-2 border-2 border-blue-600" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
                                         Log Spares Used
                                     </button>
                                     <div>
                                         {sparesUsed.map((spare) => (
-                                            <div
-                                                key={spare.id}
-                                                className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${
-                                                    spare.num_used < 1 ? 'hidden' : ''
-                                                }`}
-                                            >
+                                            <div key={spare.id} className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.num_used < 1 ? 'hidden' : ''}`}>
                                                 <div className="mr-4">{spare.part_no}</div>
                                                 <div className="mr-4">{spare.name}</div>
                                                 <div>Quantity Used: {spare.num_used}</div>
@@ -342,22 +339,12 @@ const UpdateJob = (props: ModalProps) => {
                                             );
                                         })}
                                     </div>
-                                    <div className="text-center mb-2">
-                                        Note: A job must be set to &#39;Attended - Found no Issues&#39; or &#39;Attended - Fixed&#39; in order to complete the
-                                        job
-                                    </div>
+                                    <FormTextCenter label={"Note: A job must be set to 'Attended - Found no Issues' or 'Attended - Fixed' in order to complete the job"} />
                                 </>
                             ) : null}
-                            <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
-                                    Cancel
-                                </button>
-                                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={submitHandler}>
-                                    {(status === 'Attended - Fixed' || status === 'Attended - Found no Issues') && completed !== 1 ? 'Complete' : 'Update'}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                            <GeneralFormSubmit closeModal={props.closeModal} submitLabel={(statusWatch[0] == 19 || statusWatch[0] == 20) && completed !== 1 ? 'Complete' : 'Update'} />
+                        </GeneralForm>
+                    </FormContainer>
                 </>
             )}
         </>
