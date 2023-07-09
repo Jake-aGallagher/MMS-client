@@ -1,10 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
-import axios from 'axios';
-import Loading from '../../../loading/loading';
-import RetrieveError from '../../../error/retrieveError';
-import ModalBase from '../../../modal/modal';
+import FormContainer from '../../../forms/formContainer';
+import FormHeader from '../../../forms/formHeader';
+import DialogClose from '../../../forms/dialogClose';
 
 interface Contents {
     delivery_id: number;
@@ -27,17 +23,11 @@ const ViewExtraItems = (props: ModalProps) => {
     ));
 
     return (
-        <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
-            <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">{props.payload.name}</h1>
-
+        <FormContainer>
+            <FormHeader label={props.payload.name} />
             {items}
-
-            <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={props.closeModal}>
-                    Close
-                </button>
-            </div>
-        </div>
+            <DialogClose closeModal={props.closeModal} />
+        </FormContainer>
     );
 };
 
