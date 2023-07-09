@@ -32,9 +32,8 @@ const userTableConfig = {
     headers: [
         { id: 'username', name: 'Username', type: 'string', search: true, order: true },
         { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
-        { id: 'last_name', name: 'Surname', type: 'string', search: true, order: true },
+        { id: 'last_name', name: 'Last name', type: 'string', search: true, order: true },
         { id: 'authority', name: 'Authority', type: 'authSwitch', search: true, order: true },
-        
     ],
     searchable: true,
 };
@@ -54,7 +53,6 @@ const PropertyView = () => {
         setError(false);
         setNoData(false);
         getPropertyHandler();
-        getAssignedUsersHandler();
     }, []);
 
     const getPropertyHandler = async () => {
@@ -62,27 +60,11 @@ const PropertyView = () => {
             const response = await axios.get(`${SERVER_URL}/properties/${params.asPath.split('/')[2]}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (response.data.length === 0) {
+            if (response.data.propDetails.length === 0) {
                 setNoData(true);
             } else {
-                setPropertyDetails(response.data[0]);
-            }
-            setLoading(false);
-        } catch (err) {
-            setError(true);
-            setLoading(false);
-        }
-    };
-
-    const getAssignedUsersHandler = async () => {
-        try {
-            const response = await axios.get(`${SERVER_URL}/properties/assigned-users/${params.asPath.split('/')[2]}`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            if (response.data.length === 0) {
-                setNoData(true);
-            } else {
-                setAssignedUsers(response.data);
+                setPropertyDetails(response.data.propDetails[0]);
+                setAssignedUsers(response.data.assignedUsers);
             }
             setLoading(false);
         } catch (err) {
@@ -121,13 +103,7 @@ const PropertyView = () => {
                         Assign Users
                     </button>
                 </div>
-                {viewModal ? (
-                    <ModalBase
-                        modalType={modalType}
-                        payload={parseInt(params.asPath.split('/')[2])}
-                        closeModal={() => [setViewModal(false), getPropertyHandler(), getAssignedUsersHandler()]}
-                    />
-                ) : null}
+                {viewModal ? <ModalBase modalType={modalType} payload={parseInt(params.asPath.split('/')[2])} closeModal={() => [setViewModal(false), getPropertyHandler()]} /> : null}
                 {loading ? (
                     <Loading />
                 ) : noData ? (
