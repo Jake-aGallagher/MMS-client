@@ -33,7 +33,7 @@ const GeneralFormInput = (props: Props<any>) => {
                     type={props.type}
                     min={props.min}
                     className={`mb-2 rounded-sm bg-blue-200 ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red-600 border-2'}`}
-                    {...props.register(props.formName, { required: props.required })}
+                    {...props.register(props.formName, { required: props.required, valueAsNumber: props.type == 'number' })}
                 />
             )}
             {areaTypes.includes(props.type) && (
