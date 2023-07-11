@@ -83,13 +83,13 @@ const Assets = () => {
                     {editMode ? (
                         <div className="absolute right-2 flex flex-row">
                             <button
-                                onClick={() => [setViewModal(true), setModalType('renameAsset'), setModalProps({ id: node.id, oldName: node.name })]}
+                                onClick={() => [setViewModal(true), setModalType('addEditAsset'), setModalProps({ type: 'edit', id: node.id, name: node.name })]}
                                 className="rounded-xl ml-5 text-sm bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
                             >
                                 Rename
                             </button>
                             <button
-                                onClick={() => [setViewModal(true), setModalType('addAsset'), setModalProps({ parentId: node.id, parentName: node.name })]}
+                                onClick={() => [setViewModal(true), setModalType('addEditAsset'), setModalProps({ type: 'add', id: node.id, name: node.name })]}
                                 className="rounded-xl ml-5 text-sm bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
                             >
                                 + Add Child Component

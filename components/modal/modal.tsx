@@ -1,9 +1,7 @@
 import CreateUser from '../settings/createUser';
 import AddEditProperty from '../properties/addEditProperty';
 import AssignUsers from '../properties/assignUsers';
-import RenameAsset from '../assets/rename';
 import DeleteAsset from '../assets/delete';
-import AddAsset from '../assets/create';
 import CreateJob from '../assets/createJob';
 import UpdateJob from '../jobs/update';
 import SparesUsed from '../jobs/sparesUsed';
@@ -16,6 +14,7 @@ import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelive
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems';
 import AddEditEnum from '../settings/addEditEnum';
 import DeleteForm from '../forms/DeleteForm';
+import AddEditAsset from '../assets/addEditAsset';
 
 interface ModalProps {
     closeModal: () => void;
@@ -35,10 +34,8 @@ const ModalBase = (props: ModalProps) => {
                 return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
 
             // Asset
-            case 'addAsset':
-                return <AddAsset closeModal={props.closeModal} payload={props.payload} />;
-            case 'renameAsset':
-                return <RenameAsset closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditAsset':
+                return <AddEditAsset closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditAssetNotes':
                 return <AddEditAssetNotes closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteAsset':

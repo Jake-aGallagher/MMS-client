@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
 import * as yup from 'yup';
@@ -11,12 +13,14 @@ import GeneralForm from '../forms/generalForm';
 
 interface ModalProps {
     closeModal: () => void;
-    payload: { id: number; oldName: string };
+    payload: { type: 'add' | 'edit'; id: number; name: string;}
 }
 
-const RenameAsset = (props: ModalProps) => {
-    const alertString = `There has been an issue renaming this Asset, please try again.`;
-    const defaultValues = { name: props.payload.oldName };
+const AddEditAsset = (props: ModalProps) => {
+    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const alertString = `There has been an issue ${props.payload.type == 'add' ? 'creating' : 'editing'} this Asset, please try again.`;
+    const formLabel = `${props.payload.type == 'add' ? 'Create New Component of' : 'Edit'} ${props.payload.name}`
+    let defaultValues = props.payload.type == 'add' ? {name: ''} : {name: props.payload.name}
 
     const formValidation = yup.object().shape({
         name: yup.string().required().max(45),
@@ -33,10 +37,12 @@ const RenameAsset = (props: ModalProps) => {
 
     const handleRegistration = async (data: any) => {
         try {
-            const response = await axios.put(
+            const response = await axios.post(
                 `${SERVER_URL}/asset`,
                 {
+                    type: props.payload.type,
                     id: props.payload.id,
+                    propertyId: currentProperty,
                     name: data.name,
                 },
                 {
@@ -55,13 +61,13 @@ const RenameAsset = (props: ModalProps) => {
 
     return (
         <FormContainer>
-            <FormHeader label={'Rename ' + props.payload.oldName} />
+            <FormHeader label={formLabel} />
             <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                <GeneralFormInput register={register} label="New Component Name" type="text" formName="name" errors={errors} required={true} />
+                <GeneralFormInput register={register} label="Component Name" type="text" formName="name" errors={errors} required={true} />
                 <GeneralFormSubmit closeModal={props.closeModal} />
             </GeneralForm>
         </FormContainer>
     );
 };
 
-export default RenameAsset;
+export default AddEditAsset;
