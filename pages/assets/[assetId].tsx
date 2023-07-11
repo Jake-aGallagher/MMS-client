@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Loading from '../../components/loading/loading';
-import { RootState } from '../../components/store/store';
 import GreaterThan from '../../public/GreaterThan.png';
 import axios from 'axios';
 import Link from 'next/link';
@@ -57,16 +55,13 @@ const AssetView = () => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const params = useRouter();
-    const authLevel = useSelector((state: RootState) => state.user.value.authority);
     const [assetDetails, setAssetDetails] = useState<Asset[]>([]);
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const [children, setChildren] = useState<Children[]>([]);
     const [openBranches, setOpenBranches] = useState<number[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [modalProps, setModalProps] = useState({ id: 0, note: '' });
-    const [status, setStatus] = useState('');
-    const [notes, setNotes] = useState('');
+    const [modalProps, setModalProps] = useState({ type: 'edit', id: 0, name: '', note: '' });
 
     useEffect(() => {
         reload();
@@ -88,7 +83,7 @@ const AssetView = () => {
                 setNoData(true);
             } else {
                 setAssetDetails(response.data.assetDetails);
-                setModalProps({ id: response.data.assetDetails[0].id, note: response.data.assetDetails[0].notes });
+                setModalProps({ type: 'edit', id: response.data.assetDetails[0].id, name: response.data.assetDetails[0].name, note: response.data.assetDetails[0].notes });
                 setRecentJobs(response.data.recentJobs);
                 setChildren(response.data.tree);
             }
@@ -172,10 +167,10 @@ const AssetView = () => {
                     </Link>
                     <button
                         className="ml-8 hover:text-blue-600 flex flex-row items-center"
-                        onClick={() => [setViewModal(true), setModalType('addEditAssetNotes')]}
+                        onClick={() => [setViewModal(true), setModalType('addEditAsset')]}
                     >
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                        Edit Notes
+                        Edit
                     </button>
                 </div>
                 {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}

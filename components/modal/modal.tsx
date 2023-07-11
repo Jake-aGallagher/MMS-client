@@ -9,7 +9,6 @@ import AddEditSparesNote from '../spares/sparesManagement/addEditSparesNote';
 import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier';
 import AddSparesItem from '../spares/addEditSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock';
-import AddEditAssetNotes from '../assets/addEditAssetNotes';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery';
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems';
 import AddEditEnum from '../settings/addEditEnum';
@@ -36,8 +35,6 @@ const ModalBase = (props: ModalProps) => {
             // Asset
             case 'addEditAsset':
                 return <AddEditAsset closeModal={props.closeModal} payload={props.payload} />;
-            case 'addEditAssetNotes':
-                return <AddEditAssetNotes closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteAsset':
                 return <DeleteAsset closeModal={props.closeModal} payload={props.payload} />;
 

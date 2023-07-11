@@ -15,6 +15,7 @@ interface AssetTreeItem {
     id: number;
     parentId: number;
     name: string;
+    note: string;
     breadcrumbs: string;
     children: [];
 }
@@ -83,10 +84,10 @@ const Assets = () => {
                     {editMode ? (
                         <div className="absolute right-2 flex flex-row">
                             <button
-                                onClick={() => [setViewModal(true), setModalType('addEditAsset'), setModalProps({ type: 'edit', id: node.id, name: node.name })]}
+                                onClick={() => [setViewModal(true), setModalType('addEditAsset'), setModalProps({ type: 'edit', id: node.id, name: node.name, note: node.note })]}
                                 className="rounded-xl ml-5 text-sm bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
                             >
-                                Rename
+                                Edit
                             </button>
                             <button
                                 onClick={() => [setViewModal(true), setModalType('addEditAsset'), setModalProps({ type: 'add', id: node.id, name: node.name })]}
