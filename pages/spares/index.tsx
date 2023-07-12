@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
 import { RootState } from '../../components/store/store';
@@ -7,27 +6,10 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import ModalBase from '../../components/modal/modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faClipboard, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../components/sortableTable/sortableTable';
-import { SERVER_URL } from '../../components/routing/addressAPI';
-
-interface Spare {
-    id: number;
-    part_no: string;
-    man_part_no: string;
-    name: string;
-    man_name: string;
-    description: string | null;
-    notes: string | null;
-    location: string;
-    quant_remain: number;
-    supplier: string;
-    reorder_freq: string;
-    reorder_num: number;
-    running_low: number;
-    avg_usage: number;
-    cost: number;
-}
+import { useSpares } from '../../components/spares/index/useSpares';
+import SparesTableIndexKey from '../../components/spares/index/sparesIndexTableKey';
 
 interface PropsForModal {
     id: number;
@@ -53,36 +35,11 @@ const sparesTableConfig = {
 };
 
 const Spares = () => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const [spares, setSpares] = useState<Spare[]>([]);
+    const { spares, loading, error, reload } = useSpares({ currentProperty });
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setmodalType] = useState('');
     const [modalProps, setModalProps] = useState<PropsForModal>({ id: 0, name: '' });
-
-    useEffect(() => {
-        reload();
-    }, [currentProperty]);
-
-    const reload = () => {
-        setLoading(true);
-        setError(false);
-        getHandler();
-    };
-
-    const getHandler = async () => {
-        try {
-            const response = await axios.get(`${SERVER_URL}/all-spares/${currentProperty}`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            setSpares(response.data);
-            setLoading(false);
-        } catch (err) {
-            setError(true);
-            setLoading(false);
-        }
-    };
 
     const editStock = (id: number, name: string, quantityRemaining: number) => {
         setmodalType('adjustSparesStock');
@@ -125,20 +82,7 @@ const Spares = () => {
                 ) : (
                     <>
                         <div className="flex flex-row justify-end ml-8 my-4 items-center">
-                            <div className="flex flex-row items-center border-2 border-gray-500 p-1 mr-4">
-                                <div>
-                                    <FontAwesomeIcon icon={faCheck} className="mr-1 w-5 text-green-500" />
-                                </div>
-                                <div className="mr-5 ml-1 text-sm">Greater than 1 Months supply</div>
-                                <div>
-                                    <FontAwesomeIcon icon={faTriangleExclamation} className="mr-1 w-5 text-yellow-500" />
-                                </div>
-                                <div className="mr-5 ml-1 text-sm">Less than 1 Months supply</div>
-                                <div>
-                                    <FontAwesomeIcon icon={faXmark} className="mr-1 w-5 text-red-600" />
-                                </div>
-                                <div className="mr-5 ml-1 text-sm">Nil stock remaining</div>
-                            </div>
+                            <SparesTableIndexKey />
                         </div>
                         <SortableTable config={sparesTableConfig} data={spares} adjustStockFunction={editStock} deleteFunction={deleteItem} />
                     </>
