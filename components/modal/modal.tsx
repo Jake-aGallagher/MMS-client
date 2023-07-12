@@ -11,7 +11,7 @@ import AddSparesItem from '../spares/addEditSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery';
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems';
-import AddEditEnum from '../settings/addEditEnum';
+import AddEditEnum from '../settings/enums/addEdit/addEditEnum';
 import DeleteForm from '../forms/DeleteForm';
 import AddEditAsset from '../assets/addEditAsset';
 
