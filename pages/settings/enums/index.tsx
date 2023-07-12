@@ -1,44 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ModalBase from '../../../components/modal/modal';
 import Loading from '../../../components/loading/loading';
 import RetrieveError from '../../../components/error/retrieveError';
-import axios from 'axios';
-import { SERVER_URL } from '../../../components/routing/addressAPI';
 import SortableTable from '../../../components/sortableTable/sortableTable';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-
-interface Enum {
-    id: number;
-    enum_type_id: number;
-    typeString: string;
-    value: string;
-    list_priority: number;
-    payload: number | null;
-    payload_two: string | null;
-}
-
-interface EnumType {
-    id: number;
-    type: string;
-}
-
-interface Response {
-    data: {
-        enums: Enum[];
-        enumTypes: EnumType[];
-    };
-}
+import { useEnums } from '../../../components/settings/enums/index/useEnums';
 
 const Enums = () => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const { enums, enumTypes, loading, error, reload } = useEnums()
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [payload, setPayload] = useState<{ id: number; name: string }>({ id: 0, name: '' });
-    const [enums, setEnums] = useState<Enum[]>([]);
-    const [enumTypes, setEnumTypes] = useState<EnumType[]>([]);
 
     const enumsTableConfig = {
         headers: [
@@ -55,30 +29,6 @@ const Enums = () => {
         selectSearch: true,
         selectSearchType: 'typeString',
         selectSearchOptions: enumTypes,
-    };
-
-    useEffect(() => {
-        reload();
-    }, []);
-
-    const reload = () => {
-        setLoading(true);
-        setError(false);
-        getHandler();
-    };
-
-    const getHandler = async () => {
-        try {
-            const enumsList: Response = await axios.get(`${SERVER_URL}/enums/typesvalues`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            setEnums(enumsList.data.enums);
-            setEnumTypes(enumsList.data.enumTypes);
-            setLoading(false);
-        } catch (err) {
-            setError(true);
-            setLoading(false);
-        }
     };
 
     const addEditEnum = (id: number, name: string) => {
