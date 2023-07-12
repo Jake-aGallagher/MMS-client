@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import GreaterThan from '../../../public/GreaterThan.png';
 import StockWarnings from '../../../components/spares/sparesManagement/currentStockWarnings';
 import SparesNotes from '../../../components/spares/sparesManagement/sparesNotes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import DeliveriesCard from '../../../components/spares/sparesManagement/deliveriesCard';
+import SuppliersCard from '../../../components/spares/sparesManagement/suppliersCard';
 
 const SparesManagement = () => {
     return (
@@ -15,27 +16,10 @@ const SparesManagement = () => {
                         <p>Return to Spares</p>
                     </Link>
                 </div>
-
                 <div className="bg-gray-100">
                     <StockWarnings />
-                    <div className="px-10 pt-5">
-                        <div className="bg-white p-6 rounded-lg shadow-lg">
-                            <h2 className="text-xl font-semibold mb-2">Deliveries</h2>
-                            <p className="">Add deliveries, manage scheduled deliveries and confirm when deliveries have arrived to automatically update current stock levels with the newly arrived items</p>
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 mt-4 border-2 border-blue-600 hover:border-transparent">
-                                <Link href="/spares/sparesManagement/deliveries">Manage Deliveries</Link>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="px-10 pt-5">
-                        <div className="bg-white p-6 rounded-lg shadow-lg">
-                            <h2 className="text-xl font-semibold mb-2">Suppliers</h2>
-                            <p className="">Manage info about suppliers and the spares they supply</p>
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 mt-4 border-2 border-blue-600 hover:border-transparent">
-                                <Link href="/spares/sparesManagement/suppliers">Manage Suppliers info</Link>
-                            </button>
-                        </div>
-                    </div>
+                    <DeliveriesCard />
+                    <SuppliersCard />
                     <SparesNotes />
                 </div>
             </div>
