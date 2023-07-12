@@ -1,30 +1,10 @@
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
 import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import SortableTable from '../../components/sortableTable/sortableTable';
-import { SERVER_URL } from '../../components/routing/addressAPI';
-
-interface Job {
-    id: number;
-    property_id: number;
-    asset_name: string;
-    comp_date: null | string;
-    completed: number;
-    created: string;
-    description: string;
-    logged_time: null | number;
-    notes: null | string;
-    reporter: string;
-    required_comp_date: string;
-    status: string;
-    type: string;
-    urgency: string;
-    title: string;
-}
+import { useJobs } from '../../components/jobs/index/useJobs';
 
 const jobTableConfig = {
     headers: [
@@ -45,29 +25,8 @@ const jobTableConfig = {
 };
 
 const Jobs = () => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const [jobs, setJobs] = useState<Job[]>([]);
-
-    useEffect(() => {
-        setLoading(true);
-        setError(false);
-        getHandler();
-    }, [currentProperty]);
-
-    const getHandler = async () => {
-        try {
-            const jobsList = await axios.get(`${SERVER_URL}/jobs/all-jobs/${currentProperty}`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            setJobs(jobsList.data);
-            setLoading(false);
-        } catch (err) {
-            setError(true);
-            setLoading(false);
-        }
-    };
+    const { jobs, loading, error } = useJobs({currentProperty})
 
     return (
         <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
