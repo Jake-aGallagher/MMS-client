@@ -1,20 +1,9 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import RetrieveError from '../../components/error/retrieveError';
 import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
 import SortableTable from '../../components/sortableTable/sortableTable';
-import { SERVER_URL } from '../../components/routing/addressAPI';
-
-interface Property {
-    id: number;
-    name: string;
-    type: string;
-    address: string;
-    city: string;
-    county: string;
-    postcode: string;
-}
+import { useProperties } from '../../components/properties/index/useProperties';
 
 const propertiesTableConfig = {
     headers: [
@@ -31,34 +20,9 @@ const propertiesTableConfig = {
 };
 
 const Properties = () => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const [allProperties, setAllProperties] = useState<Property[]>([]);
+    const { allProperties, loading, error, reload } = useProperties();
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setmodalType] = useState('');
-
-    useEffect(() => {
-        reload();
-    }, []);
-
-    const reload = () => {
-        setLoading(true);
-        setError(false);
-        getHandler();
-    };
-
-    const getHandler = async () => {
-        try {
-            const propertiesList = await axios.get(`${SERVER_URL}/properties/all-properties`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            setAllProperties(propertiesList.data);
-            setLoading(false);
-        } catch (err) {
-            setError(true);
-            setLoading(false);
-        }
-    };
 
     return (
         <>
