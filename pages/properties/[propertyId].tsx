@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
@@ -8,25 +7,8 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../components/sortableTable/sortableTable';
-import { SERVER_URL } from '../../components/routing/addressAPI';
 import DetailsBox from '../../components/detailsBox/detailsBox';
-
-interface Property {
-    id: number;
-    name: string;
-    type: string;
-    address: string;
-    city: string;
-    county: string;
-    postcode: string;
-}
-
-interface User {
-    username: string;
-    first_name: string;
-    last_name: string;
-    authority: number;
-}
+import { usePropertyDetails } from '../../components/properties/details/usePropertyDetails';
 
 const userTableConfig = {
     headers: [
@@ -39,43 +21,11 @@ const userTableConfig = {
 };
 
 const PropertyView = () => {
-    const [loading, setLoading] = useState(true);
-    const [noData, setNoData] = useState(false);
-    const [error, setError] = useState(false);
     const params = useRouter();
-    const [propertyDetails, setPropertyDetails] = useState<Property>();
+    const propertyNumber = params.asPath.split('/')[2]
+    const { propertyDetails, assignedUsers, loading, noData, error, reload } = usePropertyDetails(propertyNumber)
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
-
-    useEffect(() => {
-        reload();
-    }, []);
-
-    const reload = () => {
-        setLoading(true);
-        setError(false);
-        setNoData(false);
-        getPropertyHandler();
-    };
-
-    const getPropertyHandler = async () => {
-        try {
-            const response = await axios.get(`${SERVER_URL}/properties/${params.asPath.split('/')[2]}`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            if (response.data.propDetails.length === 0) {
-                setNoData(true);
-            } else {
-                setPropertyDetails(response.data.propDetails[0]);
-                setAssignedUsers(response.data.assignedUsers);
-            }
-            setLoading(false);
-        } catch (err) {
-            setError(true);
-            setLoading(false);
-        }
-    };
 
     const propertyDetailsConfig = {
         id: propertyDetails?.id,
@@ -107,7 +57,7 @@ const PropertyView = () => {
                         Assign Users
                     </button>
                 </div>
-                {viewModal ? <ModalBase modalType={modalType} payload={parseInt(params.asPath.split('/')[2])} closeModal={() => [setViewModal(false), reload()]} /> : null}
+                {viewModal ? <ModalBase modalType={modalType} payload={parseInt(propertyNumber)} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 {loading ? (
                     <Loading />
                 ) : noData ? (
