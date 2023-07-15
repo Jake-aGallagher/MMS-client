@@ -1,6 +1,6 @@
 import CreateUser from '../settings/createUser';
 import AddEditProperty from '../properties/addEditProperty/addEditProperty';
-import AssignUsers from '../properties/assignUsers';
+import AssignUsers from '../properties/assignUsers/assignUsers';
 import DeleteAsset from '../assets/delete';
 import CreateJob from '../assets/createJob';
 import UpdateJob from '../jobs/update';

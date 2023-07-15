@@ -49,11 +49,15 @@ const PropertyView = () => {
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
 
     useEffect(() => {
+        reload();
+    }, []);
+
+    const reload = () => {
         setLoading(true);
         setError(false);
         setNoData(false);
         getPropertyHandler();
-    }, []);
+    };
 
     const getPropertyHandler = async () => {
         try {
@@ -103,7 +107,7 @@ const PropertyView = () => {
                         Assign Users
                     </button>
                 </div>
-                {viewModal ? <ModalBase modalType={modalType} payload={parseInt(params.asPath.split('/')[2])} closeModal={() => [setViewModal(false), getPropertyHandler()]} /> : null}
+                {viewModal ? <ModalBase modalType={modalType} payload={parseInt(params.asPath.split('/')[2])} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 {loading ? (
                     <Loading />
                 ) : noData ? (
