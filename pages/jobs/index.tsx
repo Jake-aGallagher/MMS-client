@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import RetrieveError from '../../components/error/retrieveError';
-import Loading from '../../components/loading/loading';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import SortableTable from '../../components/sortableTable/sortableTable';
 import { useJobs } from '../../components/jobs/index/useJobs';
+import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 
 const jobTableConfig = {
     headers: [
@@ -26,7 +25,7 @@ const jobTableConfig = {
 
 const Jobs = () => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { jobs, loading, error } = useJobs({currentProperty})
+    const { jobs, loading, error } = useJobs({ currentProperty });
 
     return (
         <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
@@ -35,15 +34,9 @@ const Jobs = () => {
                     <div className="text-2xl mr-1 pb-1">+</div>Create Job
                 </Link>
             </div>
-            {loading ? (
-                <Loading />
-            ) : jobs.length === 0 ? (
-                <div>There is no data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
+            <LoadingNoDataError loading={loading} error={error}>
                 <SortableTable config={jobTableConfig} data={jobs} />
-            )}
+            </LoadingNoDataError>
         </div>
     );
 };

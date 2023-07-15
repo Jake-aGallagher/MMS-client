@@ -1,14 +1,13 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import RetrieveError from '../../../../components/error/retrieveError';
-import Loading from '../../../../components/loading/loading';
 import ModalBase from '../../../../components/modal/modal';
 import { RootState } from '../../../../components/store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../../../components/sortableTable/sortableTable';
 import { useSuppliers } from '../../../../components/spares/sparesManagement/suppliers/index/useSuppliers';
+import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
 
 const suppliersTableConfig = {
     headers: [
@@ -61,19 +60,11 @@ const Suppliers = () => {
                     </button>
                 </div>
                 {viewModal ? <ModalBase modalType={modalType} payload={supplierId} closeModal={() => [setViewModal(false), setModalType(''), reload()]} /> : null}
-                {loading ? (
-                    <Loading />
-                ) : suppliersList.length === 0 ? (
-                    <div>There is no data</div>
-                ) : error ? (
-                    <RetrieveError />
-                ) : (
-                    <>
-                        <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
-                            <SortableTable config={suppliersTableConfig} data={suppliersList} deleteFunction={deleteSupplier} editFunction={addEditSupplier} />
-                        </div>
-                    </>
-                )}
+                <LoadingNoDataError loading={loading} error={error}>
+                    <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
+                        <SortableTable config={suppliersTableConfig} data={suppliersList} deleteFunction={deleteSupplier} editFunction={addEditSupplier} />
+                    </div>
+                </LoadingNoDataError>
             </div>
         </>
     );

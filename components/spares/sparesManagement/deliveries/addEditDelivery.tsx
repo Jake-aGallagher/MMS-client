@@ -2,8 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import axios from 'axios';
-import Loading from '../../../loading/loading';
-import RetrieveError from '../../../error/retrieveError';
 import ModalBase from '../../../modal/modal';
 import { SERVER_URL } from '../../../routing/addressAPI';
 import * as yup from 'yup';
@@ -14,6 +12,7 @@ import GeneralFormSubmit from '../../../forms/generalFormSubmit';
 import GeneralFormInput from '../../../forms/generalFormInput';
 import FormContainer from '../../../forms/formContainer';
 import GeneralForm from '../../../forms/generalForm';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;
@@ -198,11 +197,7 @@ const AddEditDelivery = (props: ModalProps) => {
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : error ? (
-                <RetrieveError />
-            ) : (
+            <LoadingNoDataError loading={loading} error={error}>
                 <>
                     {viewModal ? (
                         <ModalBase
@@ -258,7 +253,7 @@ const AddEditDelivery = (props: ModalProps) => {
                         </GeneralForm>
                     </FormContainer>
                 </>
-            )}
+            </LoadingNoDataError>
         </>
     );
 };

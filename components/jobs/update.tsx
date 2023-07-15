@@ -1,8 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import Loading from '../loading/loading';
 import { useRouter } from 'next/router';
-import RetrieveError from '../error/retrieveError';
 import { RootState } from '../store/store';
 import { useSelector } from 'react-redux';
 import ModalBase from '../modal/modal';
@@ -16,6 +14,7 @@ import GeneralFormInput from '../forms/generalFormInput';
 import FormContainer from '../forms/formContainer';
 import GeneralForm from '../forms/generalForm';
 import FormTextCenter from '../forms/formTextCenter';
+import LoadingNoDataError from '../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;
@@ -252,13 +251,7 @@ const UpdateJob = (props: ModalProps) => {
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : noData ? (
-                <div>There is no data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
+            <LoadingNoDataError loading={loading} error={error} noData={noData}>
                 <>
                     {viewModal ? (
                         <ModalBase modalType="sparesUsed" payload={{ sparesUsed, type: 'used' }} fullSize={true} passbackDeatails={addSparesHandler} closeModal={() => setViewModal(false)} />
@@ -346,7 +339,7 @@ const UpdateJob = (props: ModalProps) => {
                         </GeneralForm>
                     </FormContainer>
                 </>
-            )}
+            </LoadingNoDataError>
         </>
     );
 };

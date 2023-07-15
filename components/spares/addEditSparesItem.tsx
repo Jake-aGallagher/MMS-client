@@ -2,8 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axios from 'axios';
-import Loading from '../loading/loading';
-import RetrieveError from '../error/retrieveError';
 import { SERVER_URL } from '../routing/addressAPI';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,6 +11,7 @@ import GeneralFormSubmit from '../forms/generalFormSubmit';
 import GeneralFormInput from '../forms/generalFormInput';
 import FormContainer from '../forms/formContainer';
 import GeneralForm from '../forms/generalForm';
+import LoadingNoDataError from '../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;
@@ -147,11 +146,7 @@ const AddEditSparesItem = (props: ModalProps) => {
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : error ? (
-                <RetrieveError />
-            ) : (
+            <LoadingNoDataError loading={loading} error={error}>
                 <FormContainer>
                     <FormHeader label={props.payload.name.length > 0 ? props.payload.name : 'Add Spares Item'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
@@ -168,7 +163,7 @@ const AddEditSparesItem = (props: ModalProps) => {
                         <GeneralFormSubmit closeModal={props.closeModal} />
                     </GeneralForm>
                 </FormContainer>
-            )}
+            </LoadingNoDataError>
         </>
     );
 };

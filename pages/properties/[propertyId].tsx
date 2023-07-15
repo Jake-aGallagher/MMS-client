@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
-import RetrieveError from '../../components/error/retrieveError';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../components/sortableTable/sortableTable';
 import DetailsBox from '../../components/detailsBox/detailsBox';
 import { usePropertyDetails } from '../../components/properties/details/usePropertyDetails';
+import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 
 const userTableConfig = {
     headers: [
@@ -22,8 +21,8 @@ const userTableConfig = {
 
 const PropertyView = () => {
     const params = useRouter();
-    const propertyNumber = params.asPath.split('/')[2]
-    const { propertyDetails, assignedUsers, loading, noData, error, reload } = usePropertyDetails(propertyNumber)
+    const propertyNumber = params.asPath.split('/')[2];
+    const { propertyDetails, assignedUsers, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
@@ -58,23 +57,15 @@ const PropertyView = () => {
                     </button>
                 </div>
                 {viewModal ? <ModalBase modalType={modalType} payload={parseInt(propertyNumber)} closeModal={() => [setViewModal(false), reload()]} /> : null}
-                {loading ? (
-                    <Loading />
-                ) : noData ? (
-                    <div>There has been an issue getting the Property Data</div>
-                ) : error ? (
-                    <RetrieveError />
-                ) : (
-                    <>
-                        <div className="flex flex-col xl:flex-row">
-                            <DetailsBox data={propertyDetailsConfig} />
-                            <div className="ml-10">
-                                <p className="xl:text-center text-left mb-2 font-semibold">Assigned Users</p>
-                                <SortableTable config={userTableConfig} data={assignedUsers} />
-                            </div>
+                <LoadingNoDataError loading={loading} error={error} noData={noData}>
+                    <div className="flex flex-col xl:flex-row">
+                        <DetailsBox data={propertyDetailsConfig} />
+                        <div className="ml-10">
+                            <p className="xl:text-center text-left mb-2 font-semibold">Assigned Users</p>
+                            <SortableTable config={userTableConfig} data={assignedUsers} />
                         </div>
-                    </>
-                )}
+                    </div>
+                </LoadingNoDataError>
             </div>
         </>
     );

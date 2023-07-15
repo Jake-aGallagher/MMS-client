@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import ModalBase from '../../../components/modal/modal';
-import Loading from '../../../components/loading/loading';
-import RetrieveError from '../../../components/error/retrieveError';
 import SortableTable from '../../../components/sortableTable/sortableTable';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useEnums } from '../../../components/settings/enums/index/useEnums';
+import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
 
 const Enums = () => {
-    const { enums, enumTypes, loading, error, reload } = useEnums()
+    const { enums, enumTypes, loading, error, reload } = useEnums();
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [payload, setPayload] = useState<{ id: number; name: string }>({ id: 0, name: '' });
@@ -56,7 +55,9 @@ const Enums = () => {
                 </button>
             </div>
             {viewModal ? <ModalBase modalType={modalType} payload={{ ...payload, url: 'enum' }} closeModal={() => [setPayload({ id: 0, name: '' }), setViewModal(false), reload()]} /> : null}
-            {loading ? <Loading /> : error ? <RetrieveError /> : <SortableTable config={enumsTableConfig} data={enums} editFunction={addEditEnum} deleteFunction={deleteEnum} />}
+            <LoadingNoDataError loading={loading} error={error}>
+                <SortableTable config={enumsTableConfig} data={enums} editFunction={addEditEnum} deleteFunction={deleteEnum} />
+            </LoadingNoDataError>
         </div>
     );
 };

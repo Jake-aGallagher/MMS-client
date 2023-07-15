@@ -1,14 +1,13 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import RetrieveError from '../../../../components/error/retrieveError';
-import Loading from '../../../../components/loading/loading';
 import ModalBase from '../../../../components/modal/modal';
 import { RootState } from '../../../../components/store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../../../components/sortableTable/sortableTable';
 import { useDeliveries } from '../../../../components/spares/sparesManagement/deliveries/index/useDeliveries';
+import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
 
 interface Contents {
     delivery_id: number;
@@ -36,7 +35,7 @@ const deliveriesTableConfig = {
 
 const Deliveries = () => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { deliveriesList, loading, error, reload } = useDeliveries({currentProperty})
+    const { deliveriesList, loading, error, reload } = useDeliveries({ currentProperty });
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [payload, setPayload] = useState<{ contents: Contents[]; name: string } | { id: number; name: string; url?: string }>();
@@ -73,19 +72,11 @@ const Deliveries = () => {
                     </button>
                 </div>
                 {viewModal ? <ModalBase modalType={modalType} payload={payload} closeModal={() => [setViewModal(false), setModalType(''), reload()]} /> : null}
-                {loading ? (
-                    <Loading />
-                ) : deliveriesList.length === 0 ? (
-                    <div>There is no data</div>
-                ) : error ? (
-                    <RetrieveError />
-                ) : (
-                    <>
-                        <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
-                            <SortableTable config={deliveriesTableConfig} data={deliveriesList} editFunction={addEditDelivery} deleteFunction={deleteDelvery} viewTooManyItems={viewTooManyItems} />
-                        </div>
-                    </>
-                )}
+                <LoadingNoDataError loading={loading} error={error}>
+                    <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
+                        <SortableTable config={deliveriesTableConfig} data={deliveriesList} editFunction={addEditDelivery} deleteFunction={deleteDelvery} viewTooManyItems={viewTooManyItems} />
+                    </div>
+                </LoadingNoDataError>
             </div>
         </>
     );

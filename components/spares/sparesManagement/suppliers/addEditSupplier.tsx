@@ -1,6 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import RetrieveError from '../../../error/retrieveError';
-import Loading from '../../../loading/loading';
 import axios from 'axios';
 import { RootState } from '../../../store/store';
 import { useSelector } from 'react-redux';
@@ -13,6 +11,7 @@ import GeneralFormSubmit from '../../../forms/generalFormSubmit';
 import GeneralFormInput from '../../../forms/generalFormInput';
 import FormContainer from '../../../forms/formContainer';
 import GeneralForm from '../../../forms/generalForm';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;
@@ -140,11 +139,7 @@ const AddEditSupplier = (props: ModalProps) => {
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : error ? (
-                <RetrieveError />
-            ) : (
+            <LoadingNoDataError loading={loading} error={error}>
                 <FormContainer>
                     <FormHeader label={props.payload.name.length > 0 ? 'Edit ' + props.payload.name : 'Add Supplier'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
@@ -161,7 +156,7 @@ const AddEditSupplier = (props: ModalProps) => {
                         <GeneralFormSubmit closeModal={props.closeModal} />
                     </GeneralForm>
                 </FormContainer>
-            )}
+            </LoadingNoDataError>
         </>
     );
 };

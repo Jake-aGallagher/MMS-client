@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
-import RetrieveError from '../../components/error/retrieveError';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import SortableTable from '../../components/sortableTable/sortableTable';
 import DetailsBox from '../../components/detailsBox/detailsBox';
+import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 
 interface Spare {
     id: number;
@@ -153,18 +152,12 @@ const SparesView = () => {
                 </div>
 
                 {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
-                {loading ? (
-                    <Loading />
-                ) : noData ? (
-                    <div>There has been an issue getting the Property Data</div>
-                ) : error ? (
-                    <RetrieveError />
-                ) : (
+                <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <>
                         <div className="flex flex-col xl:flex-row">{details}</div>
                         {recentJobs.length > 0 ? <SortableTable config={jobTableConfig} data={recentJobs} /> : null}
                     </>
-                )}
+                </LoadingNoDataError>
             </div>
         </>
     );

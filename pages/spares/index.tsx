@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import RetrieveError from '../../components/error/retrieveError';
-import Loading from '../../components/loading/loading';
 import { RootState } from '../../components/store/store';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
@@ -10,6 +8,7 @@ import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../components/sortableTable/sortableTable';
 import { useSpares } from '../../components/spares/index/useSpares';
 import SparesTableIndexKey from '../../components/spares/index/sparesIndexTableKey';
+import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 
 interface PropsForModal {
     id: number;
@@ -73,20 +72,12 @@ const Spares = () => {
                         closeModal={() => [setViewModal(false), setModalProps({ id: 0, name: '', quantityRemaining: 0 }), setmodalType(''), reload()]}
                     />
                 ) : null}
-                {loading ? (
-                    <Loading />
-                ) : spares.length === 0 ? (
-                    <div>There is no data</div>
-                ) : error ? (
-                    <RetrieveError />
-                ) : (
-                    <>
-                        <div className="flex flex-row justify-end ml-8 my-4 items-center">
-                            <SparesTableIndexKey />
-                        </div>
-                        <SortableTable config={sparesTableConfig} data={spares} adjustStockFunction={editStock} deleteFunction={deleteItem} />
-                    </>
-                )}
+                <LoadingNoDataError loading={loading} error={error}>
+                    <div className="flex flex-row justify-end ml-8 my-4 items-center">
+                        <SparesTableIndexKey />
+                    </div>
+                    <SortableTable config={sparesTableConfig} data={spares} adjustStockFunction={editStock} deleteFunction={deleteItem} />
+                </LoadingNoDataError>
             </div>
         </>
     );

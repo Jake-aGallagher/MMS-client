@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Loading from '../../components/loading/loading';
 import Link from 'next/link';
-import RetrieveError from '../../components/error/retrieveError';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 import ModalBase from '../../components/modal/modal';
@@ -11,6 +9,7 @@ import { useAssetDetails } from '../../components/assets/details/useAssetDetails
 import { useOpenBranches } from '../../components/assets/assetUtil/useOpenBranches';
 import ParentDetails from '../../components/assets/details/parentDetails';
 import { useAssetTree } from '../../components/assets/assetUtil/useAssetTree';
+import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 
 const recentJobTableConfig = {
     headers: [
@@ -48,13 +47,7 @@ const AssetView = () => {
                     </button>
                 </div>
                 {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
-                {loading ? (
-                    <Loading />
-                ) : noData ? (
-                    <div>There has been an issue getting the Property Data</div>
-                ) : error ? (
-                    <RetrieveError />
-                ) : (
+                <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <>
                         <div key={assetDetails?.id} className="border-b-2 border-blue-600 p-5 w-full ">
                             <div className="mb-2">Name: {assetDetails?.name}</div>
@@ -74,7 +67,7 @@ const AssetView = () => {
                             </div>
                         ) : null}
                     </>
-                )}
+                    </LoadingNoDataError>
             </div>
         </>
     );

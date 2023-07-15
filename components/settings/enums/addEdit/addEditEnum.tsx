@@ -1,6 +1,4 @@
 import { useEffect, useMemo } from 'react';
-import Loading from '../../../loading/loading';
-import RetrieveError from '../../../error/retrieveError';
 import { useForm } from 'react-hook-form';
 import GeneralFormSubmit from '../../../forms/generalFormSubmit';
 import GeneralFormInput from '../../../forms/generalFormInput';
@@ -10,6 +8,7 @@ import FormContainer from '../../../forms/formContainer';
 import { useAddEditEnums } from './useAddEditEnums';
 import { addEditEnumHandler } from './addEditEnumHandler';
 import { yupResolverEnums } from './addEditEnumValidation';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;
@@ -50,11 +49,7 @@ const AddEditEnum = (props: ModalProps) => {
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : error ? (
-                <RetrieveError />
-            ) : (
+            <LoadingNoDataError loading={loading} error={error}>
                 <FormContainer>
                     <FormHeader label={props.payload.id > 0 ? 'Edit ' + props.payload.name : 'Add Enum'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
@@ -82,7 +77,7 @@ const AddEditEnum = (props: ModalProps) => {
                         <GeneralFormSubmit closeModal={props.closeModal} />
                     </GeneralForm>
                 </FormContainer>
-            )}
+            </LoadingNoDataError>
         </>
     );
 };

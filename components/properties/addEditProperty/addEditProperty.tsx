@@ -1,6 +1,4 @@
 import { useEffect, useMemo } from 'react';
-import Loading from '../../loading/loading';
-import RetrieveError from '../../error/retrieveError';
 import { useForm } from 'react-hook-form';
 import GeneralFormSubmit from '../../forms/generalFormSubmit';
 import GeneralFormInput from '../../forms/generalFormInput';
@@ -11,6 +9,7 @@ import { useAddEditProperty } from './useAddEditProperty';
 import { yupResolverAddEditProperty } from './addEditPropertyValidation';
 import { addEditPropertyHandler } from './addEditPropertyHandler';
 import { useDispatch } from 'react-redux';
+import LoadingNoDataError from '../../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;
@@ -19,7 +18,7 @@ interface ModalProps {
 
 const AddEditProperty = (props: ModalProps) => {
     const dispatch = useDispatch();
-    const { defaultValues, id, loading, error } = useAddEditProperty({propertyNumber: props.propertyNumber});
+    const { defaultValues, id, loading, error } = useAddEditProperty({ propertyNumber: props.propertyNumber });
     const typeOptions = [
         { id: 'Factory', value: 'Factory' },
         { id: 'Commercial', value: 'Commercial' },
@@ -44,16 +43,12 @@ const AddEditProperty = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addEditPropertyHandler(data, id, props.closeModal, dispatch, props.propertyNumber)
+        await addEditPropertyHandler(data, id, props.closeModal, dispatch, props.propertyNumber);
     };
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : error ? (
-                <RetrieveError />
-            ) : (
+            <LoadingNoDataError loading={loading} error={error}>
                 <FormContainer>
                     <FormHeader label={props.propertyNumber > 0 ? 'Edit ' + defaultValues.propertyName : 'Add Property'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
@@ -66,7 +61,7 @@ const AddEditProperty = (props: ModalProps) => {
                         <GeneralFormSubmit closeModal={props.closeModal} />
                     </GeneralForm>
                 </FormContainer>
-            )}
+            </LoadingNoDataError>
         </>
     );
 };

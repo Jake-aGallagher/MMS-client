@@ -2,18 +2,17 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { RootState } from '../../components/store/store';
-import RetrieveError from '../../components/error/retrieveError';
-import Loading from '../../components/loading/loading';
 import ModalBase from '../../components/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCheck, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { useJobDetails } from '../../components/jobs/details/useJobDetails';
+import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 
 const JobView = () => {
     const params = useRouter();
-    const jobId = params.asPath.split('/')[2]
-    const { jobDetails, timeDetails, sparesDetails, loading, noData, error, reload }= useJobDetails(jobId)
+    const jobId = params.asPath.split('/')[2];
+    const { jobDetails, timeDetails, sparesDetails, loading, noData, error, reload } = useJobDetails(jobId);
     const authLevel = useSelector((state: RootState) => state.user.value.authority);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
@@ -142,19 +141,9 @@ const JobView = () => {
                     </button>
                 </div>
 
-                {loading ? (
-                    <Loading />
-                ) : noData ? (
-                    <div>There is no data</div>
-                ) : error ? (
-                    <RetrieveError />
-                ) : (
+                <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <>
-                        {viewModal ? (
-                            <ModalBase modalType={modalType} payload={jobDetails[0].id} closeModal={() => [setViewModal(false), reload()]} />
-                        ) : (
-                            ''
-                        )}
+                        {viewModal ? <ModalBase modalType={modalType} payload={jobDetails[0].id} closeModal={() => [setViewModal(false), reload()]} /> : ''}
                         <div className="w-full h-full grid overflow-hidden  grid-cols-5 grid-rows-12 gap-0.5">
                             {one}
                             {two}
@@ -163,7 +152,7 @@ const JobView = () => {
                             {five}
                         </div>
                     </>
-                )}
+                </LoadingNoDataError>
             </div>
         </>
     );

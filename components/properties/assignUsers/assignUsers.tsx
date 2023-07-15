@@ -1,5 +1,3 @@
-import Loading from '../../loading/loading';
-import RetrieveError from '../../error/retrieveError';
 import { useForm } from 'react-hook-form';
 import FormHeader from '../../forms/formHeader';
 import GeneralFormSubmit from '../../forms/generalFormSubmit';
@@ -8,6 +6,7 @@ import FormContainer from '../../forms/formContainer';
 import GeneralForm from '../../forms/generalForm';
 import { useAssignUsers } from './useAssignUsers';
 import { assignUsersdHandler } from './assignUsersHandler';
+import LoadingNoDataError from '../../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;
@@ -29,13 +28,7 @@ const AssignUsers = (props: ModalProps) => {
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : noData ? (
-                <div>There is no data</div>
-            ) : error ? (
-                <RetrieveError />
-            ) : (
+            <LoadingNoDataError loading={loading} error={error} noData={noData}>
                 <FormContainer>
                     <FormHeader label={'Assign Users'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
@@ -53,7 +46,7 @@ const AssignUsers = (props: ModalProps) => {
                         <GeneralFormSubmit closeModal={props.closeModal} />
                     </GeneralForm>
                 </FormContainer>
-            )}
+            </LoadingNoDataError>
         </>
     );
 };
