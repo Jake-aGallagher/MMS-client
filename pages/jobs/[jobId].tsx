@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { RootState } from '../../components/store/store';
@@ -9,82 +8,15 @@ import ModalBase from '../../components/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCheck, faPencil } from '@fortawesome/free-solid-svg-icons';
-import { SERVER_URL } from '../../components/routing/addressAPI';
-
-interface Job {
-    id: number;
-    property_name: string;
-    asset_name: string;
-    comp_date: null | string;
-    completed: number;
-    created: string;
-    description: string;
-    logged_time: null | number;
-    notes: null | string;
-    reporter: string;
-    required_comp_date: string;
-    status: string;
-    type: string;
-    urgency: string;
-    title: string;
-}
-
-interface TimeDetails {
-    id: number;
-    time: number;
-    first: string;
-    last: string;
-}
-
-interface UsedSpares {
-    id: number;
-    num_used: number;
-    part_no: string;
-    name: string;
-}
+import { useJobDetails } from '../../components/jobs/details/useJobDetails';
 
 const JobView = () => {
-    const [loading, setLoading] = useState(true);
-    const [noData, setNoData] = useState(false);
-    const [error, setError] = useState(false);
     const params = useRouter();
+    const jobId = params.asPath.split('/')[2]
+    const { jobDetails, timeDetails, sparesDetails, loading, noData, error, reload }= useJobDetails(jobId)
     const authLevel = useSelector((state: RootState) => state.user.value.authority);
-    const [jobDetails, setJobDetails] = useState<Job[]>([]);
-    const [timeDetails, setTimeDetails] = useState<TimeDetails[]>([]);
-    const [sparesDetails, setSparesDetails] = useState<UsedSpares[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [status, setStatus] = useState('');
-
-    useEffect(() => {
-        setLoading(true);
-        setError(false);
-        setNoData(false);
-        getJobHandler();
-    }, []);
-
-    const getJobHandler = async () => {
-        try {
-            const response = await axios.get(`${SERVER_URL}/jobs/${params.asPath.split('/')[2]}`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            if (response.data.jobDetails.length === 0) {
-                setNoData(true);
-            } else {
-                setJobDetails(response.data.jobDetails);
-                if (response.data.timeDetails) {
-                    setTimeDetails(response.data.timeDetails);
-                }
-                if (response.data.usedSpares) {
-                    setSparesDetails(response.data.usedSpares);
-                }
-            }
-            setLoading(false);
-        } catch (err) {
-            setError(true);
-            setLoading(false);
-        }
-    };
 
     const one = jobDetails.map((j) => (
         <div key={Math.random()} className="box row-start-1 row-end-2 col-start-1 col-end-6 pl-6 flex flex-row items-center relative">
@@ -219,7 +151,7 @@ const JobView = () => {
                 ) : (
                     <>
                         {viewModal ? (
-                            <ModalBase modalType={modalType} payload={jobDetails[0].id} closeModal={() => [setViewModal(false), getJobHandler()]} />
+                            <ModalBase modalType={modalType} payload={jobDetails[0].id} closeModal={() => [setViewModal(false), reload()]} />
                         ) : (
                             ''
                         )}
