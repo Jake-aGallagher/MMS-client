@@ -7,8 +7,8 @@ import RetrieveError from '../../components/error/retrieveError';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faWrench } from '@fortawesome/free-solid-svg-icons';
 import { useAssets } from '../../components/assets/index/useAssets';
-import { useOpenBranches } from '../../components/assets/index/useOpenBranches';
-import { useAssetTree } from '../../components/assets/index/useAssetTree';
+import { useOpenBranches } from '../../components/assets/assetUtil/useOpenBranches';
+import { useAssetTree } from '../../components/assets/assetUtil/useAssetTree';
 
 const Assets = () => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
@@ -18,7 +18,8 @@ const Assets = () => {
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [modalProps, setModalProps] = useState({});
-    const { allRoots } = useAssetTree(assetTree, openBranches, toggle, editMode, setViewModal, setModalType, setModalProps);
+    //const { allRoots } = useAssetTree(assetTree, openBranches, toggle, editMode, setViewModal, setModalType, setModalProps);
+    const { allRoots } = useAssetTree({type: 'index', assetTree, openBranches, toggle, editMode, setViewModal, setModalType, setModalProps});
 
     return (
         <>
