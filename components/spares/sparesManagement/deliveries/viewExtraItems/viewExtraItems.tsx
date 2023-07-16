@@ -1,6 +1,6 @@
-import FormContainer from '../../../forms/formContainer';
-import FormHeader from '../../../forms/formHeader';
-import DialogClose from '../../../forms/dialogClose';
+import FormContainer from '../../../../forms/formContainer';
+import FormHeader from '../../../../forms/formHeader';
+import DialogClose from '../../../../forms/dialogClose';
 
 interface Contents {
     delivery_id: number;

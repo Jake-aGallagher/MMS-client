@@ -10,7 +10,7 @@ import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplie
 import AddSparesItem from '../spares/addEditSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery';
-import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems';
+import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems/viewExtraItems';
 import AddEditEnum from '../settings/enums/addEdit/addEditEnum';
 import DeleteForm from '../forms/DeleteForm';
 import AddEditAsset from '../assets/addEditAsset';
