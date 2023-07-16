@@ -9,7 +9,7 @@ import AddEditSparesNote from '../spares/sparesManagement/addEditSparesNote';
 import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier';
 import AddSparesItem from '../spares/addEditSparesItem/addEditSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock';
-import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery';
+import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery/addEditDelivery';
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems/viewExtraItems';
 import AddEditEnum from '../settings/enums/addEdit/addEditEnum';
 import DeleteForm from '../forms/deleteForm/DeleteForm';
