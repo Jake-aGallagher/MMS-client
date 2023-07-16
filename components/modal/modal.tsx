@@ -12,8 +12,8 @@ import AdjustSparesStock from '../spares/adjustSparesStock';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery';
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems/viewExtraItems';
 import AddEditEnum from '../settings/enums/addEdit/addEditEnum';
-import DeleteForm from '../forms/DeleteForm';
-import AddEditAsset from '../assets/addEditAsset';
+import DeleteForm from '../forms/deleteForm/DeleteForm';
+import AddEditAsset from '../assets/addEditAsset/addEditAsset';
 
 interface ModalProps {
     closeModal: () => void;
