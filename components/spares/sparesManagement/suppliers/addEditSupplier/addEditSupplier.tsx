@@ -20,7 +20,6 @@ interface ModalProps {
 const AddEditSupplier = (props: ModalProps) => {
     const { defaultValues, loading, error } = useAddEditSupplier(props.payload.id);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    console.log(error)
 
     const {
         register,
