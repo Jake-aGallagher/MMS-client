@@ -16,7 +16,7 @@ export const dateType = (dateString: string) => {
 
 export const urlType = (urlString: string) => {
     return (
-        <a className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600" href={'https://' + urlString} target="_blank" rel='noreferrer'>
+        <a className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600" href={urlString} target="_blank" rel='noreferrer'>
             {urlString}
         </a>
     );

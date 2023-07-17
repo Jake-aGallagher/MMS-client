@@ -6,7 +6,7 @@ import CreateJob from '../assets/createJob';
 import UpdateJob from '../jobs/update';
 import SparesUsed from '../jobs/sparesUsed';
 import AddEditSparesNote from '../spares/sparesManagement/addEditSparesNote';
-import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier';
+import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier/addEditSupplier';
 import AddSparesItem from '../spares/addEditSparesItem/addEditSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery/addEditDelivery';
