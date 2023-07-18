@@ -16,6 +16,9 @@ const Settings = () => {
                 >
                     Create User
                 </button>
+                <Link href="/settings/users" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    Manage Users
+                </Link>
                 <Link href="/settings/enums" className="ml-8 hover:text-blue-600 flex flex-row items-center">
                     Manage Enums
                 </Link>
