@@ -8,7 +8,7 @@ import SparesUsed from '../jobs/sparesUsed';
 import AddEditSparesNote from '../spares/sparesManagement/sparesNotes/addEditNote/addEditSparesNote';
 import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier/addEditSupplier';
 import AddSparesItem from '../spares/addEditSparesItem/addEditSparesItem';
-import AdjustSparesStock from '../spares/adjustSparesStock';
+import AdjustSparesStock from '../spares/adjustSparesStock/adjustSparesStock';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery/addEditDelivery';
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems/viewExtraItems';
 import AddEditEnum from '../settings/enums/addEdit/addEditEnum';
