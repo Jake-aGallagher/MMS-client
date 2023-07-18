@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import StockWarnings from '../../../components/spares/sparesManagement/currentStockWarnings';
-import SparesNotes from '../../../components/spares/sparesManagement/sparesNotes/sparesNotes';
+import SparesNotes from '../../../components/spares/sparesManagement/sparesNotes/index/sparesNotes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import DeliveriesCard from '../../../components/spares/sparesManagement/deliveriesCard';

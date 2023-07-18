@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../../../routing/addressAPI';
+import { SERVER_URL } from '../../../../routing/addressAPI';
 
 interface Note {
     id: number;
