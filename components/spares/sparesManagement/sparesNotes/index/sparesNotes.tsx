@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
-import GreaterThan from '../../../../public/GreaterThan.png';
+import GreaterThan from '../../../../../public/GreaterThan.png';
 import ModalBase from '../../../../modal/modal';
 import { useSparesNotes } from './useSparesNotes';
 import NoteTitlesList from './noteTitlesList';

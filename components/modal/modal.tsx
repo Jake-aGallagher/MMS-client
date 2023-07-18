@@ -5,7 +5,7 @@ import DeleteAsset from '../assets/delete';
 import CreateJob from '../assets/createJob';
 import UpdateJob from '../jobs/update';
 import SparesUsed from '../jobs/sparesUsed';
-import AddEditSparesNote from '../spares/sparesManagement/addEditSparesNote';
+import AddEditSparesNote from '../spares/sparesManagement/sparesNotes/addEditNote/addEditSparesNote';
 import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier/addEditSupplier';
 import AddSparesItem from '../spares/addEditSparesItem/addEditSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock';
