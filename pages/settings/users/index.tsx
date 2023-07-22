@@ -15,6 +15,7 @@ const usersTableConfig = {
         { id: 'username', name: 'Username', type: 'string', search: true, order: true },
         { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
         { id: 'last_name', name: 'Last Name', type: 'string', search: true, order: true },
+        { id: 'user_group_name', name: 'User Group', type: 'string', search: true, order: true },
         { id: 'edit', name: 'Edit', type: 'edit', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'username' },
         { id: 'delete', name: 'Delete', type: 'delete', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'username' },
     ],
