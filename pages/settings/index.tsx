@@ -9,6 +9,9 @@ const Settings = () => {
             <Link href="/settings/userGroups" className="ml-8 hover:text-blue-600 flex flex-row items-center">
                 Manage User Groups
             </Link>
+            <Link href="/settings/permissions" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                Manage User Group Permissions
+            </Link>
             <Link href="/settings/enums" className="ml-8 hover:text-blue-600 flex flex-row items-center">
                 Manage Enums
             </Link>

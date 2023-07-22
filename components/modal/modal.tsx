@@ -1,4 +1,4 @@
-import CreateUser from '../settings/createUser';
+import AddEditUser from '../settings/users/addEditUsers/addEditUsers';
 import AddEditProperty from '../properties/addEditProperty/addEditProperty';
 import AssignUsers from '../properties/assignUsers/assignUsers';
 import DeleteAsset from '../assets/delete';
@@ -14,6 +14,8 @@ import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems
 import AddEditEnum from '../settings/enums/addEdit/addEditEnum';
 import DeleteForm from '../forms/deleteForm/DeleteForm';
 import AddEditAsset from '../assets/addEditAsset/addEditAsset';
+import AddEditUserGroup from '../settings/userGroups/addEditUserGroups/addEditUserGroup';
+import AddEditPermission from '../settings/permissions/addEditPermissions/addEditPermission';
 
 interface ModalProps {
     closeModal: () => void;
@@ -69,8 +71,14 @@ const ModalBase = (props: ModalProps) => {
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
 
             // Settings
-            case 'createUser':
-                return <CreateUser closeModal={props.closeModal} />;
+            case 'addEditUser':
+                return <AddEditUser closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditUserGroup':
+                return <AddEditUserGroup closeModal={props.closeModal} payload={props.payload} />;
+            case 'deleteUserGroup':
+                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditPermissions':
+                return <AddEditPermission closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditEnum':
                 return <AddEditEnum closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteEnum':
