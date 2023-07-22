@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import {
     adjustStockType,
     arrivedType,
-    userGroupType,
     completedType,
     contentsType,
     dateType,
@@ -174,10 +173,6 @@ const SortableTable = (props: Props) => {
 
                 case 'date':
                     inner = dateType(rowInfo[header.id]);
-                    break;
-
-                case 'userGroup':
-                    inner = userGroupType(rowInfo[header.id]);
                     break;
 
                 case 'completed':

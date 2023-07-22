@@ -30,19 +30,6 @@ export const arrivedType = (arrived: number) => {
     return arrived === 1 ? <div>&#10004;</div> : null;
 };
 
-export const userGroupType = (level: number) => {
-    switch (level) {
-        case 4:
-            return 'Admin';
-        case 3:
-            return 'Manager';
-        case 2:
-            return 'Engineer';
-        default:
-            return 'Staff';
-    }
-};
-
 export const remainingStockType = (remainingStock: number, usage: number) => {
     if (remainingStock === 0) {
         return (

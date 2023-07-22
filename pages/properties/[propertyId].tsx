@@ -14,7 +14,7 @@ const userTableConfig = {
         { id: 'username', name: 'Username', type: 'string', search: true, order: true },
         { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
         { id: 'last_name', name: 'Last name', type: 'string', search: true, order: true },
-        { id: 'user_group_id', name: 'User Group', type: 'userGroup', search: true, order: true },
+        { id: 'user_group_name', name: 'User Group', type: 'string', search: true, order: true },
     ],
     searchable: true,
 };
