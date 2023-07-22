@@ -13,7 +13,7 @@ const JobView = () => {
     const params = useRouter();
     const jobId = params.asPath.split('/')[2];
     const { jobDetails, timeDetails, sparesDetails, loading, noData, error, reload } = useJobDetails(jobId);
-    const authLevel = useSelector((state: RootState) => state.user.value.authority);
+    const user_group_id = useSelector((state: RootState) => state.user.value.user_group_id);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 

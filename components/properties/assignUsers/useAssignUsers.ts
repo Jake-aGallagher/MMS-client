@@ -11,7 +11,7 @@ interface UsersList {
     username: string;
     first_name: string;
     last_name: string;
-    authority: number;
+    user_group_id: number;
     assigned: boolean;
 }
 

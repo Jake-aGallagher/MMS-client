@@ -30,7 +30,7 @@ export const arrivedType = (arrived: number) => {
     return arrived === 1 ? <div>&#10004;</div> : null;
 };
 
-export const authorityType = (level: number) => {
+export const userGroupType = (level: number) => {
     switch (level) {
         case 4:
             return 'Admin';

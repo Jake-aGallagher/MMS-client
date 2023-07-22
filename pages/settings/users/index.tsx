@@ -15,8 +15,8 @@ const usersTableConfig = {
         { id: 'username', name: 'Username', type: 'string', search: true, order: true },
         { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
         { id: 'last_name', name: 'Last Name', type: 'string', search: true, order: true },
-        { id: 'edit', name: 'Edit', type: 'edit', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'value' },
-        { id: 'delete', name: 'Delete', type: 'delete', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'value' },
+        { id: 'edit', name: 'Edit', type: 'edit', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'username' },
+        { id: 'delete', name: 'Delete', type: 'delete', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'username' },
     ],
     searchable: true,
 };
@@ -32,13 +32,13 @@ const Users = () => {
         setPayload({ id, name });
         setModalType('addEditUser');
         setViewModal(true);
-    }
+    };
 
     const deleteUser = (id: number, name: string) => {
         setPayload({ id, name });
         setModalType('deleteUser');
         setViewModal(true);
-    }
+    };
 
     return (
         <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
@@ -47,17 +47,17 @@ const Users = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                <button onClick={(e) => addEditUser(0, '')} className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                <button onClick={() => addEditUser(0, '')} className="ml-8 hover:text-blue-600 flex flex-row items-center">
                     <div className="text-2xl mr-1 pb-1">+</div>
                     Add User
                 </button>
             </div>
-            {viewModal ? <ModalBase modalType={modalType} payload={{ ...payload, url: 'enum' }} closeModal={() => [setPayload({ id: 0, name: '' }), setViewModal(false), reload()]} /> : null}
+            {viewModal ? <ModalBase modalType={modalType} payload={payload} closeModal={() => [setPayload({ id: 0, name: '' }), setViewModal(false), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error}>
                 <SortableTable config={usersTableConfig} data={users} editFunction={addEditUser} deleteFunction={deleteUser} />
             </LoadingNoDataError>
         </div>
-    )
+    );
 };
 
 export default Users;

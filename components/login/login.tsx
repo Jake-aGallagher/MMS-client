@@ -47,7 +47,7 @@ const Login = (props: Props) => {
                     username: user.username,
                     first: user.first_name,
                     last: user.last_name,
-                    authority: user.authority,
+                    user_group_id: user.user_group_id,
                     id: user.id,
                 })
             );
@@ -77,7 +77,7 @@ const Login = (props: Props) => {
                         username: user.username,
                         first: user.first,
                         last: user.last,
-                        authority: user.authority,
+                        user_group_id: user.user_group_id,
                         id: user.id,
                     })
                 );

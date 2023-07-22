@@ -4,12 +4,12 @@ interface PayloadData {
     username: string;
     first: string;
     last: string;
-    authority: number;
+    user_group_id: number;
     id: number;
 }
 
 const initialState = {
-    value: { username: '', first: '', last: '', authority: 0, id: 0 },
+    value: { username: '', first: '', last: '', user_group_id: 0, id: 0 },
 };
 
 export const UserSlice = createSlice({
@@ -20,7 +20,7 @@ export const UserSlice = createSlice({
             state.value.username = action.payload.username;
             state.value.first = action.payload.first;
             state.value.last = action.payload.last;
-            state.value.authority = action.payload.authority;
+            state.value.user_group_id = action.payload.user_group_id;
             state.value.id = action.payload.id;
         },
     },

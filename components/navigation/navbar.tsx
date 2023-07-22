@@ -99,7 +99,7 @@ const NavBar = (props: Props) => {
                 username: '',
                 first: '',
                 last: '',
-                authority: 0,
+                user_group_id: 0,
                 id: 0,
             })
         );
