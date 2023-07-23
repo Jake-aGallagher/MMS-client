@@ -9,7 +9,7 @@ import SortableTable from '../sortableTable/sortableTable';
 
 interface ModalProps {
     closeModal: () => void;
-    payload: { sparesUsed: SparesUsed[]; type: string };
+    payload: { sparesSelected: SparesSelected[]; type: string };
     passbackDetails: (usedSparesArray: Spare[]) => void;
 }
 
@@ -19,7 +19,7 @@ interface Spare {
     name: string;
 }
 
-interface SparesUsed extends Spare {
+interface SparesSelected extends Spare {
     quantity: number;
 }
 
@@ -32,13 +32,13 @@ const usedConfig = {
     searchable: false,
 };
 
-const SparesUsed = (props: ModalProps) => {
+const SparesSelector = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [sparesFullList, setSparesFullList] = useState<Spare[]>([]);
-    const [sparesFiltered, setSparesFiltered] = useState<SparesUsed[]>([]);
-    const [sparesUsed, setSparesUsed] = useState<SparesUsed[]>([]);
+    const [sparesFiltered, setSparesFiltered] = useState<SparesSelected[]>([]);
+    const [sparesSelected, setSparesSelected] = useState<SparesSelected[]>([]);
     const [searchFilter, setSearchFilter] = useState({ type: 0, value: '' });
     const [showRes, setShowRes] = useState(false);
     const [numResults, setNumResults] = useState(0);
@@ -46,7 +46,7 @@ const SparesUsed = (props: ModalProps) => {
     useEffect(() => {
         setLoading(true);
         setError(false);
-        setSparesUsed(props.payload.sparesUsed);
+        setSparesSelected(props.payload.sparesSelected);
         getHandler();
     }, []);
 
@@ -72,7 +72,7 @@ const SparesUsed = (props: ModalProps) => {
     };
 
     const filterResults = () => {
-        let fList: SparesUsed[] = [];
+        let fList: SparesSelected[] = [];
         if (searchFilter.value.length === 0) {
             sparesFullList.forEach((spare) => {
                 fList.push({ ...spare, quantity: 0 });
@@ -103,18 +103,18 @@ const SparesUsed = (props: ModalProps) => {
     const removeUsedHandler = (e: React.MouseEvent<HTMLElement>, id: number) => {
         e.preventDefault();
         // change spares used to have 0 of this item
-        const i = sparesUsed.findIndex((x) => x.id === id);
-        const filtered = sparesUsed.filter((item) => item.id != id);
-        setSparesUsed(() => [...filtered, { id: sparesUsed[i].id, name: sparesUsed[i].name, part_no: sparesUsed[i].part_no, quantity: 0 }]);
+        const i = sparesSelected.findIndex((x) => x.id === id);
+        const filtered = sparesSelected.filter((item) => item.id != id);
+        setSparesSelected(() => [...filtered, { id: sparesSelected[i].id, name: sparesSelected[i].name, part_no: sparesSelected[i].part_no, quantity: 0 }]);
     };
 
     const usedInputClick = (index: number, e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         const spareToUpdate = sparesFiltered[index];
-        const indexOfMatch = sparesUsed.findIndex((x) => x.id === spareToUpdate.id);
+        const indexOfMatch = sparesSelected.findIndex((x) => x.id === spareToUpdate.id);
         if (indexOfMatch != -1) {
-            const filtered = sparesUsed.filter((item) => item.id != spareToUpdate.id);
-            setSparesUsed((prev) => [
+            const filtered = sparesSelected.filter((item) => item.id != spareToUpdate.id);
+            setSparesSelected((prev) => [
                 ...filtered,
                 {
                     id: spareToUpdate.id,
@@ -124,7 +124,7 @@ const SparesUsed = (props: ModalProps) => {
                 },
             ]);
         } else {
-            setSparesUsed((prev) => [...prev, { id: spareToUpdate.id, part_no: spareToUpdate.part_no, name: spareToUpdate.name, quantity: spareToUpdate.quantity }]);
+            setSparesSelected((prev) => [...prev, { id: spareToUpdate.id, part_no: spareToUpdate.part_no, name: spareToUpdate.name, quantity: spareToUpdate.quantity }]);
         }
         const filteredFilterList = sparesFiltered.filter((item) => item.id != spareToUpdate.id);
         const filterListUnordered = [...filteredFilterList, { id: spareToUpdate.id, part_no: spareToUpdate.part_no, name: spareToUpdate.name, quantity: 0 }];
@@ -134,15 +134,15 @@ const SparesUsed = (props: ModalProps) => {
 
     const SubmitHandler = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        props.passbackDetails(sparesUsed);
+        props.passbackDetails(sparesSelected);
         props.closeModal();
     };
 
-    let showSparesUsed: JSX.Element[] | JSX.Element;
-    if (sparesUsed === undefined || sparesUsed.length === 0) {
-        showSparesUsed = <div>None</div>;
+    let showSparesSelected: JSX.Element[] | JSX.Element;
+    if (sparesSelected === undefined || sparesSelected.length === 0) {
+        showSparesSelected = <div>None</div>;
     } else {
-        showSparesUsed = sparesUsed.map((i) => (
+        showSparesSelected = sparesSelected.map((i) => (
             <div key={i.id} className={`flex flex-row border-2 border-blue-600 rounded-md mb-2 w-fit px-2 ${i.quantity < 1 ? 'hidden' : ''}`}>
                 <div className="mr-4">{i.part_no}</div>
                 <div className="mr-4">{i.name}</div>
@@ -181,12 +181,12 @@ const SparesUsed = (props: ModalProps) => {
         <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
             <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">{props.payload.type === 'delivery' ? 'Add to Delivery' : 'Spares Used'}</h1>
             <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                {sparesUsed.length > 0 ? <SortableTable data={sparesUsed} config={usedConfig} /> : null}
+                {sparesSelected.length > 0 ? <SortableTable data={sparesSelected} config={usedConfig} /> : null}
 
                 <SparesSearch searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
 
                 <div>{props.payload.type === 'delivery' ? 'Items Ordered:' : 'Spares Used:'}</div>
-                <div className="mb-5 mt-1">{showSparesUsed}</div>
+                <div className="mb-5 mt-1">{showSparesSelected}</div>
 
                 <div className="mb-5">
                     <div>Search Results</div>
@@ -209,4 +209,4 @@ const SparesUsed = (props: ModalProps) => {
     );
 };
 
-export default SparesUsed;
+export default SparesSelector;

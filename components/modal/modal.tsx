@@ -4,7 +4,7 @@ import AssignUsers from '../properties/assignUsers/assignUsers';
 import DeleteAsset from '../assets/delete';
 import CreateJob from '../assets/createJob';
 import UpdateJob from '../jobs/update';
-import SparesUsed from '../jobs/sparesUsed';
+import SparesSelector from '../jobs/sparesSelector';
 import AddEditSparesNote from '../spares/sparesManagement/sparesNotes/addEditNote/addEditSparesNote';
 import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier/addEditSupplier';
 import AddSparesItem from '../spares/addEditSparesItem/addEditSparesItem';
@@ -47,8 +47,8 @@ const ModalBase = (props: ModalProps) => {
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
 
             //Spare
-            case 'sparesUsed':
-                return <SparesUsed closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
+            case 'SparesSelector':
+                return <SparesSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
             case 'addEditDelivery':
                 return <AddEditDelivery closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteDelivery':

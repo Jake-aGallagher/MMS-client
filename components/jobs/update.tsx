@@ -34,7 +34,7 @@ interface User {
     user_group_id: number;
 }
 
-interface SparesUsed {
+interface SparesSelected {
     id: number;
     part_no: string;
     name: string;
@@ -55,7 +55,7 @@ const UpdateJob = (props: ModalProps) => {
     const [statusOptions, setStatusOptions] = useState<StatusOptions[]>([]);
     const [users, setUsers] = useState<User[]>([]);
     const [id, setId] = useState(0);
-    const [sparesUsed, setSparesUsed] = useState<SparesUsed[]>([]);
+    const [sparesSelected, setSparesSelected] = useState<SparesSelected[]>([]);
     const [time, setTime] = useState(0);
     const [completed, setCompleted] = useState(0);
     const [loggedTimeId, setLoggedTimeId] = useState(0);
@@ -121,7 +121,7 @@ const UpdateJob = (props: ModalProps) => {
                 setStatusOptions(response.data.statusOptions);
                 setUsers(response.data.users);
                 if (response.data.usedSpares) {
-                    setSparesUsed(response.data.usedSpares);
+                    setSparesSelected(response.data.usedSpares);
                 }
                 if (response.data.timeDetails) {
                     setLoggedTimeDetails(response.data.timeDetails);
@@ -157,7 +157,7 @@ const UpdateJob = (props: ModalProps) => {
             quantity: number;
         }[]
     ) => {
-        setSparesUsed(spares);
+        setSparesSelected(spares);
     };
 
     const addFile = (file: Blob) => {
@@ -217,7 +217,7 @@ const UpdateJob = (props: ModalProps) => {
                 logged_time: time,
                 logged_time_details: loggedTimeDetails,
                 complete,
-                sparesUsed,
+                sparesUsed: sparesSelected,
                 propertyId: currentProperty,
             })
         );
@@ -254,7 +254,7 @@ const UpdateJob = (props: ModalProps) => {
             <LoadingNoDataError loading={loading} error={error} noData={noData}>
                 <>
                     {viewModal ? (
-                        <ModalBase modalType="sparesUsed" payload={{ sparesUsed, type: 'used' }} fullSize={true} passbackDeatails={addSparesHandler} closeModal={() => setViewModal(false)} />
+                        <ModalBase modalType="SparesSelector" payload={{ sparesSelected, type: 'used' }} fullSize={true} passbackDeatails={addSparesHandler} closeModal={() => setViewModal(false)} />
                     ) : null}
                     <FormContainer>
                         <FormHeader label={'Update Job'} />
@@ -284,7 +284,7 @@ const UpdateJob = (props: ModalProps) => {
                                         Log Spares Used
                                     </button>
                                     <div>
-                                        {sparesUsed.map((spare) => (
+                                        {sparesSelected.map((spare) => (
                                             <div key={spare.id} className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.quantity < 1 ? 'hidden' : ''}`}>
                                                 <div className="mr-4">{spare.part_no}</div>
                                                 <div className="mr-4">{spare.name}</div>

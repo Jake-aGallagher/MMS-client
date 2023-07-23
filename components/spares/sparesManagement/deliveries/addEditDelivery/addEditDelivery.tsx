@@ -60,8 +60,8 @@ const AddEditDelivery = (props: ModalProps) => {
                 <>
                     {viewModal ? (
                         <ModalBase
-                            modalType="sparesUsed"
-                            payload={{ sparesUsed: contents, type: 'delivery' }}
+                            modalType="SparesSelector"
+                            payload={{ sparesSelected: contents, type: 'delivery' }}
                             fullSize={true}
                             passbackDeatails={addSparesHandler}
                             closeModal={() => setViewModal(false)}
