@@ -11,7 +11,7 @@ interface Contents {
     id: number;
     part_no: string;
     name: string;
-    num_used: number;
+    quantity: number;
 }
 
 interface RetrievedContents {
@@ -100,7 +100,7 @@ export const useAddEditDelivery = (id: number, currentProperty: number) => {
         const adjustedContentsArr: Contents[] = [];
 
         deliveryItems.forEach((deliveryItem) => {
-            adjustedContentsArr.push({ id: deliveryItem.spare_id, part_no: deliveryItem.part_no, name: deliveryItem.name, num_used: deliveryItem.quantity });
+            adjustedContentsArr.push({ id: deliveryItem.spare_id, part_no: deliveryItem.part_no, name: deliveryItem.name, quantity: deliveryItem.quantity });
         });
 
         setContents(adjustedContentsArr);

@@ -22,7 +22,7 @@ interface Spare {
     id: number;
     part_no: string;
     name: string;
-    num_used: number;
+    quantity: number;
 }
 
 const AddEditDelivery = (props: ModalProps) => {
@@ -92,10 +92,10 @@ const AddEditDelivery = (props: ModalProps) => {
                             </button>
                             <div>
                                 {contents.map((spare) => (
-                                    <div key={spare.id} className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.num_used < 1 ? 'hidden' : ''}`}>
+                                    <div key={spare.id} className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.quantity < 1 ? 'hidden' : ''}`}>
                                         <div className="mr-4">{spare.part_no}</div>
                                         <div className="mr-4">{spare.name}</div>
-                                        <div>Quantity Ordered: {spare.num_used}</div>
+                                        <div>Quantity Ordered: {spare.quantity}</div>
                                     </div>
                                 ))}
                             </div>

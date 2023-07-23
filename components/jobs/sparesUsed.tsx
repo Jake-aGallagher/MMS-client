@@ -20,14 +20,14 @@ interface Spare {
 }
 
 interface SparesUsed extends Spare {
-    num_used: number;
+    quantity: number;
 }
 
 const usedConfig = {
     headers: [
-        { id: 'Part Number', name: 'Part Number', type: 'string', nameParam: 'part_no', search: false, order: false },
+        { id: 'part_no', name: 'Part Number', type: 'string', nameParam: 'part_no', search: false, order: false },
         { id: 'name', name: 'Name', type: 'string', search: false, order: false },
-        { id: 'num_used', name: 'Quantity', type: 'numver', search: false, order: false },
+        { id: 'quantity', name: 'Quantity', type: 'number', search: false, order: false },
     ],
     searchable: false,
 };
@@ -75,18 +75,18 @@ const SparesUsed = (props: ModalProps) => {
         let fList: SparesUsed[] = [];
         if (searchFilter.value.length === 0) {
             sparesFullList.forEach((spare) => {
-                fList.push({ ...spare, num_used: 0 });
+                fList.push({ ...spare, quantity: 0 });
             });
         } else if (searchFilter.type === 0) {
             sparesFullList.forEach((spare) => {
                 if (spare.part_no.toLowerCase().includes(searchFilter.value.toLowerCase())) {
-                    fList.push({ ...spare, num_used: 0 });
+                    fList.push({ ...spare, quantity: 0 });
                 }
             });
         } else {
             sparesFullList.forEach((spare) => {
                 if (spare.name.toLowerCase().includes(searchFilter.value.toLowerCase())) {
-                    fList.push({ ...spare, num_used: 0 });
+                    fList.push({ ...spare, quantity: 0 });
                 }
             });
         }
@@ -96,7 +96,7 @@ const SparesUsed = (props: ModalProps) => {
 
     const usedInputHandler = (inputValue: number, index: number) => {
         let updatedSparesFiltered = [...sparesFiltered];
-        updatedSparesFiltered[index].num_used = inputValue;
+        updatedSparesFiltered[index].quantity = inputValue;
         setSparesFiltered(updatedSparesFiltered);
     };
 
@@ -105,7 +105,7 @@ const SparesUsed = (props: ModalProps) => {
         // change spares used to have 0 of this item
         const i = sparesUsed.findIndex((x) => x.id === id);
         const filtered = sparesUsed.filter((item) => item.id != id);
-        setSparesUsed(() => [...filtered, { id: sparesUsed[i].id, name: sparesUsed[i].name, part_no: sparesUsed[i].part_no, num_used: 0 }]);
+        setSparesUsed(() => [...filtered, { id: sparesUsed[i].id, name: sparesUsed[i].name, part_no: sparesUsed[i].part_no, quantity: 0 }]);
     };
 
     const usedInputClick = (index: number, e: React.MouseEvent<HTMLElement>) => {
@@ -120,14 +120,14 @@ const SparesUsed = (props: ModalProps) => {
                     id: spareToUpdate.id,
                     part_no: spareToUpdate.part_no,
                     name: spareToUpdate.name,
-                    num_used: prev[indexOfMatch].num_used + spareToUpdate.num_used,
+                    quantity: prev[indexOfMatch].quantity + spareToUpdate.quantity,
                 },
             ]);
         } else {
-            setSparesUsed((prev) => [...prev, { id: spareToUpdate.id, part_no: spareToUpdate.part_no, name: spareToUpdate.name, num_used: spareToUpdate.num_used }]);
+            setSparesUsed((prev) => [...prev, { id: spareToUpdate.id, part_no: spareToUpdate.part_no, name: spareToUpdate.name, quantity: spareToUpdate.quantity }]);
         }
         const filteredFilterList = sparesFiltered.filter((item) => item.id != spareToUpdate.id);
-        const filterListUnordered = [...filteredFilterList, { id: spareToUpdate.id, part_no: spareToUpdate.part_no, name: spareToUpdate.name, num_used: 0 }];
+        const filterListUnordered = [...filteredFilterList, { id: spareToUpdate.id, part_no: spareToUpdate.part_no, name: spareToUpdate.name, quantity: 0 }];
         filterListUnordered.sort((a, b) => b.part_no.localeCompare(a.part_no));
         setSparesFiltered(filterListUnordered);
     };
@@ -143,11 +143,11 @@ const SparesUsed = (props: ModalProps) => {
         showSparesUsed = <div>None</div>;
     } else {
         showSparesUsed = sparesUsed.map((i) => (
-            <div key={i.id} className={`flex flex-row border-2 border-blue-600 rounded-md mb-2 w-fit px-2 ${i.num_used < 1 ? 'hidden' : ''}`}>
+            <div key={i.id} className={`flex flex-row border-2 border-blue-600 rounded-md mb-2 w-fit px-2 ${i.quantity < 1 ? 'hidden' : ''}`}>
                 <div className="mr-4">{i.part_no}</div>
                 <div className="mr-4">{i.name}</div>
                 <div className="mr-4">
-                    {props.payload.type === 'delivery' ? 'Quantity Ordered:' : 'Quantity Used:'} {i.num_used}
+                    {props.payload.type === 'delivery' ? 'Quantity Ordered:' : 'Quantity Used:'} {i.quantity}
                 </div>
                 <button
                     onClick={(e) => {
@@ -168,7 +168,7 @@ const SparesUsed = (props: ModalProps) => {
                 type="number"
                 min="0"
                 className="rounded-sm bg-blue-200 my-1 border-2 border-blue-600"
-                value={i.num_used}
+                value={i.quantity}
                 onChange={(e) => usedInputHandler(parseInt(e.target.value), index)}
             ></input>
             <button className="text-green-600 text-xl ml-4" onClick={(e) => usedInputClick(index, e)}>
