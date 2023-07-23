@@ -1,5 +1,5 @@
 import { SetStateAction } from 'react';
-import { createJobConn } from './creatJobConn';
+import { createJobConn } from './createJobConn';
 
 interface Props {
     data: any;

@@ -1,0 +1,11 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const formValidation = yup.object().shape({
+    status: yup.number().required(),
+    description: yup.string().max(1000),
+    notes: yup.string().max(1000),
+    completed: yup.number().required(),
+});
+
+export const yupResolverUpdateJob = yupResolver(formValidation);
