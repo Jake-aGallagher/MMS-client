@@ -87,7 +87,7 @@ const ModalBase = (props: ModalProps) => {
     };
     return (
         <>
-            <div className="fixed left-0 top-0 h-screen w-screen bg-black opacity-70 z-40 " onClick={props.closeModal}></div>
+            <div className={`fixed left-0 top-0 h-screen w-screen z-40 ${props.fullSize ? null : 'bg-black opacity-70'}`} onClick={props.closeModal}></div>
             {props.fullSize ? (
                 <div className="absolute top-0 mx-auto rounded-lg left-0 right-0 h-full w-full bg-blue-50 z-50 ">{modalToDisplay(props.modalType)}</div>
             ) : (
