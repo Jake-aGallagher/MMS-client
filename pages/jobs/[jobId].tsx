@@ -116,7 +116,7 @@ const JobView = () => {
                 <b>Used Spares: </b>
                 {sparesDetails.map((i) => (
                     <div className="flex flex-row my-4 ml-4 w-fit px-2" key={'spares_item_' + i.id}>
-                        {i.part_no + ' / ' + i.name + ' / Quantity: ' + i.num_used}
+                        {i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}
                     </div>
                 ))}
             </div>

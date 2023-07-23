@@ -29,7 +29,7 @@ interface TimeDetails {
 
 interface UsedSpares {
     id: number;
-    num_used: number;
+    quantity: number;
     part_no: string;
     name: string;
 }
