@@ -1,11 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import axios from 'axios';
 import ModalBase from '../../modal/modal';
-import { SERVER_URL } from '../../routing/addressAPI';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import FormHeader from '../../forms/formHeader';
 import GeneralFormSubmit from '../../forms/generalFormSubmit';
@@ -13,30 +9,19 @@ import GeneralFormInput from '../../forms/generalFormInput';
 import FormContainer from '../../forms/formContainer';
 import GeneralForm from '../../forms/generalForm';
 import LoadingNoDataError from '../../loading/loadingNoDataError';
+import { useCreateJob } from './useCreateJob';
+import { yupResolverCreateJob } from './createJobValidation';
+import { createJobHandler } from './createJobHandler';
 
 interface ModalProps {
     closeModal: () => void;
     assetId: number;
 }
 
-interface TypeOptions {
-    id: number;
-    value: string;
-}
-
-interface UrgencyOptions {
-    id: number;
-    value: string;
-}
-
 const CreateJob = (props: ModalProps) => {
-    const [loading, setLoading] = useState(true);
-    const [noData, setNoData] = useState(false);
-    const [error, setError] = useState(false);
+    const { defaultValues, typeOptions, urgencyOptions, loading, error } = useCreateJob();
     const userId = useSelector((state: RootState) => state.user.value.id);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const [typeOptions, setTypeOptions] = useState<TypeOptions[]>([]);
-    const [urgencyOptions, setUrgencyOptions] = useState<UrgencyOptions[]>([]);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [modalPayload, setModalPayload] = useState(0);
@@ -44,21 +29,6 @@ const CreateJob = (props: ModalProps) => {
         { id: 'No', value: 'No' },
         { id: 'Yes', value: 'Yes' },
     ];
-    const [defaultValues, setDefaultValues] = useState({
-        selectedType: '',
-        title: '',
-        description: '',
-        selectedUrgency: '',
-        compNow: 'No',
-    });
-
-    const formValidation = yup.object().shape({
-        selectedType: yup.string().required(),
-        title: yup.string().required().max(255),
-        description: yup.string().required().max(1000),
-        selectedUrgency: yup.string().required(),
-        compNow: yup.string().required(),
-    });
 
     const {
         register,
@@ -66,74 +36,23 @@ const CreateJob = (props: ModalProps) => {
         reset,
         formState: { errors },
     } = useForm({
-        resolver: yupResolver(formValidation),
+        resolver: yupResolverCreateJob,
         defaultValues: useMemo(() => {
             return defaultValues;
         }, [defaultValues]),
     });
 
     useEffect(() => {
-        setLoading(true);
-        setError(false);
-        setNoData(false);
-        getEnums();
-    }, []);
-
-    useEffect(() => {
         reset(defaultValues);
     }, [defaultValues]);
 
-    const getEnums = async () => {
-        try {
-            const response = await axios.get(`${SERVER_URL}/enums/create-job`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            setTypeOptions(response.data.types);
-            setUrgencyOptions(response.data.urgency);
-            setDefaultValues({
-                ...defaultValues,
-                selectedType: response.data.types[0].id,
-                selectedUrgency: response.data.urgency[0].id,
-            });
-            setLoading(false);
-        } catch (err) {
-            setError(true);
-            setLoading(false);
-        }
-    };
-
     const handleRegistration = async (data: any) => {
-        try {
-            const response = await axios.post(
-                `${SERVER_URL}/jobs`,
-                {
-                    propertyNumber: currentProperty,
-                    assetNumber: props.assetId,
-                    type: data.selectedType,
-                    title: data.title,
-                    description: data.description,
-                    urgency: data.selectedUrgency,
-                    reporter: userId,
-                },
-                {
-                    headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-                }
-            );
-            if (response.data.created && data.compNow == 'No') {
-                props.closeModal();
-            } else if (response.data.created && data.compNow == 'Yes') {
-                setModalPayload(response.data.jobId);
-                setModalType('updateJob');
-                setViewModal(true);
-            }
-        } catch (err) {
-            alert('There has been an issue creating this Job, please try again.');
-        }
+        await createJobHandler({ data, currentProperty, assetId: props.assetId, userId, closeModal: props.closeModal, setModalPayload, setModalType, setViewModal });
     };
 
     return (
         <>
-            <LoadingNoDataError loading={loading} error={error} noData={noData}>
+            <LoadingNoDataError loading={loading} error={error}>
                 <>
                     {viewModal ? <ModalBase modalType={modalType} payload={modalPayload} fullSize={true} closeModal={() => [setViewModal(false), props.closeModal()]} /> : ''}
                     <FormContainer>
