@@ -1,18 +1,18 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { RootState } from '../../store/store';
 import axios from 'axios';
-import ModalBase from '../modal/modal';
-import { SERVER_URL } from '../routing/addressAPI';
+import ModalBase from '../../modal/modal';
+import { SERVER_URL } from '../../routing/addressAPI';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import FormHeader from '../forms/formHeader';
-import GeneralFormSubmit from '../forms/generalFormSubmit';
-import GeneralFormInput from '../forms/generalFormInput';
-import FormContainer from '../forms/formContainer';
-import GeneralForm from '../forms/generalForm';
-import LoadingNoDataError from '../loading/loadingNoDataError';
+import FormHeader from '../../forms/formHeader';
+import GeneralFormSubmit from '../../forms/generalFormSubmit';
+import GeneralFormInput from '../../forms/generalFormInput';
+import FormContainer from '../../forms/formContainer';
+import GeneralForm from '../../forms/generalForm';
+import LoadingNoDataError from '../../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;

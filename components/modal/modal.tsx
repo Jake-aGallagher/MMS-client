@@ -2,7 +2,7 @@ import AddEditUser from '../settings/users/addEditUsers/addEditUsers';
 import AddEditProperty from '../properties/addEditProperty/addEditProperty';
 import AssignUsers from '../properties/assignUsers/assignUsers';
 import DeleteAsset from '../assets/delete';
-import CreateJob from '../assets/createJob';
+import CreateJob from '../jobs/createJob/createJob';
 import UpdateJob from '../jobs/update';
 import SparesSelector from '../jobs/sparesSelector';
 import AddEditSparesNote from '../spares/sparesManagement/sparesNotes/addEditNote/addEditSparesNote';
