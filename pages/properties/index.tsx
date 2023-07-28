@@ -3,6 +3,7 @@ import ModalBase from '../../components/modal/modal';
 import SortableTable from '../../components/sortableTable/sortableTable';
 import { useProperties } from '../../components/properties/index/useProperties';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
+import DataTable from '../../components/dataTable/dataTable';
 
 const propertiesTableConfig = {
     headers: [
@@ -35,6 +36,7 @@ const Properties = () => {
                 {viewModal ? <ModalBase modalType={modalType} payload={0} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
                     <SortableTable config={propertiesTableConfig} data={allProperties} />
+                    <DataTable config={propertiesTableConfig} data={allProperties} />
                 </LoadingNoDataError>
             </div>
         </>
