@@ -11,7 +11,7 @@ const propertiesTableConfig = {
         { id: 'name', name: 'Name', type: 'string', search: true, order: true },
         { id: 'type', name: 'Type', type: 'string', search: true, order: true },
         { id: 'address', name: 'Address', type: 'string', search: true, order: true },
-        { id: 'city', name: 'City', type: 'date', search: true, order: true },
+        { id: 'city', name: 'City', type: 'string', search: true, order: true },
         { id: 'county', name: 'County', type: 'string', search: true, order: true },
         { id: 'postcode', name: 'Postcode', type: 'string', search: true, order: true },
     ],

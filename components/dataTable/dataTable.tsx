@@ -3,6 +3,8 @@ import DataTableHead from './dataTableHead';
 import DataTableRow from './dataTableRow';
 import { sortBuilder } from './sortBuilder';
 import { sortTableData } from './sortData';
+import DataTableSearch from './dataTableSearch';
+import { dataTableSearchFilter } from './dataTableSearchFilter';
 
 interface Props {
     config: {
@@ -44,13 +46,22 @@ interface Contents {
 const DataTable = (props: Props) => {
     const [loading, setLoading] = useState(true);
     const rawData = props.data;
+    const [filtersArr, setFiltersArr] = useState<{ formName: string; value: number | string; filterType: string }[]>([]);
     const [filtered, setFiltered] = useState<{}[]>([]);
     const [sorted, setSorted] = useState<{}[]>([]);
     const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: props.config.reverseSort ? 'DSC' : 'ASC' });
 
     useEffect(() => {
+        filterData();
+    }, [filtersArr]);
+
+    useEffect(() => {
         sortData(currentSort.col, currentSort.dir);
-    }, []);
+    }, [filtered]);
+
+    const filterData = () => {
+        setFiltered(dataTableSearchFilter(rawData, filtersArr));
+    };
 
     const sortFunction = (chosenSort: string) => {
         const sortObj = sortBuilder(chosenSort, currentSort);
@@ -65,14 +76,17 @@ const DataTable = (props: Props) => {
     };
 
     return (
-        <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-            <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
-            <tbody>
-                {sorted.map((item) => (
-                    <DataTableRow data={item} headers={props.config.headers} linkColPrefix={props.config.linkColPrefix} viewTooManyItems={props.viewTooManyItems} />
-                ))}
-            </tbody>
-        </table>
+        <>
+            <DataTableSearch headers={props.config.headers} currentFilters={filtersArr} setFiltersArr={setFiltersArr} />
+            <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
+                <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
+                <tbody>
+                    {sorted.map((item) => (
+                        <DataTableRow data={item} headers={props.config.headers} linkColPrefix={props.config.linkColPrefix} viewTooManyItems={props.viewTooManyItems} />
+                    ))}
+                </tbody>
+            </table>
+        </>
     );
 };
 
