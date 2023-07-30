@@ -13,7 +13,7 @@ interface Props<T extends FieldValues> extends OptionNameString {
     extraClasses?: string;
 }
 
-const SearchFormInput = (props: Props<any>) => {
+const DataTableSearchInput = (props: Props<any>) => {
     const textType = ['string', 'linkWithName', 'url'];
     const numberType = ['link'];
     const dateType = ['date'];
@@ -21,18 +21,18 @@ const SearchFormInput = (props: Props<any>) => {
     const booleanType = ['completed', 'arrived'];
 
     return (
-        <>
-            {props.label ? <label htmlFor={props.formName}>{props.label}: </label> : null}
+        <div className='flex flex-col mx-1'>
+            {props.label ? <label htmlFor={props.formName} className='font-semibold'>{props.label} </label> : null}
 
             {textType.includes(props.type) && (
-                <input id={props.formName} type="text" className={`mb-2 rounded-sm bg-blue-200 ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
+                <input id={props.formName} type="text" className={`mb-2 rounded-sm bg-blue-200 w-60 ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
             )}
 
             {numberType.includes(props.type) && (
                 <input
                     id={props.formName}
                     type="number"
-                    className={`mb-2 rounded-sm bg-blue-200 ${props.extraClasses && props.extraClasses}`}
+                    className={`mb-2 rounded-sm bg-blue-200 w-60 ${props.extraClasses && props.extraClasses}`}
                     {...props.register(props.formName, { valueAsNumber: true })}
                 />
             )}
@@ -62,8 +62,8 @@ const SearchFormInput = (props: Props<any>) => {
                     ))}
                 </select>
             )} */}
-        </>
+        </div>
     );
 };
 
-export default SearchFormInput;
+export default DataTableSearchInput;

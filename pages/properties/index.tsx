@@ -35,7 +35,6 @@ const Properties = () => {
                 </div>
                 {viewModal ? <ModalBase modalType={modalType} payload={0} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
-                    <SortableTable config={propertiesTableConfig} data={allProperties} />
                     <DataTable config={propertiesTableConfig} data={allProperties} />
                 </LoadingNoDataError>
             </div>

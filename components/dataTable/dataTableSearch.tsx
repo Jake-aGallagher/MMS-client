@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import SearchFormInput from './dataTableSearchInput';
+import DataTableSearchInput from './dataTableSearchInput';
 import { useForm } from 'react-hook-form';
 import DataTableSeachForm from './dataTableSearchForm';
 import DataTableSearchSubmit from './dataTableSearchSubmit';
@@ -27,7 +27,7 @@ const DataTableSearch = (props: Props) => {
 
     const clearFilters = () => {
         props.setFiltersArr([]);
-        reset()
+        reset();
     };
 
     const handleRegistration = async (data: any) => {
@@ -45,19 +45,17 @@ const DataTableSearch = (props: Props) => {
 
     const searchItems = props.headers.map((item) => {
         if (item.search) {
-            return (
-                <div>
-                    <SearchFormInput register={register} label={item.name} type={item.type} formName={item.id} />
-                </div>
-            );
+            return <DataTableSearchInput register={register} label={item.name} type={item.type} formName={item.id} key={item.id} />;
         }
     });
 
     return (
-        <div>
+        <div className='w-full flex flex-row justify-center my-5 px-2'>
             <DataTableSeachForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                {searchItems}
-                <DataTableSearchSubmit clearFilters={clearFilters} />
+                <div className='flex flex-row min-h-fit'>
+                    <div className="flex flex-row flex-wrap">{searchItems}</div>
+                    <DataTableSearchSubmit clearFilters={clearFilters} />
+                </div>
             </DataTableSeachForm>
         </div>
     );
