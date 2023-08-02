@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import DataTableHead from './dataTableHead';
-import DataTableRow from './dataTableRow';
-import { sortBuilder } from './sortBuilder';
-import { sortTableData } from './sortData';
-import DataTableSearch from './dataTableSearch';
-import { dataTableSearchFilter } from './dataTableSearchFilter';
+import DataTableHead from './head/dataTableHead';
+import DataTableRow from './body/dataTableRow';
+import { sortBuilder } from './head/sortBuilder';
+import { sortTableData } from './head/sortData';
+import DataTableSearch from './search/dataTableSearch';
+import { dataTableSearchFilter } from './search/dataTableSearchFilter';
 import LoadingNoDataError from '../loading/loadingNoDataError';
-import { columnTypeMap } from './columnTypeMap';
+import { columnTypeMap } from './search/columnTypeMap';
 
 interface Props {
     config: {
