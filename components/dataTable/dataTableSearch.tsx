@@ -18,41 +18,37 @@ interface Props {
         avgUsagePointer?: string;
         quantRemainPonter?: string;
     }[];
-    currentFilters: { formName: string; value: number | string; filterType: string }[];
-    setFiltersArr: Dispatch<SetStateAction<{ formName: string; value: number | string; filterType: string }[]>>;
+    currentFilters: { [key: string]: string | number };
+    setFiltersObj: Dispatch<SetStateAction<{ [key: string]: string | number }>>;
 }
 
 const DataTableSearch = (props: Props) => {
     const { register, handleSubmit, reset } = useForm({});
 
     const clearFilters = () => {
-        props.setFiltersArr([]);
+        props.setFiltersObj({});
         reset();
     };
 
+    const test = 'test';
+    const another = 'tester';
+    const num = 0;
+    test.includes(another.toString());
+
     const handleRegistration = async (data: any) => {
-        const dataKeys = Object.keys(data);
-        let newFiltersArr: { formName: string; value: number | string; filterType: string }[] = [];
-        dataKeys.forEach((item: any) => {
-            if (data[item].length > 0 && data[item].trim().length > 0) {
-                newFiltersArr.push({ formName: item, value: data[item], filterType: 'string' });
-            } else if (typeof data[item] === 'number' && isFinite(data[item])) {
-                newFiltersArr.push({ formName: item, value: data[item], filterType: 'number' });
-            }
-        });
-        props.setFiltersArr(newFiltersArr);
+        props.setFiltersObj(data);
     };
 
     const searchItems = props.headers.map((item) => {
         if (item.search) {
-            return <DataTableSearchInput register={register} label={item.name} type={item.type} formName={item.id} key={item.id} />;
+            return <DataTableSearchInput register={register} label={item.name} type={item.type} formName={item.id} key={'input_' + item.id} />;
         }
     });
 
     return (
-        <div className='w-full flex flex-row justify-center my-5 px-2'>
+        <div className="w-full flex flex-row justify-center my-5 px-2">
             <DataTableSeachForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                <div className='flex flex-row min-h-fit'>
+                <div className="flex flex-row min-h-fit">
                     <div className="flex flex-row flex-wrap">{searchItems}</div>
                     <DataTableSearchSubmit clearFilters={clearFilters} />
                 </div>

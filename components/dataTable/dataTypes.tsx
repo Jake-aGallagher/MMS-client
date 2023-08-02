@@ -27,7 +27,7 @@ export const UrlData = (props: { urlString: string }) => {
 };
 
 export const TickData = (props: { tick: number }) => {
-    return <div>{props.tick === 1 ? '&#10004;' : '&#10060;'}</div>;
+    return <div>{props.tick === 1 ? <>&#10004;</> : <>&#10060;</>}</div>;
 };
 
 export const RemainingStockData = (props: { remainingStock: number; usage: number }) => {

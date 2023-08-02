@@ -8,6 +8,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import SortableTable from '../../../../components/sortableTable/sortableTable';
 import { useDeliveries } from '../../../../components/spares/sparesManagement/deliveries/index/useDeliveries';
 import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
+import DataTable from '../../../../components/dataTable/dataTable';
 
 interface Contents {
     delivery_id: number;
@@ -26,7 +27,7 @@ const deliveriesTableConfig = {
         { id: 'placed', name: 'Date Placed', type: 'date', search: true, order: true },
         { id: 'due', name: 'Date Due', type: 'date', search: true, order: true },
         { id: 'contents', name: 'Contents', type: 'contents', search: false, order: false, functionNamePointer: 'name' },
-        { id: 'arrived', name: 'Arrived', type: 'arrived', search: true, order: true },
+        { id: 'arrived', name: 'Arrived', type: 'tick', search: true, order: true },
         { id: 'edit', name: 'Edit', type: 'editWithHide', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name', hidePointer: 'arrived' },
         { id: 'delete', name: 'Delete', type: 'deleteWithHide', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name', hidePointer: 'arrived' },
     ],
@@ -75,6 +76,7 @@ const Deliveries = () => {
                 <LoadingNoDataError loading={loading} error={error}>
                     <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
                         <SortableTable config={deliveriesTableConfig} data={deliveriesList} editFunction={addEditDelivery} deleteFunction={deleteDelvery} viewTooManyItems={viewTooManyItems} />
+                        <DataTable config={deliveriesTableConfig} data={deliveriesList} />
                     </div>
                 </LoadingNoDataError>
             </div>

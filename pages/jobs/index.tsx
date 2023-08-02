@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
-import SortableTable from '../../components/sortableTable/sortableTable';
 import { useJobs } from '../../components/jobs/index/useJobs';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
+import DataTable from '../../components/dataTable/dataTable';
 
 const jobTableConfig = {
     headers: [
@@ -15,7 +15,7 @@ const jobTableConfig = {
         { id: 'urgency', name: 'Urgency', type: 'string', search: true, order: true },
         { id: 'required_comp_date', name: 'Required Completion Date', type: 'date', search: true, order: true },
         { id: 'status', name: 'Current Status', type: 'string', search: true, order: true },
-        { id: 'completed', name: 'Completed', type: 'completed', search: true, order: true },
+        { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
         { id: 'comp_date', name: 'Completed Date', type: 'date', search: true, order: true },
         { id: 'reporter', name: 'Reporter', type: 'string', search: true, order: true },
     ],
@@ -35,7 +35,7 @@ const Jobs = () => {
                 </Link>
             </div>
             <LoadingNoDataError loading={loading} error={error}>
-                <SortableTable config={jobTableConfig} data={jobs} />
+                <DataTable config={jobTableConfig} data={jobs} />
             </LoadingNoDataError>
         </div>
     );

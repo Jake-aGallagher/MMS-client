@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import ModalBase from '../../components/modal/modal';
-import SortableTable from '../../components/sortableTable/sortableTable';
 import { useProperties } from '../../components/properties/index/useProperties';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';

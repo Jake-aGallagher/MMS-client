@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { AdjustStockData, ContentsData, DateData, DeleteData, EditData, LinkData, RemainingStockData, StringData, TickData, UrlData } from './dataTypes';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
     headers: {
@@ -36,8 +37,7 @@ const DataTableRow = (props: Props) => {
                     return <UrlData urlString={row[h.id]} />;
                 case 'date':
                     return <DateData dateString={row[h.id]} />;
-                case 'completed':
-                case 'arrived':
+                case 'tick':
                     return <TickData tick={row[h.id]} />;
                 case 'contents':
                     return <ContentsData contents={row[h.id]} name={row[h.functionNamePointer!]} viewTooManyItems={props.viewTooManyItems!} />;
@@ -57,7 +57,7 @@ const DataTableRow = (props: Props) => {
                     return <StringData string={row[h.id]} />;
             }
         };
-        return <td className="border border-solid border-gray-500 px-2 text-center p-2">{switchTypes()}</td>;
+        return <td key={uuidv4()} className="border border-solid border-gray-500 px-2 text-center p-2">{switchTypes()}</td>;
     });
 
     return <tr>{dataPoints}</tr>;

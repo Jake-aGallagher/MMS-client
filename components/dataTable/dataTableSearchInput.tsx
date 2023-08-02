@@ -18,7 +18,7 @@ const DataTableSearchInput = (props: Props<any>) => {
     const numberType = ['link'];
     const dateType = ['date'];
     const selectType = [];
-    const booleanType = ['completed', 'arrived'];
+    const booleanType = ['tick'];
 
     return (
         <div className='flex flex-col mx-1'>

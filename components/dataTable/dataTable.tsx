@@ -5,6 +5,8 @@ import { sortBuilder } from './sortBuilder';
 import { sortTableData } from './sortData';
 import DataTableSearch from './dataTableSearch';
 import { dataTableSearchFilter } from './dataTableSearchFilter';
+import LoadingNoDataError from '../loading/loadingNoDataError';
+import { columnTypeMap } from './columnTypeMap';
 
 interface Props {
     config: {
@@ -46,21 +48,22 @@ interface Contents {
 const DataTable = (props: Props) => {
     const [loading, setLoading] = useState(true);
     const rawData = props.data;
-    const [filtersArr, setFiltersArr] = useState<{ formName: string; value: number | string; filterType: string }[]>([]);
-    const [filtered, setFiltered] = useState<{}[]>([]);
+    const [filtersObj, setFiltersObj] = useState<{ [key: string]: string | number }>({});
+    const [filtered, setFiltered] = useState<{}[]>(rawData);
     const [sorted, setSorted] = useState<{}[]>([]);
     const [currentSort, setCurrentSort] = useState({ col: props.config.headers[0].id, dir: props.config.reverseSort ? 'DSC' : 'ASC' });
+    const colTypeMap = columnTypeMap(props.config.headers);
 
     useEffect(() => {
         filterData();
-    }, [filtersArr]);
+    }, [filtersObj]);
 
     useEffect(() => {
         sortData(currentSort.col, currentSort.dir);
     }, [filtered]);
 
     const filterData = () => {
-        setFiltered(dataTableSearchFilter(rawData, filtersArr));
+        setFiltered(dataTableSearchFilter(rawData, filtersObj, colTypeMap));
     };
 
     const sortFunction = (chosenSort: string) => {
@@ -70,22 +73,24 @@ const DataTable = (props: Props) => {
     };
 
     const sortData = (col: string, dir: string) => {
-        let unorderedData = filtered.length > 0 ? filtered : rawData;
+        let unorderedData = filtered;
         setSorted(sortTableData(unorderedData, col, dir));
         setLoading(false);
     };
 
     return (
         <>
-            <DataTableSearch headers={props.config.headers} currentFilters={filtersArr} setFiltersArr={setFiltersArr} />
-            <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
-                <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
-                <tbody>
-                    {sorted.map((item) => (
-                        <DataTableRow data={item} headers={props.config.headers} linkColPrefix={props.config.linkColPrefix} viewTooManyItems={props.viewTooManyItems} />
-                    ))}
-                </tbody>
-            </table>
+            <DataTableSearch headers={props.config.headers} currentFilters={filtersObj} setFiltersObj={setFiltersObj} />
+            <LoadingNoDataError loading={loading} error={false}>
+                <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
+                    <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
+                    <tbody>
+                        {sorted.map((item, i) => (
+                            <DataTableRow key={'row_' + i} data={item} headers={props.config.headers} linkColPrefix={props.config.linkColPrefix} viewTooManyItems={props.viewTooManyItems} />
+                        ))}
+                    </tbody>
+                </table>
+            </LoadingNoDataError>
         </>
     );
 };
