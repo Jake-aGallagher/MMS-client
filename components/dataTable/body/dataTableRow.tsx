@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { AdjustStockData, ContentsData, DateData, DeleteData, EditData, LinkData, RemainingStockData, StringData, TickData, UrlData } from './dataTypes';
+import { ContentsData, DateData, LinkData, RemainingStockData, StringData, TickData, UrlData } from './dataTypes';
 import { v4 as uuidv4 } from 'uuid';
 import RowTools from './rowTools';
 
@@ -11,21 +11,13 @@ interface Props {
         search: boolean;
         order: boolean;
         nameParam?: string;
-        functionIdPointer?: string;
-        functionNamePointer?: string;
-        hidePointer?: string;
         avgUsagePointer?: string;
         quantRemainPonter?: string;
-
-        
         functions?: string[];
     }[];
     data: {};
     linkColPrefix?: string;
     viewTooManyItems?: (contents: Contents[], name: string) => void;
-    adjustStockFunction?: (id: number, name: string, quantityRemaining: number) => void;
-    deleteFunction?: (id: number, name: string) => void;
-    editFunction?: (id: number, name: string) => void;
     idPointer?: string;
     namePointer?: string;
     modalType?: string;

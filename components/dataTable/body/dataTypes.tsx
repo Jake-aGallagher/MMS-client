@@ -40,16 +40,6 @@ export const RemainingStockData = (props: { remainingStock: number; usage: numbe
     );
 };
 
-export const AdjustStockData = (props: { id: number; name: string; remaining: number; adjustFunction: (id: number, name: string, quantityRemaining: number) => void }) => {
-    if (props.adjustFunction) {
-        return (
-            <div className="flex flex-row justify-center items-center hover:cursor-pointer select-none" onClick={() => props.adjustFunction!(props.id, props.name, props.remaining)}>
-                <FontAwesomeIcon icon={faPenToSquare} className="mr-1 w-5" />
-            </div>
-        );
-    }
-};
-
 interface Contents {
     delivery_id: number;
     spare_id: number;
@@ -64,29 +54,5 @@ export const ContentsData = (props: { contents: Contents[]; name: string; viewTo
         return <ul>{list}</ul>;
     } else if (props.viewTooManyItems) {
         return <button onClick={() => props.viewTooManyItems!(props.contents, props.name)}>&#x1F50D;</button>;
-    }
-};
-
-export const EditData = (props: { id: number; name: string; hide: number; editFunction: (id: number, name: string) => void }) => {
-    if (props.editFunction && props.hide != 1) {
-        return (
-            <div className="flex flex-row justify-center items-center hover:cursor-pointer select-none" onClick={() => props.editFunction!(props.id, props.name)}>
-                <FontAwesomeIcon icon={faPenToSquare} className="mr-1 w-5" />
-            </div>
-        );
-    } else {
-        return;
-    }
-};
-
-export const DeleteData = (props: { id: number; name: string; hide: number; deleteFunction: (id: number, name: string) => void }) => {
-    if (props.deleteFunction && props.hide != 1) {
-        return (
-            <div className="flex flex-row justify-center items-center hover:cursor-pointer select-none" onClick={() => props.deleteFunction!(props.id, props.name)}>
-                <FontAwesomeIcon icon={faXmark} className="mr-1 w-5 text-red-600" />
-            </div>
-        );
-    } else {
-        return;
     }
 };
