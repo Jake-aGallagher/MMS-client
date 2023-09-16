@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import DataTableSearchInput from './dataTableSearchInput';
 import { useForm } from 'react-hook-form';
 import DataTableSeachForm from './dataTableSearchForm';
@@ -24,6 +24,7 @@ interface Props {
 
 const DataTableSearch = (props: Props) => {
     const { register, handleSubmit, reset } = useForm({});
+    const [view, setView] = useState(false);
 
     const clearFilters = () => {
         props.setFiltersObj({});
@@ -42,12 +43,18 @@ const DataTableSearch = (props: Props) => {
 
     return (
         <div className="w-full flex flex-row justify-center my-5 px-2">
-            <DataTableSeachForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                <div className="flex flex-row min-h-fit">
-                    <div className="flex flex-row flex-wrap">{searchItems}</div>
-                    <DataTableSearchSubmit clearFilters={clearFilters} />
-                </div>
-            </DataTableSeachForm>
+            {view ? (
+                <DataTableSeachForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                    <div className="flex flex-row min-h-fit">
+                        <div className="flex flex-row flex-wrap">{searchItems}</div>
+                        <DataTableSearchSubmit clearFilters={clearFilters} hide={() => setView(false)} />
+                    </div>
+                </DataTableSeachForm>
+            ) : (
+                <button onClick={() => setView(true)} className="h-10 w-80 border-solid border-2 border-blue-700 rounded-md flex flex-row justify-center items-center">
+                    Search
+                </button>
+            )}
         </div>
     );
 };
