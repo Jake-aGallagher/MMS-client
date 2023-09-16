@@ -51,16 +51,6 @@ const DataTableRow = (props: Props) => {
                     return <ContentsData contents={row[h.id]} name={row[h.functionNamePointer!]} viewTooManyItems={props.viewTooManyItems!} />;
                 case 'remaining_stock':
                     return <RemainingStockData remainingStock={row[h.id]} usage={row[h.avgUsagePointer!]} />;
-                case 'adjust_stock':
-                    return <AdjustStockData id={row[h.idPointer!]} name={row[h.namePointer!]} remaining={row[h.quantRemainPonter!]} adjustFunction={props.adjustStockFunction!} />;
-                case 'edit':
-                    return <EditData id={row[h.functionIdPointer!]} name={row[h.functionNamePointer!]} hide={0} editFunction={props.editFunction!} />;
-                case 'editWithHide':
-                    return <EditData id={row[h.functionIdPointer!]} name={row[h.functionNamePointer!]} hide={row[h.hidePointer!]} editFunction={props.editFunction!} />;
-                case 'delete':
-                    return <DeleteData id={row[h.functionIdPointer!]} name={row[h.functionNamePointer!]} hide={0} deleteFunction={props.deleteFunction!} />;
-                case 'deleteWithHide':
-                    return <DeleteData id={row[h.functionIdPointer!]} name={row[h.functionNamePointer!]} hide={row[h.hidePointer!]} deleteFunction={props.deleteFunction!} />;
                 case 'tools':
                     return <RowTools id={row[props.idPointer]} name={row[props.namePointer]} functions={h.functions} modalType={props.modalType} reload={props.reload} />
                 default:
