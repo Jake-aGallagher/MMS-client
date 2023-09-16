@@ -4,6 +4,8 @@ import { RootState } from '../../components/store/store';
 import { useJobs } from '../../components/jobs/index/useJobs';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
+import FullPage from '../../components/page/fullPage';
+import Toolbar from '../../components/page/toolbar';
 
 const jobTableConfig = {
     headers: [
@@ -28,16 +30,16 @@ const Jobs = () => {
     const { jobs, loading, error } = useJobs({ currentProperty });
 
     return (
-        <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
-            <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+        <FullPage>
+            <Toolbar>
                 <Link href="/assets" className="ml-8 hover:text-blue-600 flex flex-row items-center">
                     <div className="text-2xl mr-1 pb-1">+</div>Create Job
                 </Link>
-            </div>
+            </Toolbar>
             <LoadingNoDataError loading={loading} error={error}>
                 <DataTable config={jobTableConfig} data={jobs} />
             </LoadingNoDataError>
-        </div>
+        </FullPage>
     );
 };
 

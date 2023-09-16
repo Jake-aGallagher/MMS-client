@@ -3,6 +3,8 @@ import ModalBase from '../../components/modal/modal';
 import { useProperties } from '../../components/properties/index/useProperties';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
+import FullPage from '../../components/page/fullPage';
+import Toolbar from '../../components/page/toolbar';
 
 const propertiesTableConfig = {
     headers: [
@@ -25,18 +27,18 @@ const Properties = () => {
 
     return (
         <>
-            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
-                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+            <FullPage>
+                <Toolbar>
                     <button onClick={() => [setViewModal(true), setmodalType('addEditProperty')]} className="ml-8 hover:text-blue-600 flex flex-row items-center">
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Property
                     </button>
-                </div>
+                </Toolbar>
                 {viewModal ? <ModalBase modalType={modalType} payload={0} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
                     <DataTable config={propertiesTableConfig} data={allProperties} />
                 </LoadingNoDataError>
-            </div>
+            </FullPage>
         </>
     );
 };

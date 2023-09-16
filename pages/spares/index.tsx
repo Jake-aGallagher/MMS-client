@@ -9,6 +9,8 @@ import { useSpares } from '../../components/spares/index/useSpares';
 import SparesTableIndexKey from '../../components/spares/index/sparesIndexTableKey';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
+import FullPage from '../../components/page/fullPage';
+import Toolbar from '../../components/page/toolbar';
 
 interface PropsForModal {
     id: number;
@@ -55,8 +57,8 @@ const Spares = () => {
 
     return (
         <>
-            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
-                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+            <FullPage>
+                <Toolbar>
                     <Link href="/spares/sparesManagement" className="ml-8 hover:text-blue-600 flex flex-row items-center">
                         <FontAwesomeIcon icon={faClipboard} className="mr-1 w-3" />
                         Spares Management
@@ -65,13 +67,13 @@ const Spares = () => {
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Spares Item
                     </button>
-                </div>
+                </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.type} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
                     <SparesTableIndexKey />
                     <DataTable config={sparesTableConfig} data={spares} />
                 </LoadingNoDataError>
-            </div>
+            </FullPage>
         </>
     );
 };

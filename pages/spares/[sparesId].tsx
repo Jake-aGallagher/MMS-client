@@ -10,6 +10,8 @@ import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import { useSparesDetails } from '../../components/spares/details/useSparesDetails';
 import SparesDetailsRender from '../../components/spares/details/sparesDetailsRender';
 import DataTable from '../../components/dataTable/dataTable';
+import FullPage from '../../components/page/fullPage';
+import Toolbar from '../../components/page/toolbar';
 
 const jobTableConfig = {
     headers: [
@@ -37,8 +39,8 @@ const SparesView = () => {
 
     return (
         <>
-            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
-                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+            <FullPage>
+                <Toolbar>
                     <Link href="/spares" className="ml-8 hover:text-blue-600 flex flex-row items-center">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Spares</p>
@@ -47,8 +49,7 @@ const SparesView = () => {
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit Spares Item
                     </button>
-                </div>
-
+                </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <>
@@ -56,7 +57,7 @@ const SparesView = () => {
                         {recentJobs.length > 0 ? <DataTable config={jobTableConfig} data={recentJobs} /> : null}
                     </>
                 </LoadingNoDataError>
-            </div>
+            </FullPage>
         </>
     );
 };

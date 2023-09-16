@@ -8,6 +8,8 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useDeliveries } from '../../../../components/spares/sparesManagement/deliveries/index/useDeliveries';
 import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
 import DataTable from '../../../../components/dataTable/dataTable';
+import FullPage from '../../../../components/page/fullPage';
+import Toolbar from '../../../../components/page/toolbar';
 
 interface Contents {
     delivery_id: number;
@@ -55,8 +57,8 @@ const Deliveries = () => {
 
     return (
         <>
-            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
-                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+            <FullPage>
+                <Toolbar>
                     <Link href="/spares/sparesManagement" className="ml-8 hover:text-blue-600 flex flex-row items-center">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Spares Management</p>
@@ -65,14 +67,14 @@ const Deliveries = () => {
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Delivery
                     </button>
-                </div>
+                </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { contents: [], name: '' } })]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
                     <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
                         <DataTable config={deliveriesTableConfig} data={deliveriesList} viewTooManyItems={viewTooManyItems} />
                     </div>
                 </LoadingNoDataError>
-            </div>
+            </FullPage>
         </>
     );
 };

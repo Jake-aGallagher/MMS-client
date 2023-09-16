@@ -10,6 +10,8 @@ import ParentDetails from '../../components/assets/details/parentDetails';
 import { useAssetTree } from '../../components/assets/assetUtil/useAssetTree';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
+import FullPage from '../../components/page/fullPage';
+import Toolbar from '../../components/page/toolbar';
 
 const AssetView = () => {
     const params = useRouter();
@@ -19,7 +21,7 @@ const AssetView = () => {
     const [modalProps, setModalProps] = useState({});
     const { assetDetails, recentJobs, children, loading, noData, error, reload } = useAssetDetails(assetId, setModalProps);
     const { openBranches, toggle } = useOpenBranches();
-    const { allRoots } = useAssetTree({type: 'details', assetTree: children, openBranches, toggle, setViewModal, setModalType, setModalProps});
+    const { allRoots } = useAssetTree({ type: 'details', assetTree: children, openBranches, toggle, setViewModal, setModalType, setModalProps });
 
     const recentJobTableConfig = {
         headers: [
@@ -35,8 +37,8 @@ const AssetView = () => {
 
     return (
         <>
-            <div className="w-full h-full pt-12 overflow-x-auto overflow-y-auto bg-gray-100">
-                <div className="fixed top-0 left-52 right-0 z-10 bg-gray-200 h-12 border-b-2 border-gray-300 flex flex-row justify-start items-center">
+            <FullPage>
+                <Toolbar>
                     <Link href="/assets" className="ml-8 hover:text-blue-600 flex flex-row items-center">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Assets</p>
@@ -45,7 +47,7 @@ const AssetView = () => {
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit
                     </button>
-                </div>
+                </Toolbar>
                 {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <>
@@ -67,8 +69,8 @@ const AssetView = () => {
                             </div>
                         ) : null}
                     </>
-                    </LoadingNoDataError>
-            </div>
+                </LoadingNoDataError>
+            </FullPage>
         </>
     );
 };
