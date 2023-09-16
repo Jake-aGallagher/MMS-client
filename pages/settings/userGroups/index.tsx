@@ -3,36 +3,29 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
-import SortableTable from '../../../components/sortableTable/sortableTable';
 import ModalBase from '../../../components/modal/modal';
 import { useUserGroups } from '../../../components/settings/userGroups/index/useUserGroups';
-
-const usersTableConfig = {
-    headers: [
-        { id: 'id', name: 'ID', type: 'string', search: true, order: true },
-        { id: 'name', name: 'Name', type: 'string', search: true, order: true },
-        { id: 'edit', name: 'Edit', type: 'edit', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name' },
-        { id: 'delete', name: 'Delete', type: 'delete', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name' },
-    ],
-    searchable: true,
-};
+import DataTable from '../../../components/dataTable/dataTable';
 
 const UserGroups = () => {
     const { userGroups, loading, error, reload } = useUserGroups();
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
-    const [payload, setPayload] = useState<{ id: number; name: string }>({ id: 0, name: '' });
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
-    const addEditUserGroup = (id: number, name: string) => {
-        setPayload({ id, name });
-        setModalType('addEditUserGroup');
-        setViewModal(true);
+    const userGroupsTableConfig = {
+        headers: [
+            { id: 'id', name: 'ID', type: 'string', search: true, order: true },
+            { id: 'name', name: 'Name', type: 'string', search: true, order: true },
+            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
+        ],
+        searchable: true,
+        modalType: 'UserGroup',
+        idPointer: 'id',
+        namePointer: 'name',
+        reload: reload,
     };
 
-    const deleteUserGroup = (id: number, name: string) => {
-        setPayload({ id, name });
-        setModalType('deleteUserGroup');
-        setViewModal(true);
+    const addUserGroup = () => {
+        setModal({ view: true, type: 'addEditUserGroup', payload: { id: 0, name: '' } });
     };
 
     return (
@@ -42,14 +35,14 @@ const UserGroups = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                <button onClick={(e) => addEditUserGroup(0, '')} className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                <button onClick={addUserGroup} className="ml-8 hover:text-blue-600 flex flex-row items-center">
                     <div className="text-2xl mr-1 pb-1">+</div>
                     Add User Group
                 </button>
             </div>
-            {viewModal ? <ModalBase modalType={modalType} payload={payload} closeModal={() => [setPayload({ id: 0, name: '' }), setViewModal(false), reload()]} /> : null}
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error}>
-                <SortableTable config={usersTableConfig} data={userGroups} editFunction={addEditUserGroup} deleteFunction={deleteUserGroup} />
+                <DataTable config={userGroupsTableConfig} data={userGroups} />
             </LoadingNoDataError>
         </div>
     );

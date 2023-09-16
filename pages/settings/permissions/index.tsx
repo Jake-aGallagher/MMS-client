@@ -4,28 +4,24 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalBase from '../../../components/modal/modal';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
-import SortableTable from '../../../components/sortableTable/sortableTable';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import DataTable from '../../../components/dataTable/dataTable';
 
 const Permissions = () => {
-    const usersTableConfig = {
+    const { userGroups, loading, error, reload } = useUserGroups();
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
+
+    const permissionsTableConfig = {
         headers: [
             { id: 'id', name: 'ID', type: 'string', search: true, order: true },
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
-            { id: 'edit', name: 'Edit', type: 'edit', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name' },
+            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit'] },
         ],
         searchable: true,
-    };
-
-    const { userGroups, loading, error, reload } = useUserGroups();
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
-    const [payload, setPayload] = useState<{ id: number; name: string }>({ id: 0, name: '' });
-
-    const addEditUserGroup = (id: number, name: string) => {
-        setPayload({ id, name });
-        setModalType('addEditPermissions');
-        setViewModal(true);
+        modalType: 'Permissions',
+        idPointer: 'id',
+        namePointer: 'name',
+        reload: reload,
     };
 
     return (
@@ -36,9 +32,9 @@ const Permissions = () => {
                     <p>Return to Settings</p>
                 </Link>
             </div>
-            {viewModal ? <ModalBase modalType={modalType} payload={payload} closeModal={() => [setPayload({ id: 0, name: '' }), setViewModal(false), reload()]} /> : null}
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error}>
-                <SortableTable config={usersTableConfig} data={userGroups} editFunction={addEditUserGroup} />
+                <DataTable config={permissionsTableConfig} data={userGroups} />
             </LoadingNoDataError>
         </div>
     );

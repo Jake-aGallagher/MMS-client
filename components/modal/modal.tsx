@@ -61,7 +61,7 @@ const ModalBase = (props: ModalProps) => {
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditSparesItem':
                 return <AddSparesItem closeModal={props.closeModal} payload={props.payload} />;
-            case 'adjustSparesStock':
+            case 'adjustStockSparesItem':
                 return <AdjustSparesStock closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteSparesItem':
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;

@@ -30,11 +30,6 @@ const DataTableSearch = (props: Props) => {
         reset();
     };
 
-    const test = 'test';
-    const another = 'tester';
-    const num = 0;
-    test.includes(another.toString());
-
     const handleRegistration = async (data: any) => {
         props.setFiltersObj(data);
     };

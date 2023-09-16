@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import ModalBase from '../../../components/modal/modal';
-import SortableTable from '../../../components/sortableTable/sortableTable';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useEnums } from '../../../components/settings/enums/index/useEnums';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
+import DataTable from '../../../components/dataTable/dataTable';
 
 const Enums = () => {
-    const { enums, enumTypes, loading, error, reload } = useEnums();
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
-    const [payload, setPayload] = useState<{ id: number; name: string }>({ id: 0, name: '' });
+    const { enums, loading, error, reload } = useEnums();
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     const enumsTableConfig = {
         headers: [
@@ -21,25 +19,17 @@ const Enums = () => {
             { id: 'list_priority', name: 'Order', type: 'string', search: true, order: true },
             { id: 'payload', name: 'Effect 1', type: 'number', search: true, order: true },
             { id: 'payload_two', name: 'Effect 2', type: 'string', search: true, order: true },
-            { id: 'edit', name: 'Edit', type: 'edit', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'value' },
-            { id: 'delete', name: 'Delete', type: 'delete', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'value' },
+            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
         ],
-        searchable: false,
-        selectSearch: true,
-        selectSearchType: 'typeString',
-        selectSearchOptions: enumTypes,
+        searchable: true,
+        modalType: 'Enum',
+        idPointer: 'id',
+        namePointer: 'value',
+        reload: reload,
     };
 
-    const addEditEnum = (id: number, name: string) => {
-        setPayload({ id, name });
-        setModalType('addEditEnum');
-        setViewModal(true);
-    };
-
-    const deleteEnum = (id: number, name: string) => {
-        setPayload({ id, name });
-        setModalType('deleteEnum');
-        setViewModal(true);
+    const addEnum = () => {
+        setModal({ view: true, type: 'addEditEnum', payload: { id: 0, name: '' } });
     };
 
     return (
@@ -49,14 +39,16 @@ const Enums = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                <button onClick={(e) => addEditEnum(0, '')} className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                <button onClick={addEnum} className="ml-8 hover:text-blue-600 flex flex-row items-center">
                     <div className="text-2xl mr-1 pb-1">+</div>
                     Add Enum Value
                 </button>
             </div>
-            {viewModal ? <ModalBase modalType={modalType} payload={{ ...payload, url: 'enum' }} closeModal={() => [setPayload({ id: 0, name: '' }), setViewModal(false), reload()]} /> : null}
+            {modal.view ? (
+                <ModalBase modalType={modal.type} payload={{ ...modal.payload, url: 'enum' }} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} />
+            ) : null}
             <LoadingNoDataError loading={loading} error={error}>
-                <SortableTable config={enumsTableConfig} data={enums} editFunction={addEditEnum} deleteFunction={deleteEnum} />
+                <DataTable config={enumsTableConfig} data={enums} />
             </LoadingNoDataError>
         </div>
     );

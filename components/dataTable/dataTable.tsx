@@ -17,11 +17,9 @@ interface Props {
             search: boolean;
             order: boolean;
             nameParam?: string;
-            functionIdPointer?: string;
-            functionNamePointer?: string;
-            hidePointer?: string;
             avgUsagePointer?: string;
             quantRemainPonter?: string;
+            functions?: string[];
         }[];
         searchable: boolean;
         selectSearch?: boolean;
@@ -29,11 +27,12 @@ interface Props {
         selectSearchOptions?: { type: string }[];
         linkColPrefix?: string;
         reverseSort?: boolean;
+        modalType?: string;
+        idPointer?: string;
+        namePointer?: string;
+        reload?: () => void;
     };
     data: {}[];
-    adjustStockFunction?: (id: number, name: string, quantityRemaining: number) => void;
-    deleteFunction?: (id: number, name: string) => void;
-    editFunction?: (id: number, name: string) => void;
     viewTooManyItems?: (contents: Contents[], name: string) => void;
 }
 
@@ -80,13 +79,23 @@ const DataTable = (props: Props) => {
 
     return (
         <>
-            <DataTableSearch headers={props.config.headers} currentFilters={filtersObj} setFiltersObj={setFiltersObj} />
+            {props.config.searchable ? <DataTableSearch headers={props.config.headers} currentFilters={filtersObj} setFiltersObj={setFiltersObj} /> : null}
             <LoadingNoDataError loading={loading} error={false}>
                 <table className="min-w-full table-auto border-collapse border-2 border-solid border-gray-500 ">
                     <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
                     <tbody>
                         {sorted.map((item, i) => (
-                            <DataTableRow key={'row_' + i} data={item} headers={props.config.headers} linkColPrefix={props.config.linkColPrefix} viewTooManyItems={props.viewTooManyItems} />
+                            <DataTableRow
+                                key={'row_' + i}
+                                data={item}
+                                headers={props.config.headers}
+                                linkColPrefix={props.config.linkColPrefix}
+                                viewTooManyItems={props.viewTooManyItems}
+                                modalType={props.config.modalType}
+                                idPointer={props.config.idPointer}
+                                namePointer={props.config.namePointer}
+                                reload={props.config.reload}
+                            />
                         ))}
                     </tbody>
                 </table>

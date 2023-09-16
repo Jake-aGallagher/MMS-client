@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { SERVER_URL } from '../routing/addressAPI';
 import SparesSearch from '../sparesForm/sparesSearch';
-import SortableTable from '../sortableTable/sortableTable';
+import DataTable from '../dataTable/dataTable';
 
 interface ModalProps {
     closeModal: () => void;
@@ -181,7 +181,7 @@ const SparesSelector = (props: ModalProps) => {
         <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
             <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">{props.payload.type === 'delivery' ? 'Add to Delivery' : 'Spares Used'}</h1>
             <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                {sparesSelected.length > 0 ? <SortableTable data={sparesSelected} config={usedConfig} /> : null}
+                {sparesSelected.length > 0 ? <DataTable data={sparesSelected} config={usedConfig} /> : null}
 
                 <SparesSearch searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
 

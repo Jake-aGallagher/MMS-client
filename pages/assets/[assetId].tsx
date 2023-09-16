@@ -4,24 +4,12 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 import ModalBase from '../../components/modal/modal';
-import SortableTable from '../../components/sortableTable/sortableTable';
 import { useAssetDetails } from '../../components/assets/details/useAssetDetails';
 import { useOpenBranches } from '../../components/assets/assetUtil/useOpenBranches';
 import ParentDetails from '../../components/assets/details/parentDetails';
 import { useAssetTree } from '../../components/assets/assetUtil/useAssetTree';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
-
-const recentJobTableConfig = {
-    headers: [
-        { id: 'id', name: 'Job Number', type: 'link', search: true, order: true },
-        { id: 'asset_name', name: 'Asset', type: 'string', search: true, order: true },
-        { id: 'type', name: 'Type', type: 'string', search: true, order: true },
-        { id: 'created', name: 'Created', type: 'date', search: true, order: true },
-        { id: 'completed', name: 'Completed', type: 'completed', search: true, order: true },
-    ],
-    searchable: false,
-    linkColPrefix: '/jobs/',
-};
+import DataTable from '../../components/dataTable/dataTable';
 
 const AssetView = () => {
     const params = useRouter();
@@ -32,6 +20,18 @@ const AssetView = () => {
     const { assetDetails, recentJobs, children, loading, noData, error, reload } = useAssetDetails(assetId, setModalProps);
     const { openBranches, toggle } = useOpenBranches();
     const { allRoots } = useAssetTree({type: 'details', assetTree: children, openBranches, toggle, setViewModal, setModalType, setModalProps});
+
+    const recentJobTableConfig = {
+        headers: [
+            { id: 'id', name: 'Job Number', type: 'link', search: true, order: true },
+            { id: 'asset_name', name: 'Asset', type: 'string', search: true, order: true },
+            { id: 'type', name: 'Type', type: 'string', search: true, order: true },
+            { id: 'created', name: 'Created', type: 'date', search: true, order: true },
+            { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
+        ],
+        searchable: false,
+        linkColPrefix: '/jobs/',
+    };
 
     return (
         <>
@@ -56,7 +56,7 @@ const AssetView = () => {
                         {recentJobs.length > 0 ? (
                             <div className="w-full overflow-x-auto flex flex-col items-center pb-10 border-b-2 border-blue-600 ">
                                 <div className="my-4">5 Most recent jobs for Components of {assetDetails?.name}:</div>
-                                <SortableTable config={recentJobTableConfig} data={recentJobs} />
+                                <DataTable config={recentJobTableConfig} data={recentJobs} />
                             </div>
                         ) : null}
                         {assetDetails ? <ParentDetails grand_parent_id={assetDetails.grand_parent_id} parent_id={assetDetails.parent_id} parent_name={assetDetails.parent_name} /> : null}

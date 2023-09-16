@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
-import SortableTable from '../../components/sortableTable/sortableTable';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import { useSparesDetails } from '../../components/spares/details/useSparesDetails';
 import SparesDetailsRender from '../../components/spares/details/sparesDetailsRender';
+import DataTable from '../../components/dataTable/dataTable';
 
 const jobTableConfig = {
     headers: [
@@ -18,7 +18,7 @@ const jobTableConfig = {
         { id: 'type', name: 'Type', type: 'string', search: true, order: true },
         { id: 'title', name: 'Title', type: 'string', search: true, order: true },
         { id: 'created', name: 'Created', type: 'date', search: true, order: true },
-        { id: 'completed', name: 'Completed', type: 'completed', search: true, order: true },
+        { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
     ],
     searchable: false,
     linkColPrefix: '/jobs/',
@@ -29,14 +29,10 @@ const SparesView = () => {
     const spareId = params.asPath.split('/')[2];
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { sparesDetails, recentJobs, loading, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
-    const [modalProps, setModalProps] = useState({ id: 0, name: '' });
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     const editStock = () => {
-        setModalType('addEditSparesItem');
-        setModalProps({ id: parseInt(spareId), name: sparesDetails ? sparesDetails.name : '' });
-        setViewModal(true);
+        setModal({ view: true, type: 'addEditSparesItem', payload: { id: parseInt(spareId), name: sparesDetails ? sparesDetails.name : '' } });
     };
 
     return (
@@ -53,11 +49,11 @@ const SparesView = () => {
                     </button>
                 </div>
 
-                {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
+                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <>
                         <SparesDetailsRender sparesDetails={sparesDetails} />
-                        {recentJobs.length > 0 ? <SortableTable config={jobTableConfig} data={recentJobs} /> : null}
+                        {recentJobs.length > 0 ? <DataTable config={jobTableConfig} data={recentJobs} /> : null}
                     </>
                 </LoadingNoDataError>
             </div>

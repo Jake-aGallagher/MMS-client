@@ -5,7 +5,6 @@ import ModalBase from '../../../../components/modal/modal';
 import { RootState } from '../../../../components/store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import SortableTable from '../../../../components/sortableTable/sortableTable';
 import { useDeliveries } from '../../../../components/spares/sparesManagement/deliveries/index/useDeliveries';
 import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
 import DataTable from '../../../../components/dataTable/dataTable';
@@ -18,45 +17,40 @@ interface Contents {
     name: string;
 }
 
-const deliveriesTableConfig = {
-    headers: [
-        { id: 'id', name: 'ID', type: 'string', search: true, order: true },
-        { id: 'name', name: 'Name', type: 'string', search: true, order: true },
-        { id: 'supplier', name: 'Supplier', type: 'string', search: true, order: true },
-        { id: 'courier', name: 'Courier', type: 'string', search: true, order: true },
-        { id: 'placed', name: 'Date Placed', type: 'date', search: true, order: true },
-        { id: 'due', name: 'Date Due', type: 'date', search: true, order: true },
-        { id: 'contents', name: 'Contents', type: 'contents', search: false, order: false, functionNamePointer: 'name' },
-        { id: 'arrived', name: 'Arrived', type: 'tick', search: true, order: true },
-        { id: 'edit', name: 'Edit', type: 'editWithHide', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name', hidePointer: 'arrived' },
-        { id: 'delete', name: 'Delete', type: 'deleteWithHide', search: false, order: false, functionIdPointer: 'id', functionNamePointer: 'name', hidePointer: 'arrived' },
-    ],
-    searchable: true,
-};
-
 const Deliveries = () => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { deliveriesList, loading, error, reload } = useDeliveries({ currentProperty });
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
-    const [payload, setPayload] = useState<{ contents: Contents[]; name: string } | { id: number; name: string; url?: string }>();
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { contents: Contents[]; name: string } | { id: number; name: string; url?: string } }>({
+        view: false,
+        type: '',
+        payload: { contents: [], name: '' },
+    });
 
-    const addEditDelivery = (id: number, name: string) => {
-        setPayload({ id, name });
-        setModalType('addEditDelivery');
-        setViewModal(true);
+    const deliveriesTableConfig = {
+        headers: [
+            { id: 'id', name: 'ID', type: 'string', search: true, order: true },
+            { id: 'name', name: 'Name', type: 'string', search: true, order: true },
+            { id: 'supplier', name: 'Supplier', type: 'string', search: true, order: true },
+            { id: 'courier', name: 'Courier', type: 'string', search: true, order: true },
+            { id: 'placed', name: 'Date Placed', type: 'date', search: true, order: true },
+            { id: 'due', name: 'Date Due', type: 'date', search: true, order: true },
+            { id: 'contents', name: 'Contents', type: 'contents', search: false, order: false, functionNamePointer: 'name' },
+            { id: 'arrived', name: 'Arrived', type: 'tick', search: true, order: true },
+            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
+        ],
+        searchable: true,
+        modalType: 'Delivery',
+        idPointer: 'id',
+        namePointer: 'name',
+        reload: reload,
     };
 
-    const deleteDelvery = (id: number, name: string) => {
-        setPayload({ id, name, url: 'spares/delivery' });
-        setModalType('deleteDelivery');
-        setViewModal(true);
+    const addDelivery = () => {
+        setModal({ view: true, type: 'addEditDelivery', payload: { id: 0, name: '' } });
     };
 
     const viewTooManyItems = (contents: Contents[], name: string) => {
-        setPayload({ contents, name });
-        setModalType('viewExtraSpares');
-        setViewModal(true);
+        setModal({ view: true, type: 'viewExtraSpares', payload: { contents, name } });
     };
 
     return (
@@ -67,16 +61,15 @@ const Deliveries = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Spares Management</p>
                     </Link>
-                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={(e) => addEditDelivery(0, '')}>
+                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={addDelivery}>
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Delivery
                     </button>
                 </div>
-                {viewModal ? <ModalBase modalType={modalType} payload={payload} closeModal={() => [setViewModal(false), setModalType(''), reload()]} /> : null}
+                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { contents: [], name: '' } })]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
                     <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
-                        <SortableTable config={deliveriesTableConfig} data={deliveriesList} editFunction={addEditDelivery} deleteFunction={deleteDelvery} viewTooManyItems={viewTooManyItems} />
-                        <DataTable config={deliveriesTableConfig} data={deliveriesList} />
+                        <DataTable config={deliveriesTableConfig} data={deliveriesList} viewTooManyItems={viewTooManyItems} />
                     </div>
                 </LoadingNoDataError>
             </div>

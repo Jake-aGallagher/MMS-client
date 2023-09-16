@@ -4,20 +4,10 @@ import ModalBase from '../../components/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import SortableTable from '../../components/sortableTable/sortableTable';
 import DetailsBox from '../../components/detailsBox/detailsBox';
 import { usePropertyDetails } from '../../components/properties/details/usePropertyDetails';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
-
-const userTableConfig = {
-    headers: [
-        { id: 'username', name: 'Username', type: 'string', search: true, order: true },
-        { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
-        { id: 'last_name', name: 'Last name', type: 'string', search: true, order: true },
-        { id: 'user_group_name', name: 'User Group', type: 'string', search: true, order: true },
-    ],
-    searchable: true,
-};
+import DataTable from '../../components/dataTable/dataTable';
 
 const PropertyView = () => {
     const params = useRouter();
@@ -25,6 +15,16 @@ const PropertyView = () => {
     const { propertyDetails, assignedUsers, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
+
+    const userTableConfig = {
+        headers: [
+            { id: 'username', name: 'Username', type: 'string', search: true, order: true },
+            { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
+            { id: 'last_name', name: 'Last name', type: 'string', search: true, order: true },
+            { id: 'user_group_name', name: 'User Group', type: 'string', search: true, order: true },
+        ],
+        searchable: true,
+    };
 
     const propertyDetailsConfig = {
         id: propertyDetails?.id,
@@ -62,7 +62,7 @@ const PropertyView = () => {
                         <DetailsBox data={propertyDetailsConfig} />
                         <div className="ml-10">
                             <p className="xl:text-center text-left mb-2 font-semibold">Assigned Users</p>
-                            <SortableTable config={userTableConfig} data={assignedUsers} />
+                            <DataTable config={userTableConfig} data={assignedUsers} />
                         </div>
                     </div>
                 </LoadingNoDataError>

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { AdjustStockData, ContentsData, DateData, DeleteData, EditData, LinkData, RemainingStockData, StringData, TickData, UrlData } from './dataTypes';
 import { v4 as uuidv4 } from 'uuid';
+import RowTools from './rowTools';
 
 interface Props {
     headers: {
@@ -15,6 +16,9 @@ interface Props {
         hidePointer?: string;
         avgUsagePointer?: string;
         quantRemainPonter?: string;
+
+        
+        functions?: string[];
     }[];
     data: {};
     linkColPrefix?: string;
@@ -22,6 +26,10 @@ interface Props {
     adjustStockFunction?: (id: number, name: string, quantityRemaining: number) => void;
     deleteFunction?: (id: number, name: string) => void;
     editFunction?: (id: number, name: string) => void;
+    idPointer?: string;
+    namePointer?: string;
+    modalType?: string;
+    reload?: () => void;
 }
 
 const DataTableRow = (props: Props) => {
@@ -44,7 +52,7 @@ const DataTableRow = (props: Props) => {
                 case 'remaining_stock':
                     return <RemainingStockData remainingStock={row[h.id]} usage={row[h.avgUsagePointer!]} />;
                 case 'adjust_stock':
-                    return <AdjustStockData id={row[h.functionIdPointer!]} name={row[h.functionNamePointer!]} remaining={row[h.quantRemainPonter!]} adjustFunction={props.adjustStockFunction!} />;
+                    return <AdjustStockData id={row[h.idPointer!]} name={row[h.namePointer!]} remaining={row[h.quantRemainPonter!]} adjustFunction={props.adjustStockFunction!} />;
                 case 'edit':
                     return <EditData id={row[h.functionIdPointer!]} name={row[h.functionNamePointer!]} hide={0} editFunction={props.editFunction!} />;
                 case 'editWithHide':
@@ -53,6 +61,8 @@ const DataTableRow = (props: Props) => {
                     return <DeleteData id={row[h.functionIdPointer!]} name={row[h.functionNamePointer!]} hide={0} deleteFunction={props.deleteFunction!} />;
                 case 'deleteWithHide':
                     return <DeleteData id={row[h.functionIdPointer!]} name={row[h.functionNamePointer!]} hide={row[h.hidePointer!]} deleteFunction={props.deleteFunction!} />;
+                case 'tools':
+                    return <RowTools id={row[props.idPointer]} name={row[props.namePointer]} functions={h.functions} modalType={props.modalType} reload={props.reload} />
                 default:
                     return <StringData string={row[h.id]} />;
             }

@@ -31,7 +31,7 @@ const DataTableHead = (props: Props) => {
                 <th key={'head.' + item.id} className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => props.sortFunction(item.id)}>
                     <div className=" flex flex-row justify-center items-center">
                         {item.name}
-                        {props.currentSort.col != item.id ? null : props.currentSort.dir === 'ASC' ? <div className="ml-2 text-2xl">&#8595;</div> : <div className="ml-2 text-2xl">&#8593;</div>}
+                        {props.currentSort.col != item.id ? null : props.currentSort.dir === 'ASC' ? <div className="ml-2 ">&#8595;</div> : <div className="ml-2 ">&#8593;</div>}
                     </div>
                 </th>
             );
