@@ -26,7 +26,7 @@ interface AssetTreeItem {
 export const useAssetTree = (props: Props) => {
     const allRoots = props.assetTree.map((root) => {
         const renderTree = (node: AssetTreeItem) => (
-            <div className="pl-5 mt-2 flex flex-col" key={node.id}>
+            <div className="rounded-md mt-2 flex flex-col outline-accent hover:outline-1 hover:outline-dashed transition-all" key={node.id}>
                 <div className="rounded-md px-2 h-8 flex flex-row items-center relative outline-accent hover:outline-2 hover:outline transition-all">
                     <div
                         onClick={() => props.toggle(node.id)}
@@ -50,13 +50,13 @@ export const useAssetTree = (props: Props) => {
                         <div className="absolute right-2 flex flex-row">
                             <button
                                 onClick={() => [props.setViewModal(true), props.setModalType('addEditAsset'), props.setModalProps({ type: 'edit', id: node.id, name: node.name, note: node.note })]}
-                                className="rounded-md ml-5 text-sm bg-accent hover:bg-primary h-6 px-3 border-2 border-primary hover:border-transparent"
+                                className="rounded-md ml-5 text-sm bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all"
                             >
                                 Edit
                             </button>
                             <button
                                 onClick={() => [props.setViewModal(true), props.setModalType('addEditAsset'), props.setModalProps({ type: 'add', id: node.id, name: node.name })]}
-                                className="rounded-md ml-5 text-sm bg-accent hover:bg-primary h-6 px-3 border-2 border-primary hover:border-transparent"
+                                className="rounded-md ml-5 text-sm bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all"
                             >
                                 + Add Child Component
                             </button>
@@ -74,21 +74,21 @@ export const useAssetTree = (props: Props) => {
                     ) : (
                         <div className="absolute right-2">
                             {node.parentId != 0 ? (
-                                <button className="rounded-md ml-5 text-sm bg-accent hover:bg-primary h-6 px-3 border-2 border-primary hover:border-transparent">
+                                <button className="rounded-md ml-5 text-sm bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all">
                                     <Link href={'/assets/' + node.id}>View Component Details</Link>
                                 </button>
                             ) : null}
 
                             <button
                                 onClick={() => [props.setViewModal(true), props.setModalType('createJob'), props.setModalProps({ assetId: node.id })]}
-                                className="rounded-md ml-5 text-sm bg-accent hover:bg-primary h-6 px-3 border-2 border-primary hover:border-transparent"
+                                className="rounded-md ml-5 text-sm bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all"
                             >
                                 Create Job
                             </button>
                         </div>
                     )}
                 </div>
-                {Array.isArray(node.children) && props.openBranches.includes(node.id) ? node.children.map((nodes) => renderTree(nodes)) : null}
+                <div className='pl-5'>{Array.isArray(node.children) && props.openBranches.includes(node.id) ? node.children.map((nodes) => renderTree(nodes)) : null}</div>
             </div>
         );
         return renderTree(root);
