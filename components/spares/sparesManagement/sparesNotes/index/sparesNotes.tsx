@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
-import GreaterThan from '../../../../../public/GreaterThan.png';
 import ModalBase from '../../../../modal/modal';
 import { useSparesNotes } from './useSparesNotes';
 import NoteTitlesList from './noteTitlesList';
 import NoteToView from './noteToView';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 const SparesNotes = () => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
@@ -26,18 +27,18 @@ const SparesNotes = () => {
                 />
             ) : null}
             <div className="px-10 p-5">
-                <div className="bg-white p-6 rounded-lg shadow-lg">
+                <div className="bg-background p-6 rounded-md shadow-lg">
                     <h2 className="text-xl font-semibold mb-2">
                         Notes
                         <button
                             onClick={() => [setViewModal(true), setModalType('addEditSparesNote'), setEditNoteData({ id: 0, title: '' })]}
-                            className="rounded-xl ml-5 text-sm font-normal bg-blue-50 hover:bg-blue-600 h-6 px-3 border-2 border-blue-600 hover:border-transparent"
+                            className="rounded-md ml-5 text-sm font-normal bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all"
                         >
                             Add Note
                         </button>
                     </h2>
-                    <button className="flex flex-row items-center hover:text-blue-600 icon-filter select-none" onClick={() => setShowNotes((prev) => !prev)}>
-                        <img className={`h-5 w-5 mr-1 duration-150 ${showNotes ? 'rotate-90' : null}`} src={GreaterThan.src} />
+                    <button className="flex flex-row items-center hover:text-accent transition-all select-none" onClick={() => setShowNotes((prev) => !prev)}>
+                        <FontAwesomeIcon icon={faCaretRight} className={`mr-1 w-3 transition-all ${showNotes ? 'rotate-90' : null}`} />
                         <div>
                             {numOfNotes} Saved Note{numOfNotes === 1 ? null : 's'}
                         </div>

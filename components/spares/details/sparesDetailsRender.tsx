@@ -46,11 +46,11 @@ const SparesDetailsRender = (props: Props) => {
             <div className="w-full h-full flex flex-row">
             <DetailsBox data={spareConfig} />
             <div className=" p-6 flex flex-col w-full">
-                <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
+                <div className="h-[50%] outline outline-primary outline-2 p-2 overflow-y-auto">
                     <b>Description: </b>
                     {props.sparesDetails?.description}
                 </div>
-                <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
+                <div className="h-[50%] outline outline-primary outline-2 p-2 overflow-y-auto">
                     <b>Notes: </b>
                     {props.sparesDetails?.notes}
                 </div>

@@ -13,12 +13,12 @@ const SparesManagement = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/spares" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <Link href="/spares" className="ml-8 hover:text-accent flex flex-row items-center">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Spares</p>
                     </Link>
                 </Toolbar>
-                <div className="bg-gray-100">
+                <div>
                     <StockWarnings />
                     <DeliveriesCard />
                     <SuppliersCard />

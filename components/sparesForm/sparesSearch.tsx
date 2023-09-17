@@ -34,7 +34,7 @@ const SparesSearch = (props: Props) => {
                     onChange={(e) => props.setSearchFilter({ type: props.searchFilter.type, value: e.target.value })}
                 />
                 <div
-                    className="ml-2 rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
+                    className="ml-2 rounded-md bg-blue-50 hover:bg-blue-600 h-8 px-4 border-2 border-blue-600 hover:border-transparent"
                     onClick={(e) => [e.preventDefault(), props.setSearchFilter({ type: props.searchFilter.type, value: '' })]}
                 >
                     Clear

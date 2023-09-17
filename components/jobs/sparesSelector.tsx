@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import GreaterThan from '../../public/GreaterThan.png';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { SERVER_URL } from '../routing/addressAPI';
 import SparesSearch from '../sparesForm/sparesSearch';
 import DataTable from '../dataTable/dataTable';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 interface ModalProps {
     closeModal: () => void;
@@ -23,14 +24,7 @@ interface SparesSelected extends Spare {
     quantity: number;
 }
 
-const usedConfig = {
-    headers: [
-        { id: 'part_no', name: 'Part Number', type: 'string', nameParam: 'part_no', search: false, order: false },
-        { id: 'name', name: 'Name', type: 'string', search: false, order: false },
-        { id: 'quantity', name: 'Quantity', type: 'number', search: false, order: false },
-    ],
-    searchable: false,
-};
+
 
 const SparesSelector = (props: ModalProps) => {
     const [loading, setLoading] = useState(true);
@@ -42,6 +36,15 @@ const SparesSelector = (props: ModalProps) => {
     const [searchFilter, setSearchFilter] = useState({ type: 0, value: '' });
     const [showRes, setShowRes] = useState(false);
     const [numResults, setNumResults] = useState(0);
+
+    const usedConfig = {
+        headers: [
+            { id: 'part_no', name: 'Part Number', type: 'string', nameParam: 'part_no', search: false, order: false },
+            { id: 'name', name: 'Name', type: 'string', search: false, order: false },
+            { id: 'quantity', name: 'Quantity', type: 'number', search: false, order: false },
+        ],
+        searchable: false,
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -143,7 +146,7 @@ const SparesSelector = (props: ModalProps) => {
         showSparesSelected = <div>None</div>;
     } else {
         showSparesSelected = sparesSelected.map((i) => (
-            <div key={i.id} className={`flex flex-row border-2 border-blue-600 rounded-md mb-2 w-fit px-2 ${i.quantity < 1 ? 'hidden' : ''}`}>
+            <div key={i.id} className={`flex flex-row border-2 border-primary rounded-md mb-2 w-fit px-2 ${i.quantity < 1 ? 'hidden' : ''}`}>
                 <div className="mr-4">{i.part_no}</div>
                 <div className="mr-4">{i.name}</div>
                 <div className="mr-4">
@@ -171,17 +174,17 @@ const SparesSelector = (props: ModalProps) => {
                 value={i.quantity}
                 onChange={(e) => usedInputHandler(parseInt(e.target.value), index)}
             ></input>
-            <button className="text-green-600 text-xl ml-4" onClick={(e) => usedInputClick(index, e)}>
+            <button className="text-green text-xl ml-4" onClick={(e) => usedInputClick(index, e)}>
                 &#10010;
             </button>
         </div>
     ));
 
     return (
-        <div className="h-full w-full rounded-lg relative border-4 border-blue-200">
+        <div className="h-full w-full rounded-md relative border-4 border-blue-200">
             <h1 className="w-full h-10 flex flex-row justify-center items-center font-bold bg-blue-200">{props.payload.type === 'delivery' ? 'Add to Delivery' : 'Spares Used'}</h1>
             <form className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                {sparesSelected.length > 0 ? <DataTable data={sparesSelected} config={usedConfig} /> : null}
+                <DataTable data={sparesFullList} config={usedConfig} />
 
                 <SparesSearch searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
 
@@ -190,17 +193,17 @@ const SparesSelector = (props: ModalProps) => {
 
                 <div className="mb-5">
                     <div>Search Results</div>
-                    <div className="flex flex-row items-center hover:text-blue-600 icon-filter hover:cursor-pointer select-none" onClick={() => setShowRes(!showRes)}>
-                        <img className={`mr-1 h-5 w-5 font-bold text-2xl duration-150 ${showRes ? 'rotate-90' : null}`} src={GreaterThan.src} />
+                    <div className="flex flex-row items-center hover:text-accent transition-all hover:cursor-pointer select-none" onClick={() => setShowRes(!showRes)}>
+                        <FontAwesomeIcon icon={faCaretRight} className={`mr-1 w-3 transition-all ${showRes ? 'rotate-90' : null}`} />
                         <div>{numResults} Results</div>
                     </div>
                     {showRes ? <div>{showSparesFiltered}</div> : null}
                 </div>
                 <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full bg-blue-200">
-                    <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={(e) => [e.preventDefault(), props.closeModal()]}>
+                    <button className="rounded-md bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={(e) => [e.preventDefault(), props.closeModal()]}>
                         Cancel
                     </button>
-                    <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={(e) => SubmitHandler(e)}>
+                    <button className="rounded-md bg-blue-50 hover:bg-blue-600 h-8 px-4  border-2 border-blue-600 w-32" onClick={(e) => SubmitHandler(e)}>
                         Submit
                     </button>
                 </div>

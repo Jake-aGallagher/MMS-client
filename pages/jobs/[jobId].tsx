@@ -57,13 +57,13 @@ const JobView = () => {
 
     const four = jobDetails.map((j) => (
         <div key={Math.random()} className="box row-start-5 row-end-13 col-start-1 col-end-4 p-6 flex flex-col">
-            <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
+            <div className="h-[50%] outline outline-primary outline-2 p-2 overflow-y-auto">
                 <p>
                     <b>Description: </b>
                 </p>
                 {j.description}
             </div>
-            <div className="h-[50%] outline outline-blue-600 outline-2 p-2 overflow-y-auto">
+            <div className="h-[50%] outline outline-primary outline-2 p-2 overflow-y-auto">
                 <p>
                     <b>Notes: </b>
                 </p>
@@ -129,11 +129,11 @@ const JobView = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/jobs" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <Link href="/jobs" className="ml-8 hover:text-accent flex flex-row items-center">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Jobs</p>
                     </Link>
-                    <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="ml-8 hover:text-accent flex flex-row items-center">
                         {jobDetails.length == 0 ? null : jobDetails[0].completed == 1 ? (
                             <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         ) : (

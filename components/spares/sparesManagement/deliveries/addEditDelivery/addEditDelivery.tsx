@@ -87,12 +87,12 @@ const AddEditDelivery = (props: ModalProps) => {
                             <GeneralFormInput register={register} label="Placed" type="date" formName="placed" errors={errors} required={true} />
                             <GeneralFormInput register={register} label="Due" type="date" formName="due" errors={errors} required={true} />
 
-                            <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 my-2 border-2 border-blue-600" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
+                            <button className="rounded-md bg-background hover:bg-secondary h-8 my-2 border-2 border-accent hover:border-primary" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
                                 Add Spares to Delivery
                             </button>
                             <div>
                                 {contents.map((spare) => (
-                                    <div key={spare.id} className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.quantity < 1 ? 'hidden' : ''}`}>
+                                    <div key={spare.id} className={`flex flex-row border-2 border-primary rounded-md my-4 w-fit px-2 ${spare.quantity < 1 ? 'hidden' : ''}`}>
                                         <div className="mr-4">{spare.part_no}</div>
                                         <div className="mr-4">{spare.name}</div>
                                         <div>Quantity Ordered: {spare.quantity}</div>

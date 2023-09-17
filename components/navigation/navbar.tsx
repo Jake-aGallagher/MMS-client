@@ -109,63 +109,63 @@ const NavBar = (props: Props) => {
     };
 
     const propertySelection = availProps.map((p) => (
-        <option key={p.id} value={p.id} className="text-blue-600">
+        <option key={p.id} value={p.id} className="text-accent">
             {p.name}
         </option>
     ));
 
     return (
-        <div className="fixed left-0 top-0 h-screen w-52 z-30 bg-gray-200 border-r-2 border-gray-300 flex flex-col pt-4 px-4">
+        <div className="fixed left-0 top-0 h-screen w-52 z-30 flex flex-col pt-4 px-4 bg-secondary text-text">
             <div className="w-32 h-32 mx-auto mb-2">
                 <img src={CompanyLogo.src} />
             </div>
-            <div className="w-32 h-8 mx-auto mb-6 text-center font-bold text-2xl text-blue-600">UpTime</div>
+            <div className="w-32 h-8 mx-auto mb-6 text-center font-bold text-2xl text-text">UpTime</div>
 
             {availProps && availProps.length > 1 ? (
                 <select
                     value={currentProperty}
                     onChange={(e) => changedProperty(e.target.value)}
-                    className="w-32 h-8 mx-auto mb-6 text-blue-600 border-b-2 border-blue-600"
+                    className="w-32 h-8 p-1 mx-auto mb-6 bg-secondary text-accent border-b-2 border-primary hover:cursor-pointer"
                 >
                     {propertySelection}
                 </select>
             ) : (
-                <div className="w-32 h-8 mx-auto mb-6 text-blue-600 border-b-2 border-blue-600">{availProps[0] && availProps[0].name}</div>
+                <div className="w-32 h-8 mx-auto mb-6 text-accent border-b-2 border-accent">{availProps[0] && availProps[0].name}</div>
             )}
 
-            {/* <Link href="/" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute === '/' ? 'text-blue-600' : '')}>
+            {/* <Link href="/" className={'mb-2 w-32 mx-auto hover:text-accent  transition-all ' + (currentRoute === '/' ? 'text-text' : '')}>
                 Dashboard
             </Link> */}
-            <Link href="/properties" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('properties') ? 'text-blue-600' : '')}>
+            <Link href="/properties" className={'mb-2 w-32 mx-auto hover:text-accent  transition-all ' + (currentRoute.includes('properties') ? 'text-accent' : '')}>
                 Properties
             </Link>
-            <Link href="/jobs" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('jobs') ? 'text-blue-600' : '')}>
+            <Link href="/jobs" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('jobs') ? 'text-accent' : '')}>
                 Jobs
             </Link>
-            <Link href="/assets" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('assets') ? 'text-blue-600' : '')}>
+            <Link href="/assets" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>
                 Assets
             </Link>
-            <Link href="/spares" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('spares') ? 'text-blue-600' : '')}>
+            <Link href="/spares" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('spares') ? 'text-accent' : '')}>
                 Spares
             </Link>
-            {/*<Link href="/forecast" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('forecast') ? 'text-blue-600' : '')}>
+            {/*<Link href="/forecast" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('forecast') ? 'text-accent' : '')}>
                 Forecast
             </Link> */}
-            {/*<Link href="/matrix" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('matrix') ? 'text-blue-600' : '')}>
+            {/*<Link href="/matrix" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('matrix') ? 'text-accent' : '')}>
                 Matrix
             </Link> */}
-            {/* <Link href="/notifications" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('notifications') ? 'text-blue-600' : '')}>
+            {/* <Link href="/notifications" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('notifications') ? 'text-accent' : '')}>
                 Notifications
             </Link> */}
-            {/* <Link href="/messages" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('messages') ? 'text-blue-600' : '')}>
+            {/* <Link href="/messages" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('messages') ? 'text-accent' : '')}>
                 Messages
             </Link> */}
-            <Link href="/settings" className={'mb-2 w-32 mx-auto hover:text-blue-600 ' + (currentRoute.includes('settings') ? 'text-blue-600' : '')}>
+            <Link href="/settings" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('settings') ? 'text-accent' : '')}>
                 Settings
             </Link>
             <div className="absolute left-0 bottom-0 h-24 w-52 ">
                 <div className="w-32 h-8 mx-auto mb-2">{name}</div>
-                <button onClick={logoutProcess} className="w-32 h-8 mx-auto mb-2">
+                <button onClick={logoutProcess} className="w-32 h-8 mx-auto mb-2 hover:text-accent transition-all">
                     Logout
                 </button>
             </div>

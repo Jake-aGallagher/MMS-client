@@ -41,11 +41,11 @@ const SparesView = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/spares" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <Link href="/spares" className="ml-8 hover:text-accent flex flex-row items-center">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Spares</p>
                     </Link>
-                    <button onClick={() => editStock()} className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <button onClick={() => editStock()} className="ml-8 hover:text-accent flex flex-row items-center">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit Spares Item
                     </button>

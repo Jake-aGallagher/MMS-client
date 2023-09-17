@@ -29,7 +29,7 @@ const Properties = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <button onClick={() => [setViewModal(true), setmodalType('addEditProperty')]} className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <button onClick={() => [setViewModal(true), setmodalType('addEditProperty')]} className="ml-8 hover:text-accent flex flex-row items-center">
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Property
                     </button>

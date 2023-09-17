@@ -92,7 +92,7 @@ const UpdateJob = (props: ModalProps) => {
                             {completed !== 1 ? (
                                 <>
                                     <GeneralFileInput files={files} setFiles={setFiles} />
-                                    <button className="rounded-3xl bg-blue-50 hover:bg-blue-600 h-8 my-2 border-2 border-blue-600" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
+                                    <button className="rounded-md hover:bg-secondary h-8 my-2 border-2 border-accent hover:border-primary transition-all " onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
                                         Log Spares Used
                                     </button>
                                     <div>

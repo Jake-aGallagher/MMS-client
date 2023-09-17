@@ -59,18 +59,18 @@ const Deliveries = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/spares/sparesManagement" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <Link href="/spares/sparesManagement" className="ml-8 hover:text-accent flex flex-row items-center">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Spares Management</p>
                     </Link>
-                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={addDelivery}>
+                    <button className="ml-8 hover:text-accent flex flex-row items-center" onClick={addDelivery}>
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Delivery
                     </button>
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { contents: [], name: '' } })]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
-                    <div className="w-full overflow-x-auto overflow-y-auto bg-gray-100">
+                    <div className="w-full overflow-x-auto overflow-y-auto">
                         <DataTable config={deliveriesTableConfig} data={deliveriesList} viewTooManyItems={viewTooManyItems} />
                     </div>
                 </LoadingNoDataError>

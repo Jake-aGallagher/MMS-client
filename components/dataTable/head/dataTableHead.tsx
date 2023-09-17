@@ -28,7 +28,7 @@ const DataTableHead = (props: Props) => {
     const headers = props.headers.map((item) => {
         if (item.order) {
             return (
-                <th key={'head.' + item.id} className="border-2 border-solid border-gray-500 px-2 cursor-pointer select-none" onClick={() => props.sortFunction(item.id)}>
+                <th key={'head.' + item.id} className="border-2 border-solid border-accent px-2 cursor-pointer select-none" onClick={() => props.sortFunction(item.id)}>
                     <div className=" flex flex-row justify-center items-center">
                         {item.name}
                         {props.currentSort.col != item.id ? null : props.currentSort.dir === 'ASC' ? <div className="ml-2 ">&#8595;</div> : <div className="ml-2 ">&#8593;</div>}
@@ -37,7 +37,7 @@ const DataTableHead = (props: Props) => {
             );
         } else {
             return (
-                <th key={'head.' + item.id} className="border-2 border-solid border-gray-500 px-2 select-none">
+                <th key={'head.' + item.id} className="border-2 border-solid border-accent px-2 select-none">
                     {item.name}
                 </th>
             );
@@ -45,7 +45,7 @@ const DataTableHead = (props: Props) => {
     });
 
     return (
-        <thead className="bg-gray-200">
+        <thead>
             <tr>{headers}</tr>
         </thead>
     );

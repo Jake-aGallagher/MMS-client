@@ -37,11 +37,11 @@ const Enums = () => {
     return (
         <FullPage>
             <Toolbar>
-                <Link href="/settings" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                <Link href="/settings" className="ml-8 hover:text-accent flex flex-row items-center">
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                <button onClick={addEnum} className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                <button onClick={addEnum} className="ml-8 hover:text-accent flex flex-row items-center">
                     <div className="text-2xl mr-1 pb-1">+</div>
                     Add Enum Value
                 </button>

@@ -32,7 +32,7 @@ const GeneralFormInput = (props: Props<any>) => {
                     id={props.formName}
                     type={props.type}
                     min={props.min}
-                    className={`mb-2 rounded-sm bg-blue-200 ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red-600 border-2'}`}
+                    className={`mb-2 rounded-sm bg-secondary ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
                     {...props.register(props.formName, { required: props.required, valueAsNumber: props.type == 'number' })}
                 />
             )}
@@ -40,14 +40,14 @@ const GeneralFormInput = (props: Props<any>) => {
                 <textarea
                     id={props.formName}
                     rows={props.rows}
-                    className={`mb-2 rounded-sm bg-blue-200 ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red-600 border-2'}`}
+                    className={`mb-2 rounded-sm bg-secondary ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
                     {...props.register(props.formName, { required: props.required })}
                 />
             )}
             {selectTypes.includes(props.type) && (
                 <select
                     id={props.formName}
-                    className={`mb-2 rounded-sm bg-blue-200 ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red-600 border-2'}`}
+                    className={`mb-2 rounded-sm bg-secondary ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
                     {...props.register(props.formName, { required: props.required })}
                 >
                     {props.selectOptions!.map((item) => (
@@ -58,7 +58,7 @@ const GeneralFormInput = (props: Props<any>) => {
                 </select>
             )}
             {checkboxTypes.includes(props.type) && (
-                <div className={`rounded-md my-2 p-2 border-2 border-blue-600 w-full flex flex-row ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red-600 border-2'}`}>
+                <div className={`rounded-md my-2 p-2 border-2 bg-secondary border-primary w-full flex flex-row ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}>
                     <label htmlFor={props.formName} className="w-full">
                         {props.label}
                     </label>

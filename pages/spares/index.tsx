@@ -59,11 +59,11 @@ const Spares = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/spares/sparesManagement" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <Link href="/spares/sparesManagement" className="ml-8 hover:text-accent flex flex-row items-center">
                         <FontAwesomeIcon icon={faClipboard} className="mr-1 w-3" />
                         Spares Management
                     </Link>
-                    <button onClick={addItem} className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <button onClick={addItem} className="ml-8 hover:text-accent flex flex-row items-center">
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Spares Item
                     </button>

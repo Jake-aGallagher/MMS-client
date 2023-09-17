@@ -51,7 +51,7 @@ const DataTableSearch = (props: Props) => {
                     </div>
                 </DataTableSeachForm>
             ) : (
-                <button onClick={() => setView(true)} className="h-10 w-80 border-solid border-2 border-blue-700 rounded-md flex flex-row justify-center items-center">
+                <button onClick={() => setView(true)} className="h-10 w-80 border-solid border-2 border-primary hover:border-accent rounded-md flex flex-row justify-center items-center">
                     Search
                 </button>
             )}

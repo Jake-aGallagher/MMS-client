@@ -49,7 +49,7 @@ const DataTableRow = (props: Props) => {
                     return <StringData string={row[h.id]} />;
             }
         };
-        return <td key={uuidv4()} className="border border-solid border-gray-500 px-2 text-center p-2">{switchTypes()}</td>;
+        return <td key={uuidv4()} className="border border-solid border-accent px-2 text-center p-2">{switchTypes()}</td>;
     });
 
     return <tr>{dataPoints}</tr>;

@@ -17,7 +17,7 @@ interface ModalProps {
 
 const ViewExtraItems = (props: ModalProps) => {
     const items = props.payload.contents.map((i) => (
-        <div className="flex flex-row border-2 border-blue-600 rounded-md my-4 ml-4 w-fit px-2" key={'spares_item_' + i.spare_id}>
+        <div className="flex flex-row border-2 border-primary rounded-md my-4 ml-4 w-fit px-2" key={'spares_item_' + i.spare_id}>
             {i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}
         </div>
     ));

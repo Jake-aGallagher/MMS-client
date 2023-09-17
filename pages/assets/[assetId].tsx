@@ -39,11 +39,11 @@ const AssetView = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/assets" className="ml-8 hover:text-blue-600 flex flex-row items-center">
+                    <Link href="/assets" className="ml-8 hover:text-accent flex flex-row items-center">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Assets</p>
                     </Link>
-                    <button className="ml-8 hover:text-blue-600 flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('addEditAsset')]}>
+                    <button className="ml-8 hover:text-accent flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('addEditAsset')]}>
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit
                     </button>
@@ -51,19 +51,19 @@ const AssetView = () => {
                 {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <>
-                        <div key={assetDetails?.id} className="border-b-2 border-blue-600 p-5 w-full ">
+                        <div key={assetDetails?.id} className="border-b-2 border-primary p-5 w-full ">
                             <div className="mb-2">Name: {assetDetails?.name}</div>
                             <div>Notes: {assetDetails?.notes ? assetDetails.notes : 'None'}</div>
                         </div>
                         {recentJobs.length > 0 ? (
-                            <div className="w-full overflow-x-auto flex flex-col items-center pb-10 border-b-2 border-blue-600 ">
+                            <div className="w-full overflow-x-auto flex flex-col items-center pb-10 border-b-2 border-primary ">
                                 <div className="my-4">5 Most recent jobs for Components of {assetDetails?.name}:</div>
                                 <DataTable config={recentJobTableConfig} data={recentJobs} />
                             </div>
                         ) : null}
                         {assetDetails ? <ParentDetails grand_parent_id={assetDetails.grand_parent_id} parent_id={assetDetails.parent_id} parent_name={assetDetails.parent_name} /> : null}
                         {allRoots ? (
-                            <div className="border-b-2 border-blue-600  w-full p-5 my-5 pb-10">
+                            <div className="border-b-2 border-primary  w-full p-5 my-5 pb-10">
                                 Children:
                                 {allRoots}
                             </div>

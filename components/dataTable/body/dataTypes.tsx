@@ -8,7 +8,7 @@ export const StringData = (props: { string: string }) => {
 
 export const LinkData = (props: { name: string | number; linkColPrefix: string; link: string }) => {
     return (
-        <Link href={props.linkColPrefix + props.link} className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600">
+        <Link href={props.linkColPrefix + props.link} className="border-b-2 border-black hover:text-accent hover:border-accent">
             {props.name}
         </Link>
     );
@@ -20,7 +20,7 @@ export const DateData = (props: { dateString: string }) => {
 
 export const UrlData = (props: { urlString: string }) => {
     return (
-        <a className="border-b-2 border-black hover:text-blue-600 hover:border-blue-600" href={props.urlString} target="_blank" rel="noreferrer">
+        <a className="border-b-2 border-black hover:text-accent hover:border-accent" href={props.urlString} target="_blank" rel="noreferrer">
             {props.urlString}
         </a>
     );
@@ -32,7 +32,7 @@ export const TickData = (props: { tick: number }) => {
 
 export const RemainingStockData = (props: { remainingStock: number; usage: number }) => {
     let icon = props.remainingStock == 0 ? faXmark : props.usage == 0 || props.remainingStock / props.usage > 1 ? faCheck : faTriangleExclamation;
-    let colour = props.remainingStock == 0 ? 'text-red-600' : props.usage == 0 || props.remainingStock / props.usage > 1 ? 'text-green-500' : 'text-yellow-500';
+    let colour = props.remainingStock == 0 ? 'text-red' : props.usage == 0 || props.remainingStock / props.usage > 1 ? 'text-green' : 'text-yellow';
     return (
         <div className="flex flex-row justify-center items-center">
             <FontAwesomeIcon icon={icon} className={`mr-1 w-5 ${colour}`} /> {props.remainingStock}

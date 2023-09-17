@@ -4,7 +4,7 @@ const Loading = () => {
         
           <svg
             aria-hidden="true"
-            className="mr-2 w-12 h-12 animate-spin dark:text-gray-600 fill-blue-600"
+            className="mr-2 w-12 h-12 animate-spin dark:text-background fill-primary"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

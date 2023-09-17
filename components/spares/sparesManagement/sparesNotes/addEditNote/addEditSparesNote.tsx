@@ -9,7 +9,7 @@ import FormContainer from '../../../../forms/formContainer';
 import GeneralForm from '../../../../forms/generalForm';
 import LoadingNoDataError from '../../../../loading/loadingNoDataError';
 import { useAddEditSparesNote } from './useAddEditSparesNote';
-import { yupResolverAddEditSparesNote } from './addEditSparesNotevalidation';
+import { yupResolverAddEditSparesNote } from './addEditSparesNoteValidation';
 import { addEditSparesNoteHandler } from './addEditSparesNoteHandler';
 
 interface ModalProps {

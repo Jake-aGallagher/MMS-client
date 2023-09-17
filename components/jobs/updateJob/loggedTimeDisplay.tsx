@@ -44,7 +44,7 @@ const LoggedTimeDisplay = (props: Props) => {
         <>
             <label htmlFor="time">Logged Time (mins):</label>
             <div className="flex flex-row">
-                <select className="bg-blue-200" value={loggedTimeId} onChange={(e) => setLoggedTimeId(parseInt(e.target.value))}>
+                <select className="bg-secondary" value={loggedTimeId} onChange={(e) => setLoggedTimeId(parseInt(e.target.value))}>
                     <option value={0} key="0"></option>
                     {props.users.map((user) => (
                         <option value={user.id} key={user.id}>
@@ -52,8 +52,8 @@ const LoggedTimeDisplay = (props: Props) => {
                         </option>
                     ))}
                 </select>
-                <input className="ml-4 bg-blue-200" type="number" min="0" value={loggedTimeNum} onChange={(e) => setLoggedTimeNum(e.target.value ? parseInt(e.target.value) : 0)} />
-                <button className="text-green-600 text-xl ml-4" onClick={addTimeHandler}>
+                <input className="ml-4 bg-secondary" type="number" min="0" value={loggedTimeNum} onChange={(e) => setLoggedTimeNum(e.target.value ? parseInt(e.target.value) : 0)} />
+                <button className="text-green text-xl ml-4" onClick={addTimeHandler}>
                     &#10010;
                 </button>
             </div>
@@ -61,7 +61,7 @@ const LoggedTimeDisplay = (props: Props) => {
                 {props.loggedTimeDetails.map((pair) => {
                     const data = props.users.find((x) => x.id === pair.id);
                     return (
-                        <div key={pair.id} className="flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2">
+                        <div key={pair.id} className="flex flex-row border-2 border-primary rounded-md my-4 w-fit px-2">
                             <div className="mr-4">{data?.first_name + ' ' + data?.last_name}</div>
                             <div className="mr-4">{pair.time} mins</div>
                             <button

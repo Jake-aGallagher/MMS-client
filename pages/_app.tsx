@@ -58,7 +58,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <Script src="https://kit.fontawesome.com/5e0bf4683d.js" crossOrigin="anonymous" />
-            <main className="h-screen font-sans bg-gray-100">
+            <main className="h-screen font-sans bg-background text-text">
                 <Provider store={store}>
                     {forceLogoutHandler()}
                     {loggedIn ? (
