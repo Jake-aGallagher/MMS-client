@@ -47,14 +47,6 @@ const Spares = () => {
         setModal({ view: true, type: 'addEditSparesItem', payload: { id: 0, name: '' } });
     };
 
-    const editStock = (id: number, name: string, quantityRemaining: number) => {
-        setModal({ view: true, type: 'adjustSparesStock', payload: { id, name, quantityRemaining } });
-    };
-
-    const deleteItem = (id: number, name: string) => {
-        setModal({ view: true, type: 'deleteSparesItem', payload: { id, name, quantityRemaining: 0, url: 'spares/spares-item' } });
-    };
-
     return (
         <>
             <FullPage>
@@ -68,7 +60,7 @@ const Spares = () => {
                         Add Spares Item
                     </button>
                 </Toolbar>
-                {modal.view ? <ModalBase modalType={modal.type} payload={modal.type} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
+                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
                     <SparesTableIndexKey />
                     <DataTable config={sparesTableConfig} data={spares} />
