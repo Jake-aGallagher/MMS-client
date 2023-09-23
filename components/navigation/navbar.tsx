@@ -8,6 +8,8 @@ import { setCurrentProperty } from '../store/propertySlice';
 import CompanyLogo from '../../public/CompanyLogo.png';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding, faFolderTree, faGear, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
     logoutHandler: () => void;
@@ -122,50 +124,37 @@ const NavBar = (props: Props) => {
             <div className="w-32 h-8 mx-auto mb-6 text-center font-bold text-2xl text-text">UpTime</div>
 
             {availProps && availProps.length > 1 ? (
-                <select
-                    value={currentProperty}
-                    onChange={(e) => changedProperty(e.target.value)}
-                    className="w-32 h-8 p-1 mx-auto mb-6 bg-secondary text-accent border-b-2 border-primary hover:cursor-pointer"
-                >
+                <select value={currentProperty} onChange={(e) => changedProperty(e.target.value)} className="w-32 h-8 p-1 mx-auto mb-6 bg-secondary text-accent  hover:cursor-pointer">
                     {propertySelection}
                 </select>
             ) : (
                 <div className="w-32 h-8 mx-auto mb-6 text-accent border-b-2 border-accent">{availProps[0] && availProps[0].name}</div>
             )}
 
-            {/* <Link href="/" className={'mb-2 w-32 mx-auto hover:text-accent  transition-all ' + (currentRoute === '/' ? 'text-text' : '')}>
-                Dashboard
-            </Link> */}
-            <Link href="/properties" className={'mb-2 w-32 mx-auto hover:text-accent  transition-all ' + (currentRoute.includes('properties') ? 'text-accent' : '')}>
+            <Link href="/properties" className={'mb-2 w-32 mx-auto hover:text-accent  transition-all flex flex-row ' + (currentRoute.includes('properties') ? 'text-accent' : '')}>
+                <FontAwesomeIcon icon={faBuilding} className="mr-1 w-3" />
                 Properties
             </Link>
-            <Link href="/jobs" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('jobs') ? 'text-accent' : '')}>
+            <Link href="/jobs" className={'mb-2 w-32 mx-auto hover:text-accent transition-all flex flex-row ' + (currentRoute.includes('jobs') ? 'text-accent' : '')}>
+                <FontAwesomeIcon icon={faScrewdriverWrench} className="mr-1 w-3" />
                 Jobs
             </Link>
-            <Link href="/assets" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>
+            <Link href="/assets" className={'mb-2 w-32 mx-auto hover:text-accent transition-all flex flex-row ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>
+                <FontAwesomeIcon icon={faFolderTree} className="mr-1 w-3" />
                 Assets
             </Link>
-            <Link href="/spares" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('spares') ? 'text-accent' : '')}>
+            <Link href="/spares" className={'mb-2 w-32 mx-auto hover:text-accent transition-all flex flex-row ' + (currentRoute.includes('spares') ? 'text-accent' : '')}>
+                <FontAwesomeIcon icon={faTruckFast} className="mr-1 w-3" />
                 Spares
             </Link>
-            {/*<Link href="/forecast" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('forecast') ? 'text-accent' : '')}>
-                Forecast
-            </Link> */}
-            {/*<Link href="/matrix" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('matrix') ? 'text-accent' : '')}>
-                Matrix
-            </Link> */}
-            {/* <Link href="/notifications" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('notifications') ? 'text-accent' : '')}>
-                Notifications
-            </Link> */}
-            {/* <Link href="/messages" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('messages') ? 'text-accent' : '')}>
-                Messages
-            </Link> */}
-            <Link href="/settings" className={'mb-2 w-32 mx-auto hover:text-accent transition-all ' + (currentRoute.includes('settings') ? 'text-accent' : '')}>
+            <Link href="/settings" className={'mb-2 w-32 mx-auto hover:text-accent transition-all flex flex-row ' + (currentRoute.includes('settings') ? 'text-accent' : '')}>
+                <FontAwesomeIcon icon={faGear} className="mr-1 w-3" />
                 Settings
             </Link>
             <div className="absolute left-0 bottom-0 h-24 w-52 ">
                 <div className="w-32 h-8 mx-auto mb-2">{name}</div>
-                <button onClick={logoutProcess} className="w-32 h-8 mx-auto mb-2 hover:text-accent transition-all">
+                <button onClick={logoutProcess} className="w-32 h-8 mx-auto mb-2 hover:text-accent transition-all flex flex-row items-center">
+                    <FontAwesomeIcon icon={faRightFromBracket} className="mr-1 w-3" />
                     Logout
                 </button>
             </div>
