@@ -4,7 +4,7 @@ import { faCheck, faTriangleExclamation, faXmark } from '@fortawesome/free-solid
 const SparesTableIndexKey = () => {
     return (
         <div className="flex flex-row justify-end ml-8 my-4 items-center">
-            <div className="flex flex-row items-center border-2 border-accent rounded-md p-1 mr-4">
+            <div className="bg-secondary flex flex-row items-center rounded-lg py-2 px-4 shadow-lg">
                 <div>
                     <FontAwesomeIcon icon={faCheck} className="mr-1 w-5 text-green" />
                 </div>
