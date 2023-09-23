@@ -6,6 +6,7 @@ import { SERVER_URL } from '../routing/addressAPI';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import bgImg from '../../public/stock-vector-gear-blueprint-technical-background-cogs-and-wheels-in-gray-color-abstract-parts-of-engine-1764788840.jpg';
 
 interface Props {
     loginHandler: () => void;
@@ -96,9 +97,10 @@ const Login = (props: Props) => {
 
     return (
         <div className="container mx-auto h-screen w-screen flex flex-col justify-center items-center">
+            <img src={bgImg.src} className='fixed w-screen h-screen object-cover ' />
             <form
                 onSubmit={handleSubmit(handleRegistration)}
-                className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-lg"
+                className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-lg z-10 opacity-80"
             >
                 <label htmlFor="username" className=" ">
                     Username
