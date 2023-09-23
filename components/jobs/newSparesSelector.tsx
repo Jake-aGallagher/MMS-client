@@ -92,10 +92,10 @@ const NewSparesSelector = (props: ModalProps) => {
                     <DataTable data={spareslist} config={tableConfig} />
 
                     <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full">
-                        <button className="rounded-md bg-background hover:bg-secondary h-8 px-4  border-2 border-accent hover:border-primary w-32 transition-all" onClick={(e) => [e.preventDefault(), props.closeModal()]}>
+                        <button className="btnBlue h-8 px-4 w-32" onClick={(e) => [e.preventDefault(), props.closeModal()]}>
                             Cancel
                         </button>
-                        <button className="rounded-md bg-background hover:bg-secondary h-8 px-4  border-2 border-accent hover:border-primary w-32 transition-all" onClick={(e) => submitHandler(e)}>
+                        <button className="btnBlue h-8 px-4 w-32" onClick={(e) => submitHandler(e)}>
                             Submit
                         </button>
                     </div>

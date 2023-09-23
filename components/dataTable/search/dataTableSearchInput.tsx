@@ -25,24 +25,24 @@ const DataTableSearchInput = (props: Props<any>) => {
             {props.label ? <label htmlFor={props.formName} className='font-semibold'>{props.label} </label> : null}
 
             {textType.includes(props.type) && (
-                <input id={props.formName} type="text" className={`mb-2 rounded-sm bg-secondary w-60 ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
+                <input id={props.formName} type="text" className={`mb-2 rounded-sm bg-background w-60 ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
             )}
 
             {numberType.includes(props.type) && (
                 <input
                     id={props.formName}
                     type="number"
-                    className={`mb-2 rounded-sm bg-secondary w-60 ${props.extraClasses && props.extraClasses}`}
+                    className={`mb-2 rounded-sm bg-background w-60 ${props.extraClasses && props.extraClasses}`}
                     {...props.register(props.formName, { valueAsNumber: true })}
                 />
             )}
 
             {dateType.includes(props.type) && (
-                <input id={props.formName} type="date" className={`mb-2 rounded-sm bg-secondary ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
+                <input id={props.formName} type="date" className={`mb-2 rounded-sm bg-background ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
             )}
 
             {booleanType.includes(props.type) && (
-                <select id={props.formName} className={`mb-2 rounded-sm bg-secondary ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)}>
+                <select id={props.formName} className={`mb-2 rounded-sm bg-background ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)}>
                     <option value={''} key={props.formName + '_' + 'null'}></option>
                     <option value={0} key={props.formName + '_' + 'no'}>
                         No
@@ -54,7 +54,7 @@ const DataTableSearchInput = (props: Props<any>) => {
             )}
 
             {/* {selectTypes.includes(props.type) && (
-                <select id={props.formName} className={`mb-2 rounded-sm bg-secondary ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)}>
+                <select id={props.formName} className={`mb-2 rounded-sm bg-background ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)}>
                     {props.selectOptions!.map((item) => (
                         <option value={item.id} key={props.formName + '_' + item.id}>
                             {item[props.optionNameString!]}

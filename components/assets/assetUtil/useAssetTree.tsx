@@ -26,8 +26,8 @@ interface AssetTreeItem {
 export const useAssetTree = (props: Props) => {
     const allRoots = props.assetTree.map((root) => {
         const renderTree = (node: AssetTreeItem) => (
-            <div className="rounded-md mt-2 flex flex-col outline-accent hover:outline-1 hover:outline-dashed transition-all" key={node.id}>
-                <div className="rounded-md px-2 h-8 flex flex-row items-center relative outline-accent hover:outline-2 hover:outline transition-all">
+            <div className="rounded-md mt-2 flex flex-col outline-accent hover:outline-1 hover:outline-dashed transition-colors" key={node.id}>
+                <div className="rounded-md px-2 h-8 flex flex-row items-center relative outline-accent hover:outline-2 hover:outline transition-colors">
                     <div
                         onClick={() => props.toggle(node.id)}
                         className={`flex flex-row items-center select-none text-text transition-all  ${
@@ -50,20 +50,20 @@ export const useAssetTree = (props: Props) => {
                         <div className="absolute right-2 flex flex-row">
                             <button
                                 onClick={() => [props.setViewModal(true), props.setModalType('addEditAsset'), props.setModalProps({ type: 'edit', id: node.id, name: node.name, note: node.note })]}
-                                className="rounded-md ml-5 text-sm bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all"
+                                className="btnBlue ml-5 text-sm h-6 px-3"
                             >
                                 Edit
                             </button>
                             <button
                                 onClick={() => [props.setViewModal(true), props.setModalType('addEditAsset'), props.setModalProps({ type: 'add', id: node.id, name: node.name })]}
-                                className="rounded-md ml-5 text-sm bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all"
+                                className="btnBlue ml-5 text-sm h-6 px-3"
                             >
                                 + Add Child Component
                             </button>
                             {node.parentId != 0 ? (
                                 <button
                                     onClick={() => [props.setViewModal(true), props.setModalType('deleteAsset'), props.setModalProps({ id: node.id, name: node.name })]}
-                                    className="rounded-md ml-5 text-sm hover:font-medium hover:text-background bg-background hover:bg-red h-6 px-3 border-2 border-red hover:border-transparent"
+                                    className="btnRed ml-5 text-sm h-6 px-3"
                                 >
                                     Delete
                                 </button>
@@ -74,14 +74,14 @@ export const useAssetTree = (props: Props) => {
                     ) : (
                         <div className="absolute right-2">
                             {node.parentId != 0 ? (
-                                <button className="rounded-md ml-5 text-sm bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all">
+                                <button className="btnBlue ml-5 text-sm h-6 px-3">
                                     <Link href={'/assets/' + node.id}>View Component Details</Link>
                                 </button>
                             ) : null}
 
                             <button
                                 onClick={() => [props.setViewModal(true), props.setModalType('createJob'), props.setModalProps({ assetId: node.id })]}
-                                className="rounded-md ml-5 text-sm bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all"
+                                className="btnBlue ml-5 text-sm h-6 px-3"
                             >
                                 Create Job
                             </button>

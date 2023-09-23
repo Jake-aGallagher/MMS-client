@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btnBlue {
+        @apply rounded-md bg-background border-2 border-primary hover:bg-primary hover:text-background transition-all
+    }
+    .btnRed {
+        @apply rounded-md bg-background border-2 border-red hover:bg-red hover:text-background transition-all
+    }
+  }

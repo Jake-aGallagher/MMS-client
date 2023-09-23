@@ -8,7 +8,7 @@ interface Props {
 
 const DataTableSeachForm = (props: PropsWithChildren<Props>) => {
     return (
-        <form onSubmit={props.handleSubmit(props.handleRegistration)} className="max-w-6xl  border-solid border-2 border-primary rounded-md">
+        <form onSubmit={props.handleSubmit(props.handleRegistration)} className="w-full">
             {props.children}
         </form>
     );

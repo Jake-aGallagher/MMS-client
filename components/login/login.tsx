@@ -98,7 +98,7 @@ const Login = (props: Props) => {
         <div className="container mx-auto h-screen w-screen flex flex-col justify-center items-center">
             <form
                 onSubmit={handleSubmit(handleRegistration)}
-                className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-background font-bold flex flex-col justify-center px-4 space-y-4 border-2 border-primary p-5"
+                className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-lg"
             >
                 <label htmlFor="username" className=" ">
                     Username
@@ -107,7 +107,7 @@ const Login = (props: Props) => {
                     type="text"
                     maxLength={45}
                     id="username"
-                    className={`rounded-sm bg-secondary ${(errors.username || errors.password) && 'border-red border-2'}`}
+                    className={`rounded-sm bg-background mb-5 ${(errors.username || errors.password) && 'border-red border-2'}`}
                     {...register('username', { required: true })}
                 />
 
@@ -116,11 +116,11 @@ const Login = (props: Props) => {
                     type="password"
                     maxLength={255}
                     id="password"
-                    className={`rounded-sm bg-secondary ${(errors.username || errors.password) && 'border-red border-2'}`}
+                    className={`rounded-sm bg-background mb-5 ${(errors.username || errors.password) && 'border-red border-2'}`}
                     {...register('password', { required: true })}
                 />
 
-                <button type="submit" className="rounded-md bg-background hover:bg-secondary h-8 mx-auto border-2 border-accent hover:border-primary w-32 transition-all">
+                <button type="submit" className="btnBlue h-8 mx-auto w-32">
                     Login
                 </button>
                 {errors.username || errors.password ? <div className="text-center text-red">There has been a problem logging in, please try again</div> : null}

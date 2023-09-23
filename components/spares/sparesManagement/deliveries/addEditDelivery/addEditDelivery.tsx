@@ -87,7 +87,7 @@ const AddEditDelivery = (props: ModalProps) => {
                             <GeneralFormInput register={register} label="Placed" type="date" formName="placed" errors={errors} required={true} />
                             <GeneralFormInput register={register} label="Due" type="date" formName="due" errors={errors} required={true} />
 
-                            <button className="rounded-md bg-background hover:bg-secondary h-8 my-2 border-2 border-accent hover:border-primary" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
+                            <button className="btnBlue h-8 my-2" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
                                 Add Spares to Delivery
                             </button>
                             <div>

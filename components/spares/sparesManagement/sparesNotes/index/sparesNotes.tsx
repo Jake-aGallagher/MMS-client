@@ -32,7 +32,7 @@ const SparesNotes = () => {
                         Notes
                         <button
                             onClick={() => [setViewModal(true), setModalType('addEditSparesNote'), setEditNoteData({ id: 0, title: '' })]}
-                            className="rounded-md ml-5 text-sm font-normal bg-background hover:bg-secondary h-6 px-3 border-2 border-accent hover:border-primary transition-all"
+                            className="btnBlue font-normal ml-5 text-sm h-6 px-3"
                         >
                             Add Note
                         </button>

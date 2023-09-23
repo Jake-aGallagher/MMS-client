@@ -49,10 +49,10 @@ const DataTableRow = (props: Props) => {
                     return <StringData string={row[h.id]} />;
             }
         };
-        return <td key={uuidv4()} className="border border-solid border-accent px-2 text-center p-2">{switchTypes()}</td>;
+        return <td key={uuidv4()} className="px-2 text-center p-2">{switchTypes()}</td>;
     });
 
-    return <tr>{dataPoints}</tr>;
+    return <tr className='outline-1 outline-accent hover:outline-dashed rounded-md'>{dataPoints}</tr>;
 };
 
 export default DataTableRow;

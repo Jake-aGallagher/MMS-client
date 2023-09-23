@@ -47,6 +47,13 @@ const AssetView = () => {
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit
                     </button>
+                    <button
+                        onClick={() => [setViewModal(true), setModalType('createJob'), setModalProps({ assetId })]}
+                        className="ml-8 hover:text-accent flex flex-row items-center"
+                    >
+                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                        Create Job
+                    </button>
                 </Toolbar>
                 {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
