@@ -97,7 +97,7 @@ const Login = (props: Props) => {
 
     return (
         <div className="container mx-auto h-screen w-screen flex flex-col justify-center items-center">
-            <img src={bgImg.src} className='fixed w-screen h-screen object-cover ' />
+            <img src={bgImg.src} className='fixed w-screen h-screen object-cover' draggable={false}/>
             <form
                 onSubmit={handleSubmit(handleRegistration)}
                 className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-lg z-10 opacity-80"
