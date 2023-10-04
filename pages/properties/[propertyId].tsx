@@ -45,15 +45,15 @@ const PropertyView = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/properties" className="ml-8 hover:text-accent flex flex-row items-center">
+                    <Link href="/properties" className="tLink">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Properties</p>
                     </Link>
-                    <button className="ml-8 hover:text-accent flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('addEditProperty')]}>
+                    <button className="tLink" onClick={() => [setViewModal(true), setModalType('addEditProperty')]}>
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit Property
                     </button>
-                    <button className="ml-8 hover:text-accent flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('assignUsers')]}>
+                    <button className="tLink" onClick={() => [setViewModal(true), setModalType('assignUsers')]}>
                         <FontAwesomeIcon icon={faUserPlus} className="mr-1 w-3" />
                         Assign Users
                     </button>

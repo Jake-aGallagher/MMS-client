@@ -39,11 +39,11 @@ const Users = () => {
     return (
         <FullPage>
             <Toolbar>
-                <Link href="/settings" className="ml-8 hover:text-accent flex flex-row items-center">
+                <Link href="/settings" className="tLink">
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                <button onClick={addUser} className="ml-8 hover:text-accent flex flex-row items-center">
+                <button onClick={addUser} className="tLink">
                     <div className="text-2xl mr-1 pb-1">+</div>
                     Add User
                 </button>

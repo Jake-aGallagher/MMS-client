@@ -26,7 +26,7 @@ const Assets = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <button className="ml-8 hover:text-accent flex flex-row items-center" onClick={() => setEditMode((prev) => !prev)}>
+                    <button className="tLink" onClick={() => setEditMode((prev) => !prev)}>
                         {editMode ? <FontAwesomeIcon icon={faWrench} className="mr-1 w-3" /> : <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />}
                         {editMode ? 'Switch to Work Mode' : 'Switch to Edit Mode'}
                     </button>

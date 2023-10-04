@@ -32,7 +32,7 @@ const Jobs = () => {
     return (
         <FullPage>
             <Toolbar>
-                <Link href="/assets" className="ml-8 hover:text-accent flex flex-row items-center">
+                <Link href="/assets" className="tLink">
                     <div className="text-2xl mr-1 pb-1">+</div>Create Job
                 </Link>
             </Toolbar>

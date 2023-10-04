@@ -39,17 +39,17 @@ const AssetView = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/assets" className="ml-8 hover:text-accent flex flex-row items-center">
+                    <Link href="/assets" className="tLink">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Assets</p>
                     </Link>
-                    <button className="ml-8 hover:text-accent flex flex-row items-center" onClick={() => [setViewModal(true), setModalType('addEditAsset')]}>
+                    <button className="tLink" onClick={() => [setViewModal(true), setModalType('addEditAsset')]}>
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit
                     </button>
                     <button
                         onClick={() => [setViewModal(true), setModalType('createJob'), setModalProps({ assetId })]}
-                        className="ml-8 hover:text-accent flex flex-row items-center"
+                        className="tLink"
                     >
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Create Job

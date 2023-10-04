@@ -13,7 +13,7 @@ const SparesManagement = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/spares" className="ml-8 hover:text-accent flex flex-row items-center">
+                    <Link href="/spares" className="tLink">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Spares</p>
                     </Link>

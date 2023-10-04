@@ -51,11 +51,11 @@ const Spares = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/spares/sparesManagement" className="ml-8 hover:text-accent flex flex-row items-center">
+                    <Link href="/spares/sparesManagement" className="tLink">
                         <FontAwesomeIcon icon={faClipboard} className="mr-1 w-3" />
                         Spares Management
                     </Link>
-                    <button onClick={addItem} className="ml-8 hover:text-accent flex flex-row items-center">
+                    <button onClick={addItem} className="tLink">
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add Spares Item
                     </button>

@@ -129,11 +129,11 @@ const JobView = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/jobs" className="ml-8 hover:text-accent flex flex-row items-center">
+                    <Link href="/jobs" className="tLink">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Jobs</p>
                     </Link>
-                    <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="ml-8 hover:text-accent flex flex-row items-center">
+                    <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="tLink">
                         {jobDetails.length == 0 ? null : jobDetails[0].completed == 1 ? (
                             <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         ) : (
