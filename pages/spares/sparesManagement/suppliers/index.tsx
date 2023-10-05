@@ -56,9 +56,7 @@ const Suppliers = () => {
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
-                    <div className="w-full overflow-x-auto overflow-y-auto">
-                        <DataTable config={suppliersTableConfig} data={suppliersList} />
-                    </div>
+                    <DataTable config={suppliersTableConfig} data={suppliersList} />
                 </LoadingNoDataError>
             </FullPage>
         </>

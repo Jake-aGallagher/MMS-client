@@ -70,9 +70,7 @@ const Deliveries = () => {
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { contents: [], name: '' } })]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
-                    <div className="w-full overflow-x-auto overflow-y-auto">
-                        <DataTable config={deliveriesTableConfig} data={deliveriesList} viewTooManyItems={viewTooManyItems} />
-                    </div>
+                    <DataTable config={deliveriesTableConfig} data={deliveriesList} viewTooManyItems={viewTooManyItems} />
                 </LoadingNoDataError>
             </FullPage>
         </>
