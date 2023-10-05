@@ -64,7 +64,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     {loggedIn ? (
                         <>
                             <NavBar logoutHandler={logoutHandler} />
-                            <div className="pl-52 h-screen">
+                            <div className="pl-16 xl:pl-52 h-screen transition-all">
                                 <Component {...pageProps} />
                             </div>
                         </>
