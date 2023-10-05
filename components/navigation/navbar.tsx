@@ -27,6 +27,7 @@ const NavBar = (props: Props) => {
     const [availProps, setAvailProps] = useState<AvailProps[]>([]);
     const userDetails = useSelector((state: RootState) => state.user.value);
     const name = userDetails.first + ' ' + userDetails.last;
+    const initials = userDetails.first.split('')[0].toUpperCase() + '.' + userDetails.last.split('')[0].toUpperCase();
     const router = useRouter();
     const currentRoute = router.pathname;
     const dispatch = useDispatch();
@@ -117,45 +118,49 @@ const NavBar = (props: Props) => {
     ));
 
     return (
-        <div className="fixed left-0 top-0 h-screen w-52 z-30 flex flex-col pt-4 px-4 bg-secondary text-text">
-            <div className="w-32 h-32 mx-auto mb-2">
-                <img src={CompanyLogo.src} />
+        <div className="group fixed left-0 top-0 h-screen xl:w-52 w-16 hover:w-52 z-30 flex flex-col xl:items-start pt-4 bg-secondary text-text transition-all">
+            <div className="mx-auto mb-2 h-32 flex flex-col justify-center items-center">
+                <img className="w-8 h-8 xl:w-32 xl:h-32 group-hover:w-32 group-hover:h-32 transition-all" src={CompanyLogo.src} />
             </div>
-            <div className="w-32 h-8 mx-auto mb-6 text-center font-bold text-2xl text-text">UpTime</div>
+            <div className="xl:w-32 h-8 mx-auto mb-6 text-center xl:text-2xl text-text transition-all">GIMMS</div>
+            <div className="h-8 mb-6 px-2">
+                <div className='hidden xl:block group-hover:block mx-auto w-full'>
+                    {availProps && availProps.length > 1 ? (
+                        <select value={currentProperty} onChange={(e) => changedProperty(e.target.value)} className="p-1 mx-auto w-full text-accent  hover:cursor-pointer">
+                            {propertySelection}
+                        </select>
+                    ) : (
+                        <div className="mx-auto text-accent border-b-2 border-accent">{availProps[0] && availProps[0].name}</div>
+                    )}
+                </div>
+            </div>
 
-            {availProps && availProps.length > 1 ? (
-                <select value={currentProperty} onChange={(e) => changedProperty(e.target.value)} className="w-32 h-8 p-1 mx-auto mb-6 bg-secondary text-accent  hover:cursor-pointer">
-                    {propertySelection}
-                </select>
-            ) : (
-                <div className="w-32 h-8 mx-auto mb-6 text-accent border-b-2 border-accent">{availProps[0] && availProps[0].name}</div>
-            )}
-
-            <Link href="/properties" className={'mb-2 w-32 mx-auto hover:text-accent  transition-all flex flex-row ' + (currentRoute.includes('properties') ? 'text-accent' : '')}>
-                <FontAwesomeIcon icon={faBuilding} className="mr-1 w-3" />
-                Properties
+            <Link href="/properties" className={'nLink ' + (currentRoute.includes('properties') ? 'text-accent' : '')}>
+                <FontAwesomeIcon icon={faBuilding} className="w-3" />
+                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Properties</span>
             </Link>
-            <Link href="/jobs" className={'mb-2 w-32 mx-auto hover:text-accent transition-all flex flex-row ' + (currentRoute.includes('jobs') ? 'text-accent' : '')}>
+            <Link href="/jobs" className={'nLink ' + (currentRoute.includes('jobs') ? 'text-accent' : '')}>
                 <FontAwesomeIcon icon={faScrewdriverWrench} className="mr-1 w-3" />
-                Jobs
+                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Jobs</span>
             </Link>
-            <Link href="/assets" className={'mb-2 w-32 mx-auto hover:text-accent transition-all flex flex-row ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>
+            <Link href="/assets" className={'nLink ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>
                 <FontAwesomeIcon icon={faFolderTree} className="mr-1 w-3" />
-                Assets
+                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Assets</span>
             </Link>
-            <Link href="/spares" className={'mb-2 w-32 mx-auto hover:text-accent transition-all flex flex-row ' + (currentRoute.includes('spares') ? 'text-accent' : '')}>
+            <Link href="/spares" className={'nLink ' + (currentRoute.includes('spares') ? 'text-accent' : '')}>
                 <FontAwesomeIcon icon={faTruckFast} className="mr-1 w-3" />
-                Spares
+                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Spares</span>
             </Link>
-            <Link href="/settings" className={'mb-2 w-32 mx-auto hover:text-accent transition-all flex flex-row ' + (currentRoute.includes('settings') ? 'text-accent' : '')}>
+            <Link href="/settings" className={'nLink ' + (currentRoute.includes('settings') ? 'text-accent' : '')}>
                 <FontAwesomeIcon icon={faGear} className="mr-1 w-3" />
-                Settings
+                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Settings</span>
             </Link>
-            <div className="absolute left-0 bottom-0 h-24 w-52 ">
-                <div className="w-32 h-8 mx-auto mb-2">{name}</div>
-                <button onClick={logoutProcess} className="w-32 h-8 mx-auto mb-2 hover:text-accent transition-all flex flex-row items-center">
+            <div className="mt-auto xl:w-52">
+                <div className="w-32 h-8 mx-auto mb-2 hidden xl:block group-hover:block ml-5 transition-all">{name}</div>
+                <div className="h-8 mx-auto mb-2 xl:hidden group-hover:hidden ml-5 transition-all">{initials}</div>
+                <button onClick={logoutProcess} className="nLink h-8 items-center transition-all">
                     <FontAwesomeIcon icon={faRightFromBracket} className="mr-1 w-3" />
-                    Logout
+                    <span className="hidden xl:block group-hover:block transition-all">Logout</span>
                 </button>
             </div>
         </div>
