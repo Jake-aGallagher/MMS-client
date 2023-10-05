@@ -8,7 +8,7 @@ interface Props {
 
 const GeneralForm = (props: PropsWithChildren<Props>) => {
     return (
-        <form onSubmit={props.handleSubmit(props.handleRegistration)} className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
+        <form onSubmit={props.handleSubmit(props.handleRegistration)} className="flex flex-col px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
             {props.children}
         </form>
     );

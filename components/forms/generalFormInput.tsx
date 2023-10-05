@@ -26,7 +26,7 @@ const GeneralFormInput = (props: Props<any>) => {
 
     return (
         <>
-            {props.label && props.type != 'checkbox' ? <label htmlFor={props.formName}>{props.label}: </label> : null}
+            {props.label && props.type != 'checkbox' ? <label htmlFor={props.formName} className='w-full text-left'>{props.label}: </label> : null}
             {singleTypes.includes(props.type) && (
                 <input
                     id={props.formName}

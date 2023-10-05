@@ -81,7 +81,7 @@ const DataTable = (props: Props) => {
         <>
             <LoadingNoDataError loading={loading} error={false}>
                 {props.config.searchable ? <DataTableSearch headers={props.config.headers} currentFilters={filtersObj} setFiltersObj={setFiltersObj} /> : null}
-                <table className="min-w-full table-auto  bg-secondary rounded-xl shadow-lg">
+                <table className="min-w-full table-auto bg-secondary rounded-xl shadow-lg">
                     <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
                     <tbody>
                         {sorted.map((item, i) => (

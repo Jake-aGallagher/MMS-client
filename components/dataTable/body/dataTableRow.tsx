@@ -52,7 +52,7 @@ const DataTableRow = (props: Props) => {
         return <td key={uuidv4()} className="px-2 text-center p-2">{switchTypes()}</td>;
     });
 
-    return <tr className='outline-1 outline-accent hover:outline-dashed rounded-md'>{dataPoints}</tr>;
+    return <tr className='odd:bg-secAlt even:bg-secondary outline-1 outline-accent hover:outline-dashed rounded-md'>{dataPoints}</tr>;
 };
 
 export default DataTableRow;
