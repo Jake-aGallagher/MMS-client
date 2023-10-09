@@ -16,7 +16,6 @@ interface ModalProps {
 
 const AddEditAsset = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const alertString = `There has been an issue ${props.payload.type == 'add' ? 'creating' : 'editing'} this Asset, please try again.`;
     const formLabel = `${props.payload.type == 'add' ? 'Create New Component of' : 'Edit'} ${props.payload.name}`;
     const defaultValues = props.payload.type == 'add' ? { name: '', note: '' } : { name: props.payload.name, note: props.payload.note ? props.payload.note : '' };
 
