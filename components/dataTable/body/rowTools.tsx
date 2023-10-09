@@ -29,17 +29,14 @@ const RowTools = (props: Props) => {
 
     useEffect(() => {
         document.addEventListener('click', handleClickOutside);
-        console.log('listening');
         return () => {
             document.removeEventListener('click', handleClickOutside);
-            console.log('removedddd');
         };
     }, []);
 
     const functionClicked = (functionType: 'addEdit' | 'delete' | 'adjustStock') => {
         setShowTools(false);
         setModal({ view: true, type: functionType + props.modalType, payload: { id: props.id, name: props.name } });
-        console.log(functionType, ' : ', props.modalType, ' : ', props.id);
     };
 
     const toolOptions = props.functions.map((funcString) => {

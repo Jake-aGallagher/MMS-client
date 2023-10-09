@@ -35,7 +35,7 @@ const AddEditAsset = (props: ModalProps) => {
     const handleRegistration = async (data: any) => {
         await addEditAssetHandler(data, props.payload.type, props.payload.id, currentProperty, props.closeModal);
     };
-    console.log(errors)
+
     return (
         <FormContainer>
             <FormHeader label={formLabel} />
