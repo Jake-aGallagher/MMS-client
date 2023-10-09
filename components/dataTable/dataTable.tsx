@@ -81,24 +81,28 @@ const DataTable = (props: Props) => {
         <>
             <LoadingNoDataError loading={loading} error={false}>
                 {props.config.searchable ? <DataTableSearch headers={props.config.headers} currentFilters={filtersObj} setFiltersObj={setFiltersObj} /> : null}
-                <table className="min-w-full table-auto bg-secondary rounded-xl shadow-lg">
-                    <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
-                    <tbody>
-                        {sorted.map((item, i) => (
-                            <DataTableRow
-                                key={'row_' + i}
-                                data={item}
-                                headers={props.config.headers}
-                                linkColPrefix={props.config.linkColPrefix}
-                                viewTooManyItems={props.viewTooManyItems}
-                                modalType={props.config.modalType}
-                                idPointer={props.config.idPointer}
-                                namePointer={props.config.namePointer}
-                                reload={props.config.reload}
-                            />
-                        ))}
-                    </tbody>
-                </table>
+                <div className="w-full h-full relative">
+                    <div className='overflow-x-auto overflow-y- rounded-xl shadow-lg'>
+                        <table className="w-full table-auto bg-secondary">
+                            <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
+                            <tbody>
+                                {sorted.map((item, i) => (
+                                    <DataTableRow
+                                        key={'row_' + i}
+                                        data={item}
+                                        headers={props.config.headers}
+                                        linkColPrefix={props.config.linkColPrefix}
+                                        viewTooManyItems={props.viewTooManyItems}
+                                        modalType={props.config.modalType}
+                                        idPointer={props.config.idPointer}
+                                        namePointer={props.config.namePointer}
+                                        reload={props.config.reload}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </LoadingNoDataError>
         </>
     );
