@@ -1,115 +1,28 @@
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { setUser } from '../store/userSlice';
-import { setCurrentProperty } from '../store/propertySlice';
 import CompanyLogo from '../../public/CompanyLogo.png';
-import axios from 'axios';
-import { SERVER_URL } from '../routing/addressAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faFolderTree, faGear, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import { logoutProcess } from './logoutProcess';
+import { changeProperty } from './changeProperty';
+import { useRetrieveProperty } from './useRetrieveProperty';
 
 interface Props {
     logoutHandler: () => void;
 }
 
-interface AvailProps {
-    id: number;
-    name: string;
-    lastProperty?: boolean;
-}
-
 const NavBar = (props: Props) => {
+    const dispatch = useDispatch();
+    const router = useRouter();
     const userId = useSelector((state: RootState) => state.user.value.id);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const [availProps, setAvailProps] = useState<AvailProps[]>([]);
     const userDetails = useSelector((state: RootState) => state.user.value);
+    const { availProps } = useRetrieveProperty({ currentProperty, userId });
     const name = userDetails.first + ' ' + userDetails.last;
     const initials = userDetails.first.split('')[0].toUpperCase() + '.' + userDetails.last.split('')[0].toUpperCase();
-    const router = useRouter();
     const currentRoute = router.pathname;
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        retrieveProperty();
-    }, [currentProperty]);
-
-    const retrieveProperty = async () => {
-        try {
-            const response = await axios.get(`${SERVER_URL}/properties/last-property/${userId}`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            if (response.data.length === 0) {
-                alert('You are not assigned to any Properties, please speak to your Line Manager');
-            } else {
-                setAvailProps(response.data);
-                let hasSelectedProp = false;
-                response.data.forEach((property: AvailProps) => {
-                    if (property.lastProperty == true) {
-                        dispatch(
-                            setCurrentProperty({
-                                currentProperty: property.id,
-                            })
-                        );
-                        hasSelectedProp = true;
-                    }
-                });
-                if (hasSelectedProp === false) {
-                    dispatch(
-                        setCurrentProperty({
-                            currentProperty: response.data[0].id,
-                        })
-                    );
-                }
-            }
-        } catch (err) {
-            alert('There has been an error whilst attempting to retrive your assigned properties, please try again');
-        }
-    };
-
-    const changedProperty = async (newPropIdString: string) => {
-        try {
-            const newPropId = parseInt(newPropIdString);
-            const response = await axios.put(
-                `${SERVER_URL}/properties/Last-property`,
-                {
-                    userId: userId,
-                    propertyId: newPropId,
-                },
-                {
-                    headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-                }
-            );
-            if (response.data.created) {
-                dispatch(
-                    setCurrentProperty({
-                        currentProperty: newPropId,
-                    })
-                );
-            } else {
-                alert('There has been an issue changing property, please try again.');
-            }
-        } catch (err) {
-            alert('There has been an issue changing property, please try again.');
-        }
-    };
-
-    const logoutProcess = () => {
-        dispatch(
-            setUser({
-                username: '',
-                first: '',
-                last: '',
-                user_group_id: 0,
-                id: 0,
-            })
-        );
-        localStorage.removeItem('token');
-        localStorage.removeItem('expiryDate');
-        props.logoutHandler();
-    };
 
     const propertySelection = availProps.map((p) => (
         <option key={p.id} value={p.id} className="text-accent">
@@ -124,9 +37,9 @@ const NavBar = (props: Props) => {
             </div>
             <div className="xl:w-32 h-8 mx-auto mb-6 text-center xl:text-2xl text-text transition-all">GIMMS</div>
             <div className="h-8 mb-6 px-2">
-                <div className='hidden xl:block group-hover:block mx-auto w-full'>
+                <div className="hidden xl:block group-hover:block mx-auto w-full">
                     {availProps && availProps.length > 1 ? (
-                        <select value={currentProperty} onChange={(e) => changedProperty(e.target.value)} className="p-1 mx-auto w-full text-accent  hover:cursor-pointer">
+                        <select value={currentProperty} onChange={(e) => changeProperty(dispatch, userId, e.target.value)} className="p-1 mx-auto w-full text-accent  hover:cursor-pointer">
                             {propertySelection}
                         </select>
                     ) : (
@@ -158,7 +71,7 @@ const NavBar = (props: Props) => {
             <div className="mt-auto xl:w-52">
                 <div className="w-32 h-8 mx-auto mb-2 hidden xl:block group-hover:block ml-5 transition-all">{name}</div>
                 <div className="h-8 mx-auto mb-2 xl:hidden group-hover:hidden ml-5 transition-all">{initials}</div>
-                <button onClick={logoutProcess} className="nLink h-8 items-center transition-all">
+                <button onClick={() => logoutProcess(props.logoutHandler, dispatch)} className="nLink h-8 items-center transition-all">
                     <FontAwesomeIcon icon={faRightFromBracket} className="mr-1 w-3" />
                     <span className="hidden xl:block group-hover:block transition-all">Logout</span>
                 </button>
