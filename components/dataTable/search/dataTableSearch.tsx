@@ -24,6 +24,14 @@ interface Props {
 
 const DataTableSearch = (props: Props) => {
     const { register, handleSubmit, reset } = useForm({});
+    const [viewSearch, setViewSearch] = useState(false);
+
+    const filterKeys = Object.keys(props.currentFilters);
+    const activeFilters = filterKeys.filter((item) => props.currentFilters[item]);
+
+    const toggleViewSearch = () => {
+        setViewSearch((prev) => !prev);
+    };
 
     const clearFilters = () => {
         props.setFiltersObj({});
@@ -43,9 +51,9 @@ const DataTableSearch = (props: Props) => {
     return (
         <div className="w-full flex flex-row justify-center my-5 p-2 rounded-xl shadow-lg bg-secondary">
             <DataTableSeachForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                <div className="flex flex-row min-h-fit">
-                    <div className="flex flex-row flex-wrap">{searchItems}</div>
-                    <DataTableSearchSubmit clearFilters={clearFilters} />
+                <div className="flex flex-col min-h-fit">
+                    {viewSearch ? <div className="flex flex-row flex-wrap">{searchItems}</div> : <div className="px-4 pb-2 text-center">{`There are currently ${activeFilters.length} active filters`}</div>}
+                    <DataTableSearchSubmit clearFilters={clearFilters} viewSearch={viewSearch} toggleViewSearch={toggleViewSearch} />
                 </div>
             </DataTableSeachForm>
         </div>
