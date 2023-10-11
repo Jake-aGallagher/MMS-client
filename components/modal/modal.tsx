@@ -16,7 +16,7 @@ import DeleteForm from '../forms/deleteForm/DeleteForm';
 import AddEditAsset from '../assets/addEditAsset/addEditAsset';
 import AddEditUserGroup from '../settings/userGroups/addEditUserGroups/addEditUserGroup';
 import AddEditPermission from '../settings/permissions/addEditPermissions/addEditPermission';
-import NewSparesSelector from '../jobs/newSparesSelector';
+import NewSparesSelector from '../sparesSelector/newSparesSelector';
 
 interface ModalProps {
     closeModal: () => void;
