@@ -1,6 +1,8 @@
 import FormContainer from '../../../../forms/formContainer';
 import FormHeader from '../../../../forms/formHeader';
 import DialogClose from '../../../../forms/dialogClose';
+import AltTableContainer from '../../../../dataTable/altTableContainer';
+import AltTableHeaders from '../../../../dataTable/altTableHeaders';
 
 interface Contents {
     delivery_id: number;
@@ -16,16 +18,23 @@ interface ModalProps {
 }
 
 const ViewExtraItems = (props: ModalProps) => {
-    const items = props.payload.contents.map((i) => (
-        <div className="flex flex-row border-2 border-primary rounded-md my-4 ml-4 w-fit px-2" key={'spares_item_' + i.spare_id}>
-            {i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}
-        </div>
+    const sparesTable = props.payload.contents.map((item) => (
+        <tr className="odd:bg-secAlt even:bg-secondary" key={'current_item_' + item.spare_id}>
+            <td className="text-center">{item.part_no}</td>
+            <td className="text-center">{item.name}</td>
+            <td className="text-center">{item.quantity}</td>
+        </tr>
     ));
 
     return (
         <FormContainer>
             <FormHeader label={props.payload.name} />
-            {items}
+            <div className='px-4'>
+                <AltTableContainer>
+                    <AltTableHeaders headers={['Part Number', 'Name', 'Quantity']} />
+                    <tbody>{sparesTable}</tbody>
+                </AltTableContainer>
+            </div>
             <DialogClose closeModal={props.closeModal} />
         </FormContainer>
     );
