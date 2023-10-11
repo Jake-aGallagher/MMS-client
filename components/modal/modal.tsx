@@ -15,7 +15,7 @@ import DeleteForm from '../forms/deleteForm/DeleteForm';
 import AddEditAsset from '../assets/addEditAsset/addEditAsset';
 import AddEditUserGroup from '../settings/userGroups/addEditUserGroups/addEditUserGroup';
 import AddEditPermission from '../settings/permissions/addEditPermissions/addEditPermission';
-import NewSparesSelector from '../sparesSelector/newSparesSelector';
+import SparesSelector from '../sparesSelector/sparesSelector';
 
 interface ModalProps {
     closeModal: () => void;
@@ -48,7 +48,7 @@ const ModalBase = (props: ModalProps) => {
 
             //Spare
             case 'SparesSelector':
-                return <NewSparesSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
+                return <SparesSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
             case 'addEditDelivery':
                 return <AddEditDelivery closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteDelivery':

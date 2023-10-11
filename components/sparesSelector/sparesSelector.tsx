@@ -19,7 +19,7 @@ interface SparesSelected {
     quantity: number;
 }
 
-const NewSparesSelector = (props: ModalProps) => {
+const SparesSelector = (props: ModalProps) => {
     const { spareslist, loading, error } = useSparesSelector(props.payload.sparesSelected);
 
     const updateSparesSelected = (item: SparesSelected) => {
@@ -48,4 +48,4 @@ const NewSparesSelector = (props: ModalProps) => {
     );
 };
 
-export default NewSparesSelector;
+export default SparesSelector;
