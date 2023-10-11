@@ -16,6 +16,8 @@ import { yupResolverUpdateJob } from './updateJobValidation';
 import GeneralFileInput from '../../forms/genrealFileInput';
 import { updatejobNotesHandler } from './updateJobNotesHandler';
 import { updateJobFullHandler } from './updateJobFullHandler';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 interface ModalProps {
     closeModal: () => void;
@@ -49,6 +51,51 @@ const UpdateJob = (props: ModalProps) => {
     useEffect(() => {
         reset(defaultValues);
     }, [defaultValues]);
+
+    const tableHead = () => {
+        const headers = ['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove'];
+        const headersHtml = headers.map((header) => (
+            <th className="font-semibold" key={'current_item_header_' + header}>
+                {header}
+            </th>
+        ));
+        return (
+            <thead>
+                <tr>{headersHtml}</tr>
+            </thead>
+        );
+    };
+
+    const updateSparesSelected = (id: number, type: 'add' | 'minus' | 'remove') => {
+        const index = sparesSelected.findIndex((item) => item.id == id);
+        const spareItem = sparesSelected.filter((item) => item.id == id)[0];
+        const newArr = [...sparesSelected];
+        if (type == 'add') {
+            newArr[index] = { ...spareItem, quantity: spareItem.quantity + 1 };
+        } else if (type == 'minus' && spareItem.quantity > 0) {
+            newArr[index] = { ...spareItem, quantity: spareItem.quantity - 1 };
+        } else if (type == 'remove') {
+            newArr[index] = { ...spareItem, quantity: 0 };
+        }
+        setSparesSelected(newArr);
+    };
+
+    const showCurrent = sparesSelected.map((item) => (
+        <tr className="odd:bg-secAlt even:bg-secondary" key={'current_item_' + item.id}>
+            <td className="text-center">{item.part_no}</td>
+            <td className="text-center">{item.name}</td>
+            <td className="text-center">{item.quantity}</td>
+            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateSparesSelected(item.id, 'add')}>
+                <FontAwesomeIcon icon={faPlus} className="h-5 m-auto" />
+            </td>
+            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateSparesSelected(item.id, 'minus')}>
+                <FontAwesomeIcon icon={faMinus} className="h-5 m-auto" />
+            </td>
+            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateSparesSelected(item.id, 'remove')}>
+                <FontAwesomeIcon icon={faTrashCan} className="h-5 m-auto" />
+            </td>
+        </tr>
+    ));
 
     const handleRegistration = async (data: any) => {
         if ((statusWatch[0] == 19 || statusWatch[0] == 20) && completed !== 1) {
@@ -92,17 +139,16 @@ const UpdateJob = (props: ModalProps) => {
                             {completed !== 1 ? (
                                 <>
                                     <GeneralFileInput files={files} setFiles={setFiles} />
-                                    <button className="btnBlue h-8 my-2" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
+                                    <button className="btnBlue h-8 mt-4 mb-1" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
                                         Log Spares Used
                                     </button>
-                                    <div>
-                                        {sparesSelected.map((spare) => (
-                                            <div key={spare.id} className={`flex flex-row border-2 border-blue-600 rounded-md my-4 w-fit px-2 ${spare.quantity < 1 ? 'hidden' : ''}`}>
-                                                <div className="mr-4">{spare.part_no}</div>
-                                                <div className="mr-4">{spare.name}</div>
-                                                <div>Quantity Used: {spare.quantity}</div>
-                                            </div>
-                                        ))}
+                                    <div className="w-full relative">
+                                        <div className="overflow-x-auto rounded-xl shadow-lg">
+                                            <table className="w-full table-auto bg-secondary">
+                                                {tableHead()}
+                                                <tbody>{showCurrent}</tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <LoggedTimeDisplay users={users} loggedTimeDetails={loggedTimeDetails} setLoggedTimeDetails={setLoggedTimeDetails} />
                                     <FormTextCenter label={"Note: A job must be set to 'Attended - Found no Issues' or 'Attended - Fixed' in order to complete the job"} />

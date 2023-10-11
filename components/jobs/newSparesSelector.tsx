@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import DataTable from '../dataTable/dataTable';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
 import { useSelector } from 'react-redux';
@@ -7,6 +6,8 @@ import { RootState } from '../store/store';
 import LoadingNoDataError from '../loading/loadingNoDataError';
 import FormContainer from '../forms/formContainer';
 import FormHeader from '../forms/formHeader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 interface ModalProps {
     closeModal: () => void;
@@ -30,15 +31,6 @@ const NewSparesSelector = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [spareslist, setSparesList] = useState<SparesSelected[]>([]);
 
-    const tableConfig = {
-        headers: [
-            { id: 'part_no', name: 'Part Number', type: 'string', nameParam: 'part_no', search: true, order: true },
-            { id: 'name', name: 'Name', type: 'string', search: true, order: true },
-            { id: 'quantity', name: 'Quantity', type: 'number', search: true, order: true },
-        ],
-        searchable: true,
-    };
-
     useEffect(() => {
         getHandler();
     }, []);
@@ -57,15 +49,14 @@ const NewSparesSelector = (props: ModalProps) => {
     };
 
     const mergeArrays = (fullSparesList: Spare[]) => {
-        const idListOfPropsOnes: number[] = [];
+        const idListInUse: {[key: number]: true|undefined} = {};
         const mergedList: SparesSelected[] = [];
 
         props.payload.sparesSelected.forEach((item) => {
-            idListOfPropsOnes.push(item.id);
-            mergedList.push(item);
+            idListInUse[item.id] = true;
         });
         fullSparesList.forEach((item) => {
-            if (!idListOfPropsOnes.includes(item.id)) {
+            if (idListInUse[item.id] == undefined) {
                 mergedList.push({ ...item, quantity: 0 });
             }
         });
@@ -73,30 +64,41 @@ const NewSparesSelector = (props: ModalProps) => {
         setLoading(false);
     };
 
-    const updateQuant = () => {
+    const headers = ['Part Number', 'Name', 'Add'];
+    const headersHtml = headers.map((header) => <th className="font-semibold" key={'current_item_header_' + header}>{header}</th>);
 
-    }
-
-    const submitHandler = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        // filter sparesList for any with 0 quantity
-        const filtered = spareslist.filter((item) => item.quantity > 0);
-        props.passbackDetails(filtered) 
+    const updateSparesSelected = (item: SparesSelected) => {
+        props.passbackDetails([...props.payload.sparesSelected, {...item, quantity: 1}]);
+        props.closeModal();
     };
+
+    const showCurrent = spareslist.map((item) => (
+        <tr className="odd:bg-secAlt even:bg-secondary" key={'current_item_' + item.id}>
+            <td className="text-center">{item.part_no}</td>
+            <td className="text-center">{item.name}</td>
+            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateSparesSelected(item)}>
+                <FontAwesomeIcon icon={faPlus} className="h-5 m-auto" />
+            </td>
+        </tr>
+    ));
 
     return (
         <LoadingNoDataError loading={loading} error={error}>
             <FormContainer>
                 <FormHeader label={props.payload.type === 'delivery' ? 'Add to Delivery' : 'Spares Used'} />
                 <div className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
-                    <DataTable data={spareslist} config={tableConfig} />
+                    <div className="w-full relative">
+                        <div className="overflow-x-auto rounded-xl shadow-lg">
+                            <table className="w-full table-auto bg-secondary">
+                                <thead><tr>{headersHtml}</tr></thead>
+                                <tbody>{showCurrent}</tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                    <div className="flex flex-row justify-evenly items-center absolute bottom-0 h-16 left-0 w-full">
-                        <button className="btnBlue h-8 px-4 w-32" onClick={(e) => [e.preventDefault(), props.closeModal()]}>
+                    <div className="flex flex-row justify-end items-center absolute bottom-0 h-16 left-0 w-full">
+                        <button className="btnBlue h-8 mr-4 px-4 w-32" onClick={(e) => [e.preventDefault(), props.closeModal()]}>
                             Cancel
-                        </button>
-                        <button className="btnBlue h-8 px-4 w-32" onClick={(e) => submitHandler(e)}>
-                            Submit
                         </button>
                     </div>
                 </div>
