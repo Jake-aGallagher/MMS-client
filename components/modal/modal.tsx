@@ -4,7 +4,6 @@ import AssignUsers from '../properties/assignUsers/assignUsers';
 import DeleteAsset from '../assets/delete';
 import CreateJob from '../jobs/createJob/createJob';
 import UpdateJob from '../jobs/updateJob/update';
-import SparesSelector from '../jobs/sparesSelector';
 import AddEditSparesNote from '../spares/sparesManagement/sparesNotes/addEditNote/addEditSparesNote';
 import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier/addEditSupplier';
 import AddSparesItem from '../spares/addEditSparesItem/addEditSparesItem';
