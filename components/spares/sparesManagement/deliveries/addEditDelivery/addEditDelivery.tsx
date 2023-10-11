@@ -12,6 +12,9 @@ import LoadingNoDataError from '../../../../loading/loadingNoDataError';
 import { useAddEditDelivery } from './useAddEditDelivery';
 import { yupResolverAddEditDelivery } from './addEditDeliveryValidation';
 import { addEditDeliveryHandler } from './addEditDeliveryHandler';
+import AltTableContainer from '../../../../dataTable/altTableContainer';
+import AltTableHeaders from '../../../../dataTable/altTableHeaders';
+import SparesAddRemoveTable from '../../../../sparesSelector/sparesAddRemoveTable';
 
 interface ModalProps {
     closeModal: () => void;
@@ -87,18 +90,15 @@ const AddEditDelivery = (props: ModalProps) => {
                             <GeneralFormInput register={register} label="Placed" type="date" formName="placed" errors={errors} required={true} />
                             <GeneralFormInput register={register} label="Due" type="date" formName="due" errors={errors} required={true} />
 
-                            <button className="btnBlue h-8 my-2" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
+                            <button className="btnBlue h-8 mt-4 mb-1" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
                                 Add Spares to Delivery
                             </button>
-                            <div>
-                                {contents.map((spare) => (
-                                    <div key={spare.id} className={`flex flex-row border-2 border-primary rounded-md my-4 w-fit px-2 ${spare.quantity < 1 ? 'hidden' : ''}`}>
-                                        <div className="mr-4">{spare.part_no}</div>
-                                        <div className="mr-4">{spare.name}</div>
-                                        <div>Quantity Ordered: {spare.quantity}</div>
-                                    </div>
-                                ))}
-                            </div>
+                            {contents.length > 0 && (
+                                <AltTableContainer>
+                                    <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
+                                    <SparesAddRemoveTable sparesSelected={contents} setSparesSelected={setContents} />
+                                </AltTableContainer>
+                            )}
 
                             <GeneralFormInput
                                 register={register}
