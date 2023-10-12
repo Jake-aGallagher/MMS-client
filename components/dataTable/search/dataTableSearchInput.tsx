@@ -21,28 +21,28 @@ const DataTableSearchInput = (props: Props<any>) => {
     const booleanType = ['tick'];
 
     return (
-        <div className='flex flex-col mx-1'>
-            {props.label ? <label htmlFor={props.formName} className='font-semibold'>{props.label} </label> : null}
+        <div className='flex flex-col mx-1 relative'>
+            {props.label ? <label htmlFor={props.formName} className='text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary'>{props.label} </label> : null}
 
             {textType.includes(props.type) && (
-                <input id={props.formName} type="text" className={`h-6 mb-2 rounded-md bg-background w-60 hover:border-2 border-primary border-solid ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
+                <input id={props.formName} type="text" className={`h-10 pl-1 my-2 rounded-md leading-10 bg-secondary w-60 border-1 border-primary border-solid ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
             )}
 
             {numberType.includes(props.type) && (
                 <input
                     id={props.formName}
                     type="number"
-                    className={`h-6 mb-2 rounded-md bg-background w-60 hover:border-2 border-primary border-solid ${props.extraClasses && props.extraClasses}`}
+                    className={`h-10 pl-1 my-2 rounded-md leading-10 bg-secondary w-60 border-1 border-primary border-solid ${props.extraClasses && props.extraClasses}`}
                     {...props.register(props.formName, { valueAsNumber: true })}
                 />
             )}
 
             {dateType.includes(props.type) && (
-                <input id={props.formName} type="date" className={`h-6 mb-2 rounded-md min-w-[144px] bg-background hover:border-2 border-primary border-solid ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
+                <input id={props.formName} type="date" className={`h-10 pl-1 my-2 rounded-md leading-10 bg-secondary w-60 border-1 border-primary border-solid ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)} />
             )}
 
             {booleanType.includes(props.type) && (
-                <select id={props.formName} className={`h-6 mb-2 rounded-md bg-background hover:border-2 border-primary border-solid ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)}>
+                <select id={props.formName} className={`h-10 pl-1 my-2 rounded-md leading-10 bg-secondary w-60 border-1 border-primary border-solid ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)}>
                     <option value={''} key={props.formName + '_' + 'null'}></option>
                     <option value={0} key={props.formName + '_' + 'no'}>
                         No
@@ -54,7 +54,7 @@ const DataTableSearchInput = (props: Props<any>) => {
             )}
 
             {/* {selectTypes.includes(props.type) && (
-                <select id={props.formName} className={`h-6 mb-2 rounded-md bg-background hover:border-2 border-primary border-solid ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)}>
+                <select id={props.formName} className={`h-10 pl-1 my-2 rounded-md leading-10 bg-secondary w-60 border-1 border-primary border-solid ${props.extraClasses && props.extraClasses}`} {...props.register(props.formName)}>
                     {props.selectOptions!.map((item) => (
                         <option value={item.id} key={props.formName + '_' + item.id}>
                             {item[props.optionNameString!]}

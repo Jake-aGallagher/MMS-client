@@ -25,6 +25,9 @@ module.exports = {
             gridRowEnd: {
                 13: '13',
             },
+            borderWidth: {
+                1: '1px'
+            }
         },
         plugins: [],
     },
