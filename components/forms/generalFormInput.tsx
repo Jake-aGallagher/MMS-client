@@ -39,7 +39,7 @@ const GeneralFormInput = (props: Props<any>) => {
                         id={props.formName}
                         type={props.type}
                         min={props.min}
-                        className={`h-10 pl-1 my-2 rounded-md bg-background w-full border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
+                        className={`h-10 pl-1 my-2 rounded-md w-full border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
                         {...props.register(props.formName, { required: props.required, valueAsNumber: props.type == 'number' })}
                     />
                 )}
@@ -48,7 +48,7 @@ const GeneralFormInput = (props: Props<any>) => {
                     <textarea
                         id={props.formName}
                         rows={props.rows}
-                        className={`h-20 pl-1 pt-2 my-2 rounded-md bg-background w-full border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
+                        className={`h-20 pl-1 pt-2 my-2 rounded-md w-full border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
                         {...props.register(props.formName, { required: props.required })}
                     />
                 )}
@@ -56,7 +56,7 @@ const GeneralFormInput = (props: Props<any>) => {
                 {selectTypes.includes(props.type) && (
                     <select
                         id={props.formName}
-                        className={`h-10 pl-1 my-2 rounded-md bg-background w-full border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
+                        className={`h-10 pl-1 my-2 rounded-md w-full border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
                         {...props.register(props.formName, { required: props.required })}
                     >
                         {props.selectOptions!.map((item) => (
@@ -69,7 +69,7 @@ const GeneralFormInput = (props: Props<any>) => {
 
                 {checkboxTypes.includes(props.type) && (
                     <div
-                        className={`rounded-md my-2 p-2 border-2 bg-secondary border-primary w-full flex flex-row ${props.extraClasses && props.extraClasses} ${
+                        className={`rounded-md my-2 p-2 border-1 border-primary w-full flex flex-row ${props.extraClasses && props.extraClasses} ${
                             props.errors[props.formName] && 'border-red border-2'
                         }`}
                     >

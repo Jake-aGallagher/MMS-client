@@ -97,30 +97,33 @@ const Login = (props: Props) => {
 
     return (
         <div className="container mx-auto h-screen w-screen flex flex-col justify-center items-center">
-            <img src={bgImg.src} className='fixed w-screen h-screen object-cover' draggable={false}/>
-            <form
-                onSubmit={handleSubmit(handleRegistration)}
-                className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-lg z-10 opacity-80"
-            >
-                <label htmlFor="username" className=" ">
-                    Username
-                </label>
-                <input
-                    type="text"
-                    maxLength={45}
-                    id="username"
-                    className={`rounded-sm bg-background mb-5 ${(errors.username || errors.password) && 'border-red border-2'}`}
-                    {...register('username', { required: true })}
-                />
+            <img src={bgImg.src} className="fixed w-screen h-screen object-cover" draggable={false} />
+            <form onSubmit={handleSubmit(handleRegistration)} className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-lg z-10 opacity-80">
+                <div className="flex flex-col mx-1 relative mb-2">
+                    <label htmlFor="username" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
+                        Username
+                    </label>
+                    <input
+                        type="text"
+                        maxLength={45}
+                        id="username"
+                        className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.username || errors.password) && 'border-red border-2'}`}
+                        {...register('username', { required: true })}
+                    />
+                </div>
 
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    maxLength={255}
-                    id="password"
-                    className={`rounded-sm bg-background mb-5 ${(errors.username || errors.password) && 'border-red border-2'}`}
-                    {...register('password', { required: true })}
-                />
+                <div className="flex flex-col mx-1 relative mb-2">
+                    <label htmlFor="password" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
+                        Password
+                    </label>
+                    <input
+                        type="password"
+                        maxLength={255}
+                        id="password"
+                        className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.username || errors.password) && 'border-red border-2'}`}
+                        {...register('password', { required: true })}
+                    />
+                </div>
 
                 <button type="submit" className="btnBlue h-8 mx-auto w-32">
                     Login
