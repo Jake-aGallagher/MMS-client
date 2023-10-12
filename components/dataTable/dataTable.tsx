@@ -73,7 +73,7 @@ const DataTable = (props: Props) => {
 
     const sortData = (col: string, dir: string) => {
         let unorderedData = filtered;
-        setSorted(sortTableData(unorderedData, col, dir));
+        setSorted(sortTableData(unorderedData, col, dir, colTypeMap[col]));
         setLoading(false);
     };
 
