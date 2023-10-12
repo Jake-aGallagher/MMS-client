@@ -15,7 +15,7 @@ interface Props<T extends FieldValues> extends OptionNameString {
 
 const DataTableSearchInput = (props: Props<any>) => {
     const textType = ['string', 'linkWithName', 'url'];
-    const numberType = ['link'];
+    const numberType = ['number', 'link', 'remaining_stock'];
     const dateType = ['date'];
     const selectType = [];
     const booleanType = ['tick'];

@@ -14,7 +14,7 @@ export const dataTableSearchFilter = (rawData: { [key: string]: any }[], filters
                     if (dataRow[filter] == null) {
                         passes = false;
                     } else {
-                        if (colMap[filter] == 'number' || colMap[filter] == 'link') {
+                        if (colMap[filter] == 'number' || colMap[filter] == 'link' || colMap[filter] == 'remaining_stock') {
                             if (dataRow[filter] != filtersObj[filter]) {
                                 passes = false;
                             }
