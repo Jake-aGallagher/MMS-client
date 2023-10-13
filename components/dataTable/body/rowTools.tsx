@@ -73,7 +73,7 @@ const RowTools = (props: Props) => {
             <div onClick={handleToolsClick} ref={toolsIconRef} className="group flex flex-row justify-center relative hover:cursor-pointer">
                 <FontAwesomeIcon icon={faEllipsisVertical} className="h-5 parent group-hover:text-primary transition-all" />
                 {showTools && (
-                    <div ref={overlayRef} className="absolute top-2 -left-36 rounded-b-md rounded-tl-md z-10 border-primary border-2 p-2 flex flex-col bg-background w-40 transition-all">
+                    <div ref={overlayRef} className="absolute top-2 -left-36 rounded-b-md rounded-tl-md z-10 border-primary border-1 p-2 flex flex-col bg-background w-40 transition-all">
                         {toolOptions}
                     </div>
                 )}
