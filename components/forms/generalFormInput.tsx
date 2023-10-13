@@ -56,7 +56,7 @@ const GeneralFormInput = (props: Props<any>) => {
                 {selectTypes.includes(props.type) && (
                     <select
                         id={props.formName}
-                        className={`h-10 pl-1 my-2 rounded-md w-full border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
+                        className={`h-10 pl-1 my-2 rounded-md w-full bg-background border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
                         {...props.register(props.formName, { required: props.required })}
                     >
                         {props.selectOptions!.map((item) => (
