@@ -7,6 +7,8 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import bgImg from '../../public/stock-vector-gear-blueprint-technical-background-cogs-and-wheels-in-gray-color-abstract-parts-of-engine-1764788840.jpg';
+import { useSearchParams } from 'next/navigation';
+import { setDebug } from '../store/debugSlice';
 
 interface Props {
     loginHandler: () => void;
@@ -14,6 +16,8 @@ interface Props {
 }
 
 const Login = (props: Props) => {
+    const searchParams = useSearchParams();
+    const debug = searchParams.get('debug') == process.env.NEXT_PUBLIC_DEBUG_KEY || false;
     const dispatch = useDispatch();
     const formValidation = yup.object().shape({
         username: yup.string().required().max(255),
@@ -82,6 +86,9 @@ const Login = (props: Props) => {
                         id: user.id,
                     })
                 );
+                if (debug) {
+                    dispatch(setDebug({ debug: true }));
+                }
                 localStorage.setItem('token', response.data.response.token);
                 props.refreshExpiry();
                 props.loginHandler();

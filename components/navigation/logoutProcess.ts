@@ -1,6 +1,7 @@
 import { setUser } from '../store/userSlice';
 import { Dispatch } from 'react';
 import { AnyAction } from '@reduxjs/toolkit';
+import { setDebug } from '../store/debugSlice';
 
 export const logoutProcess = (logoutHandler: () => void, dispatch: Dispatch<AnyAction>) => {
     dispatch(
@@ -12,6 +13,7 @@ export const logoutProcess = (logoutHandler: () => void, dispatch: Dispatch<AnyA
             id: 0,
         })
     );
+    dispatch(setDebug({ debug: false }));
     localStorage.removeItem('token');
     localStorage.removeItem('expiryDate');
     logoutHandler();
