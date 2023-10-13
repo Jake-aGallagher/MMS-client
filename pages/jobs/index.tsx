@@ -6,6 +6,7 @@ import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
+import { GlobalDebug } from '../../components/logs/globalDebug';
 
 const jobTableConfig = {
     headers: [
@@ -28,6 +29,7 @@ const jobTableConfig = {
 const Jobs = () => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { jobs, loading, error } = useJobs({ currentProperty });
+    GlobalDebug('Jobs Index', [['Jobs list', jobs]]);
 
     return (
         <FullPage>
