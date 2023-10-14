@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { RootState } from '../../components/store/store';
 import ModalBase from '../../components/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,120 +8,54 @@ import { useJobDetails } from '../../components/jobs/details/useJobDetails';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
+import DetailsBox from '../../components/detailsBox/detailsBox';
+import DataTable from '../../components/dataTable/dataTable';
 
 const JobView = () => {
     const params = useRouter();
     const jobId = params.asPath.split('/')[2];
     const { jobDetails, timeDetails, sparesDetails, loading, noData, error, reload } = useJobDetails(jobId);
-    const user_group_id = useSelector((state: RootState) => state.user.value.user_group_id);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
-    const one = jobDetails.map((j) => (
-        <div key={Math.random()} className="box row-start-1 row-end-2 col-start-1 col-end-6 pl-6 flex flex-row items-center relative">
-            <b>{j.property_name}</b>
-        </div>
-    ));
+    const jobDetailsConfig = {
+        id: jobDetails?.id,
+        fields: [
+            { label: 'ID Number', value: jobDetails?.id },
+            { label: 'Title', value: jobDetails?.title },
+            { label: 'Completed', value: jobDetails?.completed == 1 ? <div>&#10004;</div> : <div>&#10060;</div> },
+            { label: 'Property Name', value: jobDetails?.property_name },
+            { label: 'Asset Name', value: jobDetails?.asset_name },
+            { label: 'Type', value: jobDetails?.type },
+            { label: 'Description', value: jobDetails?.description },
+            { label: 'Notes', value: jobDetails?.notes },
+            { label: 'Status', value: jobDetails?.status },
+            { label: 'Urgency', value: jobDetails?.urgency },
+            { label: 'Date Logged', value: jobDetails?.created },
+            { label: 'Completion Deadline', value: jobDetails?.required_comp_date },
+            { label: 'Completion Date', value: jobDetails?.comp_date },
+            { label: 'Reported By', value: jobDetails?.reporter },
+        ],
+    };
 
-    const two = jobDetails.map((j) => (
-        <div key={Math.random()} className="box row-start-2 row-end-5 col-start-1 col-end-4 pl-6 flex flex-col justify-evenly">
-            <div>
-                <b>Title: </b>
-                {j.title}
-            </div>
-            <div>
-                <b>Job Id: </b>
-                {j.id}
-            </div>
-            <div>
-                <b>Asset: </b>
-                {j.asset_name}
-            </div>
-            <div>
-                <b>Type: </b>
-                {j.type}
-            </div>
-        </div>
-    ));
+    const sparesTableConfig = {
+        headers: [
+            { id: 'id', name: 'Part Number', type: 'linkWithName', nameParam: 'part_no', search: true, order: true },
+            { id: 'name', name: 'Name', type: 'string', search: true, order: true },
+            { id: 'quantity', name: 'Quantity Used', type: 'string', search: true, order: true },
+        ],
+        searchable: false,
+        linkColPrefix: '/spares/',
+    };
 
-    const three = jobDetails.map((j) => (
-        <div key={Math.random()} className="box row-start-2 row-end-5 col-start-4 col-end-6 w-full h-full flex flex-col justify-center items-center text-5xl">
-            <p className="text-lg">
-                <b>Completed</b>
-            </p>
-            {j.completed == 1 ? <div>&#10004;</div> : <div>&#10060;</div>}
-        </div>
-    ));
-
-    const four = jobDetails.map((j) => (
-        <div key={Math.random()} className="box row-start-5 row-end-13 col-start-1 col-end-4 p-6 flex flex-col">
-            <div className="h-[50%] outline outline-primary outline-2 p-2 overflow-y-auto">
-                <p>
-                    <b>Description: </b>
-                </p>
-                {j.description}
-            </div>
-            <div className="h-[50%] outline outline-primary outline-2 p-2 overflow-y-auto">
-                <p>
-                    <b>Notes: </b>
-                </p>
-                {j.notes}
-            </div>
-        </div>
-    ));
-
-    const timeDetailsShow = timeDetails.map((detail) => (
-        <div key={detail.id + detail.last} className="flex flex-row">
-            <div className="mr-4">{detail.first + ' ' + detail.last}</div>
-            <div>{detail.time} mins</div>
-        </div>
-    ));
-
-    const five = jobDetails.map((j) => (
-        <div key={Math.random()} className="box row-start-5 row-end-13 col-start-4 col-end-6 pl-6 flex flex-col justify-evenly">
-            <div>
-                <b>Current Status: </b>
-                {j.status}
-            </div>
-            <div>
-                <b>Urgency: </b>
-                {j.urgency}
-            </div>
-            <div>
-                <b>Date Created: </b>
-                {j.created}
-            </div>
-            <div>
-                <b>Required Completion Date: </b>
-                {j.required_comp_date}
-            </div>
-            {j.completed === 1 ? (
-                <div>
-                    <b>Completion Date: </b>
-                    {j.comp_date}
-                </div>
-            ) : (
-                ''
-            )}
-            <div>
-                <b>Reported By: </b>
-                {j.reporter}
-            </div>
-            <div>
-                <b>Total Time Logged (mins): </b>
-                {j.logged_time === null ? 'none' : j.logged_time}
-                {timeDetailsShow}
-            </div>
-            <div>
-                <b>Used Spares: </b>
-                {sparesDetails.map((i) => (
-                    <div className="flex flex-row my-4 ml-4 w-fit px-2" key={'spares_item_' + i.id}>
-                        {i.part_no + ' / ' + i.name + ' / Quantity: ' + i.quantity}
-                    </div>
-                ))}
-            </div>
-        </div>
-    ));
+    const timeTableConfig = {
+        headers: [
+            { id: 'first', name: 'First Name', type: 'string', search: true, order: true },
+            { id: 'last', name: 'Surname', type: 'string', search: true, order: true },
+            { id: 'time', name: 'Time Logged (Mins)', type: 'string', search: true, order: true },
+        ],
+        searchable: false,
+    };
 
     return (
         <>
@@ -134,24 +66,34 @@ const JobView = () => {
                         <p>Return to all Jobs</p>
                     </Link>
                     <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="tLink">
-                        {jobDetails.length == 0 ? null : jobDetails[0].completed == 1 ? (
+                        {jobDetails == undefined ? null : jobDetails.completed == 1 ? (
                             <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         ) : (
                             <FontAwesomeIcon icon={faCheck} className="mr-1 w-3" />
                         )}
-                        {jobDetails.length == 0 ? null : jobDetails[0].completed == 1 ? 'Update' : 'Update & Complete'}
+                        {jobDetails == undefined ? null : jobDetails.completed == 1 ? 'Update' : 'Update & Complete'}
                     </button>
                 </Toolbar>
 
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <>
-                        {viewModal ? <ModalBase modalType={modalType} payload={jobDetails[0].id} closeModal={() => [setViewModal(false), reload()]} /> : ''}
-                        <div className="w-full h-full grid overflow-hidden  grid-cols-5 grid-rows-12 gap-0.5">
-                            {one}
-                            {two}
-                            {three}
-                            {four}
-                            {five}
+                        {viewModal ? <ModalBase modalType={modalType} payload={jobDetails?.id} closeModal={() => [setViewModal(false), reload()]} /> : ''}
+
+                        <div className="w-full h-full pt-4 flex flex-col">
+                            <DetailsBox data={jobDetailsConfig} />
+                            {sparesDetails.length > 0 ? (
+                                <>
+                                    <div className="mt-4 mb-1 ml-10">Spare Parts Used</div>
+                                    <DataTable config={sparesTableConfig} data={sparesDetails} />
+                                </>
+                            ) : null}
+                            {timeDetails.length > 0 ? (
+                                <>
+                                    <div className="mt-4 mb-1 ml-10">Logged Time</div>
+                                    <DataTable config={timeTableConfig} data={timeDetails} />
+                                </>
+                            ) : null}
+                            <div className="pb-10"></div>
                         </div>
                     </>
                 </LoadingNoDataError>
