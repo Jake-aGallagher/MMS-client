@@ -28,7 +28,7 @@ const GeneralFormInput = (props: Props<any>) => {
         <div className="flex flex-col mx-1 relative mb-2">
             {props.label && props.type != 'checkbox' ? (
                 <label htmlFor={props.formName} className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-background">
-                    {props.label}:{' '}
+                    {props.label}
                 </label>
             ) : null}
 
