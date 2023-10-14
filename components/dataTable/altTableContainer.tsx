@@ -1,8 +1,12 @@
 import { PropsWithChildren } from 'react';
 
-const AltTableContainer = (props: PropsWithChildren) => {
+interface Props extends PropsWithChildren {
+    className?: string
+}
+
+const AltTableContainer = (props: Props) => {
     return (
-        <div className="w-full relative">
+        <div className={`w-full relative ${props.className && props.className}`}>
             <div className="overflow-x-auto rounded-xl shadow-lg">
                 <table className="w-full table-auto bg-secondary">{props.children}</table>
             </div>

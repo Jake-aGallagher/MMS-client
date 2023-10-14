@@ -7,14 +7,6 @@ interface StatusOptions {
     value: string;
 }
 
-interface User {
-    id: number;
-    username: string;
-    first_name: string;
-    last_name: string;
-    user_group_id: number;
-}
-
 interface SparesSelected {
     id: number;
     part_no: string;
@@ -24,6 +16,7 @@ interface SparesSelected {
 
 interface LoggedTime {
     id: number;
+    name: string
     time: number;
 }
 
@@ -32,7 +25,6 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [statusOptions, setStatusOptions] = useState<StatusOptions[]>([]);
-    const [users, setUsers] = useState<User[]>([]);
     const [sparesSelected, setSparesSelected] = useState<SparesSelected[]>([]);
     const [completed, setCompleted] = useState(0);
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
@@ -59,7 +51,6 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
                 setNoData(true);
             } else {
                 setStatusOptions(response.data.statusOptions);
-                setUsers(response.data.users);
                 if (response.data.usedSpares) {
                     setSparesSelected(response.data.usedSpares);
                 }
@@ -82,5 +73,5 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
             setLoading(false);
         }
     };
-    return { statusOptions, users, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error };
+    return { statusOptions, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error };
 };

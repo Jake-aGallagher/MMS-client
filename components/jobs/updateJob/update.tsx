@@ -11,7 +11,6 @@ import GeneralForm from '../../forms/generalForm';
 import FormTextCenter from '../../forms/formTextCenter';
 import LoadingNoDataError from '../../loading/loadingNoDataError';
 import { useUpdateJob } from './useUpdateJob';
-import LoggedTimeDisplay from './loggedTimeDisplay';
 import { yupResolverUpdateJob } from './updateJobValidation';
 import GeneralFileInput from '../../forms/genrealFileInput';
 import { updatejobNotesHandler } from './updateJobNotesHandler';
@@ -19,19 +18,26 @@ import { updateJobFullHandler } from './updateJobFullHandler';
 import AltTableHeaders from '../../dataTable/altTableHeaders';
 import AltTableContainer from '../../dataTable/altTableContainer';
 import SparesAddRemoveTable from '../../sparesSelector/sparesAddRemoveTable';
+import UsersAddRemoveTable from '../../usersSelector/usersAddRemoveTable';
 
 interface ModalProps {
     closeModal: () => void;
     jobId: number;
 }
 
+interface Modal {
+    closeModal: () => void;
+    modalType: string;
+    payload: any;
+    fullSize: boolean;
+    passbackDeatails: any;
+}
+
 const UpdateJob = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { statusOptions, users, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error } = useUpdateJob(
-        currentProperty,
-        props.jobId
-    );
+    const { statusOptions, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error } = useUpdateJob(currentProperty, props.jobId);
     const [viewModal, setViewModal] = useState(false);
+    const [modal, setModal] = useState<Modal>({ modalType: '', payload: {}, fullSize: true, passbackDeatails: null, closeModal: () => setViewModal(false) });
     const [files, setFiles] = useState<Blob[]>([]);
 
     const {
@@ -53,6 +59,17 @@ const UpdateJob = (props: ModalProps) => {
         reset(defaultValues);
     }, [defaultValues]);
 
+    const modalHandler = (e: React.MouseEvent<HTMLElement>, type: 'spares' | 'users') => {
+        e.preventDefault();
+        if (type == 'spares') {
+            setModal({ modalType: 'sparesSelector', payload: { sparesSelected, type: 'used' }, fullSize: true, passbackDeatails: setSparesSelected, closeModal: () => setViewModal(false) });
+            setViewModal(true);
+        } else {
+            setModal({ modalType: 'usersSelector', payload: { loggedTimeDetails, type: 'updateJob' }, fullSize: true, passbackDeatails: setLoggedTimeDetails, closeModal: () => setViewModal(false) });
+            setViewModal(true);
+        }
+    };
+
     const handleRegistration = async (data: any) => {
         if ((statusWatch[0] == 19 || statusWatch[0] == 20) && completed !== 1) {
             if (confirm('You are about to Complete this Job, once completed the only editable section will be the Notes, are you sure you want to continue') === true) {
@@ -70,7 +87,7 @@ const UpdateJob = (props: ModalProps) => {
             <LoadingNoDataError loading={loading} error={error} noData={noData}>
                 <>
                     {viewModal ? (
-                        <ModalBase modalType="SparesSelector" payload={{ sparesSelected, type: 'used' }} fullSize={true} passbackDeatails={setSparesSelected} closeModal={() => setViewModal(false)} />
+                        <ModalBase modalType={modal.modalType} payload={modal.payload} fullSize={modal.fullSize} passbackDeatails={modal.passbackDeatails} closeModal={modal.closeModal} />
                     ) : null}
                     <FormContainer>
                         <FormHeader label={'Update Job'} />
@@ -95,15 +112,31 @@ const UpdateJob = (props: ModalProps) => {
                             {completed !== 1 ? (
                                 <>
                                     <GeneralFileInput files={files} setFiles={setFiles} />
-                                    <button className="btnBlue h-8 mt-4 mb-1" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
+
+                                    <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
                                         Log Spares Used
                                     </button>
-
-                                    <AltTableContainer>
-                                        <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
-                                        <SparesAddRemoveTable sparesSelected={sparesSelected} setSparesSelected={setSparesSelected} />
+                                    <AltTableContainer className="mb-4 px-1">
+                                        {sparesSelected.length > 0 ? (
+                                            <>
+                                                <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
+                                                <SparesAddRemoveTable sparesSelected={sparesSelected} setSparesSelected={setSparesSelected} />
+                                            </>
+                                        ) : null}
                                     </AltTableContainer>
-                                    <LoggedTimeDisplay users={users} loggedTimeDetails={loggedTimeDetails} setLoggedTimeDetails={setLoggedTimeDetails} />
+
+                                    <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'users')}>
+                                        Log Time
+                                    </button>
+                                    <AltTableContainer className="mb-4 px-1">
+                                        {loggedTimeDetails.length > 0 ? (
+                                            <>
+                                                <AltTableHeaders headers={['Name', 'Time Logged', 'Add 5 Mins', 'Reduce 5 Mins', 'Remove']} />
+                                                <UsersAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
+                                            </>
+                                        ) : null}
+                                    </AltTableContainer>
+
                                     <FormTextCenter label={"Note: A job must be set to 'Attended - Found no Issues' or 'Attended - Fixed' in order to complete the job"} />
                                 </>
                             ) : null}

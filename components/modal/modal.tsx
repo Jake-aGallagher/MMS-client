@@ -16,6 +16,7 @@ import AddEditAsset from '../assets/addEditAsset/addEditAsset';
 import AddEditUserGroup from '../settings/userGroups/addEditUserGroups/addEditUserGroup';
 import AddEditPermission from '../settings/permissions/addEditPermissions/addEditPermission';
 import SparesSelector from '../sparesSelector/sparesSelector';
+import UsersSelector from '../usersSelector/usersSelector';
 
 interface ModalProps {
     closeModal: () => void;
@@ -45,9 +46,11 @@ const ModalBase = (props: ModalProps) => {
                 return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId} />;
             case 'updateJob':
                 return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
+            case 'usersSelector':
+                return <UsersSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
 
             //Spare
-            case 'SparesSelector':
+            case 'sparesSelector':
                 return <SparesSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
             case 'addEditDelivery':
                 return <AddEditDelivery closeModal={props.closeModal} payload={props.payload} />;
