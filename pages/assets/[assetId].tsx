@@ -12,6 +12,7 @@ import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
+import DetailsBox from '../../components/detailsBox/detailsBox';
 
 const AssetView = () => {
     const params = useRouter();
@@ -22,6 +23,14 @@ const AssetView = () => {
     const { assetDetails, recentJobs, children, loading, noData, error, reload } = useAssetDetails(assetId, setModalProps);
     const { openBranches, toggle } = useOpenBranches();
     const { allRoots } = useAssetTree({ type: 'details', assetTree: children, openBranches, toggle, setViewModal, setModalType, setModalProps });
+
+    const assetConfig = {
+        id: assetDetails?.id,
+        fields: [
+            { label: 'Name', value: assetDetails?.name },
+            { label: 'Notes', value: assetDetails?.notes },
+        ],
+    };
 
     const recentJobTableConfig = {
         headers: [
@@ -47,35 +56,40 @@ const AssetView = () => {
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit
                     </button>
-                    <button
-                        onClick={() => [setViewModal(true), setModalType('createJob'), setModalProps({ assetId })]}
-                        className="tLink"
-                    >
+                    <button onClick={() => [setViewModal(true), setModalType('createJob'), setModalProps({ assetId })]} className="tLink">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Create Job
                     </button>
                 </Toolbar>
                 {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                    <>
-                        <div key={assetDetails?.id} className="border-b-2 border-primary p-5 w-full ">
-                            <div className="mb-2">Name: {assetDetails?.name}</div>
-                            <div>Notes: {assetDetails?.notes ? assetDetails.notes : 'None'}</div>
-                        </div>
-                        {recentJobs.length > 0 ? (
-                            <div className="w-full overflow-x-auto flex flex-col items-center pb-10 border-b-2 border-primary ">
-                                <div className="my-4">5 Most recent jobs for Components of {assetDetails?.name}:</div>
-                                <DataTable config={recentJobTableConfig} data={recentJobs} />
-                            </div>
+                    <div className="w-full h-full flex flex-col pt-4">
+                        <DetailsBox data={assetConfig} />
+
+                        {assetDetails ? (
+                            <ParentDetails
+                                grand_parent_id={assetDetails.grand_parent_id}
+                                parent_id={assetDetails.parent_id}
+                                parent_name={assetDetails.parent_name}
+                                setViewModal={setViewModal}
+                                setModalType={setModalType}
+                                setModalProps={setModalProps}
+                            />
                         ) : null}
-                        {assetDetails ? <ParentDetails grand_parent_id={assetDetails.grand_parent_id} parent_id={assetDetails.parent_id} parent_name={assetDetails.parent_name} /> : null}
-                        {allRoots ? (
-                            <div className="border-b-2 border-primary  w-full p-5 my-5 pb-10">
+                        {allRoots.length > 0 ? (
+                            <div className="w-full my-5 pl-10">
                                 Children:
                                 {allRoots}
                             </div>
                         ) : null}
-                    </>
+
+                        {recentJobs.length > 0 ? (
+                            <>
+                                <div className="mt-4 mb-1 ml-10">5 Most recent jobs for Components of {assetDetails?.name}:</div>
+                                <DataTable config={recentJobTableConfig} data={recentJobs} />
+                            </>
+                        ) : null}
+                    </div>
                 </LoadingNoDataError>
             </FullPage>
         </>

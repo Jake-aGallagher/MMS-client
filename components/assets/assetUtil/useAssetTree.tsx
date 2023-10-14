@@ -26,12 +26,12 @@ interface AssetTreeItem {
 export const useAssetTree = (props: Props) => {
     const allRoots = props.assetTree.map((root) => {
         const renderTree = (node: AssetTreeItem) => (
-            <div className="rounded-md mt-2 flex flex-col outline-accent hover:outline-1 hover:outline-dashed transition-colors" key={node.id}>
-                <div className="rounded-md px-2 h-8 flex flex-row items-center relative outline-accent hover:outline-2 hover:outline transition-colors">
+            <div className="rounded-md mt-2 flex flex-col outline-primary hover:outline-1 hover:outline-dashed transition-colors" key={node.id}>
+                <div className="rounded-md px-2 h-8 flex flex-row items-center relative outline-primary hover:outline-1 hover:outline transition-colors">
                     <div
                         onClick={() => props.toggle(node.id)}
                         className={`flex flex-row items-center select-none text-text transition-all  ${
-                            Array.isArray(node.children) && node.children.length > 0 ? 'cursor-pointer hover:text-accent ' : 'cursor-default'
+                            Array.isArray(node.children) && node.children.length > 0 ? 'cursor-pointer hover:text-primary ' : 'cursor-default'
                         }`}
                     >
                         {Array.isArray(node.children) && node.children.length > 0 ? (
