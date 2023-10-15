@@ -68,7 +68,7 @@ const AssetView = () => {
                             <ParentDetails grand_parent_id={assetDetails.grand_parent_id} parent_id={assetDetails.parent_id} parent_name={assetDetails.parent_name} setModal={setModal} />
                         ) : null}
                         {allRoots.length > 0 ? (
-                            <div className="w-full my-5 pl-10">
+                            <div className="w-full my-5 pl-4">
                                 Children:
                                 {allRoots}
                             </div>
