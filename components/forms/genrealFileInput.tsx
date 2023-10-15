@@ -7,7 +7,6 @@ interface Props {
 
 const GeneralFileInput = (props: Props) => {
     const hiddenFileInput = useRef<HTMLInputElement>(null);
-    console.log('files: ', props.files);
 
     const addFile = (file: Blob) => {
         if (props.files && props.files.length > 0) {
