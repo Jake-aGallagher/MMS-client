@@ -62,7 +62,7 @@ const PropertyView = () => {
                 data: incompleteJobs.map((data) => data.count),
                 backgroundColor: ['#fcd34d', '#ef4444'],
                 borderColor: 'black',
-                borderWidth: 1
+                borderWidth: 1,
             },
         ],
     };
@@ -89,7 +89,7 @@ const PropertyView = () => {
                     <div className="flex flex-col">
                         <div className="flex flex-col xl:flex-row">
                             <DetailsBox data={propertyDetailsConfig} />
-                            <div className='pl-0 xl:pl-4 w-full ml-auto'>
+                            <div className="pl-0 xl:pl-4 w-full ml-auto">
                                 <BarChart data={data} chartTitle={`Incomplete & Overdue Jobs for ${propertyDetails?.name}`} />
                             </div>
                         </div>
