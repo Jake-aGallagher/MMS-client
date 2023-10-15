@@ -5,9 +5,13 @@ interface Props {
     parent_id: number;
     parent_name: string;
     grand_parent_id: number;
-    setViewModal: (Dispatch<SetStateAction<boolean>>);
-    setModalType: (Dispatch<SetStateAction<string>>);
-    setModalProps: (Dispatch<SetStateAction<{}>>);
+    setModal: Dispatch<
+        SetStateAction<{
+            view: boolean;
+            type: string;
+            payload: {};
+        }>
+    >;
 }
 
 const ParentDetails = (props: Props) => {
@@ -22,12 +26,9 @@ const ParentDetails = (props: Props) => {
                         <button className="btnBlue ml-auto text-sm h-6 px-3">
                             <Link href={'/assets/' + props.parent_id}>View Component Details</Link>
                         </button>
-                        <button
-                                onClick={() => [props.setViewModal(true), props.setModalType('createJob'), props.setModalProps({ assetId: props.parent_id })]}
-                                className="btnBlue ml-5 mr-2 text-sm h-6 px-3"
-                            >
-                                Create Job
-                            </button>
+                        <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: props.parent_id } })} className="btnBlue ml-5 mr-2 text-sm h-6 px-3">
+                            Create Job
+                        </button>
                     </div>
                 </div>
             ) : null}

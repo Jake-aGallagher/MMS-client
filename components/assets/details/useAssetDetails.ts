@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 
 interface Asset {
@@ -30,16 +30,7 @@ interface Children {
     children: [];
 }
 
-interface SetModalProps {
-    value: SetStateAction<{
-        type: string;
-        id: number;
-        name: string;
-        note: string;
-    }>;
-}
-
-export const useAssetDetails = (assetId: string, setModalProps: (value: SetModalProps['value']) => void) => {
+export const useAssetDetails = (assetId: string) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
@@ -67,7 +58,6 @@ export const useAssetDetails = (assetId: string, setModalProps: (value: SetModal
                 setNoData(true);
             } else {
                 setAssetDetails(response.data.assetDetails[0]);
-                setModalProps({ type: 'edit', id: response.data.assetDetails[0].id, name: response.data.assetDetails[0].name, note: response.data.assetDetails[0].notes });
                 setRecentJobs(response.data.recentJobs);
                 setChildren(response.data.tree);
             }

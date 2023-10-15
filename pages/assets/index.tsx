@@ -17,10 +17,8 @@ const Assets = () => {
     const { assetTree, loading, error, reload } = useAssets(currentProperty);
     const { openBranches, toggle } = useOpenBranches();
     const [editMode, setEditMode] = useState(false);
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
-    const [modalProps, setModalProps] = useState({});
-    const { allRoots } = useAssetTree({ type: 'index', assetTree, openBranches, toggle, editMode, setViewModal, setModalType, setModalProps });
+    const [modal, setModal] = useState({ view: false, type: '', payload: {} });
+    const { allRoots } = useAssetTree({ type: 'index', assetTree, openBranches, toggle, editMode, setModal });
 
     return (
         <>
@@ -31,7 +29,7 @@ const Assets = () => {
                         {editMode ? 'Switch to Work Mode' : 'Switch to Edit Mode'}
                     </button>
                 </Toolbar>
-                {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), setModalType(''), setModalProps(''), reload()]} /> : ''}
+                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: {} }), reload()]} /> : ''}
                 {loading ? <Loading /> : assetTree.length === 0 ? <div>There is no data</div> : error ? <RetrieveError /> : <div className="ml-5">{allRoots}</div>}
             </FullPage>
         </>

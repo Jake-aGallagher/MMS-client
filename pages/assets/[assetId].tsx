@@ -17,12 +17,10 @@ import DetailsBox from '../../components/detailsBox/detailsBox';
 const AssetView = () => {
     const params = useRouter();
     const assetId = params.asPath.split('/')[2];
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
-    const [modalProps, setModalProps] = useState({});
-    const { assetDetails, recentJobs, children, loading, noData, error, reload } = useAssetDetails(assetId, setModalProps);
+    const [modal, setModal] = useState({ view: false, type: '', payload: {} });
+    const { assetDetails, recentJobs, children, loading, noData, error, reload } = useAssetDetails(assetId);
     const { openBranches, toggle } = useOpenBranches();
-    const { allRoots } = useAssetTree({ type: 'details', assetTree: children, openBranches, toggle, setViewModal, setModalType, setModalProps });
+    const { allRoots } = useAssetTree({ type: 'details', assetTree: children, openBranches, toggle, setModal });
 
     const assetConfig = {
         id: assetDetails?.id,
@@ -52,29 +50,22 @@ const AssetView = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Assets</p>
                     </Link>
-                    <button className="tLink" onClick={() => [setViewModal(true), setModalType('addEditAsset')]}>
+                    <button className="tLink" onClick={() => setModal({ view: true, type: 'addEditAsset', payload: { id: assetDetails?.id, name: assetDetails?.name } })}>
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Edit
                     </button>
-                    <button onClick={() => [setViewModal(true), setModalType('createJob'), setModalProps({ assetId })]} className="tLink">
+                    <button onClick={() => setModal({ view: true, type: 'createJob', payload: { assetId } })} className="tLink">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Create Job
                     </button>
                 </Toolbar>
-                {viewModal ? <ModalBase modalType={modalType} payload={modalProps} closeModal={() => [setViewModal(false), reload()]} /> : null}
+                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: {} }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <div className="w-full h-full flex flex-col pt-4">
                         <DetailsBox data={assetConfig} />
 
                         {assetDetails ? (
-                            <ParentDetails
-                                grand_parent_id={assetDetails.grand_parent_id}
-                                parent_id={assetDetails.parent_id}
-                                parent_name={assetDetails.parent_name}
-                                setViewModal={setViewModal}
-                                setModalType={setModalType}
-                                setModalProps={setModalProps}
-                            />
+                            <ParentDetails grand_parent_id={assetDetails.grand_parent_id} parent_id={assetDetails.parent_id} parent_name={assetDetails.parent_name} setModal={setModal} />
                         ) : null}
                         {allRoots.length > 0 ? (
                             <div className="w-full my-5 pl-10">

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,9 +9,13 @@ interface Props {
     openBranches: number[];
     toggle: (id: number) => void;
     editMode?: boolean;
-    setViewModal: (value: SetStateAction<boolean>) => void;
-    setModalType: (value: SetStateAction<string>) => void;
-    setModalProps: (value: SetStateAction<{}>) => void;
+    setModal: Dispatch<
+        SetStateAction<{
+            view: boolean;
+            type: string;
+            payload: {};
+        }>
+    >;
 }
 
 interface AssetTreeItem {
@@ -49,22 +53,19 @@ export const useAssetTree = (props: Props) => {
                     {props.editMode ? (
                         <div className="absolute right-2 flex flex-row">
                             <button
-                                onClick={() => [props.setViewModal(true), props.setModalType('addEditAsset'), props.setModalProps({ type: 'edit', id: node.id, name: node.name, note: node.note })]}
+                                onClick={() => props.setModal({ view: true, type: 'addEditAsset', payload: { type: 'edit', id: node.id, name: node.name, note: node.note } })}
                                 className="btnBlue ml-5 text-sm h-6 px-3"
                             >
                                 Edit
                             </button>
                             <button
-                                onClick={() => [props.setViewModal(true), props.setModalType('addEditAsset'), props.setModalProps({ type: 'add', id: node.id, name: node.name })]}
+                                onClick={() => props.setModal({ view: true, type: 'addEditAsset', payload: { type: 'add', id: node.id, name: node.name } })}
                                 className="btnBlue ml-5 text-sm h-6 px-3"
                             >
                                 + Add Child Component
                             </button>
                             {node.parentId != 0 ? (
-                                <button
-                                    onClick={() => [props.setViewModal(true), props.setModalType('deleteAsset'), props.setModalProps({ id: node.id, name: node.name })]}
-                                    className="btnRed ml-5 text-sm h-6 px-3"
-                                >
+                                <button onClick={() => props.setModal({ view: true, type: 'deleteAsset', payload: { id: node.id, name: node.name } })} className="btnRed ml-5 text-sm h-6 px-3">
                                     Delete
                                 </button>
                             ) : (
@@ -79,16 +80,13 @@ export const useAssetTree = (props: Props) => {
                                 </button>
                             ) : null}
 
-                            <button
-                                onClick={() => [props.setViewModal(true), props.setModalType('createJob'), props.setModalProps({ assetId: node.id })]}
-                                className="btnBlue ml-5 text-sm h-6 px-3"
-                            >
+                            <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: node.id } })} className="btnBlue ml-5 text-sm h-6 px-3">
                                 Create Job
                             </button>
                         </div>
                     )}
                 </div>
-                <div className='pl-5'>{Array.isArray(node.children) && props.openBranches.includes(node.id) ? node.children.map((nodes) => renderTree(nodes)) : null}</div>
+                <div className="pl-5">{Array.isArray(node.children) && props.openBranches.includes(node.id) ? node.children.map((nodes) => renderTree(nodes)) : null}</div>
             </div>
         );
         return renderTree(root);
