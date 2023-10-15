@@ -14,19 +14,9 @@ import Toolbar from '../../components/page/toolbar';
 const PropertyView = () => {
     const params = useRouter();
     const propertyNumber = params.asPath.split('/')[2];
-    const { propertyDetails, assignedUsers, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
+    const { propertyDetails, assignedUsers, recentJobs, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-
-    const userTableConfig = {
-        headers: [
-            { id: 'username', name: 'Username', type: 'string', search: true, order: true },
-            { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
-            { id: 'last_name', name: 'Last name', type: 'string', search: true, order: true },
-            { id: 'user_group_name', name: 'User Group', type: 'string', search: true, order: true },
-        ],
-        searchable: true,
-    };
 
     const propertyDetailsConfig = {
         id: propertyDetails?.id,
@@ -39,6 +29,28 @@ const PropertyView = () => {
             { label: 'County', value: propertyDetails?.county },
             { label: 'Postcode', value: propertyDetails?.postcode },
         ],
+    };
+
+    const userTableConfig = {
+        headers: [
+            { id: 'username', name: 'Username', type: 'string', search: true, order: true },
+            { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
+            { id: 'last_name', name: 'Last name', type: 'string', search: true, order: true },
+            { id: 'user_group_name', name: 'User Group', type: 'string', search: true, order: true },
+        ],
+        searchable: false,
+    };
+
+    const recentJobTableConfig = {
+        headers: [
+            { id: 'id', name: 'Job Number', type: 'link', search: true, order: true },
+            { id: 'asset_name', name: 'Asset', type: 'string', search: true, order: true },
+            { id: 'type', name: 'Type', type: 'string', search: true, order: true },
+            { id: 'created', name: 'Created', type: 'date', search: true, order: true },
+            { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
+        ],
+        searchable: false,
+        linkColPrefix: '/jobs/',
     };
 
     return (
@@ -60,12 +72,20 @@ const PropertyView = () => {
                 </Toolbar>
                 {viewModal ? <ModalBase modalType={modalType} payload={parseInt(propertyNumber)} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                    <div className="flex flex-col xl:flex-row">
+                    <div className="flex flex-col">
                         <DetailsBox data={propertyDetailsConfig} />
-                        <div className="ml-10">
-                            <p className="xl:text-center text-left mb-2 font-semibold">Assigned Users</p>
-                            <DataTable config={userTableConfig} data={assignedUsers} />
-                        </div>
+                        {assignedUsers.length > 0 ? (
+                            <>
+                                <div className="mt-4 mb-1 ml-10">Assigned Users</div>
+                                <DataTable config={userTableConfig} data={assignedUsers} />
+                            </>
+                        ) : null}
+                        {recentJobs.length > 0 ? (
+                            <>
+                                <div className="mt-4 mb-1 ml-10">5 Most recent jobs of {propertyDetails?.name}:</div>
+                                <DataTable config={recentJobTableConfig} data={recentJobs} />
+                            </>
+                        ) : null}
                     </div>
                 </LoadingNoDataError>
             </FullPage>

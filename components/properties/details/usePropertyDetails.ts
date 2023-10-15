@@ -19,12 +19,22 @@ interface User {
     user_group_id: number;
 }
 
+interface RecentJobs {
+    id: number;
+    asset_name: string;
+    type: string;
+    title: string;
+    created: string;
+    completed: number;
+}
+
 export const usePropertyDetails = (propertyNumber: string) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [propertyDetails, setPropertyDetails] = useState<Property>();
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
+    const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
 
     useEffect(() => {
         reload();
@@ -47,6 +57,7 @@ export const usePropertyDetails = (propertyNumber: string) => {
             } else {
                 setPropertyDetails(response.data.propDetails[0]);
                 setAssignedUsers(response.data.assignedUsers);
+                setRecentJobs(response.data.recentJobs);
             }
             setLoading(false);
         } catch (err) {
@@ -54,5 +65,5 @@ export const usePropertyDetails = (propertyNumber: string) => {
             setLoading(false);
         }
     };
-    return { propertyDetails, assignedUsers, loading, noData, error, reload };
+    return { propertyDetails, assignedUsers, recentJobs, loading, noData, error, reload };
 };
