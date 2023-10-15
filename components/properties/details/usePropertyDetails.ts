@@ -28,6 +28,11 @@ interface RecentJobs {
     completed: number;
 }
 
+interface IncompleteJobs {
+    type: string;
+    count: number
+}
+
 export const usePropertyDetails = (propertyNumber: string) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
@@ -35,6 +40,7 @@ export const usePropertyDetails = (propertyNumber: string) => {
     const [propertyDetails, setPropertyDetails] = useState<Property>();
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
+    const [incompleteJobs, setIncompleteJobs] = useState<IncompleteJobs[]>([]);
 
     useEffect(() => {
         reload();
@@ -52,12 +58,15 @@ export const usePropertyDetails = (propertyNumber: string) => {
             const response = await axios.get(`${SERVER_URL}/properties/${propertyNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            if (response.data.propDetails.length === 0) {
+            const data = response.data;
+            if (data.propDetails.length === 0) {
                 setNoData(true);
             } else {
-                setPropertyDetails(response.data.propDetails[0]);
-                setAssignedUsers(response.data.assignedUsers);
-                setRecentJobs(response.data.recentJobs);
+                setPropertyDetails(data.propDetails[0]);
+                setAssignedUsers(data.assignedUsers);
+                setRecentJobs(data.recentJobs);
+                console.log(data.incompleteJobs)
+                setIncompleteJobs([{type: 'Incomplete', count: data.incompleteJobs[0].incomplete}, {type: 'Overdue', count: data.incompleteJobs[0].overdue}]);
             }
             setLoading(false);
         } catch (err) {
@@ -65,5 +74,5 @@ export const usePropertyDetails = (propertyNumber: string) => {
             setLoading(false);
         }
     };
-    return { propertyDetails, assignedUsers, recentJobs, loading, noData, error, reload };
+    return { propertyDetails, assignedUsers, recentJobs, incompleteJobs, loading, noData, error, reload };
 };

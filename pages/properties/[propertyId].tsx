@@ -10,11 +10,12 @@ import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
+import BarChart from '../../components/charts/barChart';
 
 const PropertyView = () => {
     const params = useRouter();
     const propertyNumber = params.asPath.split('/')[2];
-    const { propertyDetails, assignedUsers, recentJobs, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
+    const { propertyDetails, assignedUsers, recentJobs, incompleteJobs, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
@@ -53,6 +54,19 @@ const PropertyView = () => {
         linkColPrefix: '/jobs/',
     };
 
+    const data = {
+        labels: incompleteJobs.map((data) => data.type),
+        datasets: [
+            {
+                label: 'Count',
+                data: incompleteJobs.map((data) => data.count),
+                backgroundColor: ['#fcd34d', '#ef4444'],
+                borderColor: 'black',
+                borderWidth: 1
+            },
+        ],
+    };
+
     return (
         <>
             <FullPage>
@@ -73,7 +87,12 @@ const PropertyView = () => {
                 {viewModal ? <ModalBase modalType={modalType} payload={parseInt(propertyNumber)} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <div className="flex flex-col">
-                        <DetailsBox data={propertyDetailsConfig} />
+                        <div className="flex flex-col xl:flex-row">
+                            <DetailsBox data={propertyDetailsConfig} />
+                            <div className='pl-0 xl:pl-4 w-full ml-auto'>
+                                <BarChart data={data} chartTitle={`Incomplete & Overdue Jobs for ${propertyDetails?.name}`} />
+                            </div>
+                        </div>
                         {assignedUsers.length > 0 ? (
                             <>
                                 <div className="mt-4 mb-1 ml-10">Assigned Users</div>
