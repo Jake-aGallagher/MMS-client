@@ -30,7 +30,7 @@ interface RecentJobs {
 
 interface IncompleteJobs {
     type: string;
-    count: number
+    count: number;
 }
 
 export const usePropertyDetails = (propertyNumber: string) => {
@@ -41,6 +41,7 @@ export const usePropertyDetails = (propertyNumber: string) => {
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const [incompleteJobs, setIncompleteJobs] = useState<IncompleteJobs[]>([]);
+    const [raised5Months, setRaised5Months] = useState<{ month: string; value: number }[]>([]);
 
     useEffect(() => {
         reload();
@@ -65,8 +66,11 @@ export const usePropertyDetails = (propertyNumber: string) => {
                 setPropertyDetails(data.propDetails[0]);
                 setAssignedUsers(data.assignedUsers);
                 setRecentJobs(data.recentJobs);
-                console.log(data.incompleteJobs)
-                setIncompleteJobs([{type: 'Incomplete', count: data.incompleteJobs[0].incomplete}, {type: 'Overdue', count: data.incompleteJobs[0].overdue}]);
+                setIncompleteJobs([
+                    { type: 'Incomplete', count: data.incompleteJobs[0].incomplete },
+                    { type: 'Overdue', count: data.incompleteJobs[0].overdue },
+                ]);
+                setRaised5Months(data.raised5Months)
             }
             setLoading(false);
         } catch (err) {
@@ -74,5 +78,5 @@ export const usePropertyDetails = (propertyNumber: string) => {
             setLoading(false);
         }
     };
-    return { propertyDetails, assignedUsers, recentJobs, incompleteJobs, loading, noData, error, reload };
+    return { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised5Months, loading, noData, error, reload };
 };

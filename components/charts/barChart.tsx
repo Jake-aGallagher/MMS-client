@@ -50,7 +50,7 @@ const BarChart = (props: BarPropsOptions | BarPropsTitle) => {
     }
 
     return (
-        <div className='max-w-xl w-full bg-secondary rounded-xl p-2 shadow-xl mt-2'>
+        <div className='max-w-xl w-full bg-secondary rounded-xl p-2 mt-2'>
             <Bar data={props.data} options={options} />
         </div>
     );
