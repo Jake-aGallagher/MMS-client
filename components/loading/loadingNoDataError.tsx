@@ -13,7 +13,7 @@ const LoadingNoDataError = (props: Props) => {
     if (props.loading) {
         return <Loading />;
     } else if (props.noData) {
-        return <div>There has been an issue getting the Property Data</div>;
+        return <div>There has been an issue getting the Data</div>;
     } else if (props.error) {
         return <RetrieveError />;
     } else {
