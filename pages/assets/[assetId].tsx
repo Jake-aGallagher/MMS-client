@@ -13,12 +13,13 @@ import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
 import DetailsBox from '../../components/detailsBox/detailsBox';
+import AssetDetailsDefaultCharts from '../../components/charts/defaults/assetDetailsDefaultCharts';
 
 const AssetView = () => {
     const params = useRouter();
     const assetId = params.asPath.split('/')[2];
     const [modal, setModal] = useState({ view: false, type: '', payload: {} });
-    const { assetDetails, recentJobs, children, loading, noData, error, reload } = useAssetDetails(assetId);
+    const { assetDetails, recentJobs, children, jobsOfComponents6M, loading, noData, error, reload } = useAssetDetails(assetId);
     const { openBranches, toggle } = useOpenBranches();
     const { allRoots } = useAssetTree({ type: 'details', assetTree: children, openBranches, toggle, setModal });
 
@@ -61,8 +62,14 @@ const AssetView = () => {
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: {} }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                    <div className="w-full h-full flex flex-col pt-4">
-                        <DetailsBox data={assetConfig} />
+                    <div className="w-full h-full flex flex-col">
+                        <div className="flex flex-col xl:flex-row">
+                            <DetailsBox data={assetConfig} />
+                            <AssetDetailsDefaultCharts
+                                assetDetailsName={assetDetails?.name}
+                                jobsOfComponents6M={jobsOfComponents6M}
+                            />
+                        </div>
 
                         {assetDetails ? (
                             <ParentDetails grand_parent_id={assetDetails.grand_parent_id} parent_id={assetDetails.parent_id} parent_name={assetDetails.parent_name} setModal={setModal} />

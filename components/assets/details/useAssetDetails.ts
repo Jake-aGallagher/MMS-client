@@ -37,6 +37,7 @@ export const useAssetDetails = (assetId: string) => {
     const [assetDetails, setAssetDetails] = useState<Asset>();
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const [children, setChildren] = useState<Children[]>([]);
+    const [jobsOfComponents6M, setJobsOfComponents6M] = useState<{ name: string; value: number }[]>([]);
 
     useEffect(() => {
         reload();
@@ -60,6 +61,7 @@ export const useAssetDetails = (assetId: string) => {
                 setAssetDetails(response.data.assetDetails[0]);
                 setRecentJobs(response.data.recentJobs);
                 setChildren(response.data.tree);
+                setJobsOfComponents6M(response.data.jobsOfComponents6M);
             }
             setLoading(false);
         } catch (err) {
@@ -67,5 +69,5 @@ export const useAssetDetails = (assetId: string) => {
             setLoading(false);
         }
     };
-    return { assetDetails, recentJobs, children, loading, noData, error, reload };
+    return { assetDetails, recentJobs, children, jobsOfComponents6M, loading, noData, error, reload };
 };
