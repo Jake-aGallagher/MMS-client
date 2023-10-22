@@ -6,7 +6,7 @@ interface Props {
     incompleteJobs: IncompleteJobs[];
     raised6M: { month: string; value: number }[];
     sparesUsed6M: { month: string; value: number }[];
-    mostUsed6M: { name: string; quantity: number }[];
+    mostUsed6M: { name: string; value: number }[];
     sparesCost6M: { month: string; value: number }[];
 }
 
@@ -81,7 +81,7 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
                 datasets: [
                     {
                         label: 'Spares Used',
-                        data: props.mostUsed6M.map((data) => data.quantity),
+                        data: props.mostUsed6M.map((data) => data.value),
                         backgroundColor: props.mostUsed6M.map((d, index) => generateColour(index)),
                         borderColor: 'black',
                         borderWidth: 1,

@@ -43,7 +43,7 @@ export const usePropertyDetails = (propertyNumber: string) => {
     const [incompleteJobs, setIncompleteJobs] = useState<IncompleteJobs[]>([]);
     const [raised6M, setRaised6M] = useState<{ month: string; value: number }[]>([]);
     const [sparesUsed6M, setSparesUsed6M] = useState<{ month: string; value: number }[]>([]);
-    const [mostUsed6M, setMostUsed6M] = useState<{ name: string; quantity: number }[]>([]);
+    const [mostUsed6M, setMostUsed6M] = useState<{ name: string; value: number }[]>([]);
     const [sparesCost6M, setSparesCost6M] = useState<{ month: string; value: number }[]>([]);
 
     useEffect(() => {
