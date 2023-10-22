@@ -6,6 +6,7 @@ interface Props {
     incompleteJobs: IncompleteJobs[];
     raised6Months: { month: string; value: number }[];
     sparesUsed6Months: { month: string; value: number }[];
+    mostUsed6Months: { name: string; quantity: number }[];
 }
 
 interface IncompleteJobs {
@@ -54,8 +55,8 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
         {
             chartType: 'bar',
             selectValue: 'spares_used',
-            selectLabel: 'Spares Used in the last 6 Months',
-            chartTitle: `Spares Used in the last 6 Months for ${props.propertyDetailsName}`,
+            selectLabel: 'Spares used in the last 6 Months',
+            chartTitle: `Spares used in the last 6 Months for ${props.propertyDetailsName}`,
             data: {
                 labels: props.sparesUsed6Months.map((data) => data.month),
                 datasets: [
@@ -63,6 +64,24 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
                         label: 'Spares Used',
                         data: props.sparesUsed6Months.map((data) => data.value),
                         backgroundColor: props.sparesUsed6Months.map((d, index) => generateColour(index)),
+                        borderColor: 'black',
+                        borderWidth: 1,
+                    },
+                ],
+            },
+        },
+        {
+            chartType: 'bar',
+            selectValue: 'most_used',
+            selectLabel: 'Most used Spares in the last 6 Months',
+            chartTitle: `Most used Spares in the last 6 Months for ${props.propertyDetailsName}`,
+            data: {
+                labels: props.mostUsed6Months.map((data) => data.name),
+                datasets: [
+                    {
+                        label: 'Spares Used',
+                        data: props.mostUsed6Months.map((data) => data.quantity),
+                        backgroundColor: props.mostUsed6Months.map((d, index) => generateColour(index)),
                         borderColor: 'black',
                         borderWidth: 1,
                     },
