@@ -4,10 +4,34 @@ import { generateColour } from '../generateColour';
 interface Props {
     assetDetailsName: string | undefined;
     jobsOfComponents6M: { name: string; value: number }[];
+    incompleteForAsset: IncompleteForAsset[];
+}
+
+interface IncompleteForAsset {
+    type: string;
+    count: number;
 }
 
 const AssetDetailsDefaultCharts = (props: Props) => {
     const graphData = [
+        {
+            chartType: 'bar',
+            selectValue: 'incomplete',
+            selectLabel: 'Incomplete & Overdue',
+            chartTitle: `Incomplete & Overdue Jobs for ${props.assetDetailsName}`,
+            data: {
+                labels: props.incompleteForAsset.map((data) => data.type),
+                datasets: [
+                    {
+                        label: 'Count',
+                        data: props.incompleteForAsset.map((data) => data.count),
+                        backgroundColor: ['#fcd34d', '#ef4444'],
+                        borderColor: 'black',
+                        borderWidth: 1,
+                    },
+                ],
+            },
+        },
         {
             chartType: 'bar',
             selectValue: 'common_jobs_assets',

@@ -30,6 +30,11 @@ interface Children {
     children: [];
 }
 
+interface IncompleteJobs {
+    type: string;
+    count: number;
+}
+
 export const useAssetDetails = (assetId: string) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
@@ -38,6 +43,7 @@ export const useAssetDetails = (assetId: string) => {
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const [children, setChildren] = useState<Children[]>([]);
     const [jobsOfComponents6M, setJobsOfComponents6M] = useState<{ name: string; value: number }[]>([]);
+    const [incompleteForAsset, setIncompleteForAsset] = useState<IncompleteJobs[]>([]);
 
     useEffect(() => {
         reload();
@@ -62,6 +68,10 @@ export const useAssetDetails = (assetId: string) => {
                 setRecentJobs(response.data.recentJobs);
                 setChildren(response.data.tree);
                 setJobsOfComponents6M(response.data.jobsOfComponents6M);
+                setIncompleteForAsset([
+                    { type: 'Incomplete', count: response.data.incompleteForAsset[0].incomplete },
+                    { type: 'Incomplete & Overdue', count: response.data.incompleteForAsset[0].overdue },
+                ]);
             }
             setLoading(false);
         } catch (err) {
@@ -69,5 +79,5 @@ export const useAssetDetails = (assetId: string) => {
             setLoading(false);
         }
     };
-    return { assetDetails, recentJobs, children, jobsOfComponents6M, loading, noData, error, reload };
+    return { assetDetails, recentJobs, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload };
 };

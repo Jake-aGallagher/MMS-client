@@ -19,7 +19,7 @@ const AssetView = () => {
     const params = useRouter();
     const assetId = params.asPath.split('/')[2];
     const [modal, setModal] = useState({ view: false, type: '', payload: {} });
-    const { assetDetails, recentJobs, children, jobsOfComponents6M, loading, noData, error, reload } = useAssetDetails(assetId);
+    const { assetDetails, recentJobs, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload } = useAssetDetails(assetId);
     const { openBranches, toggle } = useOpenBranches();
     const { allRoots } = useAssetTree({ type: 'details', assetTree: children, openBranches, toggle, setModal });
 
@@ -68,6 +68,7 @@ const AssetView = () => {
                             <AssetDetailsDefaultCharts
                                 assetDetailsName={assetDetails?.name}
                                 jobsOfComponents6M={jobsOfComponents6M}
+                                incompleteForAsset={incompleteForAsset}
                             />
                         </div>
 
