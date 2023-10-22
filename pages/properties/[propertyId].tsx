@@ -15,7 +15,7 @@ import PropertyDetailsDefaultCharts from '../../components/charts/defaults/prope
 const PropertyView = () => {
     const params = useRouter();
     const propertyNumber = params.asPath.split('/')[2];
-    const { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised6Months, sparesUsed6Months, mostUsed6Months, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
+    const { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised6Months, sparesUsed6Months, mostUsed6Months, sparesCost6M, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
@@ -82,6 +82,7 @@ const PropertyView = () => {
                                 raised6Months={raised6Months}
                                 sparesUsed6Months={sparesUsed6Months}
                                 mostUsed6Months={mostUsed6Months}
+                                sparesCost6M={sparesCost6M}
                             />
                         </div>
                         {assignedUsers.length > 0 ? (

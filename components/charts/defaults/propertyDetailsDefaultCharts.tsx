@@ -7,6 +7,7 @@ interface Props {
     raised6Months: { month: string; value: number }[];
     sparesUsed6Months: { month: string; value: number }[];
     mostUsed6Months: { name: string; quantity: number }[];
+    sparesCost6M: { month: string; value: number }[];
 }
 
 interface IncompleteJobs {
@@ -82,6 +83,24 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
                         label: 'Spares Used',
                         data: props.mostUsed6Months.map((data) => data.quantity),
                         backgroundColor: props.mostUsed6Months.map((d, index) => generateColour(index)),
+                        borderColor: 'black',
+                        borderWidth: 1,
+                    },
+                ],
+            },
+        },
+        {
+            chartType: 'bar',
+            selectValue: 'spares_cost',
+            selectLabel: 'Spares costs for the last 6 Months',
+            chartTitle: `Cost of spares used in the last 6 Months for ${props.propertyDetailsName} (£)`,
+            data: {
+                labels: props.sparesCost6M.map((data) => data.month),
+                datasets: [
+                    {
+                        label: 'Cost (£)',
+                        data: props.sparesCost6M.map((data) => data.value),
+                        backgroundColor: props.sparesCost6M.map((d, index) => generateColour(index)),
                         borderColor: 'black',
                         borderWidth: 1,
                     },
