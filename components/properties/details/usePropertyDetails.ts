@@ -41,9 +41,9 @@ export const usePropertyDetails = (propertyNumber: string) => {
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const [incompleteJobs, setIncompleteJobs] = useState<IncompleteJobs[]>([]);
-    const [raised6Months, setRaised6Months] = useState<{ month: string; value: number }[]>([]);
-    const [sparesUsed6Months, setSparesUsed6Months] = useState<{ month: string; value: number }[]>([]);
-    const [mostUsed6Months, setMostUsed6Months] = useState<{ name: string; quantity: number }[]>([]);
+    const [raised6M, setRaised6M] = useState<{ month: string; value: number }[]>([]);
+    const [sparesUsed6M, setSparesUsed6M] = useState<{ month: string; value: number }[]>([]);
+    const [mostUsed6M, setMostUsed6M] = useState<{ name: string; quantity: number }[]>([]);
     const [sparesCost6M, setSparesCost6M] = useState<{ month: string; value: number }[]>([]);
 
     useEffect(() => {
@@ -73,9 +73,9 @@ export const usePropertyDetails = (propertyNumber: string) => {
                     { type: 'Incomplete', count: data.incompleteJobs[0].incomplete },
                     { type: 'Incomplete & Overdue', count: data.incompleteJobs[0].overdue },
                 ]);
-                setRaised6Months(data.raised6Months);
-                setSparesUsed6Months(data.sparesUsed6Months);
-                setMostUsed6Months(data.mostUsed6Months);
+                setRaised6M(data.raised6M);
+                setSparesUsed6M(data.sparesUsed6M);
+                setMostUsed6M(data.mostUsed6M);
                 setSparesCost6M(data.sparesCost6M);
             }
             setLoading(false);
@@ -84,5 +84,5 @@ export const usePropertyDetails = (propertyNumber: string) => {
             setLoading(false);
         }
     };
-    return { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised6Months, sparesUsed6Months , mostUsed6Months, sparesCost6M, loading, noData, error, reload };
+    return { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M , mostUsed6M, sparesCost6M, loading, noData, error, reload };
 };
