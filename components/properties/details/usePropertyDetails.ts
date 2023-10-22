@@ -41,7 +41,8 @@ export const usePropertyDetails = (propertyNumber: string) => {
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const [incompleteJobs, setIncompleteJobs] = useState<IncompleteJobs[]>([]);
-    const [raised5Months, setRaised5Months] = useState<{ month: string; value: number }[]>([]);
+    const [raised6Months, setRaised6Months] = useState<{ month: string; value: number }[]>([]);
+    const [sparesUsed6Months, setSparesUsed6Months] = useState<{ month: string; value: number }[]>([]);
 
     useEffect(() => {
         reload();
@@ -70,7 +71,8 @@ export const usePropertyDetails = (propertyNumber: string) => {
                     { type: 'Incomplete', count: data.incompleteJobs[0].incomplete },
                     { type: 'Overdue', count: data.incompleteJobs[0].overdue },
                 ]);
-                setRaised5Months(data.raised5Months)
+                setRaised6Months(data.raised5Months);
+                setSparesUsed6Months(data.sparesUsed6Months);
             }
             setLoading(false);
         } catch (err) {
@@ -78,5 +80,5 @@ export const usePropertyDetails = (propertyNumber: string) => {
             setLoading(false);
         }
     };
-    return { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised5Months, loading, noData, error, reload };
+    return { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised6Months, sparesUsed6Months, loading, noData, error, reload };
 };

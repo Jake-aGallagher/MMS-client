@@ -4,7 +4,8 @@ import { generateColour } from "../generateColour";
 interface Props {
     propertyDetailsName: string | undefined;
     incompleteJobs: IncompleteJobs[];
-    raised5Months: { month: string; value: number }[];
+    raised6Months: { month: string; value: number }[];
+    sparesUsed6Months: { month: string; value: number }[];
 }
 
 interface IncompleteJobs {
@@ -35,15 +36,33 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
         {
             chartType: 'bar',
             selectValue: 'raised',
-            selectLabel: 'Raised in the Last 5 Months',
-            chartTitle: `Jobs raised in last 5 Months for ${props.propertyDetailsName}`,
+            selectLabel: 'Raised in the Last 6 Months',
+            chartTitle: `Jobs raised in last 6 Months for ${props.propertyDetailsName}`,
             data: {
-                labels: props.raised5Months.map((data) => data.month),
+                labels: props.raised6Months.map((data) => data.month),
                 datasets: [
                     {
-                        label: 'Raised Jobs Count',
-                        data: props.raised5Months.map((data) => data.value),
-                        backgroundColor: props.raised5Months.map((d, index) => generateColour(index)),
+                        label: 'Raised Jobs',
+                        data: props.raised6Months.map((data) => data.value),
+                        backgroundColor: props.raised6Months.map((d, index) => generateColour(index)),
+                        borderColor: 'black',
+                        borderWidth: 1,
+                    },
+                ],
+            },
+        },
+        {
+            chartType: 'bar',
+            selectValue: 'spares_used',
+            selectLabel: 'Spares Used in the last 6 Months',
+            chartTitle: `Spares Used in the last 6 Months for ${props.propertyDetailsName}`,
+            data: {
+                labels: props.sparesUsed6Months.map((data) => data.month),
+                datasets: [
+                    {
+                        label: 'Spares Used',
+                        data: props.sparesUsed6Months.map((data) => data.value),
+                        backgroundColor: props.sparesUsed6Months.map((d, index) => generateColour(index)),
                         borderColor: 'black',
                         borderWidth: 1,
                     },

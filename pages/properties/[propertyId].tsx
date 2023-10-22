@@ -15,7 +15,7 @@ import PropertyDetailsDefaultCharts from '../../components/charts/defaults/prope
 const PropertyView = () => {
     const params = useRouter();
     const propertyNumber = params.asPath.split('/')[2];
-    const { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised5Months, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
+    const { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised6Months, sparesUsed6Months, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
@@ -76,7 +76,12 @@ const PropertyView = () => {
                     <div className="flex flex-col">
                         <div className="flex flex-col xl:flex-row">
                             <DetailsBox data={propertyDetailsConfig} />
-                            <PropertyDetailsDefaultCharts propertyDetailsName={propertyDetails?.name} incompleteJobs={incompleteJobs} raised5Months={raised5Months} />
+                            <PropertyDetailsDefaultCharts
+                                propertyDetailsName={propertyDetails?.name}
+                                incompleteJobs={incompleteJobs}
+                                raised6Months={raised6Months}
+                                sparesUsed6Months={sparesUsed6Months}
+                            />
                         </div>
                         {assignedUsers.length > 0 ? (
                             <>
