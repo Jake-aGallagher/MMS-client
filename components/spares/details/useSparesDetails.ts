@@ -35,6 +35,7 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
     const [error, setError] = useState(false);
     const [sparesDetails, setSparesDetails] = useState<Spare>();
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
+    const [used6M, setUsed6M] = useState<{ month: string; value: number }[]>([])
 
     useEffect(() => {
         reload();
@@ -56,6 +57,7 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
                 setNoData(true);
             } else {
                 setSparesDetails(response.data.spares[0]);
+                setUsed6M(response.data.used6M)
                 if (response.data.recentJobs.length > 0) {
                     setRecentJobs(response.data.recentJobs);
                 }
@@ -66,5 +68,5 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
             setLoading(false);
         }
     };
-    return { sparesDetails, recentJobs, loading, noData, error, reload };
+    return { sparesDetails, recentJobs, used6M, loading, noData, error, reload };
 };

@@ -12,12 +12,13 @@ import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
 import DetailsBox from '../../components/detailsBox/detailsBox';
+import SparesDetailsDefaultCharts from '../../components/charts/defaults/sparesDetailsDefaultCharts';
 
 const SparesView = () => {
     const params = useRouter();
     const spareId = params.asPath.split('/')[2];
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { sparesDetails, recentJobs, loading, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
+    const { sparesDetails, recentJobs, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     const spareConfig = {
@@ -73,8 +74,11 @@ const SparesView = () => {
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                    <div className="w-full h-full flex flex-col pt-4">
-                        <DetailsBox data={spareConfig} />
+                    <div className="flex flex-col">
+                        <div className="flex flex-col xl:flex-row">
+                            <DetailsBox data={spareConfig} />
+                            <SparesDetailsDefaultCharts sparesDetailsName={sparesDetails?.name} used6M={used6M} />
+                        </div>
                         {recentJobs.length > 0 ? (
                             <>
                                 <div className="mt-4 mb-1 ml-10">Recent Jobs</div>
