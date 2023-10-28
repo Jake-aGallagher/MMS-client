@@ -62,12 +62,8 @@ export const useJobDetails = (jobId: string) => {
                 setNoData(true);
             } else {
                 setJobDetails(response.data.jobDetails[0]);
-                if (response.data.timeDetails) {
-                    setTimeDetails(response.data.timeDetails);
-                }
-                if (response.data.usedSpares) {
-                    setSparesDetails(response.data.usedSpares);
-                }
+                setTimeDetails(response.data.timeDetails || []);
+                setSparesDetails(response.data.usedSpares || []);
             }
             setLoading(false);
         } catch (err) {

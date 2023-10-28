@@ -10,8 +10,7 @@ import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
 import DetailsBox from '../../components/detailsBox/detailsBox';
 import DataTable from '../../components/dataTable/dataTable';
-import DonutChart from '../../components/charts/donutChart';
-import { generateColour } from '../../components/charts/generateColour';
+import JobDetailsDefaultCharts from '../../components/charts/defaults/jobDetailsDefaultCharts';
 
 const JobView = () => {
     const params = useRouter();
@@ -59,19 +58,6 @@ const JobView = () => {
         searchable: false,
     };
 
-    const data = {
-        labels: timeDetails.map((user) => user.first + ' ' + user.last),
-        datasets: [
-            {
-                label: 'Time Logged (Mins)',
-                data: timeDetails.map((user) => user.time),
-                backgroundColor: timeDetails.map((user, index) => generateColour(index)),
-                borderColor: 'black',
-                borderWidth: 1,
-            },
-        ],
-    };
-
     return (
         <>
             <FullPage>
@@ -97,11 +83,7 @@ const JobView = () => {
                         <div className="w-full h-full pt-4 flex flex-col">
                             <div className="flex flex-col xl:flex-row">
                                 <DetailsBox data={jobDetailsConfig} />
-                                {timeDetails.length > 0 ? (
-                                    <div className="pl-0 xl:pl-4 w-full ml-auto">
-                                        <DonutChart data={data} chartTitle={`Logged Time Distribution`} />
-                                    </div>
-                                ) : null}
+                                <JobDetailsDefaultCharts JobName={jobDetails?.title} timeDetails={timeDetails} />
                             </div>
                             {sparesDetails.length > 0 ? (
                                 <>
