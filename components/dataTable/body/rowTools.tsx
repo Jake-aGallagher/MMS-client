@@ -69,14 +69,18 @@ const RowTools = (props: Props) => {
     return (
         <>
             {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: {} }), props.reload()]} /> : null}
-
-            <div onClick={handleToolsClick} ref={toolsIconRef} className="group flex flex-row justify-center relative hover:cursor-pointer">
-                <FontAwesomeIcon icon={faEllipsisVertical} className="h-5 parent group-hover:text-primary transition-all" />
-                {showTools && (
-                    <div ref={overlayRef} className="absolute top-2 -left-36 rounded-b-md rounded-tl-md z-10 border-primary border-1 p-2 flex flex-col bg-background w-40 shadow-2xl transition-all">
-                        {toolOptions}
-                    </div>
-                )}
+            <div className='flex flex-row justify-center'>
+                <div onClick={handleToolsClick} ref={toolsIconRef} className="group flex flex-row justify-center relative w-10 py-1 rounded-md hover:cursor-pointer">
+                    <FontAwesomeIcon icon={faEllipsisVertical} className="h-5 parent group-hover:text-primary transition-all" />
+                    {showTools && (
+                        <div
+                            ref={overlayRef}
+                            className="absolute top-4 -left-36 rounded-b-md rounded-tl-md z-20 border-primary border-1 p-2 flex flex-col bg-background w-40 shadow-2xl transition-all"
+                        >
+                            {toolOptions}
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );
