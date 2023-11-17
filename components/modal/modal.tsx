@@ -17,6 +17,7 @@ import AddEditUserGroup from '../settings/userGroups/addEditUserGroups/addEditUs
 import AddEditPermission from '../settings/permissions/addEditPermissions/addEditPermission';
 import SparesSelector from '../sparesSelector/sparesSelector';
 import UsersSelector from '../usersSelector/usersSelector';
+import AddEditJobType from '../settings/jobTypes/addEditJobType/addEditJobType';
 
 interface ModalProps {
     closeModal: () => void;
@@ -85,6 +86,10 @@ const ModalBase = (props: ModalProps) => {
             case 'addEditEnum':
                 return <AddEditEnum closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteEnum':
+                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditJobType':
+                return <AddEditJobType closeModal={props.closeModal} payload={props.payload} />;
+            case 'deleteJobType':
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
         }
     };
