@@ -22,6 +22,7 @@ const JobTypes = () => {
         ],
         searchable: true,
         modalType: 'JobType',
+        deleteUrl: 'jobtypes',
         idPointer: 'id',
         namePointer: 'value',
         reload: reload,
@@ -44,7 +45,7 @@ const JobTypes = () => {
                 </button>
             </Toolbar>
             {modal.view ? (
-                <ModalBase modalType={modal.type} payload={{ ...modal.payload, url: 'jobtype' }} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} />
+                <ModalBase modalType={modal.type} payload={{ ...modal.payload }} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} />
             ) : null}
             <LoadingNoDataError loading={loading} error={error}>
                 <DataTable config={enumsTableConfig} data={jobTypes} />
