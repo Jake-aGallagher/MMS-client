@@ -28,6 +28,7 @@ interface Props {
         linkColPrefix?: string;
         reverseSort?: boolean;
         modalType?: string;
+        deleteUrl?: string;
         idPointer?: string;
         namePointer?: string;
         reload?: () => void;
@@ -94,6 +95,7 @@ const DataTable = (props: Props) => {
                                         linkColPrefix={props.config.linkColPrefix}
                                         viewTooManyItems={props.viewTooManyItems}
                                         modalType={props.config.modalType}
+                                        deleteUrl={props.config.deleteUrl}
                                         idPointer={props.config.idPointer}
                                         namePointer={props.config.namePointer}
                                         reload={props.config.reload}

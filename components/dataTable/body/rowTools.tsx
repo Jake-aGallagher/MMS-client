@@ -6,6 +6,7 @@ import ModalBase from '../../modal/modal';
 interface Props {
     id: number;
     name: string;
+    url?: string;
     functions: string[];
     modalType: string;
     reload: () => void;
@@ -36,7 +37,7 @@ const RowTools = (props: Props) => {
 
     const functionClicked = (functionType: 'addEdit' | 'delete' | 'adjustStock') => {
         setShowTools(false);
-        setModal({ view: true, type: functionType + props.modalType, payload: { id: props.id, name: props.name } });
+        setModal({ view: true, type: functionType + props.modalType, payload: { id: props.id, name: props.name, url: props.url } });
     };
 
     const toolOptions = props.functions.map((funcString) => {

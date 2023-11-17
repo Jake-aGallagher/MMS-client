@@ -18,6 +18,7 @@ interface Props {
     data: {};
     linkColPrefix?: string;
     viewTooManyItems?: (contents: Contents[], name: string) => void;
+    deleteUrl?: string;
     idPointer?: string;
     namePointer?: string;
     modalType?: string;
@@ -44,7 +45,7 @@ const DataTableRow = (props: Props) => {
                 case 'remaining_stock':
                     return <RemainingStockData remainingStock={row[h.id]} usage={row[h.avgUsagePointer!]} />;
                 case 'tools':
-                    return <RowTools id={row[props.idPointer]} name={row[props.namePointer]} functions={h.functions} modalType={props.modalType} reload={props.reload} />
+                    return <RowTools id={row[props.idPointer]} name={row[props.namePointer]} url={props.deleteUrl + '/' + row[props.idPointer]} functions={h.functions} modalType={props.modalType} reload={props.reload} />
                 default:
                     return <StringData string={row[h.id]} />;
             }
