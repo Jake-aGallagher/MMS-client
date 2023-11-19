@@ -25,6 +25,9 @@ const Settings = () => {
                 <Link href="/settings/statusTypes" className="ml-8 hover:text-accent flex flex-row items-center">
                     Job Status Types
                 </Link>
+                <Link href="/settings/urgencyTypes" className="ml-8 hover:text-accent flex flex-row items-center">
+                    Job Urgency Types
+                </Link>
             </IndexCardLayout>
         </div>
     );
