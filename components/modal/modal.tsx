@@ -19,6 +19,7 @@ import SparesSelector from '../sparesSelector/sparesSelector';
 import UsersSelector from '../usersSelector/usersSelector';
 import AddEditJobType from '../settings/jobTypes/addEditJobType/addEditJobType';
 import AddEditStatusType from '../settings/statusTypes/addEditStatusType/addEditStatusType';
+import AddEditUrgencyType from '../settings/urgencyTypes/addEditUrgencyType/addEditUrgencyType';
 import { GlobalDebug } from '../logs/globalDebug';
 
 interface ModalProps {
@@ -58,45 +59,43 @@ const ModalBase = (props: ModalProps) => {
                 return <SparesSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
             case 'addEditDelivery':
                 return <AddEditDelivery closeModal={props.closeModal} payload={props.payload} />;
-            case 'deleteDelivery':
-                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'viewExtraSpares':
                 return <ViewExtraItems closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditSupplier':
                 return <AddEditSupplier closeModal={props.closeModal} payload={props.payload} />;
-            case 'deleteSupplier':
-                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditSparesItem':
                 return <AddSparesItem closeModal={props.closeModal} payload={props.payload} />;
             case 'adjustStockSparesItem':
                 return <AdjustSparesStock closeModal={props.closeModal} payload={props.payload} />;
-            case 'deleteSparesItem':
-                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditSparesNote':
                 return <AddEditSparesNote closeModal={props.closeModal} payload={props.payload} />;
-            case 'deleteSparesNote':
-                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
 
             // Settings
             case 'addEditUser':
                 return <AddEditUser closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditUserGroup':
                 return <AddEditUserGroup closeModal={props.closeModal} payload={props.payload} />;
-            case 'deleteUserGroup':
-                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditPermissions':
                 return <AddEditPermission closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditEnum':
                 return <AddEditEnum closeModal={props.closeModal} payload={props.payload} />;
-            case 'deleteEnum':
-                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditJobType':
                 return <AddEditJobType closeModal={props.closeModal} payload={props.payload} />;
-            case 'deleteJobType':
-                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditStatusType':
                 return <AddEditStatusType closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditUrgencyType':
+                return <AddEditUrgencyType closeModal={props.closeModal} payload={props.payload} />;
+            
+            // Delete Modals
+            case 'deleteDelivery':
+            case 'deleteSupplier':
+            case 'deleteSparesItem':
+            case 'deleteSparesNote':
+            case 'deleteUserGroup':
+            case 'deleteEnum':
+            case 'deleteJobType':
             case 'deleteStatusType':
+            case 'deleteUrgencyType':
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
         }
     };
