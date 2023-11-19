@@ -33,7 +33,7 @@ export const useCreateJob = () => {
 
     const getEnums = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/enums/create-job`, {
+            const response = await axios.get(`${SERVER_URL}/jobs/create-job`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setTypeOptions(response.data.types);
