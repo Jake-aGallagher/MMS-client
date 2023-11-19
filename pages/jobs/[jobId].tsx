@@ -43,7 +43,7 @@ const JobView = () => {
         headers: [
             { id: 'id', name: 'Part Number', type: 'linkWithName', nameParam: 'part_no', search: true, order: true },
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
-            { id: 'quantity', name: 'Quantity Used', type: 'string', search: true, order: true },
+            { id: 'quantity', name: 'Quantity Used', type: 'number', search: true, order: true },
         ],
         searchable: false,
         linkColPrefix: '/spares/',
@@ -53,7 +53,7 @@ const JobView = () => {
         headers: [
             { id: 'first', name: 'First Name', type: 'string', search: true, order: true },
             { id: 'last', name: 'Surname', type: 'string', search: true, order: true },
-            { id: 'time', name: 'Time Logged (Mins)', type: 'string', search: true, order: true },
+            { id: 'time', name: 'Time Logged (Mins)', type: 'number', search: true, order: true },
         ],
         searchable: false,
     };

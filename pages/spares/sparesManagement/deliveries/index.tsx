@@ -30,7 +30,7 @@ const Deliveries = () => {
 
     const deliveriesTableConfig = {
         headers: [
-            { id: 'id', name: 'ID', type: 'string', search: true, order: true },
+            { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
             { id: 'supplier', name: 'Supplier', type: 'string', search: true, order: true },
             { id: 'courier', name: 'Courier', type: 'string', search: true, order: true },

@@ -15,7 +15,7 @@ const Permissions = () => {
 
     const permissionsTableConfig = {
         headers: [
-            { id: 'id', name: 'ID', type: 'string', search: true, order: true },
+            { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
             { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit'] },
         ],

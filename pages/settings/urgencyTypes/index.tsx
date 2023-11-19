@@ -15,11 +15,11 @@ const UrgencyTypes = () => {
 
     const urgencyTypesTableConfig = {
         headers: [
-            { id: 'id', name: 'ID', type: 'string', search: true, order: true },
+            { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'value', name: 'Value', type: 'string', search: true, order: true },
-            { id: 'urgency_number', name: 'Urgency Time', type: 'string', search: true, order: true },
+            { id: 'urgency_number', name: 'Urgency Time', type: 'number', search: true, order: true },
             { id: 'urgency_period', name: 'Urgency Period', type: 'string', search: true, order: true },
-            { id: 'list_priority', name: 'Order', type: 'string', search: true, order: true },
+            { id: 'list_priority', name: 'Order', type: 'number', search: true, order: true },
             { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
         ],
         searchable: true,

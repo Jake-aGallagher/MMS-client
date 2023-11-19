@@ -31,8 +31,8 @@ const StockWarnings = () => {
             { id: 'id', name: 'Part Number', type: 'linkWithName', nameParam: 'part_no', search: true, order: true },
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
             { id: 'supplier', name: 'Supplier', type: 'string', search: true, order: true },
-            { id: 'quant_remain', name: 'Quantity Remaining', type: 'string', search: true, order: true },
-            { id: 'monthly_usage', name: 'AVG Monthly Usage', type: 'string', search: true, order: true },
+            { id: 'quant_remain', name: 'Quantity Remaining', type: 'number', search: true, order: true },
+            { id: 'monthly_usage', name: 'AVG Monthly Usage', type: 'number', search: true, order: true },
         ],
         searchable: false,
         linkColPrefix: '/spares/'
@@ -43,7 +43,7 @@ const StockWarnings = () => {
             { id: 'id', name: 'Part Number', type: 'linkWithName', nameParam: 'part_no', search: true, order: true },
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
             { id: 'supplier', name: 'Supplier', type: 'string', search: true, order: true },
-            { id: 'monthly_usage', name: 'AVG Monthly Usage', type: 'string', search: true, order: true },
+            { id: 'monthly_usage', name: 'AVG Monthly Usage', type: 'number', search: true, order: true },
         ],
         searchable: false,
         linkColPrefix: '/spares/'

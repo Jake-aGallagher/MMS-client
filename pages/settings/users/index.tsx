@@ -18,7 +18,7 @@ const Users = () => {
 
     const usersTableConfig = {
         headers: [
-            { id: 'id', name: 'ID', type: 'string', search: true, order: true },
+            { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'username', name: 'Username', type: 'string', search: true, order: true },
             { id: 'first_name', name: 'First Name', type: 'string', search: true, order: true },
             { id: 'last_name', name: 'Last Name', type: 'string', search: true, order: true },

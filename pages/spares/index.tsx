@@ -32,7 +32,7 @@ const Spares = () => {
             { id: 'man_name', name: 'Manufacturers Part Name', type: 'string', search: true, order: true },
             { id: 'location', name: 'Location', type: 'string', search: true, order: true },
             { id: 'quant_remain', name: 'Remaining Stock', type: 'remaining_stock', search: true, order: true, avgUsagePointer: 'avg_usage' },
-            { id: 'avg_usage', name: 'Usage (AVG per Month)', type: 'string', search: true, order: true },
+            { id: 'avg_usage', name: 'Usage (AVG per Month)', type: 'number', search: true, order: true },
             { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['adjust_stock', 'edit', 'delete'] },
         ],
         searchable: true,
