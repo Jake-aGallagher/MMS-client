@@ -18,6 +18,8 @@ import AddEditPermission from '../settings/permissions/addEditPermissions/addEdi
 import SparesSelector from '../sparesSelector/sparesSelector';
 import UsersSelector from '../usersSelector/usersSelector';
 import AddEditJobType from '../settings/jobTypes/addEditJobType/addEditJobType';
+import AddEditStatusType from '../settings/statusTypes/addEditStatusType/addEditStatusType';
+import { GlobalDebug } from '../logs/globalDebug';
 
 interface ModalProps {
     closeModal: () => void;
@@ -29,6 +31,7 @@ interface ModalProps {
 
 const ModalBase = (props: ModalProps) => {
     const modalToDisplay = (modalType: string) => {
+        GlobalDebug('Modal', [['modal type', modalType]])
         switch (modalType) {
             // Property
             case 'addEditProperty':
@@ -90,6 +93,10 @@ const ModalBase = (props: ModalProps) => {
             case 'addEditJobType':
                 return <AddEditJobType closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteJobType':
+                return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditStatusType':
+                return <AddEditStatusType closeModal={props.closeModal} payload={props.payload} />;
+            case 'deleteStatusType':
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
         }
     };
