@@ -22,6 +22,9 @@ const Settings = () => {
                 <Link href="/settings/jobTypes" className="ml-8 hover:text-accent flex flex-row items-center">
                     Job Types
                 </Link>
+                <Link href="/settings/statusTypes" className="ml-8 hover:text-accent flex flex-row items-center">
+                    Job Status Types
+                </Link>
             </IndexCardLayout>
         </div>
     );
