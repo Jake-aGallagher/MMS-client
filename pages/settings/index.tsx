@@ -16,7 +16,7 @@ const Settings = () => {
                 </Link>
             </IndexCardLayout>
             <IndexCardLayout label="Enums">
-                <Link href="/settings/enums" className="ml-8 hover:text-accent flex flex-row items-center">
+                <Link href="/settings/enumgroups" className="ml-8 hover:text-accent flex flex-row items-center">
                     Enums
                 </Link>
                 <Link href="/settings/jobTypes" className="ml-8 hover:text-accent flex flex-row items-center">
