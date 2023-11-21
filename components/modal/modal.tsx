@@ -10,7 +10,7 @@ import AddSparesItem from '../spares/addEditSparesItem/addEditSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock/adjustSparesStock';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery/addEditDelivery';
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems/viewExtraItems';
-import AddEditEnum from '../settings/enums/addEdit/addEditEnum';
+import AddEditEnumGroup from '../settings/enumgroups/addEdit/addEditEnumGroup';
 import DeleteForm from '../forms/deleteForm/DeleteForm';
 import AddEditAsset from '../assets/addEditAsset/addEditAsset';
 import AddEditUserGroup from '../settings/userGroups/addEditUserGroups/addEditUserGroup';
@@ -21,6 +21,7 @@ import AddEditJobType from '../settings/jobTypes/addEditJobType/addEditJobType';
 import AddEditStatusType from '../settings/statusTypes/addEditStatusType/addEditStatusType';
 import AddEditUrgencyType from '../settings/urgencyTypes/addEditUrgencyType/addEditUrgencyType';
 import { GlobalDebug } from '../logs/globalDebug';
+import AddEditEnumValue from '../settings/enumgroups/enumValues/addEditEnumValues/addEditEnumValue';
 
 interface ModalProps {
     closeModal: () => void;
@@ -77,8 +78,10 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditUserGroup closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditPermissions':
                 return <AddEditPermission closeModal={props.closeModal} payload={props.payload} />;
-            case 'addEditEnum':
-                return <AddEditEnum closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditEnumGroup':
+                return <AddEditEnumGroup closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditEnumValue':
+                return <AddEditEnumValue closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditJobType':
                 return <AddEditJobType closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditStatusType':
@@ -92,7 +95,8 @@ const ModalBase = (props: ModalProps) => {
             case 'deleteSparesItem':
             case 'deleteSparesNote':
             case 'deleteUserGroup':
-            case 'deleteEnum':
+            case 'deleteEnumGroup':
+            case 'deleteEnumValue':
             case 'deleteJobType':
             case 'deleteStatusType':
             case 'deleteUrgencyType':
