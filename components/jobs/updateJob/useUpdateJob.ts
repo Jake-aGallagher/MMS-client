@@ -62,7 +62,7 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
                 const data = response.data.jobDetails[0];
                 setCompleted(data.completed);
                 setDefaultValues({
-                    status: data.status,
+                    status: data.status_id,
                     description: data.description ? data.description : '',
                     notes: data.notes ? data.notes : '',
                     completed: 0,
