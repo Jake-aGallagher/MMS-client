@@ -13,6 +13,7 @@ export const useAddEditStatusType = (props: Props) => {
         value: '',
         canComplete: 0,
         listPriority: 10,
+        initialStatus: false,
     });
 
     useEffect(() => {
@@ -35,7 +36,7 @@ export const useAddEditStatusType = (props: Props) => {
                 value: data.value,
                 canComplete: data.can_complete,
                 listPriority: data.list_priority,
-                
+                initialStatus: data.initial_status == 1,
             });
             setLoading(false);
         } catch (err) {

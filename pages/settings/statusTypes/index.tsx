@@ -17,6 +17,7 @@ const StatusTypes = () => {
         headers: [
             { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'value', name: 'Value', type: 'string', search: true, order: true },
+            { id: 'initial_status', name: 'Status on Job Creation', type: 'tick', search: true, order: true },
             { id: 'can_complete', name: 'Can Complete Job', type: 'tick', search: true, order: true },
             { id: 'list_priority', name: 'Order', type: 'number', search: true, order: true },
             { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },

@@ -8,6 +8,7 @@ export const addEditStatusTypeHandler = async (data: any, id: number, closeModal
             value: data.value,
             canComplete: data.canComplete,
             listPriority: data.listPriority,
+            initialStatus: data.initialStatus,
         });
         if (response.data.created) {
             closeModal();

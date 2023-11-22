@@ -35,7 +35,7 @@ interface Modal {
 
 const UpdateJob = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { statusOptions, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error } = useUpdateJob(currentProperty, props.jobId);
+    const { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error } = useUpdateJob(currentProperty, props.jobId);
     const [viewModal, setViewModal] = useState(false);
     const [modal, setModal] = useState<Modal>({ modalType: '', payload: {}, fullSize: true, passbackDeatails: null, closeModal: () => setViewModal(false) });
     const [files, setFiles] = useState<Blob[]>([]);
@@ -71,7 +71,7 @@ const UpdateJob = (props: ModalProps) => {
     };
 
     const handleRegistration = async (data: any) => {
-        if ((statusWatch[0] == 19 || statusWatch[0] == 20) && completed !== 1) {
+        if (completableStatus.includes(parseInt(statusWatch[0])) && completed !== 1) {
             if (confirm('You are about to Complete this Job, once completed the only editable section will be the Notes, are you sure you want to continue') === true) {
                 updateJobFullHandler(true, data, props.jobId, currentProperty, loggedTimeDetails, sparesSelected, files, props.closeModal);
             }
@@ -140,7 +140,7 @@ const UpdateJob = (props: ModalProps) => {
                                     <FormTextCenter label={"Note: A job must be set to 'Attended - Found no Issues' or 'Attended - Fixed' in order to complete the job"} />
                                 </>
                             ) : null}
-                            <GeneralFormSubmit closeModal={props.closeModal} submitLabel={(statusWatch[0] == 19 || statusWatch[0] == 20) && completed !== 1 ? 'Complete' : 'Update'} />
+                            <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(statusWatch[0])) && completed !== 1 ? 'Complete' : 'Update'} />
                         </GeneralForm>
                     </FormContainer>
                 </>

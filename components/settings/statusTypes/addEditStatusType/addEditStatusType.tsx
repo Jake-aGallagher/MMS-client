@@ -59,6 +59,7 @@ const AddEditStatusType = (props: ModalProps) => {
                         selectOptions={completionOptions}
                     />
                     <GeneralFormInput register={register} label="Order" type="number" formName="listPriority" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="Set as Initial Status on Job Creation" type="checkbox" formName="initialStatus" errors={errors} required={true} />
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
             </FormContainer>

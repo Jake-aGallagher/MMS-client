@@ -28,8 +28,9 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
     const [sparesSelected, setSparesSelected] = useState<SparesSelected[]>([]);
     const [completed, setCompleted] = useState(0);
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
+    const [completableStatus, setCompletableStatus] = useState<number[]>([])
     const [defaultValues, setDefaultValues] = useState({
-        status: 0,
+        status: '0',
         description: '',
         notes: '',
         completed: 0,
@@ -51,6 +52,7 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
                 setNoData(true);
             } else {
                 setStatusOptions(response.data.statusOptions);
+                setCompletableStatus(response.data.completableStatus)
                 if (response.data.usedSpares) {
                     setSparesSelected(response.data.usedSpares);
                 }
@@ -73,5 +75,5 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
             setLoading(false);
         }
     };
-    return { statusOptions, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error };
+    return { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error };
 };
