@@ -11,11 +11,12 @@ import Toolbar from '../../components/page/toolbar';
 import DetailsBox from '../../components/detailsBox/detailsBox';
 import DataTable from '../../components/dataTable/dataTable';
 import JobDetailsDefaultCharts from '../../components/charts/defaults/jobDetailsDefaultCharts';
+import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
 
 const JobView = () => {
     const params = useRouter();
     const jobId = params.asPath.split('/')[2];
-    const { jobDetails, timeDetails, sparesDetails, loading, noData, error, reload } = useJobDetails(jobId);
+    const { jobDetails, files, timeDetails, sparesDetails, loading, noData, error, reload } = useJobDetails(jobId);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
@@ -83,7 +84,12 @@ const JobView = () => {
                         <div className="w-full h-full pt-4 flex flex-col">
                             <div className="flex flex-col xl:flex-row">
                                 <DetailsBox data={jobDetailsConfig} />
-                                <JobDetailsDefaultCharts JobName={jobDetails?.title} timeDetails={timeDetails} />
+                                <div className="flex flex-col w-full">
+                                    <div className='w-full xl:pl-8'>
+                                        <AttachedFilesBox files={files} reload={reload} />
+                                    </div>
+                                    <JobDetailsDefaultCharts JobName={jobDetails?.title} timeDetails={timeDetails} />
+                                </div>
                             </div>
                             {sparesDetails.length > 0 ? (
                                 <>

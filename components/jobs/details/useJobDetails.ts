@@ -39,6 +39,7 @@ export const useJobDetails = (jobId: string) => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [jobDetails, setJobDetails] = useState<Job>();
+    const [files, setFiles] = useState<{ id: string; name: string }[]>([]);
     const [timeDetails, setTimeDetails] = useState<TimeDetails[]>([]);
     const [sparesDetails, setSparesDetails] = useState<UsedSpares[]>([]);
 
@@ -62,6 +63,7 @@ export const useJobDetails = (jobId: string) => {
                 setNoData(true);
             } else {
                 setJobDetails(response.data.jobDetails[0]);
+                setFiles(response.data.files || []);
                 setTimeDetails(response.data.timeDetails || []);
                 setSparesDetails(response.data.usedSpares || []);
             }
@@ -71,5 +73,5 @@ export const useJobDetails = (jobId: string) => {
             setLoading(false);
         }
     };
-    return { jobDetails, timeDetails, sparesDetails, loading, noData, error, reload };
+    return { jobDetails, files, timeDetails, sparesDetails, loading, noData, error, reload };
 };
