@@ -85,9 +85,11 @@ const JobView = () => {
                             <div className="flex flex-col xl:flex-row">
                                 <DetailsBox data={jobDetailsConfig} />
                                 <div className="flex flex-col w-full">
-                                    <div className='w-full xl:pl-8'>
-                                        <AttachedFilesBox files={files} reload={reload} />
-                                    </div>
+                                    {files.length > 0 ? (
+                                        <div className="w-full xl:pl-8">
+                                            <AttachedFilesBox files={files} reload={reload} />
+                                        </div>
+                                    ) : null}
                                     <JobDetailsDefaultCharts JobName={jobDetails?.title} timeDetails={timeDetails} />
                                 </div>
                             </div>
