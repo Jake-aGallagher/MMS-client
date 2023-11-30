@@ -6,10 +6,11 @@ interface PayloadData {
     last: string;
     user_group_id: number;
     id: number;
+    isAdmin: boolean;
 }
 
 const initialState = {
-    value: { username: '', first: '', last: '', user_group_id: 0, id: 0 },
+    value: { username: '', first: '', last: '', user_group_id: 0, id: 0, isAdmin: false },
 };
 
 export const UserSlice = createSlice({
@@ -22,6 +23,7 @@ export const UserSlice = createSlice({
             state.value.last = action.payload.last;
             state.value.user_group_id = action.payload.user_group_id;
             state.value.id = action.payload.id;
+            state.value.isAdmin = action.payload.isAdmin;
         },
     },
 });

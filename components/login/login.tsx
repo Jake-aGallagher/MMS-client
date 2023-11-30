@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import bgImg from '../../public/stock-vector-gear-blueprint-technical-background-cogs-and-wheels-in-gray-color-abstract-parts-of-engine-1764788840.jpg';
 import { useSearchParams } from 'next/navigation';
 import { setDebug } from '../store/debugSlice';
+import { setPermissions } from '../store/permissionsSlice';
 
 interface Props {
     loginHandler: () => void;
@@ -54,8 +55,10 @@ const Login = (props: Props) => {
                     last: user.last_name,
                     user_group_id: user.user_group_id,
                     id: user.id,
+                    isAdmin: user.isAdmin,
                 })
             );
+            dispatch(setPermissions({ permissions: response.data.permissions }));
             props.loginHandler();
         } catch (err) {}
     };
@@ -75,8 +78,8 @@ const Login = (props: Props) => {
                     withCredentials: true,
                 }
             );
-            if (response.data.response.passedValidation) {
-                const user = response.data.response.user;
+            if (response.data.passedValidation) {
+                const user = response.data.user;
                 dispatch(
                     setUser({
                         username: user.username,
@@ -84,12 +87,14 @@ const Login = (props: Props) => {
                         last: user.last,
                         user_group_id: user.user_group_id,
                         id: user.id,
+                        isAdmin: response.data.isAdmin,
                     })
                 );
+                dispatch(setPermissions({ permissions: response.data.permissions }));
                 if (debug) {
                     dispatch(setDebug({ debug: true }));
                 }
-                localStorage.setItem('token', response.data.response.token);
+                localStorage.setItem('token', response.data.token);
                 props.refreshExpiry();
                 props.loginHandler();
             } else {
