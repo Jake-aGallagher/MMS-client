@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 const SparesNotes = () => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { notes, numOfNotes, reload } = useSparesNotes(currentProperty);
     const [showNotes, setShowNotes] = useState(false);
@@ -30,12 +32,14 @@ const SparesNotes = () => {
                 <div className="bg-background p-6 rounded-md shadow-lg">
                     <h2 className="text-xl font-semibold mb-2">
                         Notes
-                        <button
-                            onClick={() => [setViewModal(true), setModalType('addEditSparesNote'), setEditNoteData({ id: 0, title: '' })]}
-                            className="btnBlue font-normal ml-5 text-sm h-6 px-3"
-                        >
-                            Add Note
-                        </button>
+                        {permissions.sparesManagement?.manage || isAdmin ? (
+                            <button
+                                onClick={() => [setViewModal(true), setModalType('addEditSparesNote'), setEditNoteData({ id: 0, title: '' })]}
+                                className="btnBlue font-normal ml-5 text-sm h-6 px-3"
+                            >
+                                Add Note
+                            </button>
+                        ) : null}
                     </h2>
                     <button className="flex flex-row items-center hover:text-accent transition-all select-none" onClick={() => setShowNotes((prev) => !prev)}>
                         <FontAwesomeIcon icon={faCaretRight} className={`mr-1 w-3 transition-all ${showNotes ? 'rotate-90' : null}`} />

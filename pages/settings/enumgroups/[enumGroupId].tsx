@@ -9,10 +9,19 @@ import FullPage from '../../../components/page/fullPage';
 import Toolbar from '../../../components/page/toolbar';
 import { useEnumValues } from '../../../components/settings/enumgroups/enumValues/index/useEnumValues';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../components/store/store';
+import { DataTableConfig } from '../../../components/dataTable/types/configType';
 
 const EnumValues = () => {
-    const params = useRouter();
-    const enumGroupId = parseInt(params.asPath.split('/')[3]);
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.enums?.view && !isAdmin) {
+        router.push('/settings');
+    }
+
+    const enumGroupId = parseInt(router.asPath.split('/')[3]);
     const { enumValues, loading, error, reload } = useEnumValues(enumGroupId);
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string; groupId: number } }>({
         view: false,
@@ -20,12 +29,11 @@ const EnumValues = () => {
         payload: { id: 0, name: '', groupId: enumGroupId },
     });
 
-    const enumValuesTableConfig = {
+    const enumValuesTableConfig: DataTableConfig = {
         headers: [
             { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'value', name: 'Value', type: 'string', search: true, order: true },
             { id: 'list_priority', name: 'Order', type: 'number', search: true, order: true },
-            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
         ],
         searchable: true,
         modalType: 'EnumValue',
@@ -34,6 +42,9 @@ const EnumValues = () => {
         namePointer: 'value',
         reload: reload,
     };
+    if (permissions.enums?.manage || isAdmin) {
+        enumValuesTableConfig.headers.push({ id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] });
+    }
 
     const addEnumGroup = () => {
         setModal({ view: true, type: 'addEditEnumValue', payload: { id: 0, name: '', groupId: enumGroupId } });
@@ -46,10 +57,12 @@ const EnumValues = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Enum Groups</p>
                 </Link>
-                <button onClick={addEnumGroup} className="tLink">
-                    <div className="text-2xl mr-1 pb-1">+</div>
-                    Add Enum Value
-                </button>
+                {permissions.enums?.manage || isAdmin ? (
+                    <button onClick={addEnumGroup} className="tLink">
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add Enum Value
+                    </button>
+                ) : null}
             </Toolbar>
             {modal.view ? (
                 <ModalBase

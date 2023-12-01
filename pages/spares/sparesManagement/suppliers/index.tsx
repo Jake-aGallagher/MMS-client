@@ -10,13 +10,22 @@ import LoadingNoDataError from '../../../../components/loading/loadingNoDataErro
 import DataTable from '../../../../components/dataTable/dataTable';
 import FullPage from '../../../../components/page/fullPage';
 import Toolbar from '../../../../components/page/toolbar';
+import { useRouter } from 'next/navigation';
+import { DataTableConfig } from '../../../../components/dataTable/types/configType';
 
 const Suppliers = () => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.sparesManagement?.view && !isAdmin) {
+        router.push('/spares');
+    }
+
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { suppliersList, loading, error, reload } = useSuppliers({ currentProperty });
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string; url?: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
-    const suppliersTableConfig = {
+    const suppliersTableConfig: DataTableConfig = {
         headers: [
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
             { id: 'website', name: 'Website', type: 'url', search: true, order: true },
@@ -28,7 +37,6 @@ const Suppliers = () => {
             { id: 'county', name: 'County', type: 'string', search: true, order: true },
             { id: 'postcode', name: 'Postcode', type: 'string', search: true, order: true },
             { id: 'supplies', name: 'Supplies', type: 'string', search: true, order: true },
-            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
         ],
         searchable: true,
         modalType: 'Supplier',
@@ -36,6 +44,9 @@ const Suppliers = () => {
         namePointer: 'name',
         reload: reload,
     };
+    if (permissions.sparesManagement?.manage || isAdmin) {
+        suppliersTableConfig.headers.push({ id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] });
+    }
 
     const addEditSupplier = () => {
         setModal({ view: true, type: 'addEditSupplier', payload: { id: 0, name: '' } });
@@ -49,10 +60,12 @@ const Suppliers = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Spares Management</p>
                     </Link>
-                    <button className="tLink" onClick={addEditSupplier}>
-                        <div className="text-2xl mr-1 pb-1">+</div>
-                        Add Supplier
-                    </button>
+                    {permissions.sparesManagement?.manage || isAdmin ? (
+                        <button className="tLink" onClick={addEditSupplier}>
+                            <div className="text-2xl mr-1 pb-1">+</div>
+                            Add Supplier
+                        </button>
+                    ) : null}
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>

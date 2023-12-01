@@ -8,16 +8,26 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import DataTable from '../../../components/dataTable/dataTable';
 import FullPage from '../../../components/page/fullPage';
 import Toolbar from '../../../components/page/toolbar';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../components/store/store';
+import { DataTableConfig } from '../../../components/dataTable/types/configType';
 
 const Permissions = () => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.userGroups?.view && !isAdmin) {
+        router.push('/settings');
+    }
+
     const { userGroups, loading, error, reload } = useUserGroups();
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
-    const permissionsTableConfig = {
+    const permissionsTableConfig: DataTableConfig = {
         headers: [
             { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
-            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit'] },
         ],
         searchable: true,
         modalType: 'Permissions',
@@ -25,6 +35,9 @@ const Permissions = () => {
         namePointer: 'name',
         reload: reload,
     };
+    if (permissions.userGroups?.manage || isAdmin) {
+        permissionsTableConfig.headers.push({ id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit'] });
+    }
 
     return (
         <FullPage>

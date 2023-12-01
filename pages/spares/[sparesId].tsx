@@ -15,8 +15,14 @@ import DetailsBox from '../../components/detailsBox/detailsBox';
 import SparesDetailsDefaultCharts from '../../components/charts/defaults/sparesDetailsDefaultCharts';
 
 const SparesView = () => {
-    const params = useRouter();
-    const spareId = params.asPath.split('/')[2];
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.spares?.view && !isAdmin) {
+        router.push('/');
+    }
+
+    const spareId = router.asPath.split('/')[2];
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { sparesDetails, recentJobs, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
@@ -67,10 +73,12 @@ const SparesView = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Spares</p>
                     </Link>
-                    <button onClick={() => editStock()} className="tLink">
-                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                        Edit Spares Item
-                    </button>
+                    {permissions.spares?.manage || isAdmin ? (
+                        <button onClick={() => editStock()} className="tLink">
+                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                            Edit Spares Item
+                        </button>
+                    ) : null}
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>

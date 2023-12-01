@@ -14,10 +14,18 @@ import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
 import DetailsBox from '../../components/detailsBox/detailsBox';
 import AssetDetailsDefaultCharts from '../../components/charts/defaults/assetDetailsDefaultCharts';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/store/store';
 
 const AssetView = () => {
-    const params = useRouter();
-    const assetId = params.asPath.split('/')[2];
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.assets?.view && !isAdmin) {
+        router.push('/');
+    }
+
+    const assetId = router.asPath.split('/')[2];
     const [modal, setModal] = useState({ view: false, type: '', payload: {} });
     const { assetDetails, recentJobs, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload } = useAssetDetails(assetId);
     const { openBranches, toggle } = useOpenBranches();
@@ -51,25 +59,25 @@ const AssetView = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Assets</p>
                     </Link>
-                    <button className="tLink" onClick={() => setModal({ view: true, type: 'addEditAsset', payload: { id: assetDetails?.id, name: assetDetails?.name } })}>
-                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                        Edit
-                    </button>
-                    <button onClick={() => setModal({ view: true, type: 'createJob', payload: { assetId } })} className="tLink">
-                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                        Create Job
-                    </button>
+                    {permissions.assets?.manage || isAdmin ? (
+                        <button className="tLink" onClick={() => setModal({ view: true, type: 'addEditAsset', payload: { id: assetDetails?.id, name: assetDetails?.name } })}>
+                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                            Edit
+                        </button>
+                    ) : null}
+                    {permissions.jobs?.manage || isAdmin ? (
+                        <button onClick={() => setModal({ view: true, type: 'createJob', payload: { assetId } })} className="tLink">
+                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                            Create Job
+                        </button>
+                    ) : null}
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: {} }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <div className="w-full h-full flex flex-col">
                         <div className="flex flex-col xl:flex-row">
                             <DetailsBox data={assetConfig} />
-                            <AssetDetailsDefaultCharts
-                                assetDetailsName={assetDetails?.name}
-                                jobsOfComponents6M={jobsOfComponents6M}
-                                incompleteForAsset={incompleteForAsset}
-                            />
+                            <AssetDetailsDefaultCharts assetDetailsName={assetDetails?.name} jobsOfComponents6M={jobsOfComponents6M} incompleteForAsset={incompleteForAsset} />
                         </div>
 
                         {assetDetails ? (

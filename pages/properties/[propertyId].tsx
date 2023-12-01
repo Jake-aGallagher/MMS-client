@@ -11,10 +11,18 @@ import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
 import PropertyDetailsDefaultCharts from '../../components/charts/defaults/propertyDetailsDefaultCharts';
+import { RootState } from '../../components/store/store';
+import { useSelector } from 'react-redux';
 
 const PropertyView = () => {
-    const params = useRouter();
-    const propertyNumber = params.asPath.split('/')[2];
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.properties?.view && !isAdmin) {
+        router.push('/');
+    }
+
+    const propertyNumber = router.asPath.split('/')[2];
     const { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M, mostUsed6M, sparesCost6M, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
@@ -62,14 +70,18 @@ const PropertyView = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Properties</p>
                     </Link>
-                    <button className="tLink" onClick={() => [setViewModal(true), setModalType('addEditProperty')]}>
-                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                        Edit Property
-                    </button>
-                    <button className="tLink" onClick={() => [setViewModal(true), setModalType('assignUsers')]}>
-                        <FontAwesomeIcon icon={faUserPlus} className="mr-1 w-3" />
-                        Assign Users
-                    </button>
+                    {permissions.properties?.manage || isAdmin ? (
+                        <>
+                            <button className="tLink" onClick={() => [setViewModal(true), setModalType('addEditProperty')]}>
+                                <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                                Edit Property
+                            </button>
+                            <button className="tLink" onClick={() => [setViewModal(true), setModalType('assignUsers')]}>
+                                <FontAwesomeIcon icon={faUserPlus} className="mr-1 w-3" />
+                                Assign Users
+                            </button>
+                        </>
+                    ) : null}
                 </Toolbar>
                 {viewModal ? <ModalBase modalType={modalType} payload={parseInt(propertyNumber)} closeModal={() => [setViewModal(false), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>

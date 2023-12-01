@@ -7,8 +7,18 @@ import DeliveriesCard from '../../../components/spares/sparesManagement/deliveri
 import SuppliersCard from '../../../components/spares/sparesManagement/suppliersCard';
 import FullPage from '../../../components/page/fullPage';
 import Toolbar from '../../../components/page/toolbar';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../components/store/store';
+import { useRouter } from 'next/navigation';
 
 const SparesManagement = () => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.sparesManagement?.view && !isAdmin) {
+        router.push('/spares');
+    }
+
     return (
         <>
             <FullPage>
@@ -20,9 +30,13 @@ const SparesManagement = () => {
                 </Toolbar>
                 <div>
                     <StockWarnings />
-                    <DeliveriesCard />
-                    <SuppliersCard />
-                    <SparesNotes />
+                    {permissions.sparesManagement?.view || isAdmin ? (
+                        <>
+                            <DeliveriesCard />
+                            <SuppliersCard />
+                            <SparesNotes />
+                        </>
+                    ) : null}
                 </div>
             </FullPage>
         </>

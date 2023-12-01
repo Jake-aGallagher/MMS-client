@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { Dispatch, SetStateAction } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 interface Props {
     parent_id: number;
@@ -15,6 +17,9 @@ interface Props {
 }
 
 const ParentDetails = (props: Props) => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+
     return (
         <>
             {props.grand_parent_id && props.grand_parent_id > 0 ? (
@@ -23,12 +28,14 @@ const ParentDetails = (props: Props) => {
                     <div className="flex flex-row outline-primary hover:outline-1 hover:outline py-1 rounded-md">
                         <div className="pl-8">{props.parent_name}</div>
 
-                        <button className="btnBlue ml-auto text-sm h-6 px-3">
+                        <button className="btnBlue ml-auto mr-2 text-sm h-6 px-3">
                             <Link href={'/assets/' + props.parent_id}>View Component Details</Link>
                         </button>
-                        <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: props.parent_id } })} className="btnBlue ml-5 mr-2 text-sm h-6 px-3">
-                            Create Job
-                        </button>
+                        {permissions.jobs?.manage || isAdmin ? (
+                            <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: props.parent_id } })} className="btnBlue ml-2 mr-2 text-sm h-6 px-3">
+                                Create Job
+                            </button>
+                        ) : null}
                     </div>
                 </div>
             ) : null}

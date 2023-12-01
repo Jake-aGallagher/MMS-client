@@ -8,19 +8,29 @@ import DataTable from '../../../components/dataTable/dataTable';
 import FullPage from '../../../components/page/fullPage';
 import Toolbar from '../../../components/page/toolbar';
 import { useUrgencyTypes } from '../../../components/settings/urgencyTypes/index/useUrgencyType';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../components/store/store';
+import { DataTableConfig } from '../../../components/dataTable/types/configType';
 
 const UrgencyTypes = () => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.enums?.view && !isAdmin) {
+        router.push('/settings');
+    }
+
     const { urgencyTypes, loading, error, reload } = useUrgencyTypes();
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
-    const urgencyTypesTableConfig = {
+    const urgencyTypesTableConfig: DataTableConfig = {
         headers: [
             { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'value', name: 'Value', type: 'string', search: true, order: true },
             { id: 'urgency_number', name: 'Urgency Time', type: 'number', search: true, order: true },
             { id: 'urgency_period', name: 'Urgency Period', type: 'string', search: true, order: true },
             { id: 'list_priority', name: 'Order', type: 'number', search: true, order: true },
-            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
         ],
         searchable: true,
         modalType: 'UrgencyType',
@@ -29,6 +39,9 @@ const UrgencyTypes = () => {
         namePointer: 'value',
         reload: reload,
     };
+    if (permissions.enums?.manage || isAdmin) {
+        urgencyTypesTableConfig.headers.push({ id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] });
+    }
 
     const addUrgencyType = () => {
         setModal({ view: true, type: 'addEditUrgencyType', payload: { id: 0, name: '' } });
@@ -41,14 +54,14 @@ const UrgencyTypes = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                <button onClick={addUrgencyType} className="tLink">
-                    <div className="text-2xl mr-1 pb-1">+</div>
-                    Add Job Urgency Type
-                </button>
+                {permissions.enums?.manage || isAdmin ? (
+                    <button onClick={addUrgencyType} className="tLink">
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add Job Urgency Type
+                    </button>
+                ) : null}
             </Toolbar>
-            {modal.view ? (
-                <ModalBase modalType={modal.type} payload={{ ...modal.payload }} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} />
-            ) : null}
+            {modal.view ? <ModalBase modalType={modal.type} payload={{ ...modal.payload }} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error}>
                 <DataTable config={urgencyTypesTableConfig} data={urgencyTypes} />
             </LoadingNoDataError>

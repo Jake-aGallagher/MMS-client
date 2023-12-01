@@ -7,6 +7,7 @@ import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
 import { GlobalDebug } from '../../components/logs/globalDebug';
+import { useRouter } from 'next/router';
 
 const jobTableConfig = {
     headers: [
@@ -27,6 +28,13 @@ const jobTableConfig = {
 };
 
 const Jobs = () => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.jobs?.view && !isAdmin) {
+        router.push('/');
+    }
+
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { jobs, loading, error } = useJobs({ currentProperty });
     GlobalDebug('Jobs Index', [['Jobs list', jobs]]);

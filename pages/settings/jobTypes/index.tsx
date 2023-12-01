@@ -8,17 +8,27 @@ import DataTable from '../../../components/dataTable/dataTable';
 import FullPage from '../../../components/page/fullPage';
 import Toolbar from '../../../components/page/toolbar';
 import { useJobTypes } from '../../../components/settings/jobTypes/index/useJobTypes';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../components/store/store';
+import { DataTableConfig } from '../../../components/dataTable/types/configType';
 
 const JobTypes = () => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.enums?.view && !isAdmin) {
+        router.push('/settings');
+    }
+
     const { jobTypes, loading, error, reload } = useJobTypes();
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
-    const enumsTableConfig = {
+    const enumsTableConfig: DataTableConfig = {
         headers: [
             { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'value', name: 'Value', type: 'string', search: true, order: true },
             { id: 'list_priority', name: 'Order', type: 'number', search: true, order: true },
-            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
         ],
         searchable: true,
         modalType: 'JobType',
@@ -27,6 +37,9 @@ const JobTypes = () => {
         namePointer: 'value',
         reload: reload,
     };
+    if (permissions.enums?.manage || isAdmin) {
+        enumsTableConfig.headers.push({ id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] });
+    }
 
     const addJobType = () => {
         setModal({ view: true, type: 'addEditJobType', payload: { id: 0, name: '' } });
@@ -39,14 +52,14 @@ const JobTypes = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                <button onClick={addJobType} className="tLink">
-                    <div className="text-2xl mr-1 pb-1">+</div>
-                    Add Job Type
-                </button>
+                {permissions.enums?.manage || isAdmin ? (
+                    <button onClick={addJobType} className="tLink">
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add Job Type
+                    </button>
+                ) : null}
             </Toolbar>
-            {modal.view ? (
-                <ModalBase modalType={modal.type} payload={{ ...modal.payload }} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} />
-            ) : null}
+            {modal.view ? <ModalBase modalType={modal.type} payload={{ ...modal.payload }} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error}>
                 <DataTable config={enumsTableConfig} data={jobTypes} />
             </LoadingNoDataError>

@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { Dispatch, SetStateAction } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 interface Props {
     type: string;
@@ -28,6 +30,9 @@ interface AssetTreeItem {
 }
 
 export const useAssetTree = (props: Props) => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+
     const allRoots = props.assetTree.map((root) => {
         const renderTree = (node: AssetTreeItem) => (
             <div className="rounded-md mt-2 flex flex-col outline-primary hover:outline-1 hover:outline-dashed transition-colors" key={node.id}>
@@ -50,7 +55,7 @@ export const useAssetTree = (props: Props) => {
                         <div>{node.name}</div>
                     </div>
 
-                    {props.editMode ? (
+                    {props.editMode && (permissions.assets?.manage || isAdmin) ? (
                         <div className="absolute right-2 flex flex-row">
                             <button
                                 onClick={() => props.setModal({ view: true, type: 'addEditAsset', payload: { type: 'edit', id: node.id, name: node.name, note: node.note } })}
@@ -79,10 +84,11 @@ export const useAssetTree = (props: Props) => {
                                     <Link href={'/assets/' + node.id}>View Component Details</Link>
                                 </button>
                             ) : null}
-
-                            <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: node.id } })} className="btnBlue ml-5 text-sm h-6 px-3">
-                                Create Job
-                            </button>
+                            {permissions.jobs?.manage || isAdmin ? (
+                                <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: node.id } })} className="btnBlue ml-5 text-sm h-6 px-3">
+                                    Create Job
+                                </button>
+                            ) : null}
                         </div>
                     )}
                 </div>

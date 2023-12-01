@@ -12,10 +12,18 @@ import DetailsBox from '../../components/detailsBox/detailsBox';
 import DataTable from '../../components/dataTable/dataTable';
 import JobDetailsDefaultCharts from '../../components/charts/defaults/jobDetailsDefaultCharts';
 import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../components/store/store';
 
 const JobView = () => {
-    const params = useRouter();
-    const jobId = params.asPath.split('/')[2];
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.jobs?.view && !isAdmin) {
+        router.push('/');
+    }
+
+    const jobId = router.asPath.split('/')[2];
     const { jobDetails, files, timeDetails, sparesDetails, loading, noData, error, reload } = useJobDetails(jobId);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
@@ -67,14 +75,16 @@ const JobView = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Jobs</p>
                     </Link>
-                    <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="tLink">
-                        {jobDetails == undefined ? null : jobDetails.completed == 1 ? (
-                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                        ) : (
-                            <FontAwesomeIcon icon={faCheck} className="mr-1 w-3" />
-                        )}
-                        {jobDetails == undefined ? null : jobDetails.completed == 1 ? 'Update' : 'Update & Complete'}
-                    </button>
+                    {permissions.jobs?.manage || isAdmin ? (
+                        <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="tLink">
+                            {jobDetails == undefined ? null : jobDetails.completed == 1 ? (
+                                <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                            ) : (
+                                <FontAwesomeIcon icon={faCheck} className="mr-1 w-3" />
+                            )}
+                            {jobDetails == undefined ? null : jobDetails.completed == 1 ? 'Update' : 'Update & Complete'}
+                        </button>
+                    ) : null}
                 </Toolbar>
 
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>

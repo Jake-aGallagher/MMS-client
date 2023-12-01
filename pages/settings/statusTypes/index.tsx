@@ -8,19 +8,29 @@ import DataTable from '../../../components/dataTable/dataTable';
 import FullPage from '../../../components/page/fullPage';
 import Toolbar from '../../../components/page/toolbar';
 import { useStatusTypes } from '../../../components/settings/statusTypes/index/useStatusType';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../components/store/store';
+import { DataTableConfig } from '../../../components/dataTable/types/configType';
 
 const StatusTypes = () => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.enums?.view && !isAdmin) {
+        router.push('/settings');
+    }
+
     const { statusTypes, loading, error, reload } = useStatusTypes();
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
-    const statusTypesTableConfig = {
+    const statusTypesTableConfig: DataTableConfig = {
         headers: [
             { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'value', name: 'Value', type: 'string', search: true, order: true },
             { id: 'initial_status', name: 'Status on Job Creation', type: 'tick', search: true, order: true },
             { id: 'can_complete', name: 'Can Complete Job', type: 'tick', search: true, order: true },
             { id: 'list_priority', name: 'Order', type: 'number', search: true, order: true },
-            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
         ],
         searchable: true,
         modalType: 'StatusType',
@@ -29,6 +39,9 @@ const StatusTypes = () => {
         namePointer: 'value',
         reload: reload,
     };
+    if (permissions.enums?.manage || isAdmin) {
+        statusTypesTableConfig.headers.push({ id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] });
+    }
 
     const addStatusType = () => {
         setModal({ view: true, type: 'addEditStatusType', payload: { id: 0, name: '' } });
@@ -41,14 +54,14 @@ const StatusTypes = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                <button onClick={addStatusType} className="tLink">
-                    <div className="text-2xl mr-1 pb-1">+</div>
-                    Add Job Status Type
-                </button>
+                {permissions.enums?.manage || isAdmin ? (
+                    <button onClick={addStatusType} className="tLink">
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add Job Status Type
+                    </button>
+                ) : null}
             </Toolbar>
-            {modal.view ? (
-                <ModalBase modalType={modal.type} payload={{ ...modal.payload }} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} />
-            ) : null}
+            {modal.view ? <ModalBase modalType={modal.type} payload={{ ...modal.payload }} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error}>
                 <DataTable config={statusTypesTableConfig} data={statusTypes} />
             </LoadingNoDataError>

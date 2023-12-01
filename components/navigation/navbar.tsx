@@ -14,6 +14,8 @@ interface Props {
 }
 
 const NavBar = (props: Props) => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const dispatch = useDispatch();
     const router = useRouter();
     const userId = useSelector((state: RootState) => state.user.value.id);
@@ -47,23 +49,30 @@ const NavBar = (props: Props) => {
                     )}
                 </div>
             </div>
-
-            <Link href="/properties" className={'nLink ' + (currentRoute.includes('properties') ? 'text-accent' : '')}>
-                <FontAwesomeIcon icon={faBuilding} className="w-3" />
-                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Properties</span>
-            </Link>
-            <Link href="/jobs" className={'nLink ' + (currentRoute.includes('jobs') ? 'text-accent' : '')}>
-                <FontAwesomeIcon icon={faScrewdriverWrench} className="mr-1 w-3" />
-                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Jobs</span>
-            </Link>
-            <Link href="/assets" className={'nLink ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>
-                <FontAwesomeIcon icon={faFolderTree} className="mr-1 w-3" />
-                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Assets</span>
-            </Link>
-            <Link href="/spares" className={'nLink ' + (currentRoute.includes('spares') ? 'text-accent' : '')}>
-                <FontAwesomeIcon icon={faTruckFast} className="mr-1 w-3" />
-                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Spares</span>
-            </Link>
+            {permissions.properties?.view || isAdmin ? (
+                <Link href="/properties" className={'nLink ' + (currentRoute.includes('properties') ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faBuilding} className="w-3" />
+                    <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Properties</span>
+                </Link>
+            ) : null}
+            {permissions.jobs?.view || isAdmin ? (
+                <Link href="/jobs" className={'nLink ' + (currentRoute.includes('jobs') ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faScrewdriverWrench} className="mr-1 w-3" />
+                    <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Jobs</span>
+                </Link>
+            ) : null}
+            {permissions.assets?.view || isAdmin ? (
+                <Link href="/assets" className={'nLink ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faFolderTree} className="mr-1 w-3" />
+                    <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Assets</span>
+                </Link>
+            ) : null}
+            {permissions.spares?.view || isAdmin ? (
+                <Link href="/spares" className={'nLink ' + (currentRoute.includes('spares') ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faTruckFast} className="mr-1 w-3" />
+                    <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Spares</span>
+                </Link>
+            ) : null}
             <Link href="/settings" className={'nLink ' + (currentRoute.includes('settings') ? 'text-accent' : '')}>
                 <FontAwesomeIcon icon={faGear} className="mr-1 w-3" />
                 <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Settings</span>

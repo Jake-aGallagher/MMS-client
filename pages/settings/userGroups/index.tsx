@@ -8,16 +8,26 @@ import { useUserGroups } from '../../../components/settings/userGroups/index/use
 import DataTable from '../../../components/dataTable/dataTable';
 import FullPage from '../../../components/page/fullPage';
 import Toolbar from '../../../components/page/toolbar';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../components/store/store';
+import { DataTableConfig } from '../../../components/dataTable/types/configType';
 
 const UserGroups = () => {
+    const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
+    const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const router = useRouter();
+    if (!permissions.userGrous?.view && !isAdmin) {
+        router.push('/settings');
+    }
+
     const { userGroups, loading, error, reload } = useUserGroups();
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
-    const userGroupsTableConfig = {
+    const userGroupsTableConfig: DataTableConfig = {
         headers: [
             { id: 'id', name: 'ID', type: 'number', search: true, order: true },
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
-            { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] },
         ],
         searchable: true,
         modalType: 'UserGroup',
@@ -25,6 +35,9 @@ const UserGroups = () => {
         namePointer: 'name',
         reload: reload,
     };
+    if (permissions.userGrous?.manage || isAdmin) {
+        userGroupsTableConfig.headers.push({ id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] });
+    }
 
     const addUserGroup = () => {
         setModal({ view: true, type: 'addEditUserGroup', payload: { id: 0, name: '' } });
@@ -37,10 +50,12 @@ const UserGroups = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                <button onClick={addUserGroup} className="tLink">
-                    <div className="text-2xl mr-1 pb-1">+</div>
-                    Add User Group
-                </button>
+                {permissions.userGrous?.manage || isAdmin ? (
+                    <button onClick={addUserGroup} className="tLink">
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add User Group
+                    </button>
+                ) : null}
             </Toolbar>
             {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error}>
