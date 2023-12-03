@@ -16,6 +16,7 @@ import DetailsBox from '../../components/detailsBox/detailsBox';
 import AssetDetailsDefaultCharts from '../../components/charts/defaults/assetDetailsDefaultCharts';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
+import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
 
 const AssetView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -77,7 +78,12 @@ const AssetView = () => {
                     <div className="w-full h-full flex flex-col">
                         <div className="flex flex-col xl:flex-row">
                             <DetailsBox data={assetConfig} />
-                            <AssetDetailsDefaultCharts assetDetailsName={assetDetails?.name} jobsOfComponents6M={jobsOfComponents6M} incompleteForAsset={incompleteForAsset} />
+                            <div className="flex flex-col w-full">
+                                <div className="w-full xl:pl-8">
+                                    <AttachedFilesBox model="asset" id={parseInt(assetId)} />
+                                </div>
+                                <AssetDetailsDefaultCharts assetDetailsName={assetDetails?.name} jobsOfComponents6M={jobsOfComponents6M} incompleteForAsset={incompleteForAsset} />
+                            </div>
                         </div>
 
                         {assetDetails ? (

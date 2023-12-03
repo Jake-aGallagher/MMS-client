@@ -13,6 +13,7 @@ import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
 import DetailsBox from '../../components/detailsBox/detailsBox';
 import SparesDetailsDefaultCharts from '../../components/charts/defaults/sparesDetailsDefaultCharts';
+import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
 
 const SparesView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -85,7 +86,12 @@ const SparesView = () => {
                     <div className="flex flex-col">
                         <div className="flex flex-col xl:flex-row">
                             <DetailsBox data={spareConfig} />
-                            <SparesDetailsDefaultCharts sparesDetailsName={sparesDetails?.name} used6M={used6M} />
+                            <div className="flex flex-col w-full">
+                                <div className="w-full xl:pl-8">
+                                    <AttachedFilesBox model="spare" id={parseInt(spareId)} />
+                                </div>
+                                <SparesDetailsDefaultCharts sparesDetailsName={sparesDetails?.name} used6M={used6M} />
+                            </div>
                         </div>
                         {recentJobs.length > 0 ? (
                             <>

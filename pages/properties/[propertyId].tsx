@@ -13,6 +13,7 @@ import Toolbar from '../../components/page/toolbar';
 import PropertyDetailsDefaultCharts from '../../components/charts/defaults/propertyDetailsDefaultCharts';
 import { RootState } from '../../components/store/store';
 import { useSelector } from 'react-redux';
+import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
 
 const PropertyView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -88,14 +89,19 @@ const PropertyView = () => {
                     <div className="flex flex-col">
                         <div className="flex flex-col xl:flex-row">
                             <DetailsBox data={propertyDetailsConfig} />
-                            <PropertyDetailsDefaultCharts
-                                propertyDetailsName={propertyDetails?.name}
-                                incompleteJobs={incompleteJobs}
-                                raised6M={raised6M}
-                                sparesUsed6M={sparesUsed6M}
-                                mostUsed6M={mostUsed6M}
-                                sparesCost6M={sparesCost6M}
-                            />
+                            <div className="flex flex-col w-full">
+                                <div className="w-full xl:pl-8">
+                                    <AttachedFilesBox model="property" id={parseInt(propertyNumber)} />
+                                </div>
+                                <PropertyDetailsDefaultCharts
+                                    propertyDetailsName={propertyDetails?.name}
+                                    incompleteJobs={incompleteJobs}
+                                    raised6M={raised6M}
+                                    sparesUsed6M={sparesUsed6M}
+                                    mostUsed6M={mostUsed6M}
+                                    sparesCost6M={sparesCost6M}
+                                />
+                            </div>
                         </div>
                         {assignedUsers.length > 0 ? (
                             <>
