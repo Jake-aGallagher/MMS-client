@@ -1,8 +1,10 @@
-import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
+import { useGetFiles } from './useGetFiles';
+import { addFileHandler } from './addFileHandler';
+import { deleteFileHandler } from './deleteFileHandler';
 
 interface Props {
     model: string;
@@ -13,46 +15,7 @@ const AttachedFilesBox = (props: Props) => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const hiddenFileInput = useRef<HTMLInputElement>(null);
-    const [files, setFiles] = useState<{ id: string; name: string }[]>([]);
-
-    useEffect(() => {
-        reload();
-    }, []);
-
-    const reload = () => {
-        getfilesHandler();
-    }
-
-    const getfilesHandler = async () => {
-        try {
-            const response = await axios.get(`${SERVER_URL}/files/${props.model}/${props.id}`, {
-                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            });
-            if (response.data.files) {
-                setFiles(response.data.files);
-            }
-        } catch (err) {
-            alert('There has been an issue retrieving files, please try again.');
-        }
-    };
-
-    const addFileHandler = async (file: Blob) => {
-        const formData = new FormData();
-        formData.append('files', file);
-        formData.append(
-            'data',
-            JSON.stringify({
-                model: props.model,
-                id: props.id,
-            })
-        );
-        const response = await axios.post(`${SERVER_URL}/file`, formData, { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } });
-        if (response.data.created) {
-            reload();
-        } else {
-            alert('There has been an issue attaching this file, please try again.');
-        }
-    };
+    const { files, reload } = useGetFiles(props.model, props.id);
 
     const handleAddClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
@@ -61,14 +24,12 @@ const AttachedFilesBox = (props: Props) => {
         }
     };
 
-    const deleteFileHandler = async (id: string) => {
-        await axios.delete(`${SERVER_URL}/file`, {
-            headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
-            data: {
-                id: id,
-            },
-        });
-        reload();
+    const addFile = async (file: Blob) => {
+        await addFileHandler(file, props.model, props.id, reload)
+    };
+
+    const deleteFile = async (id: string) => {
+        await deleteFileHandler(id, reload)
     };
 
     return (
@@ -86,7 +47,7 @@ const AttachedFilesBox = (props: Props) => {
                             id="fileAttachment"
                             ref={hiddenFileInput}
                             className="hidden"
-                            onChange={(e) => (e.target.files ? addFileHandler(e.target.files[0]) : null)}
+                            onChange={(e) => (e.target.files ? addFile(e.target.files[0]) : null)}
                         />
                     </>
                 ) : null}
@@ -101,7 +62,7 @@ const AttachedFilesBox = (props: Props) => {
                         Download
                     </a>
                     {permissions.files?.manage || isAdmin ? (
-                        <button onClick={() => deleteFileHandler(item.id)} className="btnRed w-16 h-8">
+                        <button onClick={() => deleteFile(item.id)} className="btnRed w-16 h-8">
                             Delete
                         </button>
                     ) : null}
