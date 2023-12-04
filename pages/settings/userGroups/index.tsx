@@ -31,6 +31,7 @@ const UserGroups = () => {
         ],
         searchable: true,
         modalType: 'UserGroup',
+        deleteUrl: 'usergroups',
         idPointer: 'id',
         namePointer: 'name',
         reload: reload,

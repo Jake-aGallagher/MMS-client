@@ -37,7 +37,7 @@ const EnumValues = () => {
         ],
         searchable: true,
         modalType: 'EnumValue',
-        deleteUrl: 'enumValues',
+        deleteUrl: 'enumvalues',
         idPointer: 'id',
         namePointer: 'value',
         reload: reload,

@@ -94,6 +94,7 @@ const ModalBase = (props: ModalProps) => {
             case 'deleteSupplier':
             case 'deleteSparesItem':
             case 'deleteSparesNote':
+            case 'deleteUser':
             case 'deleteUserGroup':
             case 'deleteEnumGroup':
             case 'deleteEnumValue':

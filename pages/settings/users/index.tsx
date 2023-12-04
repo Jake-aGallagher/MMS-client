@@ -35,6 +35,7 @@ const Users = () => {
         ],
         searchable: true,
         modalType: 'User',
+        deleteUrl: 'users',
         idPointer: 'id',
         namePointer: 'username',
         reload: reload,

@@ -16,6 +16,7 @@ interface Props {
         value: SetStateAction<{
             id: number;
             title: string;
+            url?: string;
         }>
     ) => void;
 }
@@ -41,7 +42,7 @@ const NoteTitlesList = (props: Props) => {
                             Edit
                         </button>
                         <button
-                            onClick={() => [props.setViewModal(true), props.setModalType('deleteSparesNote'), props.setEditNoteData({ id: note.id, title: note.title })]}
+                            onClick={() => [props.setViewModal(true), props.setModalType('deleteSparesNote'), props.setEditNoteData({ id: note.id, title: note.title, url: 'spares/note' })]}
                             className="btnRed ml-5 text-sm h-6 px-3"
                         >
                             Delete

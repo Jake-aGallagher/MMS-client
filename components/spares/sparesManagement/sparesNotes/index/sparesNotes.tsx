@@ -17,7 +17,7 @@ const SparesNotes = () => {
     const [viewNote, setViewNote] = useState(0);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [editNoteData, setEditNoteData] = useState<{ id: number; title: string }>({ id: 0, title: '' });
+    const [editNoteData, setEditNoteData] = useState<{ id: number; title: string, url?: string; }>({ id: 0, title: '' });
 
     return (
         <>

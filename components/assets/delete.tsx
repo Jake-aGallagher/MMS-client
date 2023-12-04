@@ -35,10 +35,9 @@ const DeleteAsset = (props: ModalProps) => {
 
     const handleRegistration = async (data: any) => {
         try {
-            const response = await axios.delete(`${SERVER_URL}/asset`, {
+            const response = await axios.delete(`${SERVER_URL}/asset/${props.payload.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
                 data: {
-                    id: props.payload.id,
                     deleteType: data.deleteType,
                 },
             });

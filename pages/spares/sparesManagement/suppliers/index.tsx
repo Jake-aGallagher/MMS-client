@@ -40,6 +40,7 @@ const Suppliers = () => {
         ],
         searchable: true,
         modalType: 'Supplier',
+        deleteUrl: 'spares/supplier',
         idPointer: 'id',
         namePointer: 'name',
         reload: reload,

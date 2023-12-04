@@ -46,6 +46,7 @@ const Spares = () => {
         searchable: true,
         linkColPrefix: '/spares/',
         modalType: 'SparesItem',
+        deleteUrl: 'spares/item',
         idPointer: 'id',
         namePointer: 'name',
         reload: reload,

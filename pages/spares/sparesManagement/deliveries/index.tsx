@@ -50,6 +50,7 @@ const Deliveries = () => {
         ],
         searchable: true,
         modalType: 'Delivery',
+        deleteUrl: 'spares/delivery',
         idPointer: 'id',
         namePointer: 'name',
         reload: reload,
@@ -81,7 +82,7 @@ const Deliveries = () => {
                         </button>
                     ) : null}
                 </Toolbar>
-                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { contents: [], name: '' } })]} /> : null}
+                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { contents: [], name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
                     <DataTable config={deliveriesTableConfig} data={deliveriesList} viewTooManyItems={viewTooManyItems} />
                 </LoadingNoDataError>
