@@ -52,7 +52,7 @@ const DashChartComponent = (props: Props) => {
             <div className="w-full h-full bg-secondary rounded-lg p-2 flex flex-col">
                 <div className="flex flex-row">
                     <h1 className="text-lg">{props.text.title}</h1>
-                    <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} onClick={() => setExpanded(true)} className="mx-auto mr-1 w-3 hover:text-accent hover:cursor-pointer transition-all" />
+                    <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} onClick={() => setExpanded(true)} className="mx-auto mr-1 w-5 hover:text-accent hover:cursor-pointer transition-all" />
                 </div>
 
                 {props.text.totalString ? (
