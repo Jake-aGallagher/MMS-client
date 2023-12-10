@@ -7,6 +7,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 interface BaseBarProps {
     data: ChartData<'bar'>;
     yAxisTitle?: string;
+    fullScreen?: boolean;
 }
 
 interface BarPropsOptions extends BaseBarProps {
@@ -27,7 +28,7 @@ const BarChart = (props: BarPropsOptions | BarPropsDash | BarPropsTitle) => {
         options = props.options;
     } else if ('dashboard' in props) {
         options = {
-            responsive: false,
+            responsive: true,
             maintainAspectRatio: false,
             plugins: {
                 legend: {
@@ -38,17 +39,17 @@ const BarChart = (props: BarPropsOptions | BarPropsDash | BarPropsTitle) => {
                 y: {
                     title: {
                         display: props.yAxisTitle ? true : false,
-                        text: props.yAxisTitle
+                        text: props.yAxisTitle,
                     },
-                }
-            }
+                },
+            },
         };
     } else if ('chartTitle' in props) {
         options = {
             responsive: true,
             plugins: {
                 legend: {
-                    display: false
+                    display: false,
                 },
                 title: {
                     display: true,
@@ -59,9 +60,17 @@ const BarChart = (props: BarPropsOptions | BarPropsDash | BarPropsTitle) => {
     }
 
     return (
-        <div className={`${'dashboard' in props ? 'flex flex-row justify-center items-center' : 'max-w-xl mt-2 w-full bg-secondary rounded-xl p-2'}`}>
-            <Bar data={props.data} options={options} />
-        </div>
+        <>
+            {props.fullScreen ? (
+                <div className='h-full w-full p-10 rounded-md flex flex-col justify-center items-center'>
+                    <Bar data={props.data} options={options} />
+                </div>
+            ) : (
+                <div className={`${'dashboard' in props ? 'flex flex-row justify-center items-center' : 'max-w-xl mt-2 w-full bg-secondary rounded-xl p-2'}`}>
+                    <Bar data={props.data} options={options} />
+                </div>
+            )}
+        </>
     );
 };
 
