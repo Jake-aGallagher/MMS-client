@@ -65,15 +65,15 @@ const DashChartComponent = (props: Props) => {
                 {props.avgData ? (
                     <div className="text-lg">
                         {props.avgData.value > 0 ? (
-                            <p className={`${props.avgData.flipped ? 'text-green' : 'text-red'} inline-block`}>
+                            <div className={`${props.avgData.flipped ? 'text-green' : 'text-red'} inline-block`}>
                                 <FontAwesomeIcon icon={faArrowUp} className="mr-1 w-3 inline-block pb-1 " />
                                 {props.avgData.value}% <p className="inline-block">above average</p>
-                            </p>
+                            </div>
                         ) : (
-                            <p className={`${props.avgData.flipped ? 'text-red' : 'text-green'} inline-block`}>
+                            <div className={`${props.avgData.flipped ? 'text-red' : 'text-green'} inline-block`}>
                                 <FontAwesomeIcon icon={faArrowDown} className="mr-1 w-3 inline-block pb-1 " />
                                 {Math.abs(props.avgData.value)}% <p className="inline-block">below average</p>
-                            </p>
+                            </div>
                         )}
                     </div>
                 ) : null}
