@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import CompanyLogo from '../../public/CompanyLogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faFolderTree, faGear, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faChartColumn, faFolderTree, faGear, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { logoutProcess } from './logoutProcess';
 import { changeProperty } from './changeProperty';
 import { useRetrieveProperty } from './useRetrieveProperty';
@@ -49,6 +49,10 @@ const NavBar = (props: Props) => {
                     )}
                 </div>
             </div>
+            <Link href="/" className={'nLink ' + (currentRoute == '/' ? 'text-accent' : '')}>
+                <FontAwesomeIcon icon={faChartColumn} className="w-3" />
+                <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Dashboard</span>
+            </Link>
             {permissions.properties?.view || isAdmin ? (
                 <Link href="/properties" className={'nLink ' + (currentRoute.includes('properties') ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faBuilding} className="w-3" />
