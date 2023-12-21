@@ -1,21 +1,34 @@
+import Loading from '../loading/loading';
 import DashChartComponent from './dashChartComponent';
 
-const JobsOpen = () => {
-    const jobsOpen = 18;
-    const avgData = { value: 12, flipped: false };
+interface Props {
+    data: {
+        thisMonth: number;
+        mainData: { label: string; value: number }[];
+    };
+    loading: boolean;
+    error: boolean;
+}
 
-    const mainData = [
-        { label: 'Open & not Due', value: 10 },
-        { label: 'Open & Overdue', value: 8 },
-    ];
+const JobsOpen = (props: Props) => {
     const text = {
         title: 'Jobs Open',
         labels: 'Count',
-        totalString: jobsOpen.toString(),
+        totalString: props.data?.thisMonth.toString(),
         removeMonthSoFar: true,
     };
 
-    return <DashChartComponent avgData={avgData} mainData={mainData} text={text} />;
+    return (
+        <>
+            {props.loading ? (
+                <div className="w-full h-full bg-secondary rounded-md relative">
+                    <Loading />
+                </div>
+            ) : (
+                <DashChartComponent mainData={props.data.mainData} text={text} />
+            )}
+        </>
+    );
 };
 
 export default JobsOpen;
