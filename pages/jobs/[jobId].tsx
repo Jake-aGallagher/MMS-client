@@ -41,6 +41,7 @@ const JobView = () => {
             { label: 'Notes', value: jobDetails?.notes },
             { label: 'Status', value: jobDetails?.status },
             { label: 'Urgency', value: jobDetails?.urgency },
+            { label: 'Scheduled', value: jobDetails?.scheduled == 1 ? <div>&#10004;</div> : <div>&#10060;</div> },
             { label: 'Date Logged', value: jobDetails?.created },
             { label: 'Completion Deadline', value: jobDetails?.required_comp_date },
             { label: 'Completion Date', value: jobDetails?.comp_date },

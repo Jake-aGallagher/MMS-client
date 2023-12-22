@@ -17,6 +17,7 @@ const jobTableConfig = {
         { id: 'title', name: 'Title', type: 'string', search: true, order: true },
         { id: 'created', name: 'Created', type: 'date', search: true, order: true },
         { id: 'urgency', name: 'Urgency', type: 'string', search: true, order: true },
+        { id: 'scheduled', name: 'Scheduled', type: 'tick', search: true, order: true },
         { id: 'required_comp_date', name: 'Required Completion Date', type: 'date', search: true, order: true },
         { id: 'status', name: 'Current Status', type: 'string', search: true, order: true },
         { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
