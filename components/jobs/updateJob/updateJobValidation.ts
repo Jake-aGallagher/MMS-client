@@ -6,6 +6,7 @@ const formValidation = yup.object().shape({
     description: yup.string().max(1000),
     notes: yup.string().max(1000),
     completed: yup.number().required(),
+    continueSchedule: yup.string(),
 });
 
 export const yupResolverUpdateJob = yupResolver(formValidation);

@@ -35,6 +35,7 @@ export const updateJobFullHandler = async (
             notes: data.notes,
             logged_time_details: loggedTimeDetails,
             complete,
+            continueSchedule: data.continueSchedule,
             sparesUsed: sparesSelected,
             propertyId: currentProperty,
         })

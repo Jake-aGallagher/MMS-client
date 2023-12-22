@@ -16,7 +16,7 @@ interface SparesSelected {
 
 interface LoggedTime {
     id: number;
-    name: string
+    name: string;
     time: number;
 }
 
@@ -27,13 +27,16 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
     const [statusOptions, setStatusOptions] = useState<StatusOptions[]>([]);
     const [sparesSelected, setSparesSelected] = useState<SparesSelected[]>([]);
     const [completed, setCompleted] = useState(0);
+    const [scheduled, setScheduled] = useState(false);
+    const [scheduleDates, setScheduleDates] = useState<{ current_schedule: string; new_schedule: string }[]>([{ current_schedule: '', new_schedule: '' }]);
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
-    const [completableStatus, setCompletableStatus] = useState<number[]>([])
+    const [completableStatus, setCompletableStatus] = useState<number[]>([]);
     const [defaultValues, setDefaultValues] = useState({
         status: '0',
         description: '',
         notes: '',
         completed: 0,
+        continueSchedule: 'Yes',
     });
 
     useEffect(() => {
@@ -52,7 +55,7 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
                 setNoData(true);
             } else {
                 setStatusOptions(response.data.statusOptions);
-                setCompletableStatus(response.data.completableStatus)
+                setCompletableStatus(response.data.completableStatus);
                 if (response.data.usedSpares) {
                     setSparesSelected(response.data.usedSpares);
                 }
@@ -60,12 +63,17 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
                     setLoggedTimeDetails(response.data.timeDetails);
                 }
                 const data = response.data.jobDetails[0];
+                if (data.scheduled) {
+                    setScheduled(true);
+                    setScheduleDates(response.data.scheduleDates);
+                }
                 setCompleted(data.completed);
                 setDefaultValues({
                     status: data.status_id,
                     description: data.description ? data.description : '',
                     notes: data.notes ? data.notes : '',
                     completed: 0,
+                    continueSchedule: 'Yes',
                 });
                 setNoData(false);
             }
@@ -75,5 +83,5 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
             setLoading(false);
         }
     };
-    return { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error };
+    return { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, scheduled, scheduleDates, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error };
 };

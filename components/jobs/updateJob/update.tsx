@@ -35,7 +35,14 @@ interface Modal {
 
 const UpdateJob = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error } = useUpdateJob(currentProperty, props.jobId);
+    const { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, scheduled, scheduleDates, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error } = useUpdateJob(
+        currentProperty,
+        props.jobId
+    );
+    const continueScheduleOptions = [
+        { id: 'Yes', value: `Continue on current schedule (next due: ${scheduleDates[0].current_schedule || ''})` },
+        { id: 'Adjust', value: `Adjust schedule (next due: ${scheduleDates[0].new_schedule || ''})` },
+    ]
     const [viewModal, setViewModal] = useState(false);
     const [modal, setModal] = useState<Modal>({ modalType: '', payload: {}, fullSize: true, passbackDeatails: null, closeModal: () => setViewModal(false) });
     const [files, setFiles] = useState<Blob[]>([]);
@@ -136,9 +143,19 @@ const UpdateJob = (props: ModalProps) => {
                                             </>
                                         ) : null}
                                     </AltTableContainer>
-
-                                    <FormTextCenter label={"Note: A job must be set to 'Attended - Found no Issues' or 'Attended - Fixed' in order to complete the job"} />
                                 </>
+                            ) : null}
+                            {completableStatus.includes(parseInt(statusWatch[0])) && completed !== 1 && scheduled ? (
+                                <GeneralFormInput
+                                    register={register}
+                                    label="Continue Schedule"
+                                    type="select"
+                                    formName="continueSchedule"
+                                    errors={errors}
+                                    required={true}
+                                    optionNameString="value"
+                                    selectOptions={continueScheduleOptions}
+                                />
                             ) : null}
                             <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(statusWatch[0])) && completed !== 1 ? 'Complete' : 'Update'} />
                         </GeneralForm>
