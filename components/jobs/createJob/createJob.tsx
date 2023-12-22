@@ -12,6 +12,7 @@ import LoadingNoDataError from '../../loading/loadingNoDataError';
 import { useCreateJob } from './useCreateJob';
 import { yupResolverCreateJob } from './createJobValidation';
 import { createJobHandler } from './createJobHandler';
+import FormTextCenter from '../../forms/formTextCenter';
 
 interface ModalProps {
     closeModal: () => void;
@@ -25,14 +26,25 @@ const CreateJob = (props: ModalProps) => {
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [modalPayload, setModalPayload] = useState(0);
-    const compNowOptions = [
+    const breakdownScheduledOptions = [
+        { id: 'Breakdown', value: 'Breakdown' },
+        { id: 'Scheduled', value: 'Scheduled' },
+    ];
+    const yesNoOptions = [
         { id: 'No', value: 'No' },
         { id: 'Yes', value: 'Yes' },
+    ];
+    const timeUnitOptions = [
+        { id: 'DAY', value: 'Days' },
+        { id: 'WEEK', value: 'Weeks' },
+        { id: 'MONTH', value: 'Months' },
+        { id: 'YEAR', value: 'Years' },
     ];
 
     const {
         register,
         handleSubmit,
+        watch,
         reset,
         formState: { errors },
     } = useForm({
@@ -41,6 +53,9 @@ const CreateJob = (props: ModalProps) => {
             return defaultValues;
         }, [defaultValues]),
     });
+
+    const [watchBreakdownSchedule] = watch(['breakdownOrSchedule']);
+    const [watchStartNow] = watch(['startNow']);
 
     useEffect(() => {
         reset(defaultValues);
@@ -60,6 +75,16 @@ const CreateJob = (props: ModalProps) => {
                         <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                             <GeneralFormInput
                                 register={register}
+                                label="Breakdown or Scheduled"
+                                type="select"
+                                formName="breakdownOrSchedule"
+                                errors={errors}
+                                required={true}
+                                optionNameString="value"
+                                selectOptions={breakdownScheduledOptions}
+                            />
+                            <GeneralFormInput
+                                register={register}
                                 label="Job Type"
                                 type="select"
                                 formName="selectedType"
@@ -70,26 +95,62 @@ const CreateJob = (props: ModalProps) => {
                             />
                             <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
                             <GeneralFormInput register={register} label="Job Description" type="textarea" formName="description" errors={errors} rows={5} />
-                            <GeneralFormInput
-                                register={register}
-                                label="Urgency"
-                                type="select"
-                                formName="selectedUrgency"
-                                errors={errors}
-                                required={true}
-                                optionNameString="value"
-                                selectOptions={urgencyOptions}
-                            />
-                            <GeneralFormInput
-                                register={register}
-                                label="Would you like to update and/or complete this Job immediately"
-                                type="select"
-                                formName="compNow"
-                                errors={errors}
-                                required={true}
-                                optionNameString="value"
-                                selectOptions={compNowOptions}
-                            />
+
+                            {watchBreakdownSchedule === 'Scheduled' ? (
+                                <>
+                                    <GeneralFormInput
+                                        register={register}
+                                        label="Start from today"
+                                        type="select"
+                                        formName="startNow"
+                                        errors={errors}
+                                        required={true}
+                                        optionNameString="value"
+                                        selectOptions={yesNoOptions}
+                                    />
+                                    {watchStartNow === 'No' ? (
+                                        <GeneralFormInput register={register} label="Start Date" type="date" formName="scheduleStart" errors={errors} required={true} />
+                                    ) : null}
+                                    <FormTextCenter label="Schedule frequency" />
+                                    <div className="flex flex-row w-full gap-2">
+                                        <GeneralFormInput register={register} label="Frequency" type="number" formName="intervalFrequency" errors={errors} required={true} min={1} />
+                                        <GeneralFormInput
+                                            register={register}
+                                            label="Time Unit"
+                                            type="select"
+                                            formName="intervalTimeUnit"
+                                            errors={errors}
+                                            required={true}
+                                            optionNameString="value"
+                                            selectOptions={timeUnitOptions}
+                                            extraClasses={'w-full'}
+                                        />
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <GeneralFormInput
+                                        register={register}
+                                        label="Urgency"
+                                        type="select"
+                                        formName="selectedUrgency"
+                                        errors={errors}
+                                        required={true}
+                                        optionNameString="value"
+                                        selectOptions={urgencyOptions}
+                                    />
+                                    <GeneralFormInput
+                                        register={register}
+                                        label="Would you like to update and/or complete this Job immediately"
+                                        type="select"
+                                        formName="compNow"
+                                        errors={errors}
+                                        required={true}
+                                        optionNameString="value"
+                                        selectOptions={yesNoOptions}
+                                    />
+                                </>
+                            )}
                             <GeneralFormSubmit closeModal={props.closeModal} />
                         </GeneralForm>
                     </FormContainer>

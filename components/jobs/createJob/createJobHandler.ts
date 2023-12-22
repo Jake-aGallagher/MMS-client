@@ -17,10 +17,15 @@ export const createJobHandler = async (props: Props) => {
         const response = await createJobConn({
             propertyNumber: props.currentProperty,
             assetNumber: props.assetId,
+            breakdownOrSchedule: props.data.breakdownOrSchedule,
             type: props.data.selectedType,
             title: props.data.title,
             description: props.data.description,
             urgency: props.data.selectedUrgency,
+            startNow: props.data.startNow,
+            scheduleStart: props.data.scheduleStart.toString() || null,
+            intervalFrequency: props.data.intervalFrequency,
+            intervalTimeUnit: props.data.intervalTimeUnit,
             reporter: props.userId,
         });
         if (response.data.created && props.data.compNow == 'No') {

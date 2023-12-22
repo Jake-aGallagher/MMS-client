@@ -18,11 +18,16 @@ export const useCreateJob = () => {
     const [typeOptions, setTypeOptions] = useState<TypeOptions[]>([]);
     const [urgencyOptions, setUrgencyOptions] = useState<UrgencyOptions[]>([]);
     const [defaultValues, setDefaultValues] = useState({
+        breakdownOrSchedule: 'Breakdown',
         selectedType: '',
         title: '',
         description: '',
         selectedUrgency: '',
         compNow: 'No',
+        startNow: 'No',
+        scheduleStart: '',
+        intervalFrequency: 1,
+        intervalTimeUnit: 'WEEK',
     });
 
     useEffect(() => {
