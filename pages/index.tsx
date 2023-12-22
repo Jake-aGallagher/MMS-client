@@ -6,7 +6,7 @@ import LostRevenue from '../components/dashboard/lostRevenue';
 import SparesCosts from '../components/dashboard/sparesCosts';
 import FullPage from '../components/page/fullPage';
 import Toolbar from '../components/page/toolbar';
-import PlannedUnplanned from '../components/dashboard/plannedUnplanned';
+import BreakdownVsPlannned from '../components/dashboard/breakdownVsPlanned';
 import IncidentsOfNoSpares from '../components/dashboard/incidentsOfNoSpares';
 import RevenueLostByAsset from '../components/dashboard/RevenueLostByAsset';
 import { useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ const Dashboard = () => {
                 <JobsCompleted data={completed} loading={jobLoading} error={jobError}/>
                 <RevenueLostByAsset />
                 <JobsOpen data={open} loading={jobLoading} error={jobError}/>
-                <PlannedUnplanned />
+                <BreakdownVsPlannned data={planned} loading={jobLoading} error={jobError}/>
             </div>
         </FullPage>
     );

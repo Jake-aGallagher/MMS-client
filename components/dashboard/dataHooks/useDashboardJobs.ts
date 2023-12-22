@@ -27,7 +27,7 @@ export const useDashboardJobs = (propertyId: number) => {
     const [raised, setRaised] = useState<RaisedCompleted>(empty);
     const [completed, setCompleted] = useState<RaisedCompleted>(empty);
     const [open, setOpen] = useState<Base>(baseEmpty);
-    const [planned, setPlanned] = useState();
+    const [planned, setPlanned] = useState(baseEmpty);
 
     useEffect(() => {
         reload();
@@ -47,7 +47,7 @@ export const useDashboardJobs = (propertyId: number) => {
             setRaised(response.data.raised);
             setCompleted(response.data.completed);
             setOpen(response.data.open);
-            setPlanned(response.data.planned);
+            setPlanned(response.data.breakdownVsPlanned);
             setLoading(false);
         } catch (err) {
             setError(true);
