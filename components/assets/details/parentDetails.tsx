@@ -29,7 +29,7 @@ const ParentDetails = (props: Props) => {
                         <div className="pl-8">{props.parent_name}</div>
 
                         <button className="btnBlue ml-auto mr-2 text-sm h-6 px-3">
-                            <Link href={'/assets/' + props.parent_id}>View Component Details</Link>
+                            <Link href={'/assets/' + props.parent_id}>View</Link>
                         </button>
                         {permissions.jobs?.manage || isAdmin ? (
                             <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: props.parent_id } })} className="btnBlue ml-2 mr-2 text-sm h-6 px-3">

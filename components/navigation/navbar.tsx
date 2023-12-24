@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import CompanyLogo from '../../public/CompanyLogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faChartColumn, faFolderTree, faGear, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faChartColumn, faClipboardList, faFolderTree, faGear, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { logoutProcess } from './logoutProcess';
 import { changeProperty } from './changeProperty';
 import { useRetrieveProperty } from './useRetrieveProperty';
@@ -63,6 +63,12 @@ const NavBar = (props: Props) => {
                 <Link href="/jobs" className={'nLink ' + (currentRoute.includes('jobs') ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faScrewdriverWrench} className="mr-1 w-3" />
                     <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Jobs</span>
+                </Link>
+            ) : null}
+            {permissions.jobs?.view || isAdmin ? (
+                <Link href="/schedules" className={'nLink ' + (currentRoute.includes('schedules') ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faClipboardList} className="mr-1 w-3" />
+                    <span className="hidden xl:block group-hover:block transition-all absolute ml-4">PM's</span>
                 </Link>
             ) : null}
             {permissions.assets?.view || isAdmin ? (
