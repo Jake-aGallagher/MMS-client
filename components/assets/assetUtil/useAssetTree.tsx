@@ -81,12 +81,17 @@ export const useAssetTree = (props: Props) => {
                         <div className="absolute right-2">
                             {node.parentId != 0 ? (
                                 <button className="btnBlue ml-5 text-sm h-6 px-3">
-                                    <Link href={'/assets/' + node.id}>View Component Details</Link>
+                                    <Link href={'/assets/' + node.id}>View</Link>
                                 </button>
                             ) : null}
                             {permissions.jobs?.manage || isAdmin ? (
                                 <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: node.id } })} className="btnBlue ml-5 text-sm h-6 px-3">
                                     Create Job
+                                </button>
+                            ) : null}
+                            {permissions.jobs?.manage || isAdmin ? (
+                                <button onClick={() => props.setModal({ view: true, type: 'createPm', payload: { assetId: node.id } })} className="btnBlue ml-5 text-sm h-6 px-3">
+                                    Create PM
                                 </button>
                             ) : null}
                         </div>

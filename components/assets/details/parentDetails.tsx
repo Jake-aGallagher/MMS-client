@@ -32,8 +32,13 @@ const ParentDetails = (props: Props) => {
                             <Link href={'/assets/' + props.parent_id}>View</Link>
                         </button>
                         {permissions.jobs?.manage || isAdmin ? (
-                            <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: props.parent_id } })} className="btnBlue ml-2 mr-2 text-sm h-6 px-3">
+                            <button onClick={() => props.setModal({ view: true, type: 'createJob', payload: { assetId: props.parent_id } })} className="btnBlue ml-3 mr-2 text-sm h-6 px-3">
                                 Create Job
+                            </button>
+                        ) : null}
+                        {permissions.jobs?.manage || isAdmin ? (
+                            <button onClick={() => props.setModal({ view: true, type: 'createPm', payload: { assetId: props.parent_id } })} className="btnBlue ml-3 mr-2 text-sm h-6 px-3">
+                                Create PM
                             </button>
                         ) : null}
                     </div>
