@@ -89,7 +89,7 @@ export const useAssetTree = (props: Props) => {
                                     Create Job
                                 </button>
                             ) : null}
-                            {permissions.jobs?.manage || isAdmin ? (
+                            {permissions.schedules?.manage || isAdmin ? (
                                 <button onClick={() => props.setModal({ view: true, type: 'createPm', payload: { assetId: node.id } })} className="btnBlue ml-5 text-sm h-6 px-3">
                                     Create PM
                                 </button>

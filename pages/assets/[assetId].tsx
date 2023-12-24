@@ -72,6 +72,12 @@ const AssetView = () => {
                             Create Job
                         </button>
                     ) : null}
+                    {permissions.schedules?.manage || isAdmin ? (
+                        <button onClick={() => setModal({ view: true, type: 'createPm', payload: { assetId } })} className="tLink">
+                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                            Create PM
+                        </button>
+                    ) : null}
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: {} }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>

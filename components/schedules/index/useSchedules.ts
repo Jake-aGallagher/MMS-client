@@ -34,7 +34,6 @@ export const useSchedules = (props: Props) => {
             const schedulesList = await axios.get(`${SERVER_URL}/schedules/all-schedules/${props.currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            console.log(schedulesList.data);
             setSchedules(schedulesList.data);
             setLoading(false);
         } catch (err) {

@@ -36,7 +36,7 @@ const ParentDetails = (props: Props) => {
                                 Create Job
                             </button>
                         ) : null}
-                        {permissions.jobs?.manage || isAdmin ? (
+                        {permissions.schedules?.manage || isAdmin ? (
                             <button onClick={() => props.setModal({ view: true, type: 'createPm', payload: { assetId: props.parent_id } })} className="btnBlue ml-3 mr-2 text-sm h-6 px-3">
                                 Create PM
                             </button>

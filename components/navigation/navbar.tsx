@@ -65,7 +65,7 @@ const NavBar = (props: Props) => {
                     <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Jobs</span>
                 </Link>
             ) : null}
-            {permissions.jobs?.view || isAdmin ? (
+            {permissions.schedules?.view || isAdmin ? (
                 <Link href="/schedules" className={'nLink ' + (currentRoute.includes('schedules') ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faClipboardList} className="mr-1 w-3" />
                     <span className="hidden xl:block group-hover:block transition-all absolute ml-4">PM's</span>

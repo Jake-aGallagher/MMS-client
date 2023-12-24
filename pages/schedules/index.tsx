@@ -22,14 +22,14 @@ const schedulesTableConfig = {
         { id: 'frequency', name: 'Frequency', type: 'string', search: true, order: true },
     ],
     searchable: true,
-    linkColPrefix: '/jobs/',
+    linkColPrefix: '/schedules/',
 };
 
 const Schedules = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
-    if (!permissions.jobs?.view && !isAdmin) {
+    if (!permissions.schedules?.view && !isAdmin) {
         router.push('/');
     }
 
