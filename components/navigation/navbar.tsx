@@ -46,7 +46,7 @@ const NavBar = (props: Props) => {
                             {propertySelection}
                         </select>
                     ) : (
-                        <span className={`h-8 mx-auto text-accent ${availProps[0].name.length > 20 ? "text-sm" : ""}`}>{availProps[0] && availProps[0].name}</span>
+                        <span className={`h-8 mx-auto text-accent ${availProps[0] && availProps[0].name.length > 20 ? "text-sm" : ""}`}>{availProps[0] && availProps[0].name}</span>
                     )}
                 </div>
                 <div className='xl:hidden group-hover:hidden h-full w-full flex flex-row justify-center items-center'>
