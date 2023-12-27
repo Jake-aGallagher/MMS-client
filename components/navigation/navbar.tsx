@@ -5,7 +5,7 @@ import { RootState } from '../store/store';
 import GallagticFullLogo from '../../public/Gallagtic-Full.svg';
 import GallagticShortLogo from '../../public/Gallagtic-Short.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faChartColumn, faClipboardList, faFolderTree, faGear, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faBuildingUser, faChartColumn, faClipboardList, faFileContract, faFolderTree, faGear, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { logoutProcess } from './logoutProcess';
 import { changeProperty } from './changeProperty';
 import { useRetrieveProperty } from './useRetrieveProperty';
@@ -39,15 +39,18 @@ const NavBar = (props: Props) => {
                 <img className="w-44 h-20 transition-all hidden xl:block group-hover:block" src={GallagticFullLogo.src} />
                 <img className="w-12 h-20 transition-all block xl:hidden group-hover:hidden" src={GallagticShortLogo.src} />
             </div>
-            <div className="h-8 mb-6 px-2">
-                <div className="hidden xl:block group-hover:block mx-auto w-full">
+            <div className="h-6 mb-2">
+                <div className="hidden pl-4 xl:block group-hover:block mx-auto w-full">
                     {availProps && availProps.length > 1 ? (
                         <select value={currentProperty} onChange={(e) => changeProperty(dispatch, userId, e.target.value)} className="p-1 mx-auto w-full text-accent  hover:cursor-pointer">
                             {propertySelection}
                         </select>
                     ) : (
-                        <div className="mx-auto text-accent border-b-2 border-accent">{availProps[0] && availProps[0].name}</div>
+                        <span className={`h-8 mx-auto text-accent ${availProps[0].name.length > 20 ? "text-sm" : ""}`}>{availProps[0] && availProps[0].name}</span>
                     )}
+                </div>
+                <div className='xl:hidden group-hover:hidden h-full w-full flex flex-row justify-center items-center'>
+                    <FontAwesomeIcon icon={faBuildingUser} className="w-4" />
                 </div>
             </div>
             <Link href="/" className={'nLink ' + (currentRoute == '/' ? 'text-accent' : '')}>
@@ -76,6 +79,12 @@ const NavBar = (props: Props) => {
                 <Link href="/assets" className={'nLink ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faFolderTree} className="mr-1 w-3" />
                     <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Assets</span>
+                </Link>
+            ) : null}
+            {permissions.jobs?.view || isAdmin ? (
+                <Link href="/logs" className={'nLink ' + (currentRoute.includes('logs') ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faFileContract} className="mr-1 w-3" />
+                    <span className="hidden xl:block group-hover:block transition-all absolute ml-4">Logs</span>
                 </Link>
             ) : null}
             {permissions.spares?.view || isAdmin ? (
