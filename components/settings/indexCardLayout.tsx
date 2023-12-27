@@ -6,7 +6,7 @@ interface Props extends PropsWithChildren {
 
 const IndexCardLayout = (props: Props) => {
     return (
-        <div className="rounded-lg shadow-lg bg-secondary m-5 w-96 px-4 pb-4 pt-2 h-fit">
+        <div className="rounded-lg shadow-lg bg-secondary my-5 mx-2 w-96 pb-4 pt-2 h-fit">
             <div className='text-center text-2xl'>{props.label}</div>
             {props.children}
         </div>
