@@ -47,15 +47,15 @@ export default function App({ Component, pageProps }: AppProps) {
         <>
             <Head>
                 <title>UpTime</title>
-                <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-                <link rel="manifest" href="/site.webmanifest" />
-                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-                <meta name="msapplication-TileColor" content="#da532c" />
-                <meta name="theme-color" content="#ffffff" />
                 <meta name="description" content="A Maintenance Management System" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+                <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png"/>
+                <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png"/>
+                <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png"/>
+
             </Head>
             <Script src="https://kit.fontawesome.com/5e0bf4683d.js" crossOrigin="anonymous" />
             <main className="h-screen font-sans bg-background text-text">
