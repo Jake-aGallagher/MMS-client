@@ -20,7 +20,7 @@ import UsersSelector from '../usersSelector/usersSelector';
 import AddEditJobType from '../settings/jobTypes/addEditJobType/addEditJobType';
 import AddEditStatusType from '../settings/statusTypes/addEditStatusType/addEditStatusType';
 import AddEditUrgencyType from '../settings/urgencyTypes/addEditUrgencyType/addEditUrgencyType';
-import { GlobalDebug } from '../logs/globalDebug';
+import { GlobalDebug } from '../debug/globalDebug';
 import AddEditEnumValue from '../settings/enumgroups/enumValues/addEditEnumValues/addEditEnumValue';
 import AddSchedule from '../schedules/addSchedule/addSchedule';
 
