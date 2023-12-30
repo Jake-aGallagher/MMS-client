@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 
 const schedulesTableConfig = {
     headers: [
-        { id: 'id', name: 'Job Number', type: 'link', search: true, order: true },
+        { id: 'id', name: 'Schedule Number', type: 'link', search: true, order: true },
         { id: 'asset', name: 'Asset', type: 'string', search: true, order: true },
         { id: 'type', name: 'Type', type: 'string', search: true, order: true },
         { id: 'title', name: 'Title', type: 'string', search: true, order: true },
