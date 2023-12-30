@@ -29,7 +29,7 @@ export const useAddSchedule = () => {
 
     const getEnums = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/schedules/add-schedule`, {
+            const response = await axios.get(`${SERVER_URL}/schedule-templates/add-schedule`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setTypeOptions(response.data.types);

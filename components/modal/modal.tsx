@@ -57,7 +57,7 @@ const ModalBase = (props: ModalProps) => {
                 return <UsersSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
 
             // Schedule
-            case 'createPm':
+            case 'createPmSchedule':
                 return <AddSchedule closeModal={props.closeModal} assetId={props.payload.assetId} />;
 
             //Spare
