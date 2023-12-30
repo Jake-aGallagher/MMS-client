@@ -29,6 +29,7 @@ const ScheduleView = () => {
 
     const scheduleDetailsConfig = {
         id: scheduleDetails?.id,
+        title: 'Schedule Details',
         fields: [
             { label: 'ID Number', value: scheduleDetails?.id },
             { label: 'Title', value: scheduleDetails?.title },

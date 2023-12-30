@@ -52,7 +52,7 @@ export const useScheduleDetails = (propertyId: number, scheduleId: string) => {
                 setNoData(true);
             } else {
                 setScheduleDetails(response.data.scheduleDetails[0]);
-                setSchedulePMs(response.data.scheduleJobs);
+                setSchedulePMs(response.data.schedulePMs);
             }
             setLoading(false);
         } catch (err) {
