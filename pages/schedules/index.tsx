@@ -15,11 +15,9 @@ const schedulesTableConfig = {
         { id: 'asset', name: 'Asset', type: 'string', search: true, order: true },
         { id: 'type', name: 'Type', type: 'string', search: true, order: true },
         { id: 'title', name: 'Title', type: 'string', search: true, order: true },
-        { id: 'required_comp_date', name: 'Required Completion Date', type: 'date', search: true, order: true },
-        { id: 'status', name: 'Current Status', type: 'string', search: true, order: true },
-        { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
-        { id: 'comp_date', name: 'Completed Date', type: 'date', search: true, order: true },
         { id: 'frequency', name: 'Frequency', type: 'string', search: true, order: true },
+        { id: 'next_due_date', name: 'Next Due', type: 'date', search: true, order: true },
+        { id: 'up_to_date', name: 'Up to Date', type: 'tick', search: true, order: true },
     ],
     searchable: true,
     linkColPrefix: '/schedules/',
@@ -41,7 +39,7 @@ const Schedules = () => {
         <FullPage>
             <Toolbar>
                 <Link href="/assets" className="tLink">
-                    <div className="text-2xl mr-1 pb-1">+</div>Create PM Job
+                    <div className="text-2xl mr-1 pb-1">+</div>Create PM Schedule
                 </Link>
             </Toolbar>
             <LoadingNoDataError loading={loading} error={error}>

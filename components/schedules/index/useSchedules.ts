@@ -11,11 +11,9 @@ interface Schedule {
     asset: string;
     type: string;
     title: string;
-    required_comp_date: string;
-    completed: number;
-    comp_date: string;
-    status: string;
     frequency: string;
+    next_due_date: string;
+    up_to_date: number;
 }
 
 export const useSchedules = (props: Props) => {
@@ -31,7 +29,7 @@ export const useSchedules = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const schedulesList = await axios.get(`${SERVER_URL}/schedules/all-schedules/${props.currentProperty}`, {
+            const schedulesList = await axios.get(`${SERVER_URL}/schedule-templates/all-schedules/${props.currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setSchedules(schedulesList.data);
