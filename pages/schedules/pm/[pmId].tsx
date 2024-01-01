@@ -11,6 +11,8 @@ import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
 import DetailsBox from '../../../components/detailsBox/detailsBox';
 import AttachedFilesBox from '../../../components/attachedFilesBox/attachedFilesBox';
 import DataTable from '../../../components/dataTable/dataTable';
+import { useState } from 'react';
+import ModalBase from '../../../components/modal/modal';
 
 const PMDetails = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -19,8 +21,9 @@ const PMDetails = () => {
     if (!permissions.schedules?.view && !isAdmin) {
         router.push('/');
     }
-
+    
     const schedulePMId = router.asPath.split('/')[3];
+    const [modal, setModal] = useState<{view: boolean; type: string; payload: number}>({view: false, type: '', payload: 0})
     const { schedulePMDetails, timeDetails, sparesDetails, loading, noData, error, reload } = useSchedulePMDetails(schedulePMId);
 
     const schedulePMConfig = {
@@ -73,8 +76,8 @@ const PMDetails = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to PM Schedule</p>
                 </Link>
-                {permissions.schedules?.manage || isAdmin ? (
-                    <button onClick={() => ''} className="tLink">
+                {(permissions.schedules?.manage || isAdmin) && schedulePMDetails?.completed == 0 ? (
+                    <button onClick={() => setModal({view: true, type: 'editPm', payload: parseInt(schedulePMId)})} className="tLink">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Update
                     </button>
@@ -83,6 +86,7 @@ const PMDetails = () => {
 
             <LoadingNoDataError loading={loading} error={error} noData={noData}>
                 <>
+                    {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({view: false, type: '', payload: 0}), reload()]} /> : ''}
                     <div className="w-full h-full pt-4 flex flex-col">
                         <div className="flex flex-col xl:flex-row">
                             <DetailsBox data={schedulePMConfig} />

@@ -8,7 +8,6 @@ import GeneralFormSubmit from '../../forms/generalFormSubmit';
 import GeneralFormInput from '../../forms/generalFormInput';
 import FormContainer from '../../forms/formContainer';
 import GeneralForm from '../../forms/generalForm';
-import FormTextCenter from '../../forms/formTextCenter';
 import LoadingNoDataError from '../../loading/loadingNoDataError';
 import { useUpdateJob } from './useUpdateJob';
 import { yupResolverUpdateJob } from './updateJobValidation';

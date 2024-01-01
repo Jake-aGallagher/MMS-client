@@ -23,6 +23,7 @@ import AddEditUrgencyType from '../settings/urgencyTypes/addEditUrgencyType/addE
 import { GlobalDebug } from '../debug/globalDebug';
 import AddEditEnumValue from '../settings/enumgroups/enumValues/addEditEnumValues/addEditEnumValue';
 import AddSchedule from '../schedules/addSchedule/addSchedule';
+import EditPM from '../schedules/pm/editPm/editPm';
 
 interface ModalProps {
     closeModal: () => void;
@@ -59,6 +60,8 @@ const ModalBase = (props: ModalProps) => {
             // Schedule
             case 'createPmSchedule':
                 return <AddSchedule closeModal={props.closeModal} assetId={props.payload.assetId} />;
+            case 'editPm':
+                return <EditPM closeModal={props.closeModal} pmId={props.payload} />
 
             //Spare
             case 'sparesSelector':
