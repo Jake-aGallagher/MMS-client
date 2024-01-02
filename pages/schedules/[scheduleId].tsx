@@ -67,7 +67,7 @@ const ScheduleView = () => {
                         <p>Return to PM Schedules</p>
                     </Link>
                     {permissions.schedules?.manage || isAdmin ? (
-                        <button onClick={() => [setViewModal(true), setModalType('updateSchedule')]} className="tLink">
+                        <button onClick={() => [setViewModal(true), setModalType('editSchedule')]} className="tLink">
                             <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                             Update
                         </button>
