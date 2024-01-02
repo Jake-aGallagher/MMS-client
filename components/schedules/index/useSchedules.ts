@@ -22,10 +22,14 @@ export const useSchedules = (props: Props) => {
     const [schedules, setSchedules] = useState<Schedule[]>([]);
 
     useEffect(() => {
+        reload();
+    }, [props.currentProperty]);
+
+    const reload = () => {
         setLoading(true);
         setError(false);
         getHandler();
-    }, [props.currentProperty]);
+    };
 
     const getHandler = async () => {
         try {
@@ -39,5 +43,5 @@ export const useSchedules = (props: Props) => {
             setLoading(false);
         }
     };
-    return { schedules, loading, error };
+    return { schedules, loading, error, reload };
 };
