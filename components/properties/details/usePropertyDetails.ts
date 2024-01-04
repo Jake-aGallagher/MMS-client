@@ -70,8 +70,10 @@ export const usePropertyDetails = (propertyNumber: string) => {
                 setAssignedUsers(data.assignedUsers);
                 setRecentJobs(data.recentJobs);
                 setIncompleteJobs([
-                    { type: 'Incomplete', count: data.incompleteJobs[0].incomplete },
-                    { type: 'Incomplete & Overdue', count: data.incompleteJobs[0].overdue },
+                    { type: 'Non-Overdue Job', count: data.incompleteJobs[0].incomplete },
+                    { type: 'Overdue Job', count: data.incompleteJobs[0].overdue },
+                    { type: 'Non-Overdue PM', count: data.incompleteJobs[1].incomplete },
+                    { type: 'Overdue PM', count: data.incompleteJobs[1].overdue },
                 ]);
                 setRaised6M(data.raised6M);
                 setSparesUsed6M(data.sparesUsed6M);

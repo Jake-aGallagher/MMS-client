@@ -12,7 +12,7 @@ interface Props {
 
 const JobsOpen = (props: Props) => {
     const text = {
-        title: 'Jobs Open',
+        title: 'Open Mainentance Tasks',
         labels: 'Count',
         totalString: props.data?.thisMonth.toString(),
         removeMonthSoFar: true,

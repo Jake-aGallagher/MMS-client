@@ -19,9 +19,9 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
     const graphData = [
         {
             chartType: 'bar',
-            selectValue: 'incomplete',
-            selectLabel: 'Incomplete & Overdue',
-            chartTitle: `Incomplete & Overdue Jobs for ${props.propertyDetailsName}`,
+            selectValue: 'outstanding',
+            selectLabel: 'Outstanding Jobs & PMs',
+            chartTitle: `Outstanding Jobs & PMs for ${props.propertyDetailsName}`,
             data: {
                 labels: props.incompleteJobs.map((data) => data.type),
                 datasets: [
