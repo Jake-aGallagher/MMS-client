@@ -104,7 +104,7 @@ const AssetView = () => {
 
                         {recentJobs.length > 0 ? (
                             <>
-                                <div className="mt-4 mb-1 ml-10">5 Most recent jobs for Components of {assetDetails?.name}:</div>
+                                <div className="mt-4 mb-1 ml-10">5 Most recent Maintenance Tasks for Components of {assetDetails?.name}:</div>
                                 <DataTable config={recentJobTableConfig} data={recentJobs} />
                             </>
                         ) : null}

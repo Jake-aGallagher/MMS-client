@@ -37,9 +37,9 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
         },
         {
             chartType: 'bar',
-            selectValue: 'raised',
-            selectLabel: 'Raised in the Last 6 Months',
-            chartTitle: `Jobs raised in last 6 Months for ${props.propertyDetailsName}`,
+            selectValue: 'created',
+            selectLabel: 'Maintenance Tasks Created in the Last 6 Months',
+            chartTitle: `Maintenance Tasks Created in last 6 Months for ${props.propertyDetailsName}`,
             data: {
                 labels: props.raised6M.map((data) => data.month),
                 datasets: [

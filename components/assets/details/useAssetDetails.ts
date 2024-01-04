@@ -69,8 +69,10 @@ export const useAssetDetails = (assetId: string) => {
                 setChildren(response.data.tree);
                 setJobsOfComponents6M(response.data.jobsOfComponents6M);
                 setIncompleteForAsset([
-                    { type: 'Incomplete', count: response.data.incompleteForAsset[0].incomplete },
-                    { type: 'Incomplete & Overdue', count: response.data.incompleteForAsset[0].overdue },
+                    { type: 'Non-Overdue Job', count: response.data.incompleteForAsset[0].incomplete },
+                    { type: 'Overdue Job', count: response.data.incompleteForAsset[0].overdue },
+                    { type: 'Non-Overdue PM', count: response.data.incompleteForAsset[1].incomplete },
+                    { type: 'Overdue PM', count: response.data.incompleteForAsset[1].overdue },
                 ]);
             }
             setLoading(false);
