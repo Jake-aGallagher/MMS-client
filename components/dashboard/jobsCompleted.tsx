@@ -13,8 +13,8 @@ interface Props {
 
 const JobsCompleted = (props: Props) => {
     const text = {
-        title: 'Jobs Completed',
-        labels: 'Jobs Completed',
+        title: 'Maintenance Tasks Completed',
+        labels: 'Maintenance Tasks Completed',
         totalString: props.data?.thisMonth.toString(),
     };
 
