@@ -64,9 +64,9 @@ const PMDetails = () => {
         searchable: false,
     };
 
-    let returnHref = '/schedules';
+    let returnHref = '/schedule-templates';
     if (schedulePMDetails) {
-        returnHref = `/schedules/${schedulePMDetails.template_id}`;
+        returnHref = `/schedule-templates/${schedulePMDetails.template_id}`;
     }
 
     return (

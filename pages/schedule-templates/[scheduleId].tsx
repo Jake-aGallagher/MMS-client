@@ -55,14 +55,14 @@ const ScheduleView = () => {
         ],
         searchable: true,
         reverseSort: true,
-        linkColPrefix: `/schedules/pm/`,
+        linkColPrefix: `/schedule-templates/pm/`,
     };
 
     return (
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/schedules" className="tLink">
+                    <Link href="/schedule-templates" className="tLink">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to PM Schedules</p>
                     </Link>
