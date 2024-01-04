@@ -1,5 +1,6 @@
 import { SetStateAction } from 'react';
 import { createJobConn } from './createJobConn';
+import { al } from 'vitest/dist/reporters-5f784f42';
 
 interface Props {
     data: any;
@@ -13,19 +14,15 @@ interface Props {
 }
 
 export const createJobHandler = async (props: Props) => {
+    const alertString = 'There has been an issue creating this Job, please try again.';
     try {
         const response = await createJobConn({
             propertyNumber: props.currentProperty,
             assetNumber: props.assetId,
-            breakdownOrSchedule: props.data.breakdownOrSchedule,
             type: props.data.selectedType,
             title: props.data.title,
             description: props.data.description,
             urgency: props.data.selectedUrgency,
-            startNow: props.data.startNow,
-            scheduleStart: props.data.scheduleStart.toString() || null,
-            intervalFrequency: props.data.intervalFrequency,
-            intervalTimeUnit: props.data.intervalTimeUnit,
             reporter: props.userId,
         });
         if (response.data.created && props.data.compNow == 'No') {
@@ -34,8 +31,10 @@ export const createJobHandler = async (props: Props) => {
             props.setModalPayload(response.data.jobId);
             props.setModalType('updateJob');
             props.setViewModal(true);
+        } else {
+            alert(alertString);
         }
     } catch (err) {
-        alert('There has been an issue creating this Job, please try again.');
+        alert(alertString);
     }
 };

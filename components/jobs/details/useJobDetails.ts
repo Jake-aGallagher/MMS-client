@@ -18,7 +18,6 @@ interface Job {
     type: string;
     urgency: string;
     title: string;
-    scheduled: number;
 }
 
 interface TimeDetails {
