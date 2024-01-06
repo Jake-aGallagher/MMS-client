@@ -79,7 +79,7 @@ const PMDetails = () => {
                 {(permissions.schedules?.manage || isAdmin) && schedulePMDetails?.completed == 0 ? (
                     <button onClick={() => setModal({view: true, type: 'editPm', payload: parseInt(schedulePMId)})} className="tLink">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                        Update
+                        Update PM
                     </button>
                 ) : null}
             </Toolbar>

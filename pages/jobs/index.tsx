@@ -21,7 +21,7 @@ const jobTableConfig = {
         { id: 'status', name: 'Current Status', type: 'string', search: true, order: true },
         { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
         { id: 'comp_date', name: 'Completed Date', type: 'date', search: true, order: true },
-        { id: 'reporter', name: 'Reporter', type: 'string', search: true, order: true },
+        { id: 'reported_by', name: 'Reported By', type: 'string', search: true, order: true },
     ],
     searchable: true,
     linkColPrefix: '/jobs/',

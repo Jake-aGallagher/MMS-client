@@ -75,7 +75,7 @@ const AssetView = () => {
                     {permissions.schedules?.manage || isAdmin ? (
                         <button onClick={() => setModal({ view: true, type: 'createPm', payload: { assetId } })} className="tLink">
                             <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                            Create PM
+                            Create PM Schedule
                         </button>
                     ) : null}
                 </Toolbar>

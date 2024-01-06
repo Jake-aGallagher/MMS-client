@@ -12,7 +12,7 @@ interface Job {
     description: string;
     logged_time: null | number;
     notes: null | string;
-    reporter: string;
+    reported_by: string;
     required_comp_date: string;
     status: string;
     type: string;

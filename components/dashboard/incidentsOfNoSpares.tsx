@@ -13,7 +13,7 @@ const IncidentsOfNoSpares = () => {
         { label: 'November', value: 4 },
     ];
     const text = {
-        title: 'Incidents of no Spares being available',
+        title: 'Incidents of no Parts available',
         labels: 'Count',
         totalString: incidents.toString(),
     };

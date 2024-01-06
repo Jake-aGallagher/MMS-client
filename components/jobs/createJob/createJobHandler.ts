@@ -1,6 +1,5 @@
 import { SetStateAction } from 'react';
 import { createJobConn } from './createJobConn';
-import { al } from 'vitest/dist/reporters-5f784f42';
 
 interface Props {
     data: any;
@@ -23,7 +22,7 @@ export const createJobHandler = async (props: Props) => {
             title: props.data.title,
             description: props.data.description,
             urgency: props.data.selectedUrgency,
-            reporter: props.userId,
+            reported_by: props.userId,
         });
         if (response.data.created && props.data.compNow == 'No') {
             props.closeModal();

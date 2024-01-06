@@ -70,7 +70,7 @@ describe('<JobView /> component', () => {
                 logged_time: null,
                 notes: null,
                 property_name: 'Cardboard Co.',
-                reporter: 'Jake Gallagher',
+                reported_by: 'Jake Gallagher',
                 required_comp_date: '27/04/23',
                 status: 'Un-attended',
                 title: 'Replace belt',

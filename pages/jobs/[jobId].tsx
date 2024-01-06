@@ -44,7 +44,7 @@ const JobView = () => {
             { label: 'Date Logged', value: jobDetails?.created },
             { label: 'Completion Deadline', value: jobDetails?.required_comp_date },
             { label: 'Completion Date', value: jobDetails?.comp_date },
-            { label: 'Reported By', value: jobDetails?.reporter },
+            { label: 'Reported By', value: jobDetails?.reported_by },
         ],
     };
 
