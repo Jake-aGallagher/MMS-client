@@ -48,9 +48,9 @@ const AddEditSparesItem = (props: ModalProps) => {
                     <FormHeader label={props.payload.name.length > 0 ? props.payload.name : 'Add Spares Item'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                         <GeneralFormInput register={register} label="Part Number" type="text" formName="partNo" errors={errors} required={true} />
-                        <GeneralFormInput register={register} label="Manufacturers Part Number" type="text" formName="manPartNo" errors={errors} />
-                        <GeneralFormInput register={register} label="Item Name" type="text" formName="name" errors={errors} required={true} />
-                        <GeneralFormInput register={register} label="Manufacturers Item Name" type="text" formName="manName" errors={errors} />
+                        <GeneralFormInput register={register} label="Part Name" type="text" formName="name" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="OEM Part Number" type="text" formName="manPartNo" errors={errors} />
+                        <GeneralFormInput register={register} label="OEM Part Name" type="text" formName="manName" errors={errors} />
                         <GeneralFormInput register={register} label="Description" type="textarea" formName="description" errors={errors} rows={4} />
                         <GeneralFormInput register={register} label="Notes" type="textarea" formName="notes" errors={errors} rows={4} />
                         <GeneralFormInput register={register} label="Location" type="text" formName="location" errors={errors} />

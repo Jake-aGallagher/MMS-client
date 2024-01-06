@@ -33,8 +33,8 @@ const SparesView = () => {
         fields: [
             { label: 'Part Number', value: sparesDetails?.part_no },
             { label: 'Name', value: sparesDetails?.name },
-            { label: 'Manufacturers Part Number', value: sparesDetails?.man_part_no },
-            { label: 'Manufacturers Part Name', value: sparesDetails?.man_name },
+            { label: 'OEM Part Number', value: sparesDetails?.man_part_no },
+            { label: 'OEM Part Name', value: sparesDetails?.man_name },
             { label: 'Description', value: sparesDetails?.description },
             { label: 'Notes', value: sparesDetails?.notes },
             { label: 'Location', value: sparesDetails?.location },

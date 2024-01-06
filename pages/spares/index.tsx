@@ -36,9 +36,9 @@ const Spares = () => {
     const sparesTableConfig: DataTableConfig = {
         headers: [
             { id: 'id', name: 'Part Number', type: 'linkWithName', nameParam: 'part_no', search: true, order: true },
-            { id: 'man_part_no', name: 'Manufacturers Part Number', type: 'string', search: true, order: true },
-            { id: 'name', name: 'Name', type: 'string', search: true, order: true },
-            { id: 'man_name', name: 'Manufacturers Part Name', type: 'string', search: true, order: true },
+            { id: 'name', name: 'Part Name', type: 'string', search: true, order: true },
+            { id: 'man_part_no', name: 'OEM Part Number', type: 'string', search: true, order: true },
+            { id: 'man_name', name: 'OEM Part Name', type: 'string', search: true, order: true },
             { id: 'location', name: 'Location', type: 'string', search: true, order: true },
             { id: 'quant_remain', name: 'Remaining Stock', type: 'remaining_stock', search: true, order: true, avgUsagePointer: 'avg_usage' },
             { id: 'avg_usage', name: 'Usage (AVG per Month)', type: 'number', search: true, order: true },
