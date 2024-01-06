@@ -30,7 +30,7 @@ const PMDetails = () => {
         id: schedulePMDetails?.id,
         title: 'PM Details',
         fields: [
-            { label: 'ID Number', value: schedulePMDetails?.id },
+            { label: 'ID', value: schedulePMDetails?.id },
             { label: 'Title', value: schedulePMDetails?.title },
             { label: 'Asset', value: schedulePMDetails?.asset },
             { label: 'Type', value: schedulePMDetails?.type },

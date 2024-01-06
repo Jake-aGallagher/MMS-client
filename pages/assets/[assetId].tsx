@@ -42,7 +42,7 @@ const AssetView = () => {
 
     const recentJobTableConfig = {
         headers: [
-            { id: 'id', name: 'Job Number', type: 'link', search: true, order: true },
+            { id: 'id', name: 'ID', type: 'link', search: true, order: true },
             { id: 'asset_name', name: 'Asset', type: 'string', search: true, order: true },
             { id: 'type', name: 'Type', type: 'string', search: true, order: true },
             { id: 'created', name: 'Created', type: 'date', search: true, order: true },

@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 
 const propertiesTableConfig = {
     headers: [
-        { id: 'id', name: 'Property Number', type: 'link', search: true, order: true },
+        { id: 'id', name: 'ID', type: 'link', search: true, order: true },
         { id: 'name', name: 'Name', type: 'string', search: true, order: true },
         { id: 'type', name: 'Type', type: 'string', search: true, order: true },
         { id: 'address', name: 'Address', type: 'string', search: true, order: true },
