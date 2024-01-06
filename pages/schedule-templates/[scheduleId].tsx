@@ -34,7 +34,7 @@ const ScheduleView = () => {
             { label: 'ID Number', value: scheduleDetails?.id },
             { label: 'Title', value: scheduleDetails?.title },
             { label: 'Up to Date', value: scheduleDetails?.up_to_date == 1 ? <div>&#10004;</div> : <div>&#10060;</div> },
-            { label: 'Asset Name', value: scheduleDetails?.asset },
+            { label: 'Asset', value: scheduleDetails?.asset },
             { label: 'Type', value: scheduleDetails?.type },
             { label: 'Description', value: scheduleDetails?.description },
             { label: 'Last Completed', value: scheduleDetails?.last_comp_date },
