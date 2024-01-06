@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faPenToSquare, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleInfo, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
+import Tooltip from '../../tooltip/tooltip';
 
 export const StringData = (props: { string: string }) => {
     return <div>{props.string}</div>;
@@ -31,11 +32,19 @@ export const TickData = (props: { tick: number }) => {
 };
 
 export const RemainingStockData = (props: { remainingStock: number; usage: number }) => {
-    let icon = props.remainingStock == 0 ? faXmark : props.usage == 0 || props.remainingStock / props.usage > 1 ? faCheck : faTriangleExclamation;
-    let colour = props.remainingStock == 0 ? 'text-red' : props.usage == 0 || props.remainingStock / props.usage > 1 ? 'text-green' : 'text-yellow';
+    const level = props.remainingStock <= 0 ? 'none' : props.remainingStock / props.usage > 1 ? 'good' : 'low';
+    const icon = level == 'none' ? faXmark : level == 'good' ? faCheck : faTriangleExclamation;
+    const colour = level == 'none' ? 'text-red' : level == 'good' ? 'text-green' : 'text-yellow';
+    const negative = props.remainingStock < 0;
+    const negativeWarning = 'Please check negative stock level.'
     return (
         <div className="flex flex-row justify-center items-center">
             <FontAwesomeIcon icon={icon} className={`mr-1 w-5 ${colour}`} /> {props.remainingStock}
+            {negative ? (
+                <Tooltip text={negativeWarning} direction='left'>
+                        <FontAwesomeIcon icon={faCircleInfo} className={`ml-1 mb-4 w-4 hover:text-accent`} />
+                </Tooltip>
+            ) : null}
         </div>
     );
 };
