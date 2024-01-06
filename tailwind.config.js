@@ -26,9 +26,14 @@ module.exports = {
                 13: '13',
             },
             borderWidth: {
-                1: '1px'
-            }
+                1: '1px',
+            },
         },
         plugins: [],
+    },
+    variants: {
+        extend: {
+            visibility: ['group-hover'],
+        },
     },
 };
