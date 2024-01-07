@@ -39,12 +39,12 @@ export const useEditPM = (currentProperty: number, jobId: number) => {
         setLoading(true);
         setError(false);
         setNoData(false);
-        getJobUpdate();
+        getUpdate();
     }, []);
 
-    const getJobUpdate = async () => {
+    const getUpdate = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/schedules/edit/${currentProperty}/${jobId}`, {
+            const response = await axios.get(`${SERVER_URL}/pms/edit/${currentProperty}/${jobId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.PMDetails === 0) {

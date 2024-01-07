@@ -29,7 +29,7 @@ export const useEditSchedule = (PMScheduleId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/schedule-template/edit-schedule/${PMScheduleId}`, {
+            const response = await axios.get(`${SERVER_URL}/pm-schedule/edit-schedule/${PMScheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             console.log(response.data);

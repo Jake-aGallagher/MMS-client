@@ -45,7 +45,7 @@ export const useScheduleDetails = (propertyId: number, scheduleId: string) => {
 
     const getScheduleHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/schedule-templates/${propertyId}/${scheduleId}`, {
+            const response = await axios.get(`${SERVER_URL}/pm-schedules/${propertyId}/${scheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.scheduleDetails.length === 0) {

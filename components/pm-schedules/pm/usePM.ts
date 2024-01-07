@@ -53,7 +53,7 @@ export const useSchedulePMDetails = (PMId: string) => {
 
     const getScheduleHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/schedules/${PMId}`, {
+            const response = await axios.get(`${SERVER_URL}/pms/${PMId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.schedulePMDetails.length === 0) {

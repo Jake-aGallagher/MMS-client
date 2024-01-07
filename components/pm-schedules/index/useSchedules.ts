@@ -33,7 +33,7 @@ export const useSchedules = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const schedulesList = await axios.get(`${SERVER_URL}/schedule-templates/all-schedules/${props.currentProperty}`, {
+            const schedulesList = await axios.get(`${SERVER_URL}/pm-schedules/all-schedules/${props.currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setSchedules(schedulesList.data);
