@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useSchedulePMDetails } from '../../../components/schedules/pm/usePM';
+import { useSchedulePMDetails } from '../../../components/pm-schedules/pm/usePM';
 import { RootState } from '../../../components/store/store';
 import { useRouter } from 'next/router';
 import FullPage from '../../../components/page/fullPage';
@@ -64,9 +64,9 @@ const PMDetails = () => {
         searchable: false,
     };
 
-    let returnHref = '/schedule-templates';
+    let returnHref = '/pm-schedules';
     if (schedulePMDetails) {
-        returnHref = `/schedule-templates/${schedulePMDetails.template_id}`;
+        returnHref = `/pm-schedules/${schedulePMDetails.template_id}`;
     }
 
     return (

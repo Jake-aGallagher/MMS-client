@@ -70,7 +70,7 @@ const NavBar = (props: Props) => {
                 </Link>
             ) : null}
             {permissions.schedules?.view || isAdmin ? (
-                <Link href="/schedule-templates" className={'nLink ' + (currentRoute.includes('schedule-templates') ? 'text-accent' : '')}>
+                <Link href="/pm-schedules" className={'nLink ' + (currentRoute.includes('pm-schedules') ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faClipboardList} className="mr-1 w-3" />
                     <span className="hidden xl:block group-hover:block transition-all absolute ml-4">PM's</span>
                 </Link>

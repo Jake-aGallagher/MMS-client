@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
-import { useSchedules } from '../../components/schedules/index/useSchedules';
+import { useSchedules } from '../../components/pm-schedules/index/useSchedules';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
@@ -32,9 +32,9 @@ const Schedules = () => {
             { id: 'up_to_date', name: 'Up to Date', type: 'tick', search: true, order: true },
         ],
         searchable: true,
-        linkColPrefix: '/schedule-templates/',
+        linkColPrefix: '/pm-schedules/',
         modalType: 'ScheduleTemplate',
-        deleteUrl: 'schedule-templates',
+        deleteUrl: 'pm-schedules',
         idPointer: 'id',
         namePointer: 'title',
         reload: reload,

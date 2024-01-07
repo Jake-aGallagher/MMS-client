@@ -22,9 +22,9 @@ import AddEditStatusType from '../settings/statusTypes/addEditStatusType/addEdit
 import AddEditUrgencyType from '../settings/urgencyTypes/addEditUrgencyType/addEditUrgencyType';
 import { GlobalDebug } from '../debug/globalDebug';
 import AddEditEnumValue from '../settings/enumgroups/enumValues/addEditEnumValues/addEditEnumValue';
-import AddSchedule from '../schedules/addSchedule/addSchedule';
-import EditPM from '../schedules/pm/editPm/editPm';
-import EditSchedule from '../schedules/editSchedule/editSchedule';
+import AddSchedule from '../pm-schedules/addSchedule/addSchedule';
+import EditPM from '../pm-schedules/pm/editPm/editPm';
+import EditSchedule from '../pm-schedules/editSchedule/editSchedule';
 
 interface ModalProps {
     closeModal: () => void;

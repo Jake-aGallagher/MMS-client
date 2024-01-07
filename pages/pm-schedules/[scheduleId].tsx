@@ -11,7 +11,7 @@ import DetailsBox from '../../components/detailsBox/detailsBox';
 import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
-import { useScheduleDetails } from '../../components/schedules/details/useScheduleDetails';
+import { useScheduleDetails } from '../../components/pm-schedules/details/useScheduleDetails';
 import DataTable from '../../components/dataTable/dataTable';
 
 const ScheduleView = () => {
@@ -55,14 +55,14 @@ const ScheduleView = () => {
         ],
         searchable: true,
         reverseSort: true,
-        linkColPrefix: `/schedule-templates/pm/`,
+        linkColPrefix: `/pm-schedules/pm/`,
     };
 
     return (
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/schedule-templates" className="tLink">
+                    <Link href="/pm-schedules" className="tLink">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to PM Schedules</p>
                     </Link>
