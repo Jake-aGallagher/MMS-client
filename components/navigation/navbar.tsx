@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import GallagticFullLogo from '../../public/Gallagtic-Full.svg';
-import GallagticShortLogo from '../../public/Gallagtic-Short.svg';
+import Logo from '../../public/Logo.svg';
+import LogoWithName from '../../public/LogoName.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faBuildingUser, faChartColumn, faClipboardList, faFileContract, faFolderTree, faGear, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { logoutProcess } from './logoutProcess';
@@ -34,10 +34,10 @@ const NavBar = (props: Props) => {
     ));
 
     return (
-        <div className="group fixed left-0 top-0 h-screen xl:w-52 w-16 hover:w-52 z-30 flex flex-col xl:items-start pt-5 bg-secondary text-text transition-all">
+        <div className="group fixed left-0 top-0 h-screen xl:w-52 w-16 hover:w-52 z-30 flex flex-col xl:items-start pt-3 bg-secondary text-text transition-all">
             <div className="mx-auto mb-2 flex flex-col justify-center items-center">
-                <img className="w-44 h-20 transition-all hidden xl:block group-hover:block" src={GallagticFullLogo.src} />
-                <img className="w-12 h-20 transition-all block xl:hidden group-hover:hidden" src={GallagticShortLogo.src} />
+                <img className="w-44 h-24 transition-all hidden xl:block group-hover:block" src={LogoWithName.src} />
+                <img className="w-12 h-24 transition-all block xl:hidden group-hover:hidden" src={Logo.src} />
             </div>
             <div className="h-6 mb-2">
                 <div className="hidden pl-4 xl:block group-hover:block mx-auto w-full">
