@@ -66,7 +66,7 @@ const PMDetails = () => {
 
     let returnHref = '/pm-schedules';
     if (schedulePMDetails) {
-        returnHref = `/pm-schedules/${schedulePMDetails.template_id}`;
+        returnHref = `/pm-schedules/${schedulePMDetails.schedule_id}`;
     }
 
     return (

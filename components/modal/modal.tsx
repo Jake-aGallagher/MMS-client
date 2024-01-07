@@ -37,6 +37,7 @@ interface ModalProps {
 const ModalBase = (props: ModalProps) => {
     const modalToDisplay = (modalType: string) => {
         GlobalDebug('Modal', [['modal type', modalType]])
+        console.log('modal type', modalType)
         switch (modalType) {
             // Property
             case 'addEditProperty':
@@ -58,10 +59,10 @@ const ModalBase = (props: ModalProps) => {
             case 'usersSelector':
                 return <UsersSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
 
-            // Schedule
+            // PMs
             case 'createPmSchedule':
                 return <AddSchedule closeModal={props.closeModal} assetId={props.payload.assetId} />;
-            case 'editSchedule':
+            case 'addEditPmSchedule':
                 return <EditSchedule closeModal={props.closeModal} scheduleId={props.payload} />;
             case 'editPm':
                 return <EditPM closeModal={props.closeModal} pmId={props.payload} />
@@ -112,7 +113,7 @@ const ModalBase = (props: ModalProps) => {
             case 'deleteJobType':
             case 'deleteStatusType':
             case 'deleteUrgencyType':
-            case 'deleteScheduleTemplate':
+            case 'deletePmSchedule':
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
         }
     };

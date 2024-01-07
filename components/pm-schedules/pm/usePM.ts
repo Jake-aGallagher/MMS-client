@@ -4,7 +4,7 @@ import axios from 'axios';
 
 interface SchedulePM {
     id: number;
-    template_id: number;
+    schedule_id: number;
     title: string;
     asset: string;
     type: string;

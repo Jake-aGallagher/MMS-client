@@ -33,7 +33,7 @@ const Schedules = () => {
         ],
         searchable: true,
         linkColPrefix: '/pm-schedules/',
-        modalType: 'ScheduleTemplate',
+        modalType: 'PmSchedule',
         deleteUrl: 'pm-schedules',
         idPointer: 'id',
         namePointer: 'title',

@@ -22,8 +22,8 @@ const ScheduleView = () => {
         router.push('/');
     }
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const scheduleTemplateId = router.asPath.split('/')[2];
-    const { scheduleDetails, schedulePMs, loading, noData, error, reload } = useScheduleDetails(currentProperty, scheduleTemplateId);
+    const pmScheduleId = router.asPath.split('/')[2];
+    const { scheduleDetails, schedulePMs, loading, noData, error, reload } = useScheduleDetails(currentProperty, pmScheduleId);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
@@ -83,7 +83,7 @@ const ScheduleView = () => {
                                 <DetailsBox data={scheduleDetailsConfig} />
                                 <div className="flex flex-col w-full">
                                     <div className="w-full xl:pl-8">
-                                        <AttachedFilesBox model="scheduleTemplate" id={parseInt(scheduleTemplateId)} />
+                                        <AttachedFilesBox model="pmSchedule" id={parseInt(pmScheduleId)} />
                                     </div>
                                 </div>
                             </div>
