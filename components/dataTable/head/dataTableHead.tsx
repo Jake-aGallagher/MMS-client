@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import SparesTableIndexKey from '../../spares/index/sparesIndexTableKey';
 
 interface Props {
     headers: {
@@ -25,6 +26,11 @@ interface Props {
 }
 
 const DataTableHead = (props: Props) => {
+    const tooltips = (itemId: string) => {
+        if (itemId === 'quant_remain') {
+            return <SparesTableIndexKey />
+        }
+    }
     const headers = props.headers.map((item) => {
         if (item.order) {
             return (
@@ -32,6 +38,7 @@ const DataTableHead = (props: Props) => {
                     <div className=" flex flex-row justify-center items-center font-semibold">
                         {item.name}
                         {props.currentSort.col != item.id ? null : props.currentSort.dir === 'ASC' ? <div className="ml-2 ">&#8595;</div> : <div className="ml-2 ">&#8593;</div>}
+                        {tooltips(item.id)}
                     </div>
                 </th>
             );
