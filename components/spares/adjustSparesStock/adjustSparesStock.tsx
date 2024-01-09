@@ -42,7 +42,7 @@ const AdjustSparesStock = (props: ModalProps) => {
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <FormTextCenter label={'Current Stock level'} />
                     <FormTextCenter label={spareStock.toString()} />
-                    <GeneralFormInput register={register} label="Difference" type="number" formName="diff" errors={errors} required={true} min={0 - newStock} />
+                    <GeneralFormInput register={register} label="Difference" type="number" formName="diff" errors={errors} required={true} min={0 - spareStock} />
                     <FormTextCenter label={'New Stock Level'} />
                     <FormTextCenter label={newStock.toString()} />
                     <GeneralFormSubmit closeModal={props.closeModal} />
