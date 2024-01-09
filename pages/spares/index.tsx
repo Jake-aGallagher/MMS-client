@@ -6,7 +6,6 @@ import ModalBase from '../../components/modal/modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import { useSpares } from '../../components/spares/index/useSpares';
-import SparesTableIndexKey from '../../components/spares/index/sparesIndexTableKey';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
@@ -78,7 +77,6 @@ const Spares = () => {
                 </Toolbar>
                 {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
                 <LoadingNoDataError loading={loading} error={error}>
-                    <SparesTableIndexKey />
                     <DataTable config={sparesTableConfig} data={spares} />
                 </LoadingNoDataError>
             </FullPage>
