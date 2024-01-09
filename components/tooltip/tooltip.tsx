@@ -14,7 +14,7 @@ const Tooltip = (props: Props) => {
                 className={
                     `invisible group-hover:visible opacity-0 group-hover:opacity-100
                     absolute w-60 p-1 z-10 top-full text-center rounded-lg transition-all
-                    bg-background text-black border-2 border-accent     
+                    bg-background text-black border-1 border-accent     
                     ${direction}`
                 }
             >
