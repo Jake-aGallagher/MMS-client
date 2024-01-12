@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import bgImg from '../../public/stock-vector-gear-blueprint-technical-background-cogs-and-wheels-in-gray-color-abstract-parts-of-engine-1764788840.jpg';
+import LogoWithName from '../../public/LogoName.svg';
 import { useSearchParams } from 'next/navigation';
 import { setDebug } from '../store/debugSlice';
 import { setPermissions } from '../store/permissionsSlice';
@@ -110,6 +111,7 @@ const Login = (props: Props) => {
     return (
         <div className="container mx-auto h-screen w-screen flex flex-col justify-center items-center">
             <img src={bgImg.src} className="fixed w-screen h-screen object-cover" draggable={false} />
+            <img src={LogoWithName.src} className="fixed top-0 left-0 w-44 h-24 m-4" draggable={false} />
             <form onSubmit={handleSubmit(handleRegistration)} className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-lg z-10 opacity-80">
                 <div className="flex flex-col mx-1 relative mb-2">
                     <label htmlFor="username" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
