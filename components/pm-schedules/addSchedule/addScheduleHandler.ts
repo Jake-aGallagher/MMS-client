@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const addScheduleHandler = async (props: Props) => {
-    const alertString = 'There has been an issue creating this Job, please try again.';
+    const alertString = 'There has been an issue creating this PM Schedule, please try again.';
     try {
         const response = await addScheduleConn({
             propertyId: props.propertyId,

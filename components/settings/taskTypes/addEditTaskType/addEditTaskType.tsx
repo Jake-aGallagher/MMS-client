@@ -5,9 +5,9 @@ import GeneralFormInput from '../../../forms/generalFormInput';
 import FormHeader from '../../../forms/formHeader';
 import FormContainer from '../../../forms/formContainer';
 import GeneralForm from '../../../forms/generalForm';
-import { useAddEditJobType } from './useAddEditJobType';
-import { addEditJobTypeHandler } from './addEditJobTypeHandler';
-import { yupResolverAddEditJobType } from './addEditJobTypeValidation';
+import { useAddEditTaskType } from './useAddEditTaskType';
+import { addEditTaskTypeHandler } from './addEditTaskTypeHandler';
+import { yupResolverAddEditTaskType } from './addEditTaskTypeValidation';
 import LoadingNoDataError from '../../../loading/loadingNoDataError';
 
 interface ModalProps {
@@ -15,8 +15,8 @@ interface ModalProps {
     payload: { id: number; name: string };
 }
 
-const AddEditJobType = (props: ModalProps) => {
-    const { defaultValues, loading, error } = useAddEditJobType({ jobTypeNumber: props.payload.id });
+const AddEditTaskType = (props: ModalProps) => {
+    const { defaultValues, loading, error } = useAddEditTaskType({ taskTypeNumber: props.payload.id });
 
     const {
         register,
@@ -24,7 +24,7 @@ const AddEditJobType = (props: ModalProps) => {
         reset,
         formState: { errors },
     } = useForm({
-        resolver: yupResolverAddEditJobType,
+        resolver: yupResolverAddEditTaskType,
         defaultValues: useMemo(() => {
             return defaultValues;
         }, [defaultValues]),
@@ -35,13 +35,13 @@ const AddEditJobType = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addEditJobTypeHandler(data, props.payload.id, props.closeModal);
+        await addEditTaskTypeHandler(data, props.payload.id, props.closeModal);
     };
 
     return (
         <LoadingNoDataError loading={loading} error={error}>
             <FormContainer>
-                <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.value : 'Add Job Type'} />
+                <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.value : 'Add Task Type'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="Value" type="text" formName="value" errors={errors} required={true} />
                     <GeneralFormInput register={register} label="Order" type="number" formName="listPriority" errors={errors} required={true} />
@@ -52,4 +52,4 @@ const AddEditJobType = (props: ModalProps) => {
     );
 };
 
-export default AddEditJobType;
+export default AddEditTaskType;

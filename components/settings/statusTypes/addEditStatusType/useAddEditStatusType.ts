@@ -20,13 +20,13 @@ export const useAddEditStatusType = (props: Props) => {
         if (props.statusTypeNumber > 0) {
             setLoading(true);
             setError(false);
-            getJobTypeHandler();
+            getStatusTypeHandler();
         } else {
             setLoading(false);
         }
     }, []);
 
-    const getJobTypeHandler = async () => {
+    const getStatusTypeHandler = async () => {
         try {
             const response = await axios.get(`${SERVER_URL}/statustypes/${props.statusTypeNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },

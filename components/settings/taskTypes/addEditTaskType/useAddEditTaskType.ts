@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
 
 interface Props {
-    jobTypeNumber: number;
+    taskTypeNumber: number;
 }
 
-export const useAddEditJobType = (props: Props) => {
+export const useAddEditTaskType = (props: Props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [defaultValues, setDefaultValues] = useState({
@@ -15,21 +15,21 @@ export const useAddEditJobType = (props: Props) => {
     });
 
     useEffect(() => {
-        if (props.jobTypeNumber > 0) {
+        if (props.taskTypeNumber > 0) {
             setLoading(true);
             setError(false);
-            getJobTypeHandler();
+            getTaskTypeHandler();
         } else {
             setLoading(false);
         }
     }, []);
 
-    const getJobTypeHandler = async () => {
+    const getTaskTypeHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/jobtypes/${props.jobTypeNumber}`, {
+            const response = await axios.get(`${SERVER_URL}/tasktypes/${props.taskTypeNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            const data = response.data.jobType[0];
+            const data = response.data.taskType[0];
             setDefaultValues({
                 value: data.value,
                 listPriority: data.list_priority,

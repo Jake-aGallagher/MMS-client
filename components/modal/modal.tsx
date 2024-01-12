@@ -17,7 +17,7 @@ import AddEditUserGroup from '../settings/userGroups/addEditUserGroups/addEditUs
 import AddEditPermission from '../settings/permissions/addEditPermissions/addEditPermission';
 import SparesSelector from '../sparesSelector/sparesSelector';
 import UsersSelector from '../usersSelector/usersSelector';
-import AddEditJobType from '../settings/jobTypes/addEditJobType/addEditJobType';
+import AddEditTaskType from '../settings/taskTypes/addEditTaskType/addEditTaskType';
 import AddEditStatusType from '../settings/statusTypes/addEditStatusType/addEditStatusType';
 import AddEditUrgencyType from '../settings/urgencyTypes/addEditUrgencyType/addEditUrgencyType';
 import { GlobalDebug } from '../debug/globalDebug';
@@ -94,8 +94,8 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditEnumGroup closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditEnumValue':
                 return <AddEditEnumValue closeModal={props.closeModal} payload={props.payload} />;
-            case 'addEditJobType':
-                return <AddEditJobType closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditTaskType':
+                return <AddEditTaskType closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditStatusType':
                 return <AddEditStatusType closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditUrgencyType':
@@ -110,7 +110,7 @@ const ModalBase = (props: ModalProps) => {
             case 'deleteUserGroup':
             case 'deleteEnumGroup':
             case 'deleteEnumValue':
-            case 'deleteJobType':
+            case 'deleteTaskType':
             case 'deleteStatusType':
             case 'deleteUrgencyType':
             case 'deletePmSchedule':

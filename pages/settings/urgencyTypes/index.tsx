@@ -57,7 +57,7 @@ const UrgencyTypes = () => {
                 {permissions.enums?.manage || isAdmin ? (
                     <button onClick={addUrgencyType} className="tLink">
                         <div className="text-2xl mr-1 pb-1">+</div>
-                        Add Job Urgency Type
+                        Add Urgency Type
                     </button>
                 ) : null}
             </Toolbar>

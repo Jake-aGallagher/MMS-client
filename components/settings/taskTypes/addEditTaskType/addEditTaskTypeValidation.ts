@@ -6,4 +6,4 @@ const formValidation = yup.object().shape({
     listPriority: yup.number().required(),
 });
 
-export const yupResolverAddEditJobType = yupResolver(formValidation)
+export const yupResolverAddEditTaskType = yupResolver(formValidation)

@@ -45,12 +45,12 @@ const AddEditStatusType = (props: ModalProps) => {
     return (
         <LoadingNoDataError loading={loading} error={error}>
             <FormContainer>
-                <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.value : 'Add Job Type'} />
+                <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.value : 'Add Status Type'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="Value" type="text" formName="value" errors={errors} required={true} />
                     <GeneralFormInput
                         register={register}
-                        label="Allow Job Completion"
+                        label="Allow Job/PM Completion"
                         type="select"
                         formName="canComplete"
                         errors={errors}
@@ -59,7 +59,7 @@ const AddEditStatusType = (props: ModalProps) => {
                         selectOptions={completionOptions}
                     />
                     <GeneralFormInput register={register} label="Order" type="number" formName="listPriority" errors={errors} required={true} />
-                    <GeneralFormInput register={register} label="Set as Initial Status on Job Creation" type="checkbox" formName="initialStatus" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="Set as Initial Status on Job/PM Creation" type="checkbox" formName="initialStatus" errors={errors} required={true} />
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
             </FormContainer>

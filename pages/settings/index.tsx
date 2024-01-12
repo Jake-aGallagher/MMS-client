@@ -37,14 +37,14 @@ const Settings = () => {
                         <Link href="/settings/enumgroups" className="pl-4 mt-2 hover:text-accent flex flex-row items-center">
                             Enums
                         </Link>
-                        <Link href="/settings/jobTypes" className="pl-4 mt-2 hover:text-accent flex flex-row items-center">
-                            Job Types
+                        <Link href="/settings/taskTypes" className="pl-4 mt-2 hover:text-accent flex flex-row items-center">
+                            Task Types
                         </Link>
                         <Link href="/settings/statusTypes" className="pl-4 mt-2 hover:text-accent flex flex-row items-center">
-                            Job Status Types
+                            Status Types
                         </Link>
                         <Link href="/settings/urgencyTypes" className="pl-4 mt-2 hover:text-accent flex flex-row items-center">
-                            Job Urgency Types
+                            Urgency Types
                         </Link>
                     </IndexCardLayout>
                 ) : null}

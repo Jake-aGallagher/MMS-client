@@ -43,7 +43,7 @@ const ScheduleView = () => {
         ],
     };
 
-    const scheduleJobsTableConfig = {
+    const PMsTableConfig = {
         headers: [
             { id: 'id', name: 'PM ID', type: 'link', search: true, order: true },
             { id: 'created', name: 'Date Created', type: 'string', search: true, order: true },
@@ -87,7 +87,7 @@ const ScheduleView = () => {
                                     </div>
                                 </div>
                             </div>
-                            {schedulePMs.length > 0 ? <DataTable config={scheduleJobsTableConfig} data={schedulePMs} /> : null}
+                            {schedulePMs.length > 0 ? <DataTable config={PMsTableConfig} data={schedulePMs} /> : null}
                         </div>
                     </>
                 </LoadingNoDataError>

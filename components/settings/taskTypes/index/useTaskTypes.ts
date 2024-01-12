@@ -2,17 +2,17 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
 
-interface JobType {
+interface TaskType {
     id: number;
     value: string;
     list_priority: number;
 }
 
 
-export const useJobTypes = () => {
+export const useTaskTypes = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [jobTypes, setJobTypes] = useState<JobType[]>([]);
+    const [taskTypes, setTaskTypes] = useState<TaskType[]>([]);
 
     useEffect(() => {
         reload();
@@ -26,15 +26,15 @@ export const useJobTypes = () => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/jobtypes`, {
+            const response = await axios.get(`${SERVER_URL}/tasktypes`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            setJobTypes(response.data.jobTypes);
+            setTaskTypes(response.data.taskTypes);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { jobTypes, loading, error, reload };
+    return { taskTypes, loading, error, reload };
 };

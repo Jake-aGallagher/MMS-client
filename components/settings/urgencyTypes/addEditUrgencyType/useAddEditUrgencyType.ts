@@ -20,13 +20,13 @@ export const useAddEditUrgencyType = (props: Props) => {
         if (props.urgencyTypeNumber > 0) {
             setLoading(true);
             setError(false);
-            getJobTypeHandler();
+            getUrgencyTypeHandler();
         } else {
             setLoading(false);
         }
     }, []);
 
-    const getJobTypeHandler = async () => {
+    const getUrgencyTypeHandler = async () => {
         try {
             const response = await axios.get(`${SERVER_URL}/urgencytypes/${props.urgencyTypeNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },

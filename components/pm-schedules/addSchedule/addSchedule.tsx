@@ -59,7 +59,7 @@ const AddSchedule = (props: ModalProps) => {
         <>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormContainer>
-                    <FormHeader label={'Create New Planned Maintenance Job'} />
+                    <FormHeader label={'Create New Planned Maintenance Schedule'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                         <GeneralFormInput register={register} label="PM Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
                         <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />

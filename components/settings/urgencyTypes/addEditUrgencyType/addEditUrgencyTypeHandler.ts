@@ -1,7 +1,7 @@
 import { addEditUrgencyTypeConn } from './addEditUrgencyTypeConn';
 
 export const addEditUrgencyTypeHandler = async (data: any, id: number, closeModal: () => void) => {
-    const alertString = `There has been an issue ${id > 0 ? 'editing' : 'creating'} this Job Urgency Type, please try again.`;
+    const alertString = `There has been an issue ${id > 0 ? 'editing' : 'creating'} this Urgency Type, please try again.`;
     try {
         const response = await addEditUrgencyTypeConn({
             id: id ? id : 0,

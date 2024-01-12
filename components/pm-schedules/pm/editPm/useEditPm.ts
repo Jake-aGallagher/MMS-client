@@ -20,7 +20,7 @@ interface LoggedTime {
     time: number;
 }
 
-export const useEditPM = (currentProperty: number, jobId: number) => {
+export const useEditPM = (currentProperty: number, PMId: number) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
@@ -44,7 +44,7 @@ export const useEditPM = (currentProperty: number, jobId: number) => {
 
     const getUpdate = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/pms/edit/${currentProperty}/${jobId}`, {
+            const response = await axios.get(`${SERVER_URL}/pms/edit/${currentProperty}/${PMId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.PMDetails === 0) {
