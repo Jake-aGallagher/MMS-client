@@ -37,7 +37,7 @@ interface ModalProps {
 const ModalBase = (props: ModalProps) => {
     const modalToDisplay = (modalType: string) => {
         GlobalDebug('Modal', [['modal type', modalType]])
-        console.log('modal type', modalType)
+
         switch (modalType) {
             // Property
             case 'addEditProperty':
@@ -63,7 +63,7 @@ const ModalBase = (props: ModalProps) => {
             case 'createPmSchedule':
                 return <AddSchedule closeModal={props.closeModal} assetId={props.payload.assetId} />;
             case 'addEditPmSchedule':
-                return <EditSchedule closeModal={props.closeModal} scheduleId={props.payload} />;
+                return <EditSchedule closeModal={props.closeModal} payload={props.payload} />;
             case 'editPm':
                 return <EditPM closeModal={props.closeModal} pmId={props.payload} />
 

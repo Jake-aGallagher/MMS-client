@@ -1,23 +1,23 @@
-import { useForm } from "react-hook-form";
-import { useEditSchedule } from "./useEditSchedule";
-import { useEffect, useMemo } from "react";
-import { yupResolverEditSchedule } from "./editScheduleValidation";
-import LoadingNoDataError from "../../loading/loadingNoDataError";
-import FormContainer from "../../forms/formContainer";
-import FormHeader from "../../forms/formHeader";
-import GeneralForm from "../../forms/generalForm";
-import GeneralFormInput from "../../forms/generalFormInput";
-import FormTextCenter from "../../forms/formTextCenter";
-import GeneralFormSubmit from "../../forms/generalFormSubmit";
-import { editScheduleHandler } from "./editScheduleHandler";
+import { useForm } from 'react-hook-form';
+import { useEditSchedule } from './useEditSchedule';
+import { useEffect, useMemo } from 'react';
+import { yupResolverEditSchedule } from './editScheduleValidation';
+import LoadingNoDataError from '../../loading/loadingNoDataError';
+import FormContainer from '../../forms/formContainer';
+import FormHeader from '../../forms/formHeader';
+import GeneralForm from '../../forms/generalForm';
+import GeneralFormInput from '../../forms/generalFormInput';
+import FormTextCenter from '../../forms/formTextCenter';
+import GeneralFormSubmit from '../../forms/generalFormSubmit';
+import { editScheduleHandler } from './editScheduleHandler';
 
 interface ModalProps {
     closeModal: () => void;
-    scheduleId: number;
+    payload: { id: number; name: string; url: string };
 }
 
 const EditSchedule = (props: ModalProps) => {
-    const { defaultValues, typeOptions, loading, error } = useEditSchedule(props.scheduleId);
+    const { defaultValues, typeOptions, loading, error } = useEditSchedule(props.payload.id);
     const yesNoOptions = [
         { id: 'No', value: 'No' },
         { id: 'Yes', value: 'Yes' },
@@ -49,14 +49,14 @@ const EditSchedule = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await editScheduleHandler(props.scheduleId, data, props.closeModal );
+        await editScheduleHandler(props.payload.id, data, props.closeModal);
     };
-    
+
     return (
         <>
-            <LoadingNoDataError loading={loading} error={error}>
-                <FormContainer>
-                    <FormHeader label={'Edit PM Schedule'} />
+            <FormContainer>
+                <FormHeader label={'Edit PM Schedule'} />
+                <LoadingNoDataError loading={loading} error={error}>
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                         <GeneralFormInput register={register} label="PM Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
                         <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
@@ -89,8 +89,8 @@ const EditSchedule = (props: ModalProps) => {
                         </div>
                         <GeneralFormSubmit closeModal={props.closeModal} />
                     </GeneralForm>
-                </FormContainer>
-            </LoadingNoDataError>
+                </LoadingNoDataError>
+            </FormContainer>
         </>
     );
 };
