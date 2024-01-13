@@ -52,7 +52,7 @@ const DataTableHead = (props: Props) => {
     });
 
     return (
-        <thead>
+        <thead className='h-10'>
             <tr>{headers}</tr>
         </thead>
     );
