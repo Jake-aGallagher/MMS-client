@@ -25,6 +25,7 @@ import AddEditEnumValue from '../settings/enumgroups/enumValues/addEditEnumValue
 import AddSchedule from '../pm-schedules/addSchedule/addSchedule';
 import EditPM from '../pm-schedules/pm/editPm/editPm';
 import EditSchedule from '../pm-schedules/editSchedule/editSchedule';
+import AddEditLogTemplate from '../logs/logsManagement/addEditLogTemplate/addEditLogTemplate';
 
 interface ModalProps {
     closeModal: () => void;
@@ -66,6 +67,10 @@ const ModalBase = (props: ModalProps) => {
                 return <EditSchedule closeModal={props.closeModal} payload={props.payload} />;
             case 'editPm':
                 return <EditPM closeModal={props.closeModal} pmId={props.payload} />
+
+            // Logs
+            case 'addEditLogTemplate':
+                return <AddEditLogTemplate closeModal={props.closeModal} payload={props.payload} />;
 
             //Spare
             case 'sparesSelector':
