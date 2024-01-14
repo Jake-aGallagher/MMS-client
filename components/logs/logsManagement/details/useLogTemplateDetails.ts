@@ -35,7 +35,6 @@ export const useLogTemplateDetails = (propertyId: number, scheduleId: number) =>
             const response = await axios.get(`${SERVER_URL}/logs/log-templates/${propertyId}/${scheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            console.log(response.data.logTemplate)
             if (response.data.logTemplate.length === 0) {
                 setNoData(true);
             } else {

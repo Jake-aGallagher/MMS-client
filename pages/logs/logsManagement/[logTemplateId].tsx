@@ -21,7 +21,7 @@ const LogTemplate = () => {
         router.push('/logs');
     }
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const logTemplateId = parseInt(router.asPath.split('/')[2]);
+    const logTemplateId = parseInt(router.asPath.split('/')[3]);
     
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
     const { templateDetails, loading, noData, error, reload } = useLogTemplateDetails(currentProperty, logTemplateId);
