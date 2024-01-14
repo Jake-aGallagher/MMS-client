@@ -12,7 +12,7 @@ import DataTable from '../../../components/dataTable/dataTable';
 import { useState } from 'react';
 import ModalBase from '../../../components/modal/modal';
 
-const Logs = () => {
+const LogTemplates = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions); // todo permissions for logs
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
@@ -32,7 +32,7 @@ const Logs = () => {
             { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] }
         ],
         searchable: true,
-        linkColPrefix: '/logs/logsManangement/',
+        linkColPrefix: '/logs/logsManagement/',
         modalType: 'LogTemplate',
         deleteUrl: 'logs/log-templates',
         idPointer: 'id',
@@ -59,4 +59,4 @@ const Logs = () => {
     );
 };
 
-export default Logs;
+export default LogTemplates;
