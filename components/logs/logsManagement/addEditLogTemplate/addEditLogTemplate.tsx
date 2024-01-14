@@ -39,7 +39,7 @@ const AddEditLogTemplate = (props: ModalProps) => {
         reset,
         formState: { errors },
     } = useForm({
-        resolver: yupResolverAddEditLogTemplate,
+        resolver: yupResolverAddEditLogTemplate(props.payload.id === 0),
         defaultValues: useMemo(() => {
             return defaultValues;
         }, [defaultValues]),
@@ -52,28 +52,32 @@ const AddEditLogTemplate = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addEditLogTemplateHandler(data, currentProperty, props.closeModal);
+        await addEditLogTemplateHandler(props.payload.id, data, currentProperty, props.closeModal);
     };
 
     return (
         <>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormContainer>
-                    <FormHeader label={'Create New Planned Maintenance Schedule'} />
+                    <FormHeader label={'Create New Log Template'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                         <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
                         <GeneralFormInput register={register} label="Log Description (will show at top of Log)" type="textarea" formName="description" errors={errors} rows={5} />
-                        <GeneralFormInput
-                            register={register}
-                            label="Start from today"
-                            type="select"
-                            formName="startNow"
-                            errors={errors}
-                            required={true}
-                            optionNameString="value"
-                            selectOptions={yesNoOptions}
-                        />
-                        {watchStartNow === 'No' ? <GeneralFormInput register={register} label="Start Date" type="date" formName="scheduleStart" errors={errors} required={true} /> : null}
+                        {props.payload.id === 0 ? (
+                            <>
+                                <GeneralFormInput
+                                    register={register}
+                                    label="Start from today"
+                                    type="select"
+                                    formName="startNow"
+                                    errors={errors}
+                                    required={true}
+                                    optionNameString="value"
+                                    selectOptions={yesNoOptions}
+                                />
+                                {watchStartNow === 'No' ? <GeneralFormInput register={register} label="Start Date" type="date" formName="scheduleStart" errors={errors} required={true} /> : null}
+                            </>
+                        ) : null}
                         <FormTextCenter label="Schedule frequency" />
                         <div className="flex flex-row w-full gap-2">
                             <GeneralFormInput register={register} label="Frequency" type="number" formName="frequencyTime" errors={errors} required={true} min={1} />

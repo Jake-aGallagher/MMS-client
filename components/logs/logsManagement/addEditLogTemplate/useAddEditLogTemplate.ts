@@ -2,6 +2,15 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
 
+interface LogTemplateDefaultValues {
+    title: string;
+    description: string;
+    startNow?: string;
+    scheduleStart?: string;
+    frequencyTime: number;
+    frequencyUnit: string;
+}
+
 export const useAddEditLogTemplate = (logTemplateId: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -30,12 +39,11 @@ export const useAddEditLogTemplate = (logTemplateId: number) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setDefaultValues({
-                title: response.data.title,
-                description: response.data.description,
-                startNow: response.data.startNow,
-                scheduleStart: response.data.scheduleStart,
-                frequencyTime: response.data.frequencyTime,
-                frequencyUnit: response.data.frequencyUnit,
+                ...defaultValues,
+                title: response.data.logTemplate.title,
+                description: response.data.logTemplate.description,
+                frequencyTime: response.data.logTemplate.frequency_time,
+                frequencyUnit: response.data.logTemplate.frequency_unit,
             });
             setLoading(false);
         } catch (err) {
