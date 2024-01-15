@@ -22,7 +22,7 @@ const LogTemplate = () => {
     }
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const logTemplateId = parseInt(router.asPath.split('/')[3]);
-    
+
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
     const { templateDetails, loading, noData, error, reload } = useLogTemplateDetails(currentProperty, logTemplateId);
 
@@ -46,16 +46,26 @@ const LogTemplate = () => {
                         <p>Return to Log Templates</p>
                     </Link>
                     {permissions.logsManagement?.manage || isAdmin ? (
-                        <button onClick={() => setModal({view: true, type: 'addEditLogTemplate', payload: {id: logTemplateId, name: templateDetails?.title || ''}})} className="tLink">
-                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                            Edit Log Template
-                        </button>
+                        <>
+                            <button onClick={() => setModal({ view: true, type: 'addEditLogTemplate', payload: { id: logTemplateId, name: templateDetails?.title || '' } })} className="tLink">
+                                <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                                Edit Log Template
+                            </button>
+                            <Link href={`/logs/logsManagement/formBuilder/${logTemplateId}`} className="tLink">
+                                <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                                <p>Form Builder</p>
+                            </Link>
+                        </>
                     ) : null}
                 </Toolbar>
 
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <>
-                        {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({view:false,type:'',payload:{id:0,name:''}}), reload()]} /> : ''}
+                        {modal.view ? (
+                            <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} />
+                        ) : (
+                            ''
+                        )}
 
                         <div className="w-full h-full pt-4 flex flex-col">
                             <div className="flex flex-col xl:flex-row">
