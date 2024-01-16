@@ -7,6 +7,8 @@ interface Props {
         guidance: string;
         sort_order: number;
     };
+    editLogField: (fieldId: number, fieldName: string) => void;
+    deleteLogField: (fieldId: number, fieldName: string) => void;
 }
 
 const LogFieldCard = (props: Props) => {
@@ -21,8 +23,12 @@ const LogFieldCard = (props: Props) => {
                 <div>Type: &nbsp;&nbsp;&nbsp;{props.data.type}</div>
             </div>
             <div className="ml-auto flex flex-row items-center">
-                <button className="btnBlue w-16 h-8 mr-4">Edit</button>
-                <button className="btnRed w-16 h-8 mr-4">Delete</button>
+                <button onClick={() => props.editLogField(props.data.id, props.data.name)} className="btnBlue w-16 h-8 mr-4">
+                    Edit
+                </button>
+                <button onClick={() => props.deleteLogField(props.data.id, props.data.name)} className="btnRed w-16 h-8 mr-4">
+                    Delete
+                </button>
             </div>
         </div>
     );

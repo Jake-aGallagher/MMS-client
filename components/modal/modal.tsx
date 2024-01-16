@@ -123,6 +123,7 @@ const ModalBase = (props: ModalProps) => {
             case 'deleteUrgencyType':
             case 'deletePmSchedule':
             case 'deleteLogTemplate':
+            case 'deleteLogField':
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
         }
     };

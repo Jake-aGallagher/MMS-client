@@ -11,20 +11,40 @@ import ModalBase from '../../../../components/modal/modal';
 import { useLogFields } from '../../../../components/logs/logsManagement/details/formBuilder/useLogFields/useLogFields';
 import LogFieldCard from '../../../../components/logs/logsManagement/details/formBuilder/useLogFields/logFieldCard';
 
+interface AddEdit {
+    logId: number;
+    fieldId: number;
+    name: string;
+}
+
+interface Delete {
+    id: number;
+    name: string;
+    url: string;
+}
+
 const LogFormBuilder = () => {
     const logTemplateId = parseInt(router.asPath.split('/')[4]);
     const { logFields, loading, error, reload } = useLogFields(logTemplateId);
-    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { logId: number; fieldId: number; name: string } }>({
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: AddEdit | Delete }>({
         view: false,
         type: '',
         payload: { logId: 0, fieldId: 0, name: '' },
     });
 
-    const functionhere = () => {
+    const editLogField = (fieldId: number, fieldName: string) => {
+        setModal({ view: true, type: 'addEditLogField', payload: { logId: logTemplateId, fieldId: fieldId, name: fieldName } });
+    };
+
+    const deleteLogField = (fieldId: number, fieldName: string) => {
+        setModal({ view: true, type: 'deleteLogField', payload: { id: fieldId, name: fieldName, url: 'logs/log-fields' } });
+    };
+
+    const addLogField = () => {
         setModal({ view: true, type: 'addEditLogField', payload: { logId: logTemplateId, fieldId: 0, name: '' } });
     };
 
-    const fields = logFields.map((field, i) => <LogFieldCard data={field} key={'logField_' + i} />);
+    const fields = logFields.map((field, i) => <LogFieldCard data={field} key={'logField_' + i} editLogField={editLogField} deleteLogField={deleteLogField} />);
 
     return (
         <>
@@ -43,7 +63,7 @@ const LogFormBuilder = () => {
                             ''
                         )}
                         {fields}
-                        <AddLogField clickHandler={functionhere} />
+                        <AddLogField clickHandler={addLogField} />
                     </>
                 </LoadingNoDataError>
             </FullPage>

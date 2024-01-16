@@ -25,11 +25,15 @@ export const useAddEditLogField = (fieldId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/logs/edit-log-template/${fieldId}`, {
+            const response = await axios.get(`${SERVER_URL}/logs/edit-log-field/${fieldId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setDefaultValues({
-                ...defaultValues,
+                type: response.data.logField.type,
+                name: response.data.logField.name,
+                required: response.data.logField.required ? 'Yes' : 'No',
+                order: response.data.logField.sort_order,
+                guidance: response.data.logField.guidance,
             });
             setLoading(false);
         } catch (err) {
