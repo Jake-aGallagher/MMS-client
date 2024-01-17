@@ -7,7 +7,11 @@ export const deleteFormHandler = async (name: string, url: string, id: number, c
         if (response.data.deleted) {
             closeModal();
         } else {
-            alert(alertString);
+            if (response.data.message) {
+                alert(response.data.message);
+            } else {
+                alert(alertString);
+            }
         }
     } catch (err) {
         alert(alertString);
