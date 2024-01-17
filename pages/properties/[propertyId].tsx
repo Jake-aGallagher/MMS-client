@@ -64,61 +64,59 @@ const PropertyView = () => {
     };
 
     return (
-        <>
-            <FullPage>
-                <Toolbar>
-                    <Link href="/properties" className="tLink">
-                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                        <p>Return to all Properties</p>
-                    </Link>
-                    {permissions.properties?.manage || isAdmin ? (
+        <FullPage>
+            <Toolbar>
+                <Link href="/properties" className="tLink">
+                    <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                    <p>Return to all Properties</p>
+                </Link>
+                {permissions.properties?.manage || isAdmin ? (
+                    <>
+                        <button className="tLink" onClick={() => [setViewModal(true), setModalType('addEditProperty')]}>
+                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                            Edit Property
+                        </button>
+                        <button className="tLink" onClick={() => [setViewModal(true), setModalType('assignUsers')]}>
+                            <FontAwesomeIcon icon={faUserPlus} className="mr-1 w-3" />
+                            Assign Users
+                        </button>
+                    </>
+                ) : null}
+            </Toolbar>
+            {viewModal ? <ModalBase modalType={modalType} payload={parseInt(propertyNumber)} closeModal={() => [setViewModal(false), reload()]} /> : null}
+            <LoadingNoDataError loading={loading} error={error} noData={noData}>
+                <div className="flex flex-col">
+                    <div className="flex flex-col xl:flex-row">
+                        <DetailsBox data={propertyDetailsConfig} />
+                        <div className="flex flex-col w-full">
+                            <div className="w-full xl:pl-8">
+                                <AttachedFilesBox model="property" id={parseInt(propertyNumber)} />
+                            </div>
+                            <PropertyDetailsDefaultCharts
+                                propertyDetailsName={propertyDetails?.name}
+                                incompleteJobs={incompleteJobs}
+                                raised6M={raised6M}
+                                sparesUsed6M={sparesUsed6M}
+                                mostUsed6M={mostUsed6M}
+                                sparesCost6M={sparesCost6M}
+                            />
+                        </div>
+                    </div>
+                    {assignedUsers.length > 0 ? (
                         <>
-                            <button className="tLink" onClick={() => [setViewModal(true), setModalType('addEditProperty')]}>
-                                <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                                Edit Property
-                            </button>
-                            <button className="tLink" onClick={() => [setViewModal(true), setModalType('assignUsers')]}>
-                                <FontAwesomeIcon icon={faUserPlus} className="mr-1 w-3" />
-                                Assign Users
-                            </button>
+                            <div className="mt-4 mb-1 ml-10">Assigned Users</div>
+                            <DataTable config={userTableConfig} data={assignedUsers} />
                         </>
                     ) : null}
-                </Toolbar>
-                {viewModal ? <ModalBase modalType={modalType} payload={parseInt(propertyNumber)} closeModal={() => [setViewModal(false), reload()]} /> : null}
-                <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                    <div className="flex flex-col">
-                        <div className="flex flex-col xl:flex-row">
-                            <DetailsBox data={propertyDetailsConfig} />
-                            <div className="flex flex-col w-full">
-                                <div className="w-full xl:pl-8">
-                                    <AttachedFilesBox model="property" id={parseInt(propertyNumber)} />
-                                </div>
-                                <PropertyDetailsDefaultCharts
-                                    propertyDetailsName={propertyDetails?.name}
-                                    incompleteJobs={incompleteJobs}
-                                    raised6M={raised6M}
-                                    sparesUsed6M={sparesUsed6M}
-                                    mostUsed6M={mostUsed6M}
-                                    sparesCost6M={sparesCost6M}
-                                />
-                            </div>
-                        </div>
-                        {assignedUsers.length > 0 ? (
-                            <>
-                                <div className="mt-4 mb-1 ml-10">Assigned Users</div>
-                                <DataTable config={userTableConfig} data={assignedUsers} />
-                            </>
-                        ) : null}
-                        {recentJobs.length > 0 ? (
-                            <>
-                                <div className="mt-4 mb-1 ml-10">5 Most recent jobs of {propertyDetails?.name}:</div>
-                                <DataTable config={recentJobTableConfig} data={recentJobs} />
-                            </>
-                        ) : null}
-                    </div>
-                </LoadingNoDataError>
-            </FullPage>
-        </>
+                    {recentJobs.length > 0 ? (
+                        <>
+                            <div className="mt-4 mb-1 ml-10">5 Most recent jobs of {propertyDetails?.name}:</div>
+                            <DataTable config={recentJobTableConfig} data={recentJobs} />
+                        </>
+                    ) : null}
+                </div>
+            </LoadingNoDataError>
+        </FullPage>
     );
 };
 

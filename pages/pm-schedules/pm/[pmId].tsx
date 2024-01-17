@@ -21,9 +21,9 @@ const PMDetails = () => {
     if (!permissions.schedules?.view && !isAdmin) {
         router.push('/');
     }
-    
+
     const schedulePMId = router.asPath.split('/')[3];
-    const [modal, setModal] = useState<{view: boolean; type: string; payload: number}>({view: false, type: '', payload: 0})
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: number }>({ view: false, type: '', payload: 0 });
     const { schedulePMDetails, timeDetails, sparesDetails, loading, noData, error, reload } = useSchedulePMDetails(schedulePMId);
 
     const schedulePMConfig = {
@@ -77,39 +77,37 @@ const PMDetails = () => {
                     <p>Return to PM Schedule</p>
                 </Link>
                 {(permissions.schedules?.manage || isAdmin) && schedulePMDetails?.completed == 0 ? (
-                    <button onClick={() => setModal({view: true, type: 'editPm', payload: parseInt(schedulePMId)})} className="tLink">
+                    <button onClick={() => setModal({ view: true, type: 'editPm', payload: parseInt(schedulePMId) })} className="tLink">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Update PM
                     </button>
                 ) : null}
             </Toolbar>
 
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: 0 }), reload()]} /> : ''}
             <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                <>
-                    {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({view: false, type: '', payload: 0}), reload()]} /> : ''}
-                    <div className="w-full h-full pt-4 flex flex-col">
-                        <div className="flex flex-col xl:flex-row">
-                            <DetailsBox data={schedulePMConfig} />
-                            <div className="flex flex-col w-full">
-                                <div className="w-full xl:pl-8">
-                                    <AttachedFilesBox model="schedulePM" id={parseInt(schedulePMId)} />
-                                </div>
+                <div className="w-full h-full pt-4 flex flex-col">
+                    <div className="flex flex-col xl:flex-row">
+                        <DetailsBox data={schedulePMConfig} />
+                        <div className="flex flex-col w-full">
+                            <div className="w-full xl:pl-8">
+                                <AttachedFilesBox model="schedulePM" id={parseInt(schedulePMId)} />
                             </div>
                         </div>
                     </div>
-                    {sparesDetails.length > 0 ? (
-                        <>
-                            <div className="mt-4 mb-1 ml-10">Spare Parts Used</div>
-                            <DataTable config={sparesTableConfig} data={sparesDetails} />
-                        </>
-                    ) : null}
-                    {timeDetails.length > 0 ? (
-                        <>
-                            <div className="mt-4 mb-1 ml-10">Logged Time</div>
-                            <DataTable config={timeTableConfig} data={timeDetails} />
-                        </>
-                    ) : null}
-                </>
+                </div>
+                {sparesDetails.length > 0 ? (
+                    <>
+                        <div className="mt-4 mb-1 ml-10">Spare Parts Used</div>
+                        <DataTable config={sparesTableConfig} data={sparesDetails} />
+                    </>
+                ) : null}
+                {timeDetails.length > 0 ? (
+                    <>
+                        <div className="mt-4 mb-1 ml-10">Logged Time</div>
+                        <DataTable config={timeTableConfig} data={timeDetails} />
+                    </>
+                ) : null}
             </LoadingNoDataError>
         </FullPage>
     );

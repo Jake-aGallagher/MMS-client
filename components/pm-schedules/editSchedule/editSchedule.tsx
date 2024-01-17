@@ -54,8 +54,8 @@ const EditSchedule = (props: ModalProps) => {
 
     return (
         <FormContainer>
-            <FormHeader label={'Edit PM Schedule'} />
             <LoadingNoDataError loading={loading} error={error}>
+            <FormHeader label={'Edit PM Schedule'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="PM Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
                     <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />

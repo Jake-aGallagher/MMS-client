@@ -54,26 +54,24 @@ const Suppliers = () => {
     };
 
     return (
-        <>
-            <FullPage>
-                <Toolbar>
-                    <Link href="/spares/sparesManagement" className="tLink">
-                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                        <p>Return to Spares Management</p>
-                    </Link>
-                    {permissions.sparesManagement?.manage || isAdmin ? (
-                        <button className="tLink" onClick={addEditSupplier}>
-                            <div className="text-2xl mr-1 pb-1">+</div>
-                            Add Supplier
-                        </button>
-                    ) : null}
-                </Toolbar>
-                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
-                <LoadingNoDataError loading={loading} error={error}>
-                    <DataTable config={suppliersTableConfig} data={suppliersList} />
-                </LoadingNoDataError>
-            </FullPage>
-        </>
+        <FullPage>
+            <Toolbar>
+                <Link href="/spares/sparesManagement" className="tLink">
+                    <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                    <p>Return to Spares Management</p>
+                </Link>
+                {permissions.sparesManagement?.manage || isAdmin ? (
+                    <button className="tLink" onClick={addEditSupplier}>
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add Supplier
+                    </button>
+                ) : null}
+            </Toolbar>
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
+            <LoadingNoDataError loading={loading} error={error}>
+                <DataTable config={suppliersTableConfig} data={suppliersList} />
+            </LoadingNoDataError>
+        </FullPage>
     );
 };
 

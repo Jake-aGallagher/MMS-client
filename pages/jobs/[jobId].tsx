@@ -68,57 +68,52 @@ const JobView = () => {
     };
 
     return (
-        <>
-            <FullPage>
-                <Toolbar>
-                    <Link href="/jobs" className="tLink">
-                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                        <p>Return to all Jobs</p>
-                    </Link>
-                    {permissions.jobs?.manage || isAdmin ? (
-                        <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="tLink">
-                            {jobDetails == undefined ? null : jobDetails.completed == 1 ? (
-                                <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                            ) : (
-                                <FontAwesomeIcon icon={faCheck} className="mr-1 w-3" />
-                            )}
-                            {jobDetails == undefined ? null : jobDetails.completed == 1 ? 'Update' : 'Update & Complete'}
-                        </button>
-                    ) : null}
-                </Toolbar>
+        <FullPage>
+            <Toolbar>
+                <Link href="/jobs" className="tLink">
+                    <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                    <p>Return to all Jobs</p>
+                </Link>
+                {permissions.jobs?.manage || isAdmin ? (
+                    <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="tLink">
+                        {jobDetails == undefined ? null : jobDetails.completed == 1 ? (
+                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                        ) : (
+                            <FontAwesomeIcon icon={faCheck} className="mr-1 w-3" />
+                        )}
+                        {jobDetails == undefined ? null : jobDetails.completed == 1 ? 'Update' : 'Update & Complete'}
+                    </button>
+                ) : null}
+            </Toolbar>
 
-                <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                    <>
-                        {viewModal ? <ModalBase modalType={modalType} payload={jobDetails?.id} closeModal={() => [setViewModal(false), reload()]} /> : ''}
-
-                        <div className="w-full h-full pt-4 flex flex-col">
-                            <div className="flex flex-col xl:flex-row">
-                                <DetailsBox data={jobDetailsConfig} />
-                                <div className="flex flex-col w-full">
-                                    <div className="w-full xl:pl-8">
-                                        <AttachedFilesBox model="job" id={parseInt(jobId)} />
-                                    </div>
-                                    <JobDetailsDefaultCharts JobName={jobDetails?.title} timeDetails={timeDetails} />
-                                </div>
+            {viewModal ? <ModalBase modalType={modalType} payload={jobDetails?.id} closeModal={() => [setViewModal(false), reload()]} /> : ''}
+            <LoadingNoDataError loading={loading} error={error} noData={noData}>
+                <div className="w-full h-full pt-4 flex flex-col">
+                    <div className="flex flex-col xl:flex-row">
+                        <DetailsBox data={jobDetailsConfig} />
+                        <div className="flex flex-col w-full">
+                            <div className="w-full xl:pl-8">
+                                <AttachedFilesBox model="job" id={parseInt(jobId)} />
                             </div>
-                            {sparesDetails.length > 0 ? (
-                                <>
-                                    <div className="mt-4 mb-1 ml-10">Spare Parts Used</div>
-                                    <DataTable config={sparesTableConfig} data={sparesDetails} />
-                                </>
-                            ) : null}
-                            {timeDetails.length > 0 ? (
-                                <>
-                                    <div className="mt-4 mb-1 ml-10">Logged Time</div>
-                                    <DataTable config={timeTableConfig} data={timeDetails} />
-                                </>
-                            ) : null}
-                            <div className="pb-10"></div>
+                            <JobDetailsDefaultCharts JobName={jobDetails?.title} timeDetails={timeDetails} />
                         </div>
-                    </>
-                </LoadingNoDataError>
-            </FullPage>
-        </>
+                    </div>
+                    {sparesDetails.length > 0 ? (
+                        <>
+                            <div className="mt-4 mb-1 ml-10">Spare Parts Used</div>
+                            <DataTable config={sparesTableConfig} data={sparesDetails} />
+                        </>
+                    ) : null}
+                    {timeDetails.length > 0 ? (
+                        <>
+                            <div className="mt-4 mb-1 ml-10">Logged Time</div>
+                            <DataTable config={timeTableConfig} data={timeDetails} />
+                        </>
+                    ) : null}
+                    <div className="pb-10"></div>
+                </div>
+            </LoadingNoDataError>
+        </FullPage>
     );
 };
 

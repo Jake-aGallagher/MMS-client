@@ -67,42 +67,40 @@ const SparesView = () => {
     };
 
     return (
-        <>
-            <FullPage>
-                <Toolbar>
-                    <Link href="/spares" className="tLink">
-                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                        <p>Return to all Spares</p>
-                    </Link>
-                    {permissions.spares?.manage || isAdmin ? (
-                        <button onClick={() => editStock()} className="tLink">
-                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                            Edit Spares Item
-                        </button>
-                    ) : null}
-                </Toolbar>
-                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
-                <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                    <div className="flex flex-col">
-                        <div className="flex flex-col xl:flex-row">
-                            <DetailsBox data={spareConfig} />
-                            <div className="flex flex-col w-full">
-                                <div className="w-full xl:pl-8">
-                                    <AttachedFilesBox model="spare" id={parseInt(spareId)} />
-                                </div>
-                                <SparesDetailsDefaultCharts sparesDetailsName={sparesDetails?.name} used6M={used6M} />
+        <FullPage>
+            <Toolbar>
+                <Link href="/spares" className="tLink">
+                    <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                    <p>Return to all Spares</p>
+                </Link>
+                {permissions.spares?.manage || isAdmin ? (
+                    <button onClick={() => editStock()} className="tLink">
+                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                        Edit Spares Item
+                    </button>
+                ) : null}
+            </Toolbar>
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
+            <LoadingNoDataError loading={loading} error={error} noData={noData}>
+                <div className="flex flex-col">
+                    <div className="flex flex-col xl:flex-row">
+                        <DetailsBox data={spareConfig} />
+                        <div className="flex flex-col w-full">
+                            <div className="w-full xl:pl-8">
+                                <AttachedFilesBox model="spare" id={parseInt(spareId)} />
                             </div>
+                            <SparesDetailsDefaultCharts sparesDetailsName={sparesDetails?.name} used6M={used6M} />
                         </div>
-                        {recentJobs.length > 0 ? (
-                            <>
-                                <div className="mt-4 mb-1 ml-10">Recent Jobs</div>
-                                <DataTable config={jobTableConfig} data={recentJobs} />
-                            </>
-                        ) : null}
                     </div>
-                </LoadingNoDataError>
-            </FullPage>
-        </>
+                    {recentJobs.length > 0 ? (
+                        <>
+                            <div className="mt-4 mb-1 ml-10">Recent Jobs</div>
+                            <DataTable config={jobTableConfig} data={recentJobs} />
+                        </>
+                    ) : null}
+                </div>
+            </LoadingNoDataError>
+        </FullPage>
     );
 };
 

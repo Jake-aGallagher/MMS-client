@@ -79,46 +79,44 @@ const DataTable = (props: Props) => {
     };
 
     return (
-        <>
-            <LoadingNoDataError loading={loading} error={false}>
-                {props.config.searchable ? <DataTableSearch headers={props.config.headers} currentFilters={filtersObj} setFiltersObj={setFiltersObj} /> : null}
-                <div className="w-full h-full relative">
-                    <div className="overflow-x-auto rounded-xl shadow-lg">
-                        <table className="w-full table-auto bg-secondary">
-                            <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
-                            <tbody>
-                                {sorted.map((item, i) => (
-                                    <DataTableRow
-                                        key={'row_' + i}
-                                        data={item}
-                                        headers={props.config.headers}
-                                        linkColPrefix={props.config.linkColPrefix}
-                                        viewTooManyItems={props.viewTooManyItems}
-                                        modalType={props.config.modalType}
-                                        deleteUrl={props.config.deleteUrl}
-                                        idPointer={props.config.idPointer}
-                                        namePointer={props.config.namePointer}
-                                        reload={props.config.reload}
-                                    />
-                                ))}
-                            </tbody>
-                            <tfoot className="bg-secondary h-10 text-center">
-                                <tr>
-                                    <td colSpan={100}>
-                                        Showing Results ... to ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Results Per Page:{' '}
-                                        <select>
-                                            <option>10</option>
-                                            <option>25</option>
-                                            <option>50</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+        <LoadingNoDataError loading={loading} error={false}>
+            {props.config.searchable ? <DataTableSearch headers={props.config.headers} currentFilters={filtersObj} setFiltersObj={setFiltersObj} /> : null}
+            <div className="w-full h-full relative">
+                <div className="overflow-x-auto rounded-xl shadow-lg">
+                    <table className="w-full table-auto bg-secondary">
+                        <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
+                        <tbody>
+                            {sorted.map((item, i) => (
+                                <DataTableRow
+                                    key={'row_' + i}
+                                    data={item}
+                                    headers={props.config.headers}
+                                    linkColPrefix={props.config.linkColPrefix}
+                                    viewTooManyItems={props.viewTooManyItems}
+                                    modalType={props.config.modalType}
+                                    deleteUrl={props.config.deleteUrl}
+                                    idPointer={props.config.idPointer}
+                                    namePointer={props.config.namePointer}
+                                    reload={props.config.reload}
+                                />
+                            ))}
+                        </tbody>
+                        <tfoot className="bg-secondary h-10 text-center">
+                            <tr>
+                                <td colSpan={100}>
+                                    Showing Results ... to ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Results Per Page:{' '}
+                                    <select>
+                                        <option>10</option>
+                                        <option>25</option>
+                                        <option>50</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
-            </LoadingNoDataError>
-        </>
+            </div>
+        </LoadingNoDataError>
     );
 };
 

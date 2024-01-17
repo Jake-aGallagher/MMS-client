@@ -59,40 +59,35 @@ const ScheduleView = () => {
     };
 
     return (
-        <>
-            <FullPage>
-                <Toolbar>
-                    <Link href="/pm-schedules" className="tLink">
-                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                        <p>Return to PM Schedules</p>
-                    </Link>
-                    {permissions.schedules?.manage || isAdmin ? (
-                        <button onClick={() => [setViewModal(true), setModalType('editSchedule')]} className="tLink">
-                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                            Update Schedule
-                        </button>
-                    ) : null}
-                </Toolbar>
+        <FullPage>
+            <Toolbar>
+                <Link href="/pm-schedules" className="tLink">
+                    <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                    <p>Return to PM Schedules</p>
+                </Link>
+                {permissions.schedules?.manage || isAdmin ? (
+                    <button onClick={() => [setViewModal(true), setModalType('editSchedule')]} className="tLink">
+                        <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                        Update Schedule
+                    </button>
+                ) : null}
+            </Toolbar>
 
-                <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                    <>
-                        {viewModal ? <ModalBase modalType={modalType} payload={scheduleDetails?.id} closeModal={() => [setViewModal(false), reload()]} /> : ''}
-
-                        <div className="w-full h-full pt-4 flex flex-col">
-                            <div className="flex flex-col xl:flex-row">
-                                <DetailsBox data={scheduleDetailsConfig} />
-                                <div className="flex flex-col w-full">
-                                    <div className="w-full xl:pl-8">
-                                        <AttachedFilesBox model="pmSchedule" id={parseInt(pmScheduleId)} />
-                                    </div>
-                                </div>
+            {viewModal ? <ModalBase modalType={modalType} payload={scheduleDetails?.id} closeModal={() => [setViewModal(false), reload()]} /> : ''}
+            <LoadingNoDataError loading={loading} error={error} noData={noData}>
+                <div className="w-full h-full pt-4 flex flex-col">
+                    <div className="flex flex-col xl:flex-row">
+                        <DetailsBox data={scheduleDetailsConfig} />
+                        <div className="flex flex-col w-full">
+                            <div className="w-full xl:pl-8">
+                                <AttachedFilesBox model="pmSchedule" id={parseInt(pmScheduleId)} />
                             </div>
-                            {schedulePMs.length > 0 ? <DataTable config={PMsTableConfig} data={schedulePMs} /> : null}
                         </div>
-                    </>
-                </LoadingNoDataError>
-            </FullPage>
-        </>
+                    </div>
+                    {schedulePMs.length > 0 ? <DataTable config={PMsTableConfig} data={schedulePMs} /> : null}
+                </div>
+            </LoadingNoDataError>
+        </FullPage>
     );
 };
 

@@ -38,49 +38,40 @@ const LogTemplate = () => {
     };
 
     return (
-        <>
-            <FullPage>
-                <Toolbar>
-                    <Link href="/logs/logsManagement" className="tLink">
-                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                        <p>Return to Log Templates</p>
-                    </Link>
-                    {permissions.logsManagement?.manage || isAdmin ? (
-                        <>
-                            <button onClick={() => setModal({ view: true, type: 'addEditLogTemplate', payload: { id: logTemplateId, name: templateDetails?.title || '' } })} className="tLink">
-                                <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                                Edit Log Template
-                            </button>
-                            <Link href={`/logs/logsManagement/formBuilder/${logTemplateId}`} className="tLink">
-                                <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                                <p>Form Builder</p>
-                            </Link>
-                        </>
-                    ) : null}
-                </Toolbar>
-
-                <LoadingNoDataError loading={loading} error={error} noData={noData}>
+        <FullPage>
+            <Toolbar>
+                <Link href="/logs/logsManagement" className="tLink">
+                    <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                    <p>Return to Log Templates</p>
+                </Link>
+                {permissions.logsManagement?.manage || isAdmin ? (
                     <>
-                        {modal.view ? (
-                            <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} />
-                        ) : (
-                            ''
-                        )}
+                        <button onClick={() => setModal({ view: true, type: 'addEditLogTemplate', payload: { id: logTemplateId, name: templateDetails?.title || '' } })} className="tLink">
+                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                            Edit Log Template
+                        </button>
+                        <Link href={`/logs/logsManagement/formBuilder/${logTemplateId}`} className="tLink">
+                            <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
+                            <p>Form Builder</p>
+                        </Link>
+                    </>
+                ) : null}
+            </Toolbar>
 
-                        <div className="w-full h-full pt-4 flex flex-col">
-                            <div className="flex flex-col xl:flex-row">
-                                <DetailsBox data={scheduleDetailsConfig} />
-                                <div className="flex flex-col w-full">
-                                    <div className="w-full xl:pl-8">
-                                        <AttachedFilesBox model="logTemplate" id={logTemplateId} />
-                                    </div>
-                                </div>
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : ''}
+            <LoadingNoDataError loading={loading} error={error} noData={noData}>
+                <div className="w-full h-full pt-4 flex flex-col">
+                    <div className="flex flex-col xl:flex-row">
+                        <DetailsBox data={scheduleDetailsConfig} />
+                        <div className="flex flex-col w-full">
+                            <div className="w-full xl:pl-8">
+                                <AttachedFilesBox model="logTemplate" id={logTemplateId} />
                             </div>
                         </div>
-                    </>
-                </LoadingNoDataError>
-            </FullPage>
-        </>
+                    </div>
+                </div>
+            </LoadingNoDataError>
+        </FullPage>
     );
 };
 

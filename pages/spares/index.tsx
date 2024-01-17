@@ -27,7 +27,7 @@ const Spares = () => {
     if (!permissions.spares?.view && !isAdmin) {
         router.push('/');
     }
-    
+
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { spares, loading, error, reload } = useSpares({ currentProperty });
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: PropsForModal }>({ view: false, type: '', payload: { id: 0, name: '' } });
@@ -59,28 +59,26 @@ const Spares = () => {
     };
 
     return (
-        <>
-            <FullPage>
-                <Toolbar>
-                    {permissions.sparesManagement?.view || isAdmin ? (
-                        <Link href="/spares/sparesManagement" className="tLink">
-                            <FontAwesomeIcon icon={faClipboard} className="mr-1 w-3" />
-                            Spares Management
-                        </Link>
-                    ) : null}
-                    {permissions.spares?.manage || isAdmin ? (
-                        <button onClick={addItem} className="tLink">
-                            <div className="text-2xl mr-1 pb-1">+</div>
-                            Add Spares Item
-                        </button>
-                    ) : null}
-                </Toolbar>
-                {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
-                <LoadingNoDataError loading={loading} error={error}>
-                    <DataTable config={sparesTableConfig} data={spares} />
-                </LoadingNoDataError>
-            </FullPage>
-        </>
+        <FullPage>
+            <Toolbar>
+                {permissions.sparesManagement?.view || isAdmin ? (
+                    <Link href="/spares/sparesManagement" className="tLink">
+                        <FontAwesomeIcon icon={faClipboard} className="mr-1 w-3" />
+                        Spares Management
+                    </Link>
+                ) : null}
+                {permissions.spares?.manage || isAdmin ? (
+                    <button onClick={addItem} className="tLink">
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add Spares Item
+                    </button>
+                ) : null}
+            </Toolbar>
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : null}
+            <LoadingNoDataError loading={loading} error={error}>
+                <DataTable config={sparesTableConfig} data={spares} />
+            </LoadingNoDataError>
+        </FullPage>
     );
 };
 

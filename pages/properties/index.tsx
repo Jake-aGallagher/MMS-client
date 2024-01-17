@@ -30,28 +30,26 @@ const Properties = () => {
     if (!permissions.properties?.vieew && !isAdmin) {
         router.push('/');
     }
-    
+
     const { allProperties, loading, error, reload } = useProperties();
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setmodalType] = useState('');
 
     return (
-        <>
-            <FullPage>
-                <Toolbar>
-                    {permissions.properties?.manage || isAdmin ? (
-                        <button onClick={() => [setViewModal(true), setmodalType('addEditProperty')]} className="tLink">
-                            <div className="text-2xl mr-1 pb-1">+</div>
-                            Add Property
-                        </button>
-                    ) : null}
-                </Toolbar>
-                {viewModal ? <ModalBase modalType={modalType} payload={0} closeModal={() => [setViewModal(false), reload()]} /> : null}
-                <LoadingNoDataError loading={loading} error={error}>
-                    <DataTable config={propertiesTableConfig} data={allProperties} />
-                </LoadingNoDataError>
-            </FullPage>
-        </>
+        <FullPage>
+            <Toolbar>
+                {permissions.properties?.manage || isAdmin ? (
+                    <button onClick={() => [setViewModal(true), setmodalType('addEditProperty')]} className="tLink">
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add Property
+                    </button>
+                ) : null}
+            </Toolbar>
+            {viewModal ? <ModalBase modalType={modalType} payload={0} closeModal={() => [setViewModal(false), reload()]} /> : null}
+            <LoadingNoDataError loading={loading} error={error}>
+                <DataTable config={propertiesTableConfig} data={allProperties} />
+            </LoadingNoDataError>
+        </FullPage>
     );
 };
 

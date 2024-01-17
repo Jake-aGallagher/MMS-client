@@ -47,31 +47,27 @@ const LogFormBuilder = () => {
     const fields = logFields.map((field, i) => <LogFieldCard data={field} key={'logField_' + i} editLogField={editLogField} deleteLogField={deleteLogField} />);
 
     return (
-        <>
-            <FullPage>
-                <Toolbar>
-                    <Link href={`/logs/logsManagement/${logTemplateId}`} className="tLink">
-                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                        <p>Return to Log Template</p>
-                    </Link>
-                    <button className="tLink">
-                        <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-1 w-3" />
-                        <p>Preview Form</p>
-                    </button>
-                </Toolbar>
-                <LoadingNoDataError loading={loading} error={error}>
-                    <>
-                        {modal.view ? (
-                            <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { logId: 0, fieldId: 0, name: '' } }), reload()]} />
-                        ) : (
-                            ''
-                        )}
-                        {fields}
-                        <AddLogField clickHandler={addLogField} />
-                    </>
-                </LoadingNoDataError>
-            </FullPage>
-        </>
+        <FullPage>
+            <Toolbar>
+                <Link href={`/logs/logsManagement/${logTemplateId}`} className="tLink">
+                    <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                    <p>Return to Log Template</p>
+                </Link>
+                <button className="tLink">
+                    <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-1 w-3" />
+                    <p>Preview Form</p>
+                </button>
+            </Toolbar>
+            {modal.view ? (
+                <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { logId: 0, fieldId: 0, name: '' } }), reload()]} />
+            ) : (
+                ''
+            )}
+            <LoadingNoDataError loading={loading} error={error}>
+                {fields}
+                <AddLogField clickHandler={addLogField} />
+            </LoadingNoDataError>
+        </FullPage>
     );
 };
 
