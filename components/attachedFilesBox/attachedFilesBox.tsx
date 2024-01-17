@@ -5,6 +5,8 @@ import { useRef } from 'react';
 import { useGetFiles } from './useGetFiles';
 import { addFileHandler } from './addFileHandler';
 import { deleteFileHandler } from './deleteFileHandler';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleDown, faPaperclip, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
     model: string;
@@ -39,7 +41,7 @@ const AttachedFilesBox = (props: Props) => {
                 {permissions.files?.manage || isAdmin ? (
                     <>
                         <button onClick={(e) => handleAddClick(e)} className="ml-auto btnBlue w-28 h-8 flex flex-row justify-center items-center">
-                            + Attach File
+                        <FontAwesomeIcon icon={faPaperclip} className="h-5 m-auto" />
                         </button>
                         <input
                             type="file"
@@ -58,12 +60,12 @@ const AttachedFilesBox = (props: Props) => {
                     <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${item.id}`}>
                         {item.name}
                     </a>
-                    <a className="btnBlue w-24 h-8 flex flex-col justify-center items-center ml-auto mr-2" href={`${SERVER_URL}/getfile/${item.id}`}>
-                        Download
+                    <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${item.id}`}>
+                        <FontAwesomeIcon icon={faCircleDown} className="h-5 m-auto" />
                     </a>
                     {permissions.files?.manage || isAdmin ? (
-                        <button onClick={() => deleteFile(item.id)} className="btnRed w-16 h-8">
-                            Delete
+                        <button onClick={() => deleteFile(item.id)} className="btnRed w-12 h-8">
+                            <FontAwesomeIcon icon={faTrash} className="h-5 m-auto" />
                         </button>
                     ) : null}
                 </div>
