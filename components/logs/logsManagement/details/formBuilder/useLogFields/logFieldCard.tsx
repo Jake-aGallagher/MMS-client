@@ -14,7 +14,7 @@ interface Props {
 const LogFieldCard = (props: Props) => {
     return (
         <div className="w-full h-16 mt-5 rounded-lg border-1 border-solid border-accent flex flex-row">
-            <div className="h-full w-16 rounded-lg bg-secondary flex flex-col justify-center items-center">
+            <div className="h-full w-16 flex flex-col justify-center items-center bg-secondary rounded-l-lg">
                 <div>Order</div>
                 <div>{props.data.sort_order}</div>
             </div>

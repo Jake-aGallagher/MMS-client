@@ -2,7 +2,7 @@ import Link from 'next/link';
 import FullPage from '../../../../components/page/fullPage';
 import Toolbar from '../../../../components/page/toolbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import router from 'next/router';
 import AddLogField from '../../../../components/logs/logsManagement/details/formBuilder/addLogFieldButton';
 import { useState } from 'react';
@@ -54,6 +54,10 @@ const LogFormBuilder = () => {
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to Log Template</p>
                     </Link>
+                    <button className="tLink">
+                        <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-1 w-3" />
+                        <p>Preview Form</p>
+                    </button>
                 </Toolbar>
                 <LoadingNoDataError loading={loading} error={error}>
                     <>
