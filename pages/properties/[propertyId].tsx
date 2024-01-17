@@ -48,6 +48,7 @@ const PropertyView = () => {
             { id: 'last_name', name: 'Last name', type: 'string', search: true, order: true },
             { id: 'user_group_name', name: 'User Group', type: 'string', search: true, order: true },
         ],
+        title: 'Assigned Users',
         searchable: false,
     };
 
@@ -59,6 +60,7 @@ const PropertyView = () => {
             { id: 'created', name: 'Created', type: 'date', search: true, order: true },
             { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
         ],
+        title: `5 Most recent Maintenance Tasks for ${propertyDetails?.name}`,
         searchable: false,
         linkColPrefix: '/jobs/',
     };
@@ -103,16 +105,14 @@ const PropertyView = () => {
                         </div>
                     </div>
                     {assignedUsers.length > 0 ? (
-                        <>
-                            <div className="mt-4 mb-1 ml-10">Assigned Users</div>
+                        <div className="mt-4">
                             <DataTable config={userTableConfig} data={assignedUsers} />
-                        </>
+                        </div>
                     ) : null}
                     {recentJobs.length > 0 ? (
-                        <>
-                            <div className="mt-4 mb-1 ml-10">5 Most recent jobs of {propertyDetails?.name}:</div>
+                        <div className="mt-4">
                             <DataTable config={recentJobTableConfig} data={recentJobs} />
-                        </>
+                        </div>
                     ) : null}
                 </div>
             </LoadingNoDataError>

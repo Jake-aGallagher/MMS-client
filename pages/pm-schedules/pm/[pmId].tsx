@@ -51,6 +51,7 @@ const PMDetails = () => {
             { id: 'name', name: 'Name', type: 'string', search: true, order: true },
             { id: 'quantity', name: 'Quantity Used', type: 'number', search: true, order: true },
         ],
+        title: 'Spare Parts Used',
         searchable: false,
         linkColPrefix: '/spares/',
     };
@@ -61,6 +62,7 @@ const PMDetails = () => {
             { id: 'last', name: 'Surname', type: 'string', search: true, order: true },
             { id: 'time', name: 'Time Logged (Mins)', type: 'number', search: true, order: true },
         ],
+        title: 'Time Logged',
         searchable: false,
     };
 
@@ -97,16 +99,14 @@ const PMDetails = () => {
                     </div>
                 </div>
                 {sparesDetails.length > 0 ? (
-                    <>
-                        <div className="mt-4 mb-1 ml-10">Spare Parts Used</div>
+                    <div className="mt-4">
                         <DataTable config={sparesTableConfig} data={sparesDetails} />
-                    </>
+                    </div>
                 ) : null}
                 {timeDetails.length > 0 ? (
-                    <>
-                        <div className="mt-4 mb-1 ml-10">Logged Time</div>
+                    <div className="mt-4">
                         <DataTable config={timeTableConfig} data={timeDetails} />
-                    </>
+                    </div>
                 ) : null}
             </LoadingNoDataError>
         </FullPage>

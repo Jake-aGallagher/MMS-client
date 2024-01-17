@@ -48,6 +48,7 @@ const AssetView = () => {
             { id: 'created', name: 'Created', type: 'date', search: true, order: true },
             { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
         ],
+        title: `5 Most recent Maintenance Tasks for Components of ${assetDetails?.name}`,
         searchable: false,
         linkColPrefix: '/jobs/',
     };
@@ -103,10 +104,9 @@ const AssetView = () => {
                         ) : null}
 
                         {recentJobs.length > 0 ? (
-                            <>
-                                <div className="mt-4 mb-1 ml-10">5 Most recent Maintenance Tasks for Components of {assetDetails?.name}:</div>
+                            <div className="mt-4">
                                 <DataTable config={recentJobTableConfig} data={recentJobs} />
-                            </>
+                            </div>
                         ) : null}
                     </div>
                 </LoadingNoDataError>

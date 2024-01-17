@@ -32,6 +32,7 @@ interface Props {
         idPointer?: string;
         namePointer?: string;
         reload?: () => void;
+        title?: string;
     };
     data: {}[];
     viewTooManyItems?: (contents: Contents[], name: string) => void;
@@ -84,6 +85,7 @@ const DataTable = (props: Props) => {
             <div className="w-full h-full relative">
                 <div className="overflow-x-auto rounded-xl shadow-lg">
                     <table className="w-full table-auto bg-secondary">
+                        {props.config.title ? <caption className="w-full bg-secondary text-lg">{props.config.title}</caption> : null}
                         <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />
                         <tbody>
                             {sorted.map((item, i) => (

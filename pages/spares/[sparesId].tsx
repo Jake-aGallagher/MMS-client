@@ -58,6 +58,7 @@ const SparesView = () => {
             { id: 'created', name: 'Created', type: 'date', search: true, order: true },
             { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
         ],
+        title: 'Recent Jobs',
         searchable: false,
         linkColPrefix: '/jobs/',
     };
@@ -93,10 +94,9 @@ const SparesView = () => {
                         </div>
                     </div>
                     {recentJobs.length > 0 ? (
-                        <>
-                            <div className="mt-4 mb-1 ml-10">Recent Jobs</div>
+                        <div className="mt-4">
                             <DataTable config={jobTableConfig} data={recentJobs} />
-                        </>
+                        </div>
                     ) : null}
                 </div>
             </LoadingNoDataError>
