@@ -27,27 +27,25 @@ const AssignUsers = (props: ModalProps) => {
     };
 
     return (
-        <>
+        <FormContainer>
             <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                <FormContainer>
-                    <FormHeader label={'Assign Users'} />
-                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                        {users.map((user) => (
-                            <GeneralFormInput
-                                key={user.id}
-                                register={register}
-                                label={user.first_name + ' ' + user.last_name}
-                                type="checkbox"
-                                formName={user.id.toString()}
-                                errors={errors}
-                                checked={user.assigned}
-                            />
-                        ))}
-                        <GeneralFormSubmit closeModal={props.closeModal} />
-                    </GeneralForm>
-                </FormContainer>
+                <FormHeader label={'Assign Users'} />
+                <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                    {users.map((user) => (
+                        <GeneralFormInput
+                            key={user.id}
+                            register={register}
+                            label={user.first_name + ' ' + user.last_name}
+                            type="checkbox"
+                            formName={user.id.toString()}
+                            errors={errors}
+                            checked={user.assigned}
+                        />
+                    ))}
+                    <GeneralFormSubmit closeModal={props.closeModal} />
+                </GeneralForm>
             </LoadingNoDataError>
-        </>
+        </FormContainer>
     );
 };
 

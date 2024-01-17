@@ -42,8 +42,8 @@ const AddEditUser = (props: ModalProps) => {
     };
 
     return (
-        <LoadingNoDataError loading={loading} error={error}>
-            <FormContainer>
+        <FormContainer>
+            <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.payload.id > 0 ? 'Edit ' + props.payload.name : 'Create User'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="Username" type="text" formName="username" errors={errors} required={true} />
@@ -67,8 +67,8 @@ const AddEditUser = (props: ModalProps) => {
                     />
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
-            </FormContainer>
-        </LoadingNoDataError>
+            </LoadingNoDataError>
+        </FormContainer>
     );
 };
 

@@ -1,10 +1,10 @@
-import AltTableContainer from "../dataTable/altTableContainer";
-import AltTableHeaders from "../dataTable/altTableHeaders";
-import FormContainer from "../forms/formContainer";
-import FormHeader from "../forms/formHeader";
-import LoadingNoDataError from "../loading/loadingNoDataError";
-import { useUsersSelector } from "./useUsersSelector";
-import UsersAvailableTable from "./usersAvailableTable";
+import AltTableContainer from '../dataTable/altTableContainer';
+import AltTableHeaders from '../dataTable/altTableHeaders';
+import FormContainer from '../forms/formContainer';
+import FormHeader from '../forms/formHeader';
+import LoadingNoDataError from '../loading/loadingNoDataError';
+import { useUsersSelector } from './useUsersSelector';
+import UsersAvailableTable from './usersAvailableTable';
 
 interface ModalProps {
     closeModal: () => void;
@@ -14,7 +14,7 @@ interface ModalProps {
 
 interface LoggedTime {
     id: number;
-    name: string
+    name: string;
     time: number;
 }
 
@@ -27,9 +27,9 @@ const UsersSelector = (props: ModalProps) => {
     };
 
     return (
-        <LoadingNoDataError loading={loading} error={error}>
-            <FormContainer>
-                <FormHeader label='Log Time for User' />
+        <FormContainer>
+            <LoadingNoDataError loading={loading} error={error}>
+                <FormHeader label="Log Time for User" />
                 <div className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                     <AltTableContainer>
                         <AltTableHeaders headers={['Name', 'Add']} />
@@ -42,9 +42,9 @@ const UsersSelector = (props: ModalProps) => {
                         </button>
                     </div>
                 </div>
-            </FormContainer>
-        </LoadingNoDataError>
-    )
-}
+            </LoadingNoDataError>
+        </FormContainer>
+    );
+};
 
 export default UsersSelector;

@@ -43,8 +43,8 @@ const AddEditStatusType = (props: ModalProps) => {
     };
 
     return (
-        <LoadingNoDataError loading={loading} error={error}>
-            <FormContainer>
+        <FormContainer>
+            <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.value : 'Add Status Type'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="Value" type="text" formName="value" errors={errors} required={true} />
@@ -62,8 +62,8 @@ const AddEditStatusType = (props: ModalProps) => {
                     <GeneralFormInput register={register} label="Set as Initial Status on Job/PM Creation" type="checkbox" formName="initialStatus" errors={errors} required={true} />
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
-            </FormContainer>
-        </LoadingNoDataError>
+            </LoadingNoDataError>
+        </FormContainer>
     );
 };
 

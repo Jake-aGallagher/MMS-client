@@ -52,43 +52,32 @@ const AddEditLogField = (props: ModalProps) => {
     };
 
     return (
-        <>
+        <FormContainer>
             <LoadingNoDataError loading={loading} error={error}>
-                <FormContainer>
-                    <FormHeader label={'Add Edit Field'} />
-                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                        <GeneralFormInput
-                            register={register}
-                            label="Field Type"
-                            type="select"
-                            formName="type"
-                            errors={errors}
-                            required={true}
-                            optionNameString="value"
-                            selectOptions={fieldTypeOptions}
-                        />
-                        <GeneralFormInput register={register} label={watchType !== 'info' ? 'Field Name' : 'Info/Guidance/Note'} type="text" formName="name" errors={errors} />
-                        {watchType !== 'info' ? (
-                            <>
-                                <GeneralFormInput
-                                    register={register}
-                                    label="Mandatory Field"
-                                    type="select"
-                                    formName="required"
-                                    errors={errors}
-                                    required={true}
-                                    optionNameString="value"
-                                    selectOptions={yesNoOptions}
-                                />
-                                <GeneralFormInput register={register} label="Guidance Notes (will Show in tooltip)" type="text" formName="guidance" errors={errors} />
-                            </>
-                        ) : null}
-                        <GeneralFormInput register={register} label="Order" type="number" formName="order" errors={errors} min={0} />
-                        <GeneralFormSubmit closeModal={props.closeModal} />
-                    </GeneralForm>
-                </FormContainer>
+                <FormHeader label={'Add Edit Field'} />
+                <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                    <GeneralFormInput register={register} label="Field Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={fieldTypeOptions} />
+                    <GeneralFormInput register={register} label={watchType !== 'info' ? 'Field Name' : 'Info/Guidance/Note'} type="text" formName="name" errors={errors} />
+                    {watchType !== 'info' ? (
+                        <>
+                            <GeneralFormInput
+                                register={register}
+                                label="Mandatory Field"
+                                type="select"
+                                formName="required"
+                                errors={errors}
+                                required={true}
+                                optionNameString="value"
+                                selectOptions={yesNoOptions}
+                            />
+                            <GeneralFormInput register={register} label="Guidance Notes (will Show in tooltip)" type="text" formName="guidance" errors={errors} />
+                        </>
+                    ) : null}
+                    <GeneralFormInput register={register} label="Order" type="number" formName="order" errors={errors} min={0} />
+                    <GeneralFormSubmit closeModal={props.closeModal} />
+                </GeneralForm>
             </LoadingNoDataError>
-        </>
+        </FormContainer>
     );
 };
 

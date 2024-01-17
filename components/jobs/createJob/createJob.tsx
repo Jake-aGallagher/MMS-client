@@ -53,50 +53,47 @@ const CreateJob = (props: ModalProps) => {
 
     return (
         <>
-            <LoadingNoDataError loading={loading} error={error}>
-                <>
-                    {viewModal ? <ModalBase modalType={modalType} payload={modalPayload} fullSize={true} closeModal={() => [setViewModal(false), props.closeModal()]} /> : ''}
-                    <FormContainer>
-                        <FormHeader label={'Create New Job'} />
-                        <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                            <GeneralFormInput
-                                register={register}
-                                label="Job Type"
-                                type="select"
-                                formName="selectedType"
-                                errors={errors}
-                                required={true}
-                                optionNameString="value"
-                                selectOptions={typeOptions}
-                            />
-                            <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
-                            <GeneralFormInput register={register} label="Job Description" type="textarea" formName="description" errors={errors} rows={5} />
-                            <GeneralFormInput
-                                register={register}
-                                label="Urgency"
-                                type="select"
-                                formName="selectedUrgency"
-                                errors={errors}
-                                required={true}
-                                optionNameString="value"
-                                selectOptions={urgencyOptions}
-                            />
-                            <GeneralFormInput
-                                register={register}
-                                label="Would you like to update and/or complete this Job immediately"
-                                type="select"
-                                formName="compNow"
-                                errors={errors}
-                                required={true}
-                                optionNameString="value"
-                                selectOptions={yesNoOptions}
-                            />
-                            <GeneralFormSubmit closeModal={props.closeModal} />
-                        </GeneralForm>
-                    </FormContainer>
-                </>
-            </LoadingNoDataError>
-            ;
+            {viewModal ? <ModalBase modalType={modalType} payload={modalPayload} fullSize={true} closeModal={() => [setViewModal(false), props.closeModal()]} /> : ''}
+            <FormContainer>
+                <LoadingNoDataError loading={loading} error={error}>
+                    <FormHeader label={'Create New Job'} />
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                        <GeneralFormInput
+                            register={register}
+                            label="Job Type"
+                            type="select"
+                            formName="selectedType"
+                            errors={errors}
+                            required={true}
+                            optionNameString="value"
+                            selectOptions={typeOptions}
+                        />
+                        <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Job Description" type="textarea" formName="description" errors={errors} rows={5} />
+                        <GeneralFormInput
+                            register={register}
+                            label="Urgency"
+                            type="select"
+                            formName="selectedUrgency"
+                            errors={errors}
+                            required={true}
+                            optionNameString="value"
+                            selectOptions={urgencyOptions}
+                        />
+                        <GeneralFormInput
+                            register={register}
+                            label="Would you like to update and/or complete this Job immediately"
+                            type="select"
+                            formName="compNow"
+                            errors={errors}
+                            required={true}
+                            optionNameString="value"
+                            selectOptions={yesNoOptions}
+                        />
+                        <GeneralFormSubmit closeModal={props.closeModal} />
+                    </GeneralForm>
+                </LoadingNoDataError>
+            </FormContainer>
         </>
     );
 };

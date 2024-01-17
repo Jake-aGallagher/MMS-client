@@ -47,22 +47,20 @@ const AddEditProperty = (props: ModalProps) => {
     };
 
     return (
-        <>
+        <FormContainer>
             <LoadingNoDataError loading={loading} error={error}>
-                <FormContainer>
-                    <FormHeader label={props.propertyNumber > 0 ? 'Edit ' + defaultValues.propertyName : 'Add Property'} />
-                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                        <GeneralFormInput register={register} label="Facility Name" type="text" formName="propertyName" errors={errors} required={true} />
-                        <GeneralFormInput register={register} label="Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
-                        <GeneralFormInput register={register} label="Address" type="text" formName="address" errors={errors} required={true} />
-                        <GeneralFormInput register={register} label="City" type="text" formName="city" errors={errors} required={true} />
-                        <GeneralFormInput register={register} label="County" type="text" formName="county" errors={errors} required={true} />
-                        <GeneralFormInput register={register} label="Postcode" type="text" formName="postcode" errors={errors} required={true} />
-                        <GeneralFormSubmit closeModal={props.closeModal} />
-                    </GeneralForm>
-                </FormContainer>
+                <FormHeader label={props.propertyNumber > 0 ? 'Edit ' + defaultValues.propertyName : 'Add Property'} />
+                <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                    <GeneralFormInput register={register} label="Facility Name" type="text" formName="propertyName" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
+                    <GeneralFormInput register={register} label="Address" type="text" formName="address" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="City" type="text" formName="city" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="County" type="text" formName="county" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="Postcode" type="text" formName="postcode" errors={errors} required={true} />
+                    <GeneralFormSubmit closeModal={props.closeModal} />
+                </GeneralForm>
             </LoadingNoDataError>
-        </>
+        </FormContainer>
     );
 };
 

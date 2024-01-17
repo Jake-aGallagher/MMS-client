@@ -86,65 +86,61 @@ const UpdateJob = (props: ModalProps) => {
 
     return (
         <>
-            <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                <>
-                    {viewModal ? (
-                        <ModalBase modalType={modal.modalType} payload={modal.payload} fullSize={modal.fullSize} passbackDeatails={modal.passbackDeatails} closeModal={modal.closeModal} />
-                    ) : null}
-                    <FormContainer>
-                        <FormHeader label={'Update Job'} />
-                        <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                            {completed !== 1 ? (
-                                <>
-                                    <GeneralFormInput
-                                        register={register}
-                                        label="Current Status"
-                                        type="select"
-                                        formName="status"
-                                        errors={errors}
-                                        required={true}
-                                        optionNameString="value"
-                                        selectOptions={statusOptions}
-                                    />
-                                    <GeneralFormInput register={register} label="Description" type="textarea" formName="description" errors={errors} rows={5} />
-                                </>
-                            ) : null}
-                            <GeneralFormInput register={register} label="Notes" type="textarea" formName="notes" errors={errors} rows={5} />
+            {viewModal ? <ModalBase modalType={modal.modalType} payload={modal.payload} fullSize={modal.fullSize} passbackDeatails={modal.passbackDeatails} closeModal={modal.closeModal} /> : null}
+            <FormContainer>
+                <LoadingNoDataError loading={loading} error={error} noData={noData}>
+                    <FormHeader label={'Update Job'} />
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                        {completed !== 1 ? (
+                            <>
+                                <GeneralFormInput
+                                    register={register}
+                                    label="Current Status"
+                                    type="select"
+                                    formName="status"
+                                    errors={errors}
+                                    required={true}
+                                    optionNameString="value"
+                                    selectOptions={statusOptions}
+                                />
+                                <GeneralFormInput register={register} label="Description" type="textarea" formName="description" errors={errors} rows={5} />
+                            </>
+                        ) : null}
+                        <GeneralFormInput register={register} label="Notes" type="textarea" formName="notes" errors={errors} rows={5} />
 
-                            {completed !== 1 ? (
-                                <>
-                                    <GeneralFileInput files={files} setFiles={setFiles} />
+                        {completed !== 1 ? (
+                            <>
+                                <GeneralFileInput files={files} setFiles={setFiles} />
 
-                                    <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
-                                        Log Spares Used
-                                    </button>
-                                    <AltTableContainer className="mb-4 px-1">
-                                        {sparesSelected.length > 0 ? (
-                                            <>
-                                                <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
-                                                <SparesAddRemoveTable sparesSelected={sparesSelected} setSparesSelected={setSparesSelected} />
-                                            </>
-                                        ) : null}
-                                    </AltTableContainer>
+                                <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
+                                    Log Spares Used
+                                </button>
+                                <AltTableContainer className="mb-4 px-1">
+                                    {sparesSelected.length > 0 ? (
+                                        <>
+                                            <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
+                                            <SparesAddRemoveTable sparesSelected={sparesSelected} setSparesSelected={setSparesSelected} />
+                                        </>
+                                    ) : null}
+                                </AltTableContainer>
 
-                                    <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'users')}>
-                                        Log Time
-                                    </button>
-                                    <AltTableContainer className="mb-4 px-1">
-                                        {loggedTimeDetails.length > 0 ? (
-                                            <>
-                                                <AltTableHeaders headers={['Name', 'Time Logged', 'Add 5 Mins', 'Reduce 5 Mins', 'Remove']} />
-                                                <UsersAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
-                                            </>
-                                        ) : null}
-                                    </AltTableContainer>
-                                </>
-                            ) : null}
-                            <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(statusWatch[0])) && completed !== 1 ? 'Complete' : 'Update'} />
-                        </GeneralForm>
-                    </FormContainer>
-                </>
-            </LoadingNoDataError>
+                                <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'users')}>
+                                    Log Time
+                                </button>
+                                <AltTableContainer className="mb-4 px-1">
+                                    {loggedTimeDetails.length > 0 ? (
+                                        <>
+                                            <AltTableHeaders headers={['Name', 'Time Logged', 'Add 5 Mins', 'Reduce 5 Mins', 'Remove']} />
+                                            <UsersAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
+                                        </>
+                                    ) : null}
+                                </AltTableContainer>
+                            </>
+                        ) : null}
+                        <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(statusWatch[0])) && completed !== 1 ? 'Complete' : 'Update'} />
+                    </GeneralForm>
+                </LoadingNoDataError>
+            </FormContainer>
         </>
     );
 };

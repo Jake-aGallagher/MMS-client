@@ -53,45 +53,43 @@ const EditSchedule = (props: ModalProps) => {
     };
 
     return (
-        <>
-            <FormContainer>
-                <FormHeader label={'Edit PM Schedule'} />
-                <LoadingNoDataError loading={loading} error={error}>
-                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                        <GeneralFormInput register={register} label="PM Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
-                        <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
-                        <GeneralFormInput register={register} label="PM Description" type="textarea" formName="description" errors={errors} rows={5} />
+        <FormContainer>
+            <FormHeader label={'Edit PM Schedule'} />
+            <LoadingNoDataError loading={loading} error={error}>
+                <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                    <GeneralFormInput register={register} label="PM Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
+                    <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="PM Description" type="textarea" formName="description" errors={errors} rows={5} />
+                    <GeneralFormInput
+                        register={register}
+                        label="Adjust Current Due Date?"
+                        type="select"
+                        formName="editStart"
+                        errors={errors}
+                        required={true}
+                        optionNameString="value"
+                        selectOptions={yesNoOptions}
+                    />
+                    {watchEditStart === 'Yes' ? <GeneralFormInput register={register} label="Next Due" type="date" formName="scheduleStart" errors={errors} required={true} /> : null}
+                    <FormTextCenter label="Schedule frequency" />
+                    <div className="flex flex-row w-full gap-2">
+                        <GeneralFormInput register={register} label="Frequency" type="number" formName="frequencyTime" errors={errors} required={true} min={1} />
                         <GeneralFormInput
                             register={register}
-                            label="Adjust Current Due Date?"
+                            label="Time Unit"
                             type="select"
-                            formName="editStart"
+                            formName="frequencyUnit"
                             errors={errors}
                             required={true}
                             optionNameString="value"
-                            selectOptions={yesNoOptions}
+                            selectOptions={timeUnitOptions}
+                            extraClasses={'w-full'}
                         />
-                        {watchEditStart === 'Yes' ? <GeneralFormInput register={register} label="Next Due" type="date" formName="scheduleStart" errors={errors} required={true} /> : null}
-                        <FormTextCenter label="Schedule frequency" />
-                        <div className="flex flex-row w-full gap-2">
-                            <GeneralFormInput register={register} label="Frequency" type="number" formName="frequencyTime" errors={errors} required={true} min={1} />
-                            <GeneralFormInput
-                                register={register}
-                                label="Time Unit"
-                                type="select"
-                                formName="frequencyUnit"
-                                errors={errors}
-                                required={true}
-                                optionNameString="value"
-                                selectOptions={timeUnitOptions}
-                                extraClasses={'w-full'}
-                            />
-                        </div>
-                        <GeneralFormSubmit closeModal={props.closeModal} />
-                    </GeneralForm>
-                </LoadingNoDataError>
-            </FormContainer>
-        </>
+                    </div>
+                    <GeneralFormSubmit closeModal={props.closeModal} />
+                </GeneralForm>
+            </LoadingNoDataError>
+        </FormContainer>
     );
 };
 

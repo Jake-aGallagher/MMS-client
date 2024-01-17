@@ -59,60 +59,58 @@ const AddEditDelivery = (props: ModalProps) => {
 
     return (
         <>
-            <LoadingNoDataError loading={loading} error={error}>
-                <>
-                    {viewModal ? (
-                        <ModalBase
-                            modalType="sparesSelector"
-                            payload={{ sparesSelected: contents, type: 'delivery' }}
-                            fullSize={true}
-                            passbackDeatails={addSparesHandler}
-                            closeModal={() => setViewModal(false)}
+            {viewModal ? (
+                <ModalBase
+                    modalType="sparesSelector"
+                    payload={{ sparesSelected: contents, type: 'delivery' }}
+                    fullSize={true}
+                    passbackDeatails={addSparesHandler}
+                    closeModal={() => setViewModal(false)}
+                />
+            ) : (
+                ''
+            )}
+            <FormContainer>
+                <LoadingNoDataError loading={loading} error={error}>
+                    <FormHeader label={props.payload.name.length > 0 ? props.payload.name : 'Add Delivery'} />
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                        <GeneralFormInput register={register} label="Delivery Name" type="text" formName="name" errors={errors} required={true} />
+                        <GeneralFormInput
+                            register={register}
+                            label="Supplier"
+                            type="select"
+                            formName="supplier"
+                            errors={errors}
+                            required={true}
+                            optionNameString="name"
+                            selectOptions={suppliersList}
                         />
-                    ) : (
-                        ''
-                    )}
-                    <FormContainer>
-                        <FormHeader label={props.payload.name.length > 0 ? props.payload.name : 'Add Delivery'} />
-                        <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                            <GeneralFormInput register={register} label="Delivery Name" type="text" formName="name" errors={errors} required={true} />
-                            <GeneralFormInput
-                                register={register}
-                                label="Supplier"
-                                type="select"
-                                formName="supplier"
-                                errors={errors}
-                                required={true}
-                                optionNameString="name"
-                                selectOptions={suppliersList}
-                            />
-                            <GeneralFormInput register={register} label="Courier" type="text" formName="courier" errors={errors} required={true} />
-                            <GeneralFormInput register={register} label="Placed" type="date" formName="placed" errors={errors} required={true} />
-                            <GeneralFormInput register={register} label="Due" type="date" formName="due" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Courier" type="text" formName="courier" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Placed" type="date" formName="placed" errors={errors} required={true} />
+                        <GeneralFormInput register={register} label="Due" type="date" formName="due" errors={errors} required={true} />
 
-                            <button className="btnBlue h-8 mt-4 mb-1" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
-                                Add Spares to Delivery
-                            </button>
-                            {contents.length > 0 && (
-                                <AltTableContainer>
-                                    <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
-                                    <SparesAddRemoveTable sparesSelected={contents} setSparesSelected={setContents} />
-                                </AltTableContainer>
-                            )}
+                        <button className="btnBlue h-8 mt-4 mb-1" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
+                            Add Spares to Delivery
+                        </button>
+                        {contents.length > 0 && (
+                            <AltTableContainer>
+                                <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
+                                <SparesAddRemoveTable sparesSelected={contents} setSparesSelected={setContents} />
+                            </AltTableContainer>
+                        )}
 
-                            <GeneralFormInput
-                                register={register}
-                                label="Delivery Arrived, Selecting this Will automatically add the Spares items to stock"
-                                type="checkbox"
-                                formName="arrived"
-                                errors={errors}
-                                required={true}
-                            />
-                            <GeneralFormSubmit closeModal={props.closeModal} />
-                        </GeneralForm>
-                    </FormContainer>
-                </>
-            </LoadingNoDataError>
+                        <GeneralFormInput
+                            register={register}
+                            label="Delivery Arrived, Selecting this Will automatically add the Spares items to stock"
+                            type="checkbox"
+                            formName="arrived"
+                            errors={errors}
+                            required={true}
+                        />
+                        <GeneralFormSubmit closeModal={props.closeModal} />
+                    </GeneralForm>
+                </LoadingNoDataError>
+            </FormContainer>
         </>
     );
 };

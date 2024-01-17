@@ -75,77 +75,73 @@ const EditPM = (props: Props) => {
     };
 
     const handleRegistration = async (data: any) => {
-        const complete = completableStatus.includes(parseInt(data.status))
+        const complete = completableStatus.includes(parseInt(data.status));
         editPMHandler(data, props.pmId, complete, currentProperty, loggedTimeDetails, sparesSelected, props.closeModal, []);
     };
 
     return (
         <>
-            <LoadingNoDataError loading={loading} error={error} noData={noData}>
-                <>
-                    {viewModal ? (
-                        <ModalBase modalType={modal.modalType} payload={modal.payload} fullSize={modal.fullSize} passbackDeatails={modal.passbackDeatails} closeModal={modal.closeModal} />
-                    ) : null}
-                    <FormContainer>
-                        <FormHeader label={'Update PM'} />
-                        <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                            <GeneralFormInput
-                                register={register}
-                                label="Current Status"
-                                type="select"
-                                formName="status"
-                                errors={errors}
-                                required={true}
-                                optionNameString="value"
-                                selectOptions={statusOptions}
-                            />
-                            <GeneralFormInput register={register} label="Notes" type="textarea" formName="notes" errors={errors} rows={5} />
+            {viewModal ? <ModalBase modalType={modal.modalType} payload={modal.payload} fullSize={modal.fullSize} passbackDeatails={modal.passbackDeatails} closeModal={modal.closeModal} /> : null}
+            <FormContainer>
+                <LoadingNoDataError loading={loading} error={error} noData={noData}>
+                    <FormHeader label={'Update PM'} />
+                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                        <GeneralFormInput
+                            register={register}
+                            label="Current Status"
+                            type="select"
+                            formName="status"
+                            errors={errors}
+                            required={true}
+                            optionNameString="value"
+                            selectOptions={statusOptions}
+                        />
+                        <GeneralFormInput register={register} label="Notes" type="textarea" formName="notes" errors={errors} rows={5} />
 
-                            <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
-                                Log Spares Used
-                            </button>
-                            <AltTableContainer className="mb-4 px-1">
-                                {sparesSelected.length > 0 ? (
-                                    <>
-                                        <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
-                                        <SparesAddRemoveTable sparesSelected={sparesSelected} setSparesSelected={setSparesSelected} />
-                                    </>
-                                ) : null}
-                            </AltTableContainer>
-
-                            <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'users')}>
-                                Log Time
-                            </button>
-                            <AltTableContainer className="mb-4 px-1">
-                                {loggedTimeDetails.length > 0 ? (
-                                    <>
-                                        <AltTableHeaders headers={['Name', 'Time Logged', 'Add 5 Mins', 'Reduce 5 Mins', 'Remove']} />
-                                        <UsersAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
-                                    </>
-                                ) : null}
-                            </AltTableContainer>
-                            {completableStatus.includes(parseInt(statusWatch[0])) ? (
+                        <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
+                            Log Spares Used
+                        </button>
+                        <AltTableContainer className="mb-4 px-1">
+                            {sparesSelected.length > 0 ? (
                                 <>
-                                    <GeneralFormInput
-                                        register={register}
-                                        label="Continue Schedule"
-                                        type="select"
-                                        formName="continueSchedule"
-                                        errors={errors}
-                                        required={true}
-                                        optionNameString="value"
-                                        selectOptions={continueScheduleOptions}
-                                    />
-                                    <div className="mt-auto">
-                                        <FormTextCenter label="You are about to Complete this PM, once completed the only editable section will be the Notes" />
-                                    </div>
+                                    <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
+                                    <SparesAddRemoveTable sparesSelected={sparesSelected} setSparesSelected={setSparesSelected} />
                                 </>
                             ) : null}
-                            <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(statusWatch[0])) ? 'Complete' : 'Update'} />
-                        </GeneralForm>
-                    </FormContainer>
-                </>
-            </LoadingNoDataError>
+                        </AltTableContainer>
+
+                        <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'users')}>
+                            Log Time
+                        </button>
+                        <AltTableContainer className="mb-4 px-1">
+                            {loggedTimeDetails.length > 0 ? (
+                                <>
+                                    <AltTableHeaders headers={['Name', 'Time Logged', 'Add 5 Mins', 'Reduce 5 Mins', 'Remove']} />
+                                    <UsersAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
+                                </>
+                            ) : null}
+                        </AltTableContainer>
+                        {completableStatus.includes(parseInt(statusWatch[0])) ? (
+                            <>
+                                <GeneralFormInput
+                                    register={register}
+                                    label="Continue Schedule"
+                                    type="select"
+                                    formName="continueSchedule"
+                                    errors={errors}
+                                    required={true}
+                                    optionNameString="value"
+                                    selectOptions={continueScheduleOptions}
+                                />
+                                <div className="mt-auto">
+                                    <FormTextCenter label="You are about to Complete this PM, once completed the only editable section will be the Notes" />
+                                </div>
+                            </>
+                        ) : null}
+                        <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(statusWatch[0])) ? 'Complete' : 'Update'} />
+                    </GeneralForm>
+                </LoadingNoDataError>
+            </FormContainer>
         </>
     );
 };

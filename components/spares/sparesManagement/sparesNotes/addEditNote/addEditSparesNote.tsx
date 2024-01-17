@@ -45,20 +45,18 @@ const AddEditSparesNote = (props: ModalProps) => {
     };
 
     return (
-        <>
+        <FormContainer>
             <LoadingNoDataError loading={loading} error={error}>
-                <FormContainer>
-                    <FormHeader label={props.payload.title.length > 0 ? props.payload.title : 'Add Note'} />
-                    <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                        <div className="text-center">This note will be visible to anyone who visits the Spares Management Page</div>
-                        <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
-                        <GeneralFormInput register={register} label="Note" type="textarea" formName="note" errors={errors} rows={10} />
-                        <div className="text-center">{watchNote[0].length} / 1000 Charachters</div>
-                        <GeneralFormSubmit closeModal={props.closeModal} />
-                    </GeneralForm>
-                </FormContainer>
+                <FormHeader label={props.payload.title.length > 0 ? props.payload.title : 'Add Note'} />
+                <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                    <div className="text-center">This note will be visible to anyone who visits the Spares Management Page</div>
+                    <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="Note" type="textarea" formName="note" errors={errors} rows={10} />
+                    <div className="text-center">{watchNote[0].length} / 1000 Charachters</div>
+                    <GeneralFormSubmit closeModal={props.closeModal} />
+                </GeneralForm>
             </LoadingNoDataError>
-        </>
+        </FormContainer>
     );
 };
 

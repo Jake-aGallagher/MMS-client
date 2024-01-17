@@ -28,8 +28,8 @@ const SparesSelector = (props: ModalProps) => {
     };
 
     return (
-        <LoadingNoDataError loading={loading} error={error}>
-            <FormContainer>
+        <FormContainer>
+            <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.payload.type === 'delivery' ? 'Add to Delivery' : 'Spares Used'} />
                 <div className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                     <AltTableContainer>
@@ -43,8 +43,8 @@ const SparesSelector = (props: ModalProps) => {
                         </button>
                     </div>
                 </div>
-            </FormContainer>
-        </LoadingNoDataError>
+            </LoadingNoDataError>
+        </FormContainer>
     );
 };
 
