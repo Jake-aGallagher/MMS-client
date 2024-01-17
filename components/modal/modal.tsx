@@ -38,7 +38,7 @@ interface ModalProps {
 
 const ModalBase = (props: ModalProps) => {
     const modalToDisplay = (modalType: string) => {
-        GlobalDebug('Modal', [['modal type', modalType]])
+        GlobalDebug('Modal', [['modal type', modalType]]);
 
         switch (modalType) {
             // Property
@@ -67,7 +67,7 @@ const ModalBase = (props: ModalProps) => {
             case 'addEditPmSchedule':
                 return <EditSchedule closeModal={props.closeModal} payload={props.payload} />;
             case 'editPm':
-                return <EditPM closeModal={props.closeModal} pmId={props.payload} />
+                return <EditPM closeModal={props.closeModal} pmId={props.payload} />;
 
             // Logs
             case 'addEditLogTemplate':
@@ -108,7 +108,7 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditStatusType closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditUrgencyType':
                 return <AddEditUrgencyType closeModal={props.closeModal} payload={props.payload} />;
-            
+
             // Delete Modals
             case 'deleteDelivery':
             case 'deleteSupplier':
@@ -127,14 +127,32 @@ const ModalBase = (props: ModalProps) => {
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
         }
     };
+
+    const smallerModalList = [
+        'deleteDelivery',
+        'deleteSupplier',
+        'deleteSparesItem',
+        'deleteSparesNote',
+        'deleteUser',
+        'deleteUserGroup',
+        'deleteEnumGroup',
+        'deleteEnumValue',
+        'deleteTaskType',
+        'deleteStatusType',
+        'deleteUrgencyType',
+        'deletePmSchedule',
+        'deleteLogTemplate',
+        'deleteLogField',
+        'deleteAsset',
+        'adjustStockSparesItem'
+    ];
+
     return (
         <>
             <div className={`fixed left-0 top-0 h-screen w-screen z-40 ${props.fullSize ? null : 'bg-black opacity-80'}`} onClick={props.closeModal}></div>
-            {props.fullSize ? (
-                <div className="absolute top-0 mx-auto rounded-md left-0 right-0 h-full w-full z-50 ">{modalToDisplay(props.modalType)}</div>
-            ) : (
-                <div className="fixed top-0 mx-auto mt-10 rounded-md left-0 right-0 h-5/6 w-4/5 lg:w-3/5 z-50 ">{modalToDisplay(props.modalType)}</div>
-            )}
+            <div className={`fixed top-0 bottom-0 left-0 right-0 m-auto rounded-md ${smallerModalList.includes(props.modalType) ? 'h-1/3' : 'h-5/6'} w-4/5 lg:w-3/5 z-50 bg-background`}>
+                {modalToDisplay(props.modalType)}
+            </div>
         </>
     );
 };
