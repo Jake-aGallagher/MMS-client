@@ -15,16 +15,6 @@ module.exports = {
             red: '#dc2626',
         },
         extend: {
-            gridTemplateRows: {
-                // Simple 12 row grid
-                12: 'repeat(12, minmax(0, 1fr))',
-            },
-            gridRowStart: {
-                4: '4',
-            },
-            gridRowEnd: {
-                13: '13',
-            },
             borderWidth: {
                 1: '1px',
             },
