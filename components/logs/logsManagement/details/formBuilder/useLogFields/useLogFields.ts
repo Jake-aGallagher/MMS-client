@@ -14,6 +14,7 @@ export interface LogTemplateFields {
 export const useLogFields = (templateId: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [logTitle, setLogTitle] = useState('');
     const [logFields, setLogFields] = useState<LogTemplateFields[]>([]);
 
     useEffect(() => {
@@ -32,11 +33,12 @@ export const useLogFields = (templateId: number) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setLogFields(response.data.logFields);
+            setLogTitle(response.data.logTitle);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { logFields, loading, error, reload };
+    return { logFields, logTitle, loading, error, reload };
 };

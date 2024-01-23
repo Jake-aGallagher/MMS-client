@@ -23,10 +23,15 @@ interface Delete {
     url: string;
 }
 
+interface Preview {
+    id: number;
+    name: string;
+}
+
 const LogFormBuilder = () => {
     const logTemplateId = parseInt(router.asPath.split('/')[4]);
-    const { logFields, loading, error, reload } = useLogFields(logTemplateId);
-    const [modal, setModal] = useState<{ view: boolean; type: string; payload: AddEdit | Delete }>({
+    const { logFields, logTitle, loading, error, reload } = useLogFields(logTemplateId);
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: AddEdit | Delete | Preview }>({
         view: false,
         type: '',
         payload: { logId: 0, fieldId: 0, name: '' },
@@ -42,6 +47,10 @@ const LogFormBuilder = () => {
 
     const addLogField = () => {
         setModal({ view: true, type: 'addEditLogField', payload: { logId: logTemplateId, fieldId: 0, name: '' } });
+    };
+
+    const previewForm = () => {
+        setModal({ view: true, type: 'previewLogForm', payload: { id: logTemplateId, name: logTitle } });
     };
 
     const fields = logFields.map((field, i) => <LogFieldCard data={field} key={'logField_' + i} editLogField={editLogField} deleteLogField={deleteLogField} />);
@@ -64,6 +73,7 @@ const LogFormBuilder = () => {
                 ''
             )}
             <LoadingNoDataError loading={loading} error={error}>
+                <h1 className='my-4 w-full text-center text-2xl'>{logTitle}</h1>
                 {fields}
                 <AddLogField clickHandler={addLogField} />
             </LoadingNoDataError>
