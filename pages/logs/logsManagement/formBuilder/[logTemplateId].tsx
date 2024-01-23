@@ -62,7 +62,7 @@ const LogFormBuilder = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Log Template</p>
                 </Link>
-                <button className="tLink">
+                <button className="tLink" onClick={previewForm}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-1 w-3" />
                     <p>Preview Form</p>
                 </button>
