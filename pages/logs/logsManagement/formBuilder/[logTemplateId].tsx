@@ -8,7 +8,7 @@ import AddLogField from '../../../../components/logs/logsManagement/details/form
 import { useState } from 'react';
 import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
 import ModalBase from '../../../../components/modal/modal';
-import { useLogFields } from '../../../../components/logs/logsManagement/details/formBuilder/useLogFields/useLogFields';
+import { useLogPreview } from '../../../../components/logs/useLogPreview';
 import LogFieldCard from '../../../../components/logs/logsManagement/details/formBuilder/useLogFields/logFieldCard';
 
 interface AddEdit {
@@ -30,7 +30,7 @@ interface Preview {
 
 const LogFormBuilder = () => {
     const logTemplateId = parseInt(router.asPath.split('/')[4]);
-    const { logFields, logTitle, loading, error, reload } = useLogFields(logTemplateId);
+    const { logFields, logTitle, loading, error, reload } = useLogPreview(logTemplateId);
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: AddEdit | Delete | Preview }>({
         view: false,
         type: '',

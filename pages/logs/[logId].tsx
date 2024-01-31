@@ -41,8 +41,21 @@ const LogDetails = () => {
             { label: 'Required Completion Date', value: log?.required_comp_date },
             { label: 'Completed', value: log?.completed === 1 ? <div>&#10004;</div> : <div>&#10060;</div> },
             { label: 'Completion Date', value: log?.comp_date },
+            { label: 'Completed By', value: log?.completed_by },
         ],
     };
+
+    const logFieldsConfig: { id: number | undefined; title: string; fields: { label: string; value: any }[] } = {
+        id: log?.id,
+        title: 'Log Fields',
+        fields: [],
+    };
+
+    if (logFields.length > 0) {
+        logFields?.forEach((field) => {
+            logFieldsConfig.fields.push({ label: field.name, value: field.value });
+        });
+    }
 
     return (
         <FullPage>
@@ -51,8 +64,8 @@ const LogDetails = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to all logs</p>
                 </Link>
-                {permissions.logs?.manage || isAdmin ? (
-                    <button onClick={() => setModal({ view: true, type: 'log', payload: { id: logId, name: log?.title } })} className="tLink">
+                {(permissions.logs?.manage || isAdmin) && log?.completed == 0 ? (
+                    <button onClick={() => setModal({ view: true, type: 'updateLog', payload: { id: logId, name: log?.title } })} className="tLink">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Update Log
                     </button>
@@ -63,7 +76,10 @@ const LogDetails = () => {
             <LoadingNoDataError loading={loading} error={error}>
                 <div className="w-full h-full pt-4 flex flex-col">
                     <div className="flex flex-col xl:flex-row">
-                        <DetailsBox data={logConfig} />
+                        <div className="w-full">
+                            <DetailsBox data={logConfig} />
+                            {logFields.length > 0 ? <DetailsBox data={logFieldsConfig} /> : null}
+                        </div>
                         <div className="flex flex-col w-full">
                             <div className="w-full xl:pl-8">
                                 <AttachedFilesBox model="log" id={logId} />

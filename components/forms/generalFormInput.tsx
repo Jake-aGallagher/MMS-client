@@ -75,7 +75,7 @@ const GeneralFormInput = (props: Props<any>) => {
                 <div
                     className={`rounded-md my-2 p-2 border-1 border-primary w-full flex flex-row ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
                 >
-                    <label htmlFor={props.formName} className="w-full">
+                    <label htmlFor={props.formName} className="w-full select-none hover:cursor-pointer">
                         {props.label}
                     </label>
                     <input id={props.formName} type="checkbox" className="mx-2" {...props.register(props.formName, { required: props.required, value: props.checked })} />

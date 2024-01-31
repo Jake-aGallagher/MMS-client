@@ -18,6 +18,7 @@ interface ModalProps {
 
 const EditSchedule = (props: ModalProps) => {
     const { defaultValues, typeOptions, loading, error } = useEditSchedule(props.payload.id);
+    console.log(defaultValues);
     const yesNoOptions = [
         { id: 'No', value: 'No' },
         { id: 'Yes', value: 'Yes' },

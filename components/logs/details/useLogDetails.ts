@@ -14,6 +14,7 @@ interface Log {
     required_comp_date: string;
     completed: number;
     comp_date: string;
+    completed_by: string;
     frequency: string;
 }
 
@@ -21,7 +22,7 @@ interface LogField {
     id: number;
     type: string;
     name: string;
-    value: string;
+    value?: string;
 }
 
 export const useLogDetails = (props: Props) => {

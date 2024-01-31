@@ -28,6 +28,7 @@ import EditSchedule from '../pm-schedules/editSchedule/editSchedule';
 import AddEditLogTemplate from '../logs/logsManagement/addEditLogTemplate/addEditLogTemplate';
 import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditField/addEditLogField';
 import PreviewLog from '../logs/logsManagement/details/formBuilder/previewLog/previewLog';
+import UpdateLog from '../logs/updateLog/updateLog';
 
 interface ModalProps {
     closeModal: () => void;
@@ -77,6 +78,8 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditLogField closeModal={props.closeModal} payload={props.payload} />;
             case 'previewLogForm':
                 return <PreviewLog closeModal={props.closeModal} payload={props.payload} />;
+            case 'updateLog':
+                return <UpdateLog closeModal={props.closeModal} payload={props.payload} />;
 
             //Spare
             case 'sparesSelector':

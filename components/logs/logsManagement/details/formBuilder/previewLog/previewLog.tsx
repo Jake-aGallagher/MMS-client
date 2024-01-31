@@ -5,7 +5,7 @@ import FormHeader from '../../../../../forms/formHeader';
 import GeneralForm from '../../../../../forms/generalForm';
 import GeneralFormInput from '../../../../../forms/generalFormInput';
 import GeneralFormSubmit from '../../../../../forms/generalFormSubmit';
-import { useLogFields } from '../useLogFields/useLogFields';
+import { useLogPreview } from '../../../../useLogPreview';
 
 interface ModalProps {
     closeModal: () => void;
@@ -13,7 +13,7 @@ interface ModalProps {
 }
 
 const PreviewLog = (props: ModalProps) => {
-    const { logFields, loading, error } = useLogFields(props.payload.id);
+    const { logFields, loading, error } = useLogPreview(props.payload.id);
 
     const {
         register,
