@@ -25,7 +25,7 @@ interface SchedulePMs {
     status: string;
 }
 
-export const useScheduleDetails = (propertyId: number, scheduleId: string) => {
+export const useScheduleDetails = (propertyId: number, scheduleId: number) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);

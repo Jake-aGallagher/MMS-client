@@ -13,7 +13,7 @@ import { editScheduleHandler } from './editScheduleHandler';
 
 interface ModalProps {
     closeModal: () => void;
-    payload: { id: number; name: string; url: string };
+    payload: { id: number; name: string;};
 }
 
 const EditSchedule = (props: ModalProps) => {

@@ -22,10 +22,9 @@ const ScheduleView = () => {
         router.push('/');
     }
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const pmScheduleId = router.asPath.split('/')[2];
+    const pmScheduleId = parseInt(router.asPath.split('/')[2]);
     const { scheduleDetails, schedulePMs, loading, noData, error, reload } = useScheduleDetails(currentProperty, pmScheduleId);
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     const scheduleDetailsConfig = {
         id: scheduleDetails?.id,
@@ -66,21 +65,21 @@ const ScheduleView = () => {
                     <p>Return to PM Schedules</p>
                 </Link>
                 {permissions.schedules?.manage || isAdmin ? (
-                    <button onClick={() => [setViewModal(true), setModalType('addEditSchedule')]} className="tLink">
+                    <button onClick={() => setModal({ view: true, type: 'editPmSchedule', payload: { id: pmScheduleId, name: scheduleDetails?.title || '' } })} className="tLink">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Update Schedule
                     </button>
                 ) : null}
             </Toolbar>
 
-            {viewModal ? <ModalBase modalType={modalType} payload={scheduleDetails?.id} closeModal={() => [setViewModal(false), reload()]} /> : ''}
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : ''}
             <LoadingNoDataError loading={loading} error={error} noData={noData}>
                 <div className="w-full h-full pt-4 flex flex-col">
                     <div className="flex flex-col xl:flex-row">
                         <DetailsBox data={scheduleDetailsConfig} />
                         <div className="flex flex-col w-full">
                             <div className="w-full xl:pl-8">
-                                <AttachedFilesBox model="pmSchedule" id={parseInt(pmScheduleId)} />
+                                <AttachedFilesBox model="pmSchedule" id={pmScheduleId} />
                             </div>
                         </div>
                     </div>

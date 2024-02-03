@@ -66,7 +66,7 @@ const ModalBase = (props: ModalProps) => {
             // PMs
             case 'createPmSchedule':
                 return <AddSchedule closeModal={props.closeModal} assetId={props.payload.assetId} />;
-            case 'addEditPmSchedule':
+            case 'editPmSchedule':
                 return <EditSchedule closeModal={props.closeModal} payload={props.payload} />;
             case 'editPm':
                 return <EditPM closeModal={props.closeModal} pmId={props.payload} />;
