@@ -21,6 +21,7 @@ interface Log {
 interface LogField {
     id: number;
     type: string;
+    enumGroupId: number | null;
     name: string;
     value?: string;
 }
@@ -30,6 +31,7 @@ export const useLogDetails = (props: Props) => {
     const [error, setError] = useState(false);
     const [log, setLog] = useState<Log>();
     const [logFields, setLogFields] = useState<LogField[]>([]);
+    const [enumGroups, setEnumGroups] = useState<{ [key: string]: { id: string; value: string }[] }>({});
 
     useEffect(() => {
         reload();
@@ -48,11 +50,12 @@ export const useLogDetails = (props: Props) => {
             });
             setLog(response.data.log);
             setLogFields(response.data.fields);
+            setEnumGroups(response.data.enumGroups);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { log, logFields, loading, error, reload };
+    return { log, logFields, enumGroups, loading, error, reload };
 };

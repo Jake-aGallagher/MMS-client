@@ -13,7 +13,7 @@ interface ModalProps {
 }
 
 const PreviewLog = (props: ModalProps) => {
-    const { logFields, loading, error } = useLogPreview(props.payload.id);
+    const { logFields, enumGroups, loading, error } = useLogPreview(props.payload.id);
 
     const {
         register,
@@ -25,7 +25,30 @@ const PreviewLog = (props: ModalProps) => {
         props.closeModal();
     };
 
-    const fields = logFields.map((field) => <GeneralFormInput register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />);
+    const fields = logFields.map((field) => {
+        switch (field.type) {
+            case 'select':
+                if (field.enumGroupId) {
+                    return (
+                        <GeneralFormInput
+                            key={field.id}
+                            register={register}
+                            label={field.name}
+                            type={field.type}
+                            formName={field.id.toString()}
+                            errors={errors}
+                            required={field.required}
+                            optionNameString="value"
+                            selectOptions={enumGroups[field.enumGroupId]}
+                        />
+                    );
+                } else {
+                    return;
+                }
+            default:
+                return <GeneralFormInput key={field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />;
+        }
+    });
 
     return (
         <FormContainer>

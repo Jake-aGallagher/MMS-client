@@ -23,7 +23,7 @@ const LogDetails = () => {
         router.push('/');
     }
 
-    const { log, logFields, loading, error, reload } = useLogDetails({ logId });
+    const { log, logFields, enumGroups, loading, error, reload } = useLogDetails({ logId });
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name?: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
     GlobalDebug('Log Details', [
         ['Log', log],
@@ -51,9 +51,23 @@ const LogDetails = () => {
         fields: [],
     };
 
+    const prettyFieldValues = (type: string, value: string, enumGroupId: number | null) => {
+        if (value === 'undefined' || value === null || value === '') return '';
+        switch (type) {
+            case 'checkbox':
+                return value ? 'Yes' : 'No';
+            case 'date':
+                return new Date(value).toLocaleDateString();
+            case 'select':
+                return enumGroups[enumGroupId!].find((item) => item.id == value)?.value || 'Enum Group Not Found';
+            default:
+                return value;
+        }
+    };
+
     if (logFields.length > 0) {
         logFields?.forEach((field) => {
-            logFieldsConfig.fields.push({ label: field.name, value: field.value });
+            logFieldsConfig.fields.push({ label: field.name, value: prettyFieldValues(field.type, field.value || '', field.enumGroupId) });
         });
     }
 

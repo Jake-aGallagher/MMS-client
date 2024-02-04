@@ -5,8 +5,10 @@ import { SERVER_URL } from '../../../../../routing/addressAPI';
 export const useAddEditLogField = (fieldId: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [enumOptions, setEnumOptions] = useState<{id: string; value:string;}[]>([]);
     const [defaultValues, setDefaultValues] = useState({
         type: 'text',
+        options: '',
         name: '',
         required: 'No',
         order: 10,
@@ -15,13 +17,26 @@ export const useAddEditLogField = (fieldId: number) => {
 
     useEffect(() => {
         if (fieldId === 0) {
-            setLoading(false);
+            getHandlerOnlyEnums();
             return;
         }
         setLoading(true);
         setError(false);
         getHandler();
     }, []);
+
+    const getHandlerOnlyEnums = async () => {
+        try {
+            const response = await axios.get(`${SERVER_URL}/enumgroups`, {
+                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+            });
+            setEnumOptions(response.data.enumGroups)
+            setLoading(false);
+        } catch (err) {
+            setError(true);
+            setLoading(false);
+        }
+    }
 
     const getHandler = async () => {
         try {
@@ -30,6 +45,7 @@ export const useAddEditLogField = (fieldId: number) => {
             });
             setDefaultValues({
                 type: response.data.logField.type,
+                options: response.data.logField.options,
                 name: response.data.logField.name,
                 required: response.data.logField.required ? 'Yes' : 'No',
                 order: response.data.logField.sort_order,
@@ -41,5 +57,5 @@ export const useAddEditLogField = (fieldId: number) => {
             setLoading(false);
         }
     };
-    return { defaultValues, loading, error };
+    return { defaultValues, enumOptions, loading, error };
 };

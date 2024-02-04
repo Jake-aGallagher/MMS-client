@@ -20,7 +20,7 @@ interface ModalProps {
 const UpdateLog = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const userId = useSelector((state: RootState) => state.user.value.id);
-    const { logFields, defaultValues, logDates, loading, error } = useLogFields(props.payload.id);
+    const { logFields, enumGroups, defaultValues, logDates, loading, error } = useLogFields(props.payload.id);
     const continueScheduleOptions = [
         { id: 'Yes', value: `Continue on current schedule (next due: ${logDates[0].current_schedule || ''})` },
         { id: 'Adjust', value: `Adjust schedule (next due: ${logDates[0].new_schedule || ''})` },
@@ -37,7 +37,7 @@ const UpdateLog = (props: ModalProps) => {
             return defaultValues;
         }, [defaultValues]),
     });
-    
+
     const completedWatch = watch(['completed']);
 
     useEffect(() => {
@@ -48,9 +48,30 @@ const UpdateLog = (props: ModalProps) => {
         await updateLogHandler(props.payload.id, data, currentProperty, userId, props.closeModal);
     };
 
-    const fields = logFields.map((field) => (
-        <GeneralFormInput key={'field_' + field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />
-    ));
+    const fields = logFields.map((field) => {
+        switch (field.type) {
+            case 'select':
+                if (field.enumGroupId) {
+                    return (
+                        <GeneralFormInput
+                            key={field.id}
+                            register={register}
+                            label={field.name}
+                            type={field.type}
+                            formName={field.id.toString()}
+                            errors={errors}
+                            required={field.required}
+                            optionNameString="value"
+                            selectOptions={enumGroups[field.enumGroupId]}
+                        />
+                    );
+                } else {
+                    return;
+                }
+            default:
+                return <GeneralFormInput key={field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />;
+        }
+    });
 
     return (
         <FormContainer>
@@ -60,22 +81,22 @@ const UpdateLog = (props: ModalProps) => {
                     {fields}
                     <GeneralFormInput register={register} label="Completed" type="checkbox" formName="completed" errors={errors} />
                     {completedWatch[0] ? (
-                            <>
-                                <GeneralFormInput
-                                    register={register}
-                                    label="Continue Schedule"
-                                    type="select"
-                                    formName="continueSchedule"
-                                    errors={errors}
-                                    required={true}
-                                    optionNameString="value"
-                                    selectOptions={continueScheduleOptions}
-                                />
-                                <div className="mt-auto">
-                                    <FormTextCenter label="You are about to Complete this Log, once completed It will no longer be editable" />
-                                </div>
-                            </>
-                        ) : null}
+                        <>
+                            <GeneralFormInput
+                                register={register}
+                                label="Continue Schedule"
+                                type="select"
+                                formName="continueSchedule"
+                                errors={errors}
+                                required={true}
+                                optionNameString="value"
+                                selectOptions={continueScheduleOptions}
+                            />
+                            <div className="mt-auto">
+                                <FormTextCenter label="You are about to Complete this Log, once completed It will no longer be editable" />
+                            </div>
+                        </>
+                    ) : null}
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
             </LoadingNoDataError>

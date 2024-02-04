@@ -3,6 +3,11 @@ import * as yup from 'yup';
 
 const formValidation = yup.object().shape({
     type: yup.string().required(),
+    options: yup.string().when('type', {
+        is: 'select',
+        then: () => yup.string().required(),
+        otherwise: () => yup.string(),
+    }),
     name: yup.string().required().max(255),
     required: yup.string().when('type', {
         is: 'Info/Guidance/Notes',

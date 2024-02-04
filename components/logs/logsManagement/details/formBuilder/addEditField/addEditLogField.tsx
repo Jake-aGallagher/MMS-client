@@ -16,12 +16,19 @@ interface ModalProps {
 }
 
 const AddEditLogField = (props: ModalProps) => {
-    const { defaultValues, loading, error } = useAddEditLogField(props.payload.fieldId);
+    const { defaultValues, enumOptions, loading, error } = useAddEditLogField(props.payload.fieldId);
     const fieldTypeOptions = [
         { id: 'text', value: 'Text' },
         { id: 'textarea', value: 'Textarea' },
         { id: 'number', value: 'Number' },
         { id: 'info', value: 'Info/Guidance/Notes' },
+        { id: 'checkbox', value: 'Checkbox'},
+        { id: 'select', value: 'Select/Dropdown'},
+        { id: 'file', value: 'File Upload (not implemented yet)'},
+        { id: 'image', value: 'Image Upload (not implemented yet)'},
+        { id: 'Signature', value: 'Signature (not implemented yet)'},
+        { id: 'date', value: 'Date'},
+        { id: 'time', value: 'Time'},
     ];
     const yesNoOptions = [
         { id: 'No', value: 'No' },
@@ -57,6 +64,9 @@ const AddEditLogField = (props: ModalProps) => {
                 <FormHeader label={'Add Edit Field'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="Field Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={fieldTypeOptions} />
+                    {watchType === 'select' ? (
+                        <GeneralFormInput register={register} label="Options (Enum Group)" type="select" formName="options" errors={errors} optionNameString="value" selectOptions={enumOptions}/>
+                    ) : null}
                     <GeneralFormInput register={register} label={watchType !== 'info' ? 'Field Name' : 'Info/Guidance/Note'} type="text" formName="name" errors={errors} />
                     {watchType !== 'info' ? (
                         <>

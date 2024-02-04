@@ -5,6 +5,7 @@ import axios from 'axios';
 export interface LogTemplateFields {
     id: number;
     type: string;
+    enumGroupId?: number;
     name: string;
     required: boolean;
     guidance: string;
@@ -16,6 +17,7 @@ export const useLogPreview = (templateId: number) => {
     const [error, setError] = useState(false);
     const [logTitle, setLogTitle] = useState('');
     const [logFields, setLogFields] = useState<LogTemplateFields[]>([]);
+    const [enumGroups, setEnumGroups] = useState<{[key: string]:{ id: string; value: string }[]}>({});
 
     useEffect(() => {
         reload();
@@ -34,11 +36,12 @@ export const useLogPreview = (templateId: number) => {
             });
             setLogFields(response.data.logFields);
             setLogTitle(response.data.logTitle);
+            setEnumGroups(response.data.enumGroups);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { logFields, logTitle, loading, error, reload };
+    return { logFields, enumGroups, logTitle, loading, error, reload };
 };

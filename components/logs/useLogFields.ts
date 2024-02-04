@@ -5,6 +5,7 @@ import axios from 'axios';
 export interface LogTemplateFields {
     id: number;
     type: string;
+    enumGroupId: number | null;
     name: string;
     required: boolean;
     guidance: string;
@@ -18,6 +19,7 @@ export const useLogFields = (logId: number) => {
     const [logFields, setLogFields] = useState<LogTemplateFields[]>([]);
     const [defaultValues, setDefaultValues] = useState<{ [key: string]: string | number | boolean }>({});
     const [logDates, setLogDates] = useState<{ current_schedule: string; new_schedule: string }[]>([{ current_schedule: '', new_schedule: '' }]);
+    const [enumGroups, setEnumGroups] = useState<{ [key: string]: { id: string; value: string }[] }>({});
 
     useEffect(() => {
         reload();
@@ -35,6 +37,7 @@ export const useLogFields = (logId: number) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setLogFields(response.data.logFields);
+            setEnumGroups(response.data.enumGroups);
             setLogDates(response.data.logDates);
             const defaultVal: { [key: string]: string | number | boolean } = {};
             response.data.logFields.forEach((field: LogTemplateFields) => {
@@ -47,5 +50,5 @@ export const useLogFields = (logId: number) => {
             setLoading(false);
         }
     };
-    return { logFields, defaultValues, logDates, logTitle, loading, error, reload };
+    return { logFields, enumGroups, defaultValues, logDates, logTitle, loading, error, reload };
 };

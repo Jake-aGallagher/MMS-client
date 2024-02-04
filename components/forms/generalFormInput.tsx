@@ -19,7 +19,7 @@ interface Props<T extends FieldValues> extends OptionNameString {
 }
 
 const GeneralFormInput = (props: Props<any>) => {
-    const singleTypes = ['text', 'number', 'date', 'password'];
+    const singleTypes = ['text', 'number', 'date', 'time', 'password'];
     const areaTypes = ['textarea'];
     const selectTypes = ['select'];
     const checkboxTypes = ['checkbox'];
