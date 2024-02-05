@@ -11,6 +11,7 @@ import { updateLogHandler } from './updateLogHandler';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import FormTextCenter from '../../forms/formTextCenter';
+import FileInput from '../../forms/fileInput';
 
 interface ModalProps {
     closeModal: () => void;
@@ -20,7 +21,7 @@ interface ModalProps {
 const UpdateLog = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const userId = useSelector((state: RootState) => state.user.value.id);
-    const { logFields, enumGroups, defaultValues, logDates, loading, error } = useLogFields(props.payload.id);
+    const { logFields, enumGroups, fileData, defaultValues, logDates, loading, error } = useLogFields(props.payload.id);
     const continueScheduleOptions = [
         { id: 'Yes', value: `Continue on current schedule (next due: ${logDates[0].current_schedule || ''})` },
         { id: 'Adjust', value: `Adjust schedule (next due: ${logDates[0].new_schedule || ''})` },
@@ -32,6 +33,7 @@ const UpdateLog = (props: ModalProps) => {
         reset,
         watch,
         formState: { errors },
+        setValue,
     } = useForm({
         defaultValues: useMemo(() => {
             return defaultValues;
@@ -68,6 +70,10 @@ const UpdateLog = (props: ModalProps) => {
                 } else {
                     return;
                 }
+            case 'file':
+                return (
+                    <FileInput key={field.id} register={register} label={field.name} formName={field.id.toString()} errors={errors} required={field.required} setValue={setValue} existingFiles={fileData[field.id] || []} />
+                );
             default:
                 return <GeneralFormInput key={field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />;
         }

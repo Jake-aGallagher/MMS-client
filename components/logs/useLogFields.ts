@@ -20,6 +20,7 @@ export const useLogFields = (logId: number) => {
     const [defaultValues, setDefaultValues] = useState<{ [key: string]: string | number | boolean }>({});
     const [logDates, setLogDates] = useState<{ current_schedule: string; new_schedule: string }[]>([{ current_schedule: '', new_schedule: '' }]);
     const [enumGroups, setEnumGroups] = useState<{ [key: string]: { id: string; value: string }[] }>({});
+    const [fileData, setFileData] = useState<{[key:string]: { id: string; encodedId: string; name: string }[]}>({});
 
     useEffect(() => {
         reload();
@@ -43,6 +44,7 @@ export const useLogFields = (logId: number) => {
             response.data.logFields.forEach((field: LogTemplateFields) => {
                 defaultVal[field.id] = field.value;
             });
+            setFileData(response.data.fileData);
             setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
@@ -50,5 +52,5 @@ export const useLogFields = (logId: number) => {
             setLoading(false);
         }
     };
-    return { logFields, enumGroups, defaultValues, logDates, logTitle, loading, error, reload };
+    return { logFields, enumGroups, fileData, defaultValues, logDates, logTitle, loading, error, reload };
 };

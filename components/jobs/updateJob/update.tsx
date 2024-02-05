@@ -40,7 +40,7 @@ const UpdateJob = (props: ModalProps) => {
     );
     const [viewModal, setViewModal] = useState(false);
     const [modal, setModal] = useState<Modal>({ modalType: '', payload: {}, fullSize: true, passbackDeatails: null, closeModal: () => setViewModal(false) });
-    const [files, setFiles] = useState<Blob[]>([]);
+    const [files, setFiles] = useState<File[]>([]);
 
     const {
         register,

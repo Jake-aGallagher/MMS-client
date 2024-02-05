@@ -41,7 +41,7 @@ const AttachedFilesBox = (props: Props) => {
                 {permissions.files?.manage || isAdmin ? (
                     <>
                         <button onClick={(e) => handleAddClick(e)} className="ml-auto btnBlue w-28 h-8 flex flex-row justify-center items-center">
-                        <FontAwesomeIcon icon={faPaperclip} className="h-5 m-auto" />
+                            <FontAwesomeIcon icon={faPaperclip} className="h-5 m-auto" />
                         </button>
                         <input
                             type="file"

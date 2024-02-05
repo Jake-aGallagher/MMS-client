@@ -6,6 +6,7 @@ import GeneralForm from '../../../../../forms/generalForm';
 import GeneralFormInput from '../../../../../forms/generalFormInput';
 import GeneralFormSubmit from '../../../../../forms/generalFormSubmit';
 import { useLogPreview } from '../../../../useLogPreview';
+import FileInput from '../../../../../forms/fileInput';
 
 interface ModalProps {
     closeModal: () => void;
@@ -19,6 +20,7 @@ const PreviewLog = (props: ModalProps) => {
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
     } = useForm();
 
     const handleRegistration = async (data: any) => {
@@ -45,6 +47,8 @@ const PreviewLog = (props: ModalProps) => {
                 } else {
                     return;
                 }
+            case 'file':
+                return <FileInput key={field.id} register={register} label={field.name} formName={field.id.toString()} errors={errors} required={field.required} setValue={setValue} existingFiles={[]}/>;
             default:
                 return <GeneralFormInput key={field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />;
         }
