@@ -11,7 +11,6 @@ import GeneralForm from '../../forms/generalForm';
 import LoadingNoDataError from '../../loading/loadingNoDataError';
 import { useUpdateJob } from './useUpdateJob';
 import { yupResolverUpdateJob } from './updateJobValidation';
-import GeneralFileInput from '../../forms/genrealFileInput';
 import { updatejobNotesHandler } from './updateJobNotesHandler';
 import { updateJobFullHandler } from './updateJobFullHandler';
 import AltTableHeaders from '../../dataTable/altTableHeaders';
@@ -110,8 +109,6 @@ const UpdateJob = (props: ModalProps) => {
 
                         {completed !== 1 ? (
                             <>
-                                <GeneralFileInput files={files} setFiles={setFiles} />
-
                                 <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
                                     Log Spares Used
                                 </button>
