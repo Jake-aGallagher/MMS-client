@@ -48,7 +48,20 @@ const PreviewLog = (props: ModalProps) => {
                     return;
                 }
             case 'file':
-                return <FileInput key={field.id} register={register} label={field.name} formName={field.id.toString()} errors={errors} required={field.required} setValue={setValue} existingFiles={[]}/>;
+            case 'image':
+                return (
+                    <FileInput
+                        key={field.id}
+                        register={register}
+                        label={field.name}
+                        formName={field.id.toString()}
+                        errors={errors}
+                        required={field.required}
+                        setValue={setValue}
+                        existingFiles={[]}
+                        image={field.type === 'image'}
+                    />
+                );
             default:
                 return <GeneralFormInput key={field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />;
         }

@@ -71,8 +71,9 @@ const UpdateLog = (props: ModalProps) => {
                     return;
                 }
             case 'file':
+            case 'image':
                 return (
-                    <FileInput key={field.id} register={register} label={field.name} formName={field.id.toString()} errors={errors} required={field.required} setValue={setValue} existingFiles={fileData[field.id] || []} />
+                    <FileInput key={field.id} register={register} label={field.name} formName={field.id.toString()} errors={errors} required={field.required} setValue={setValue} existingFiles={fileData[field.id] || []} image={field.type === 'image'}/>
                 );
             default:
                 return <GeneralFormInput key={field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />;

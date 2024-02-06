@@ -14,6 +14,7 @@ interface Props<T extends FieldValues> {
     required: boolean;
     errors: FieldErrors;
     existingFiles: { id: string; encodedId: string; name: string }[];
+    image: boolean;
 }
 
 const FileInput = (props: Props<any>) => {
@@ -51,28 +52,54 @@ const FileInput = (props: Props<any>) => {
             </label>
             <div className={`mb-4 mt-2 p-2 w-full rounded-md border-1 ${props.errors[props.formName] ? 'border-red border-2' : 'border-primary'} border-solid`}>
                 <div className="pl-2 mb-2 flex flex-row">
-                    <div>Attached Files ({fileList.length})</div>
-                    <button onClick={(e) => handleClick(e)} className="ml-auto btnBlue w-28 h-8 flex flex-row justify-center items-center">
-                        <FontAwesomeIcon icon={faPaperclip} className="h-5 m-auto" />
-                    </button>
-                    <input type="file" name="fileAttachment" id="fileAttachment" ref={hiddenFileInput} className="hidden" onChange={(e) => (e.target.files ? addFile(e.target.files[0]) : null)} />
+                    {!props.image && <div>Attached Files ({fileList.length})</div>}
+                    {!props.image || (props.image && fileList.length < 1) ? (
+                        <>
+                            <button onClick={(e) => handleClick(e)} className="ml-auto btnBlue w-28 h-8 flex flex-row justify-center items-center">
+                                <FontAwesomeIcon icon={faPaperclip} className="h-5 m-auto" />
+                            </button>
+                            <input
+                                type="file"
+                                name="fileAttachment"
+                                id="fileAttachment"
+                                ref={hiddenFileInput}
+                                className="hidden"
+                                onChange={(e) => (e.target.files ? addFile(e.target.files[0]) : null)}
+                            />
+                        </>
+                    ) : (
+                        <div className="w-full h-8"></div>
+                    )}
                 </div>
 
                 <input id={props.formName} type={'text'} className={'hidden'} {...props.register(props.formName, { required: props.required })} />
 
-                {fileList.map((item) => (
-                    <div key={'file_' + item.id} className="w-full mb-1 pl-2 flex flex-row hover:outline-dotted hover:outline-1 outline-accent rounded-md">
-                        <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
-                            {item.name}
-                        </a>
-                        <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
-                            <FontAwesomeIcon icon={faCircleDown} className="h-5 m-auto" />
-                        </a>
-                        <button onClick={() => deleteFile(item.encodedId)} className="btnRed w-12 h-8">
-                            <FontAwesomeIcon icon={faTrash} className="h-5 m-auto" />
-                        </button>
-                    </div>
-                ))}
+                {!props.image &&
+                    fileList.map((item) => (
+                        <div key={'file_' + item.id} className="w-full mb-1 pl-2 flex flex-row hover:outline-dotted hover:outline-1 outline-accent rounded-md">
+                            <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
+                                {item.name}
+                            </a>
+                            <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
+                                <FontAwesomeIcon icon={faCircleDown} className="h-5 m-auto" />
+                            </a>
+                            <button onClick={() => deleteFile(item.encodedId)} className="btnRed w-12 h-8">
+                                <FontAwesomeIcon icon={faTrash} className="h-5 m-auto" />
+                            </button>
+                        </div>
+                    ))}
+                {props.image &&
+                    fileList.map((item) => (
+                        <div className="flex flex-row">
+                            <img src={`${SERVER_URL}/getimage/${item.encodedId}`} alt="Uploaded Photo" className="w-96" />
+                            <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
+                                <FontAwesomeIcon icon={faCircleDown} className="h-5 m-auto" />
+                            </a>
+                            <button onClick={() => deleteFile(item.encodedId)} className="btnRed w-12 h-8">
+                                <FontAwesomeIcon icon={faTrash} className="h-5 m-auto" />
+                            </button>
+                        </div>
+                    ))}
             </div>
         </div>
     );
