@@ -32,6 +32,7 @@ export const useLogDetails = (props: Props) => {
     const [log, setLog] = useState<Log>();
     const [logFields, setLogFields] = useState<LogField[]>([]);
     const [enumGroups, setEnumGroups] = useState<{ [key: string]: { id: string; value: string }[] }>({});
+    const [fileData, setFileData] = useState<{[key:string]: { id: string; encodedId: string; name: string }[]}>({});
 
     useEffect(() => {
         reload();
@@ -51,11 +52,12 @@ export const useLogDetails = (props: Props) => {
             setLog(response.data.log);
             setLogFields(response.data.fields);
             setEnumGroups(response.data.enumGroups);
+            setFileData(response.data.fileData);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { log, logFields, enumGroups, loading, error, reload };
+    return { log, logFields, enumGroups, fileData, loading, error, reload };
 };

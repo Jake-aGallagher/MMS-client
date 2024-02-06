@@ -24,7 +24,7 @@ const AddEditLogField = (props: ModalProps) => {
         { id: 'info', value: 'Info/Guidance/Notes' },
         { id: 'checkbox', value: 'Checkbox'},
         { id: 'select', value: 'Select/Dropdown'},
-        { id: 'file', value: 'File Upload (not implemented yet)'},
+        { id: 'file', value: 'File Upload'},
         { id: 'image', value: 'Image Upload (not implemented yet)'},
         { id: 'Signature', value: 'Signature (not implemented yet)'},
         { id: 'date', value: 'Date'},

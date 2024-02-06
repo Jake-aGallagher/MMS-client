@@ -13,6 +13,7 @@ import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DetailsBox from '../../components/detailsBox/detailsBox';
 import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
 import { useState } from 'react';
+import { SERVER_URL } from '../../components/routing/addressAPI';
 
 const LogDetails = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -23,7 +24,7 @@ const LogDetails = () => {
         router.push('/');
     }
 
-    const { log, logFields, enumGroups, loading, error, reload } = useLogDetails({ logId });
+    const { log, logFields, enumGroups, fileData, loading, error, reload } = useLogDetails({ logId });
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name?: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
     GlobalDebug('Log Details', [
         ['Log', log],
@@ -51,7 +52,7 @@ const LogDetails = () => {
         fields: [],
     };
 
-    const prettyFieldValues = (type: string, value: string, enumGroupId: number | null) => {
+    const prettyFieldValues = (fieldId: number, type: string, value: string, enumGroupId: number | null) => {
         if (value === 'undefined' || value === null || value === '') return '';
         switch (type) {
             case 'checkbox':
@@ -60,6 +61,16 @@ const LogDetails = () => {
                 return new Date(value).toLocaleDateString();
             case 'select':
                 return enumGroups[enumGroupId!].find((item) => item.id == value)?.value || 'Enum Group Not Found';
+            case 'file':
+                const values = value.split(',');
+                const fileList = values.map((item, i) => (
+                    <li>
+                        <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${fileData[fieldId][i].encodedId}`}>
+                            {fileData[fieldId][i].name}
+                        </a>
+                    </li>
+                ));
+                return <ul>{fileList}</ul>;
             default:
                 return value;
         }
@@ -67,7 +78,7 @@ const LogDetails = () => {
 
     if (logFields.length > 0) {
         logFields?.forEach((field) => {
-            logFieldsConfig.fields.push({ label: field.name, value: prettyFieldValues(field.type, field.value || '', field.enumGroupId) });
+            logFieldsConfig.fields.push({ label: field.name, value: prettyFieldValues(field.id, field.type, field.value || '', field.enumGroupId) });
         });
     }
 
