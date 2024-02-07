@@ -14,7 +14,7 @@ interface Props<T extends FieldValues> {
     required: boolean;
     errors: FieldErrors;
     existingFiles: { id: string; encodedId: string; name: string }[];
-    image: boolean;
+    type: 'file' | 'image';
 }
 
 const FileInput = (props: Props<any>) => {
@@ -52,8 +52,8 @@ const FileInput = (props: Props<any>) => {
             </label>
             <div className={`mb-4 mt-2 p-2 w-full rounded-md border-1 ${props.errors[props.formName] ? 'border-red border-2' : 'border-primary'} border-solid`}>
                 <div className="pl-2 mb-2 flex flex-row">
-                    {!props.image && <div>Attached Files ({fileList.length})</div>}
-                    {!props.image || (props.image && fileList.length < 1) ? (
+                    {props.type == 'file' && <div>Attached Files ({fileList.length})</div>}
+                    {props.type != 'image' || (props.type == 'image' && fileList.length < 1) ? (
                         <>
                             <button onClick={(e) => handleClick(e)} className="ml-auto btnBlue w-28 h-8 flex flex-row justify-center items-center">
                                 <FontAwesomeIcon icon={faPaperclip} className="h-5 m-auto" />
@@ -74,7 +74,7 @@ const FileInput = (props: Props<any>) => {
 
                 <input id={props.formName} type={'text'} className={'hidden'} {...props.register(props.formName, { required: props.required })} />
 
-                {!props.image &&
+                {props.type != 'image' &&
                     fileList.map((item) => (
                         <div key={'file_' + item.id} className="w-full mb-1 pl-2 flex flex-row hover:outline-dotted hover:outline-1 outline-accent rounded-md">
                             <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
@@ -88,7 +88,7 @@ const FileInput = (props: Props<any>) => {
                             </button>
                         </div>
                     ))}
-                {props.image &&
+                {props.type == 'image' &&
                     fileList.map((item) => (
                         <div className="flex flex-row">
                             <img src={`${SERVER_URL}/getimage/${item.encodedId}`} alt="Uploaded Photo" className="w-96" />
