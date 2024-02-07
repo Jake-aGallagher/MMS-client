@@ -12,6 +12,7 @@ import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import FormTextCenter from '../../forms/formTextCenter';
 import FileInput from '../../forms/fileInput';
+import SignatureInput from '../../forms/signatureInput';
 
 interface ModalProps {
     closeModal: () => void;
@@ -73,7 +74,31 @@ const UpdateLog = (props: ModalProps) => {
             case 'file':
             case 'image':
                 return (
-                    <FileInput key={field.id} register={register} label={field.name} formName={field.id.toString()} errors={errors} required={field.required} setValue={setValue} existingFiles={fileData[field.id] || []} image={field.type === 'image'}/>
+                    <FileInput
+                        key={field.id}
+                        register={register}
+                        label={field.name}
+                        formName={field.id.toString()}
+                        errors={errors}
+                        required={field.required}
+                        setValue={setValue}
+                        existingFiles={fileData[field.id] || []}
+                        type={field.type}
+                    />
+                );
+            case 'signature':
+                return (
+                    <SignatureInput
+                        key={field.id}
+                        register={register}
+                        label={field.name}
+                        formName={field.id.toString()}
+                        errors={errors}
+                        required={field.required}
+                        setValue={setValue}
+                        existingFiles={fileData[field.id] || []}
+                        type={field.type}
+                    />
                 );
             default:
                 return <GeneralFormInput key={field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />;

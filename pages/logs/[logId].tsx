@@ -72,7 +72,8 @@ const LogDetails = () => {
                 ));
                 return <ul>{fileList}</ul>;
             case 'image':
-                return <img src={`${SERVER_URL}/getimage/${fileData[fieldId][0].encodedId}`} alt="Uploaded Photo" className="w-96" />
+            case 'signature':
+                return <img src={`${SERVER_URL}/getimage/${fileData[fieldId][0].encodedId}`} alt="Uploaded Photo" className="w-full" />
             default:
                 return value;
         }

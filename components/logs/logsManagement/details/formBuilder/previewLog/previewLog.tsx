@@ -7,6 +7,7 @@ import GeneralFormInput from '../../../../../forms/generalFormInput';
 import GeneralFormSubmit from '../../../../../forms/generalFormSubmit';
 import { useLogPreview } from '../../../../useLogPreview';
 import FileInput from '../../../../../forms/fileInput';
+import SignatureInput from '../../../../../forms/signatureInput';
 
 interface ModalProps {
     closeModal: () => void;
@@ -59,7 +60,21 @@ const PreviewLog = (props: ModalProps) => {
                         required={field.required}
                         setValue={setValue}
                         existingFiles={[]}
-                        image={field.type === 'image'}
+                        type={field.type}
+                    />
+                );
+            case 'signature':
+                return (
+                    <SignatureInput
+                        key={field.id}
+                        register={register}
+                        label={field.name}
+                        formName={field.id.toString()}
+                        errors={errors}
+                        required={field.required}
+                        setValue={setValue}
+                        existingFiles={[]}
+                        type={field.type}
                     />
                 );
             default:
