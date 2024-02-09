@@ -14,7 +14,6 @@ const formValidation = yup.object().shape({
         then: () => yup.string(),
         otherwise: () => yup.string().required(),
     }),
-    guidance: yup.string().max(1000),
     order: yup.number().required(),
 });
 

@@ -12,7 +12,6 @@ export const useAddEditLogField = (fieldId: number) => {
         name: '',
         required: 'No',
         order: 10,
-        guidance: '',
     });
 
     useEffect(() => {
@@ -49,7 +48,6 @@ export const useAddEditLogField = (fieldId: number) => {
                 name: response.data.logField.name,
                 required: response.data.logField.required ? 'Yes' : 'No',
                 order: response.data.logField.sort_order,
-                guidance: response.data.logField.guidance,
             });
             setLoading(false);
         } catch (err) {

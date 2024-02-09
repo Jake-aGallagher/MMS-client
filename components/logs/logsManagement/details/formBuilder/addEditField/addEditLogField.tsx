@@ -80,7 +80,6 @@ const AddEditLogField = (props: ModalProps) => {
                                 optionNameString="value"
                                 selectOptions={yesNoOptions}
                             />
-                            <GeneralFormInput register={register} label="Guidance Notes (will Show in tooltip)" type="text" formName="guidance" errors={errors} />
                         </>
                     ) : null}
                     <GeneralFormInput register={register} label="Order" type="number" formName="order" errors={errors} min={0} />

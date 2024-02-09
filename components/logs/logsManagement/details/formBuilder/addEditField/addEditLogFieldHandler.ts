@@ -9,7 +9,6 @@ export const addEditLogFieldHandler = async (id: number, data: any, templateId: 
             type: data.type,
             name: data.name,
             required: data.required == 'Yes' ? 1 : 0,
-            guidance: data.guidance || '',
             order: data.order,
         });
         if (response.data.created) {
