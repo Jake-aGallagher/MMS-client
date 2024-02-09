@@ -64,7 +64,7 @@ const LogDetails = () => {
             case 'file':
                 const values = value.split(',');
                 const fileList = values.map((item, i) => (
-                    <li>
+                    <li key={'file_list_' + fileData[fieldId][i].encodedId}>
                         <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${fileData[fieldId][i].encodedId}`}>
                             {fileData[fieldId][i].name}
                         </a>

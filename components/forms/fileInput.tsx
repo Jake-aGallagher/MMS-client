@@ -90,7 +90,7 @@ const FileInput = (props: Props<any>) => {
                     ))}
                 {props.type == 'image' &&
                     fileList.map((item) => (
-                        <div className="flex flex-row">
+                        <div key={'file_' + item.encodedId} className="flex flex-row">
                             <img src={`${SERVER_URL}/getimage/${item.encodedId}`} alt="Uploaded Photo" className="w-96" />
                             <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
                                 <FontAwesomeIcon icon={faCircleDown} className="h-5 m-auto" />
