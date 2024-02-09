@@ -8,6 +8,7 @@ import GeneralFormSubmit from '../../../../../forms/generalFormSubmit';
 import { useLogPreview } from '../../../../useLogPreview';
 import FileInput from '../../../../../forms/fileInput';
 import SignatureInput from '../../../../../forms/signatureInput';
+import InfoField from '../../../../../forms/infoField';
 
 interface ModalProps {
     closeModal: () => void;
@@ -15,7 +16,7 @@ interface ModalProps {
 }
 
 const PreviewLog = (props: ModalProps) => {
-    const { logFields, enumGroups, loading, error } = useLogPreview(props.payload.id);
+    const { logFields, enumGroups, logTitleDescription, loading, error } = useLogPreview(props.payload.id);
 
     const {
         register,
@@ -77,6 +78,8 @@ const PreviewLog = (props: ModalProps) => {
                         type={field.type}
                     />
                 );
+            case 'info':
+                return <InfoField key={field.id} name={field.name} />;
             default:
                 return <GeneralFormInput key={field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />;
         }
@@ -85,8 +88,9 @@ const PreviewLog = (props: ModalProps) => {
     return (
         <FormContainer>
             <LoadingNoDataError loading={loading} error={error}>
-                <FormHeader label={`${props.payload.name} Log Preview`} />
+                <FormHeader label={`${logTitleDescription.title} Log Preview`} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                    <InfoField name={logTitleDescription.description} />
                     {fields}
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>

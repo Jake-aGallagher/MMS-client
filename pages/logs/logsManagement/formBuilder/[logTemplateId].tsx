@@ -30,7 +30,7 @@ interface Preview {
 
 const LogFormBuilder = () => {
     const logTemplateId = parseInt(router.asPath.split('/')[4]);
-    const { logFields, logTitle, loading, error, reload } = useLogPreview(logTemplateId);
+    const { logFields, logTitleDescription, loading, error, reload } = useLogPreview(logTemplateId);
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: AddEdit | Delete | Preview }>({
         view: false,
         type: '',
@@ -50,7 +50,7 @@ const LogFormBuilder = () => {
     };
 
     const previewForm = () => {
-        setModal({ view: true, type: 'previewLogForm', payload: { id: logTemplateId, name: logTitle } });
+        setModal({ view: true, type: 'previewLogForm', payload: { id: logTemplateId, name: logTitleDescription.title } });
     };
 
     const fields = logFields.map((field, i) => <LogFieldCard data={field} key={'logField_' + i} editLogField={editLogField} deleteLogField={deleteLogField} />);
@@ -73,7 +73,7 @@ const LogFormBuilder = () => {
                 ''
             )}
             <LoadingNoDataError loading={loading} error={error}>
-                <h1 className='my-4 w-full text-center text-2xl'>{logTitle}</h1>
+                <h1 className='my-4 w-full text-center text-2xl'>{logTitleDescription.title}</h1>
                 {fields}
                 <AddLogField clickHandler={addLogField} />
             </LoadingNoDataError>

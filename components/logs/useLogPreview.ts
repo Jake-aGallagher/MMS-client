@@ -15,7 +15,7 @@ export interface LogTemplateFields {
 export const useLogPreview = (templateId: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [logTitle, setLogTitle] = useState('');
+    const [logTitleDescription, setLogTitleDescription] = useState<{title: string; description: string;}>({title: '', description: ''});
     const [logFields, setLogFields] = useState<LogTemplateFields[]>([]);
     const [enumGroups, setEnumGroups] = useState<{[key: string]:{ id: string; value: string }[]}>({});
 
@@ -35,7 +35,7 @@ export const useLogPreview = (templateId: number) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setLogFields(response.data.logFields);
-            setLogTitle(response.data.logTitle);
+            setLogTitleDescription({title: response.data.logTitleDescription.title, description: response.data.logTitleDescription.description});
             setEnumGroups(response.data.enumGroups);
             setLoading(false);
         } catch (err) {
@@ -43,5 +43,5 @@ export const useLogPreview = (templateId: number) => {
             setLoading(false);
         }
     };
-    return { logFields, enumGroups, logTitle, loading, error, reload };
+    return { logFields, enumGroups, logTitleDescription, loading, error, reload };
 };

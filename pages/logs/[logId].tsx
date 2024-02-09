@@ -81,6 +81,7 @@ const LogDetails = () => {
 
     if (logFields.length > 0) {
         logFields?.forEach((field) => {
+            if (field.type === 'info') return;
             logFieldsConfig.fields.push({ label: field.name, value: prettyFieldValues(field.id, field.type, field.value || '', field.enumGroupId) });
         });
     }

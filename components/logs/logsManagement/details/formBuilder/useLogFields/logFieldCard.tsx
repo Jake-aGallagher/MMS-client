@@ -19,7 +19,7 @@ const LogFieldCard = (props: Props) => {
                 <div>{props.data.sort_order}</div>
             </div>
             <div className="ml-4 flex flex-col justify-center">
-                <div>Name: &nbsp;{props.data.name}</div>
+                <div>Name: &nbsp;{props.data.name.length > 75 ? props.data.name.slice(0, 80) + '...' : props.data.name}</div>
                 <div>Type: &nbsp;&nbsp;&nbsp;{props.data.type}</div>
             </div>
             <div className="ml-auto flex flex-row items-center">

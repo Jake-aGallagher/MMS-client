@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import FormTextCenter from '../../forms/formTextCenter';
 import FileInput from '../../forms/fileInput';
 import SignatureInput from '../../forms/signatureInput';
+import InfoField from '../../forms/infoField';
 
 interface ModalProps {
     closeModal: () => void;
@@ -22,7 +23,7 @@ interface ModalProps {
 const UpdateLog = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const userId = useSelector((state: RootState) => state.user.value.id);
-    const { logFields, enumGroups, fileData, defaultValues, logDates, loading, error } = useLogFields(props.payload.id);
+    const { logFields, enumGroups, logTitleDescription, fileData, defaultValues, logDates, loading, error } = useLogFields(props.payload.id);
     const continueScheduleOptions = [
         { id: 'Yes', value: `Continue on current schedule (next due: ${logDates[0].current_schedule || ''})` },
         { id: 'Adjust', value: `Adjust schedule (next due: ${logDates[0].new_schedule || ''})` },
@@ -100,6 +101,8 @@ const UpdateLog = (props: ModalProps) => {
                         type={field.type}
                     />
                 );
+            case 'info':
+                return <InfoField key={field.id} name={field.name} />;
             default:
                 return <GeneralFormInput key={field.id} register={register} label={field.name} type={field.type} formName={field.id.toString()} errors={errors} required={field.required} />;
         }
@@ -110,6 +113,7 @@ const UpdateLog = (props: ModalProps) => {
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={`${props.payload.name} Log Preview`} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
+                    <InfoField name={logTitleDescription.description} />
                     {fields}
                     <GeneralFormInput register={register} label="Completed" type="checkbox" formName="completed" errors={errors} />
                     {completedWatch[0] ? (
