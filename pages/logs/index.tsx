@@ -27,11 +27,9 @@ const Logs = () => {
         headers: [
             { id: 'id', name: 'ID', type: 'link', search: true, order: true },
             { id: 'title', name: 'Title', type: 'string', search: true, order: true },
-            { id: 'created', name: 'Created', type: 'date', search: true, order: true },
-            { id: 'required_comp_date', name: 'Required Completion Date', type: 'date', search: true, order: true },
-            { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
-            { id: 'comp_date', name: 'Completed Date', type: 'date', search: true, order: true },
+            { id: 'created', name: 'Last Completed', type: 'date', search: true, order: true },
             { id: 'frequency', name: 'Frequency', type: 'string', search: true, order: true },
+            { id: 'required_comp_date', name: 'Required Completion Date', type: 'date', search: true, order: true },
         ],
         searchable: true,
         linkColPrefix: '/logs/',
