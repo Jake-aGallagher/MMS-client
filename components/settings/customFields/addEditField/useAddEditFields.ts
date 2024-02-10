@@ -39,16 +39,17 @@ export const useAddEditFields = (fieldId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/logs/edit-log-field/${fieldId}`, {
+            const response = await axios.get(`${SERVER_URL}/field/${fieldId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setDefaultValues({
-                type: response.data.logField.type,
-                options: response.data.logField.options,
-                name: response.data.logField.name,
-                required: response.data.logField.required ? 'Yes' : 'No',
-                order: response.data.logField.sort_order,
+                type: response.data.field.type,
+                options: response.data.field.enum_group_id,
+                name: response.data.field.name,
+                required: response.data.field.required ? 'Yes' : 'No',
+                order: response.data.field.sort_order,
             });
+            setEnumOptions(response.data.enums)
             setLoading(false);
         } catch (err) {
             setError(true);
