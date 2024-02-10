@@ -4,7 +4,7 @@ import Toolbar from '../../../../components/page/toolbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import router from 'next/router';
-import AddLogField from '../../../../components/logs/logsManagement/details/formBuilder/addLogFieldButton';
+import AddLogField from '../../../../components/logs/logsManagement/details/formBuilder/addFieldButton';
 import { useState } from 'react';
 import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
 import ModalBase from '../../../../components/modal/modal';
