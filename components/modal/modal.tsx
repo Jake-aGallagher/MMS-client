@@ -29,6 +29,7 @@ import AddEditLogTemplate from '../logs/logsManagement/addEditLogTemplate/addEdi
 import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditField/addEditLogField';
 import PreviewLog from '../logs/logsManagement/details/formBuilder/previewLog/previewLog';
 import UpdateLog from '../logs/updateLog/updateLog';
+import AddEditField from '../settings/customFields/addEditField/addEditFields';
 
 interface ModalProps {
     closeModal: () => void;
@@ -114,6 +115,10 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditStatusType closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditUrgencyType':
                 return <AddEditUrgencyType closeModal={props.closeModal} payload={props.payload} />;
+
+            // Fields
+            case 'addEditField':
+                return <AddEditField closeModal={props.closeModal} payload={props.payload} />;
 
             // Delete Modals
             case 'deleteDelivery':
