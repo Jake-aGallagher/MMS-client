@@ -5,7 +5,7 @@ interface AddLogFieldProps {
     clickHandler: () => void;
 }
 
-const AddLogField: React.FC<AddLogFieldProps> = ({ clickHandler }) => {
+const AddFieldButton: React.FC<AddLogFieldProps> = ({ clickHandler }) => {
     return (
         <div
             onClick={clickHandler}
@@ -21,4 +21,4 @@ const AddLogField: React.FC<AddLogFieldProps> = ({ clickHandler }) => {
     );
 };
 
-export default AddLogField;
+export default AddFieldButton;
