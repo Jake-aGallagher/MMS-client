@@ -9,7 +9,7 @@ import { useState } from 'react';
 import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
 import ModalBase from '../../../../components/modal/modal';
 import { useLogPreview } from '../../../../components/logs/useLogPreview';
-import LogFieldCard from '../../../../components/logs/logsManagement/details/formBuilder/useLogFields/logFieldCard';
+import FieldCard from '../../../../components/logs/logsManagement/details/formBuilder/useLogFields/FieldCard';
 
 interface AddEdit {
     logId: number;
@@ -53,7 +53,7 @@ const LogFormBuilder = () => {
         setModal({ view: true, type: 'previewLogForm', payload: { id: logTemplateId, name: logTitleDescription.title } });
     };
 
-    const fields = logFields.map((field, i) => <LogFieldCard data={field} key={'logField_' + i} editLogField={editLogField} deleteLogField={deleteLogField} />);
+    const fields = logFields.map((field, i) => <FieldCard data={field} key={'logField_' + i} editField={editLogField} deleteField={deleteLogField} />);
 
     return (
         <FullPage>
