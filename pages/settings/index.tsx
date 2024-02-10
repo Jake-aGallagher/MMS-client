@@ -48,6 +48,13 @@ const Settings = () => {
                         </Link>
                     </IndexCardLayout>
                 ) : null}
+
+                <IndexCardLayout label="Fields">
+                    <Link href="/settings/customFields" className="pl-4 mt-2 hover:text-accent flex flex-row items-center">
+                        Custom Fields
+                    </Link>
+                </IndexCardLayout>
+
             </div>
         </FullPage>
     );
