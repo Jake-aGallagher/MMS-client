@@ -14,14 +14,14 @@ import AddFieldButton from '../../../components/logs/logsManagement/details/form
 const CustomFields = () => {
     const [activeTab, setActiveTab] = useState('property');
     const { fields, loading, error, reload } = useFieldList(activeTab);
-    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string; model: string } }>({ view: false, type: '', payload: { id: 0, name: '', model: '' } });
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string; model: string } | {id: number; name: string; url: string} }>({ view: false, type: '', payload: { id: 0, name: '', model: '' } });
 
     const fieldList = fields.map((field, i) => (
         <FieldCard
             data={field}
             key={'logField_' + i}
             editField={() => setModal({ view: true, type: 'addEditField', payload: { id: field.id, name: field.name, model: activeTab } })}
-            deleteField={() => setModal({ view: true, type: 'deleteField', payload: { id: field.id, name: field.name, model: activeTab } })}
+            deleteField={() => setModal({ view: true, type: 'deleteField', payload: { id: field.id, name: field.name, url: 'fields' } })}
         />
     ));
 
