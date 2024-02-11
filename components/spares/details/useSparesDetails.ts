@@ -35,6 +35,7 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [sparesDetails, setSparesDetails] = useState<Spare>();
+    const [deliveryInfo, setDeliveryInfo] = useState<{due: string; quantity: number}>({due: '', quantity: 0});
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const [used6M, setUsed6M] = useState<{ month: string; value: number }[]>([])
@@ -60,6 +61,7 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
             } else {
                 setSparesDetails(response.data.spares[0]);
                 setCustomFields(response.data.customFields);
+                setDeliveryInfo(response.data.deliveryInfo[0]);
                 setUsed6M(response.data.used6M)
                 if (response.data.recentJobs.length > 0) {
                     setRecentJobs(response.data.recentJobs);
@@ -71,5 +73,5 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
             setLoading(false);
         }
     };
-    return { sparesDetails, customFields, recentJobs, used6M, loading, noData, error, reload };
+    return { sparesDetails, customFields, deliveryInfo, recentJobs, used6M, loading, noData, error, reload };
 };

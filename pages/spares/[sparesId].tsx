@@ -27,7 +27,7 @@ const SparesView = () => {
 
     const spareId = router.asPath.split('/')[2];
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { sparesDetails, customFields, recentJobs, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
+    const { sparesDetails, customFields, deliveryInfo, recentJobs, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     let spareConfig: DetailsConfig = {
@@ -46,8 +46,8 @@ const SparesView = () => {
             { label: 'Reorder Amount', value: sparesDetails?.reorder_num },
             { label: 'Avg Usage per Month', value: sparesDetails?.avg_usage },
             { label: 'Cost per Item', value: sparesDetails?.cost },
-            { label: 'Next Delivery Due', value: 'needs implimenting' },
-            { label: 'Next Delivery Quantity Expected', value: 'needs implimenting' },
+            { label: 'Next Delivery Due', value: deliveryInfo?.due ? new Date(deliveryInfo?.due).toLocaleDateString() : 'Not on Order' },
+            { label: 'Next Delivery Quantity Expected', value: deliveryInfo?.quantity },
         ],
     };
     spareConfig = addToDetailsConfig(spareConfig, customFields);
