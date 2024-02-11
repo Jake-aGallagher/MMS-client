@@ -86,7 +86,7 @@ const PreviewLog = (props: ModalProps) => {
     });
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={`${logTitleDescription.title} Log Preview`} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

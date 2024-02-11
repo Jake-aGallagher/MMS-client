@@ -82,7 +82,7 @@ const EditPM = (props: Props) => {
     return (
         <>
             {viewModal ? <ModalBase modalType={modal.modalType} payload={modal.payload} fullSize={modal.fullSize} passbackDeatails={modal.passbackDeatails} closeModal={modal.closeModal} /> : null}
-            <FormContainer>
+            <FormContainer closeModal={props.closeModal}>
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <FormHeader label={'Update PM'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

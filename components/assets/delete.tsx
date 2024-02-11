@@ -52,7 +52,7 @@ const DeleteAsset = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <FormHeader label={'Delete ' + props.payload.name + ' and all child components'} />
             <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                 <FormTextCenter label="You are about to delete this Asset/Component, this will also delete all child components." />

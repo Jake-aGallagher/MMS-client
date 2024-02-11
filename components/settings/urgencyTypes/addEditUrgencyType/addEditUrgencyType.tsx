@@ -44,7 +44,7 @@ const AddEditUrgencyType = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.value : 'Add Urgency Type'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

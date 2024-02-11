@@ -56,7 +56,7 @@ const AddSchedule = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={'Create New Planned Maintenance Schedule'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

@@ -27,7 +27,7 @@ const AssignUsers = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error} noData={noData}>
                 <FormHeader label={'Assign Users'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

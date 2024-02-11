@@ -30,7 +30,7 @@ const AddEditPermission = (props: Props) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={'Assign Permissions to ' + props.payload.name} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

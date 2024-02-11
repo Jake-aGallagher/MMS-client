@@ -109,7 +109,7 @@ const UpdateLog = (props: ModalProps) => {
     });
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={`${props.payload.name} Log Preview`} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

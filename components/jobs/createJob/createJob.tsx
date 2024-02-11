@@ -55,7 +55,7 @@ const CreateJob = (props: ModalProps) => {
     return (
         <>
             {viewModal ? <ModalBase modalType={modalType} payload={modalPayload} fullSize={true} closeModal={() => [setViewModal(false), props.closeModal()]} /> : ''}
-            <FormContainer>
+            <FormContainer closeModal={props.closeModal}>
                 <LoadingNoDataError loading={loading} error={error}>
                     <FormHeader label={'Create New Job'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

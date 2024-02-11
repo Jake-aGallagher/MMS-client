@@ -42,7 +42,7 @@ const AddEditSupplier = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.payload.name.length > 0 ? 'Edit ' + props.payload.name : 'Add Supplier'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

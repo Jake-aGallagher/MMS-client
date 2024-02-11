@@ -70,7 +70,7 @@ const AddEditDelivery = (props: ModalProps) => {
             ) : (
                 ''
             )}
-            <FormContainer>
+            <FormContainer closeModal={props.closeModal}>
                 <LoadingNoDataError loading={loading} error={error}>
                     <FormHeader label={props.payload.name.length > 0 ? props.payload.name : 'Add Delivery'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

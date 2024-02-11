@@ -45,7 +45,7 @@ const AddEditSparesNote = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.payload.title.length > 0 ? props.payload.title : 'Add Note'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

@@ -31,7 +31,7 @@ const AddEditUserGroup = (props: Props) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <FormHeader label={props.payload.id > 0 ? 'Edit ' + props.payload.name : 'Add User Group'} />
             <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                 <GeneralFormInput register={register} label="Name" type="text" formName="name" errors={errors} required={true} />

@@ -36,7 +36,7 @@ const AdjustSparesStock = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={'Adjust Stock level for ' + props.payload.name} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

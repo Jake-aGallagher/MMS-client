@@ -27,7 +27,7 @@ const ViewExtraItems = (props: ModalProps) => {
     ));
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <FormHeader label={props.payload.name} />
             <div className='px-4'>
                 <AltTableContainer>

@@ -43,7 +43,7 @@ const AddEditStatusType = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.value : 'Add Status Type'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

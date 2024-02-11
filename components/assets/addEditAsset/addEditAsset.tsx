@@ -46,7 +46,7 @@ const AddEditAsset = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={formLabel} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

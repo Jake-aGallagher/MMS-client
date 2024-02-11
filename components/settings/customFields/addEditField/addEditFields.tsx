@@ -60,7 +60,7 @@ const AddEditField = (props: Props) => {
 
     
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={`Add Edit Field`} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

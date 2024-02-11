@@ -39,7 +39,7 @@ const AddEditEnumGroup = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.payload.id > 0 ? 'Edit ' + props.payload.name : 'Add Enum Group'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

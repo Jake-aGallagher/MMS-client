@@ -19,7 +19,7 @@ const DeleteForm = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <FormHeader label={'Delete ' + props.payload.name} />
             <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                 <FormTextCenter label={'Name: ' + props.payload.name} />

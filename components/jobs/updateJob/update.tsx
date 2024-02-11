@@ -85,7 +85,7 @@ const UpdateJob = (props: ModalProps) => {
     return (
         <>
             {viewModal ? <ModalBase modalType={modal.modalType} payload={modal.payload} fullSize={modal.fullSize} passbackDeatails={modal.passbackDeatails} closeModal={modal.closeModal} /> : null}
-            <FormContainer>
+            <FormContainer closeModal={props.closeModal}>
                 <LoadingNoDataError loading={loading} error={error} noData={noData}>
                     <FormHeader label={'Update Job'} />
                     <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

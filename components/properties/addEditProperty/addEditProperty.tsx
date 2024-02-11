@@ -47,7 +47,7 @@ const AddEditProperty = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.propertyNumber > 0 ? 'Edit ' + defaultValues.propertyName : 'Add Property'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>

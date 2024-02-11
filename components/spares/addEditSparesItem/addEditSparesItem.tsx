@@ -42,7 +42,7 @@ const AddEditSparesItem = (props: ModalProps) => {
     };
 
     return (
-        <FormContainer>
+        <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
                 <FormHeader label={props.payload.name.length > 0 ? props.payload.name : 'Add Spares Item'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
