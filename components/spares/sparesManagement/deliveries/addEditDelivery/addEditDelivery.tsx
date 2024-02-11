@@ -89,15 +89,15 @@ const AddEditDelivery = (props: ModalProps) => {
                         <GeneralFormInput register={register} label="Placed" type="date" formName="placed" errors={errors} required={true} />
                         <GeneralFormInput register={register} label="Due" type="date" formName="due" errors={errors} required={true} />
 
-                        <button className="btnBlue h-8 mt-4 mb-1" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
+                        <button className="btnBlue w-48 mx-auto h-8 mt-8 mb-1" onClick={(e) => [e.preventDefault(), setViewModal(true)]}>
                             Add Spares to Delivery
                         </button>
-                        {contents.length > 0 && (
-                            <AltTableContainer>
+                        {contents.length > 0 ? (
+                            <AltTableContainer className="mb-12">
                                 <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
                                 <SparesAddRemoveTable sparesSelected={contents} setSparesSelected={setContents} />
                             </AltTableContainer>
-                        )}
+                        ) : <div className='h-12'></div>}
 
                         <GeneralFormInput
                             register={register}

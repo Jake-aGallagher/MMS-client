@@ -34,10 +34,8 @@ interface Modal {
 
 const UpdateJob = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, customFields, loading, noData, error } = useUpdateJob(
-        currentProperty,
-        props.jobId
-    );
+    const { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, customFields, loading, noData, error } =
+        useUpdateJob(currentProperty, props.jobId);
     const [viewModal, setViewModal] = useState(false);
     const [modal, setModal] = useState<Modal>({ modalType: '', payload: {}, fullSize: true, passbackDeatails: null, closeModal: () => setViewModal(false) });
     const [files, setFiles] = useState<File[]>([]);
@@ -110,29 +108,25 @@ const UpdateJob = (props: ModalProps) => {
 
                         {completed !== 1 ? (
                             <>
-                                <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
-                                    Log Spares Used
+                                <button className="btnBlue w-48 mx-auto h-8 mt-8 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
+                                    Log Spare Parts Used
                                 </button>
-                                <AltTableContainer className="mb-4 px-1">
-                                    {sparesSelected.length > 0 ? (
-                                        <>
-                                            <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
-                                            <SparesAddRemoveTable sparesSelected={sparesSelected} setSparesSelected={setSparesSelected} />
-                                        </>
-                                    ) : null}
-                                </AltTableContainer>
+                                {sparesSelected.length > 0 ? (
+                                    <AltTableContainer className="mb-12">
+                                        <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
+                                        <SparesAddRemoveTable sparesSelected={sparesSelected} setSparesSelected={setSparesSelected} />
+                                    </AltTableContainer>
+                                ) : null}
 
-                                <button className="btnBlue mx-1 w-40 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'users')}>
+                                <button className="btnBlue w-48 mx-auto h-8 mt-8 mb-1" onClick={(e) => modalHandler(e, 'users')}>
                                     Log Time
                                 </button>
-                                <AltTableContainer className="mb-4 px-1">
-                                    {loggedTimeDetails.length > 0 ? (
-                                        <>
-                                            <AltTableHeaders headers={['Name', 'Time Logged', 'Add 5 Mins', 'Reduce 5 Mins', 'Remove']} />
-                                            <UsersAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
-                                        </>
-                                    ) : null}
-                                </AltTableContainer>
+                                {loggedTimeDetails.length > 0 ? (
+                                    <AltTableContainer className="mb-12">
+                                        <AltTableHeaders headers={['Name', 'Time Logged', 'Add 5 Mins', 'Reduce 5 Mins', 'Remove']} />
+                                        <UsersAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
+                                    </AltTableContainer>
+                                ) : <div className='h-12'></div>}
                                 {FieldInputs(customFields, register, errors, setValue)}
                             </>
                         ) : null}

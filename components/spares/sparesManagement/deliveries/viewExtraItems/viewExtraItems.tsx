@@ -19,7 +19,7 @@ interface ModalProps {
 
 const ViewExtraItems = (props: ModalProps) => {
     const sparesTable = props.payload.contents.map((item) => (
-        <tr className="odd:bg-secAlt even:bg-secondary" key={'current_item_' + item.spare_id}>
+        <tr className="border-t-1 border-solid border-primary" key={'current_item_' + item.spare_id}>
             <td className="text-center">{item.part_no}</td>
             <td className="text-center">{item.name}</td>
             <td className="text-center">{item.quantity}</td>

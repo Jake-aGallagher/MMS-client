@@ -33,7 +33,7 @@ const SparesAddRemoveTable = (props: Props) => {
     };
 
     const sparesTable = props.sparesSelected.map((item) => (
-        <tr className="odd:bg-secAlt even:bg-secondary" key={'current_item_' + item.id}>
+        <tr className="border-t-1 border-solid border-primary" key={'current_item_' + item.id}>
             <td className="text-center">{item.part_no}</td>
             <td className="text-center">{item.name}</td>
             <td className="text-center">{item.quantity}</td>
