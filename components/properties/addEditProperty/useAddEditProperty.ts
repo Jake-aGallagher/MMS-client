@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
 
 interface Props {
     propertyNumber: number;
@@ -10,7 +11,8 @@ export const useAddEditProperty = (props: Props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [id, setId] = useState(props.propertyNumber);
-    const [defaultValues, setDefaultValues] = useState({
+    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
+    const [defaultValues, setDefaultValues] = useState<DefaultValues>({
         propertyName: '',
         type: 'Factory',
         address: '',
@@ -36,19 +38,24 @@ export const useAddEditProperty = (props: Props) => {
             });
             const data = response.data.propDetails[0];
             setId(parseInt(data.id));
-            setDefaultValues({
+            setCustomFields(response.data.customFields);
+            const defaultVal: DefaultValues = {
                 propertyName: data.name,
                 type: data.type,
                 address: data.address,
                 city: data.city,
                 county: data.county,
                 postcode: data.postcode,
+            };
+            response.data.customFields.fields.forEach((field: FieldValue) => {
+                defaultVal[field.id] = field.value;
             });
+            setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { defaultValues, id, loading, error };
+    return { defaultValues, customFields, id, loading, error };
 };

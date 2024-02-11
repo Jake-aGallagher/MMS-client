@@ -14,6 +14,8 @@ import PropertyDetailsDefaultCharts from '../../components/charts/defaults/prope
 import { RootState } from '../../components/store/store';
 import { useSelector } from 'react-redux';
 import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
+import { DetailsConfig } from '../../commonTypes/DetailsConfig';
+import { addToDetailsConfig } from '../../components/settings/customFields/addToDetailsConfig';
 
 const PropertyView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -24,11 +26,11 @@ const PropertyView = () => {
     }
 
     const propertyNumber = router.asPath.split('/')[2];
-    const { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M, mostUsed6M, sparesCost6M, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
+    const { propertyDetails, customFields, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M, mostUsed6M, sparesCost6M, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
-    const propertyDetailsConfig = {
+    let propertyDetailsConfig: DetailsConfig = {
         id: propertyDetails?.id,
         fields: [
             { label: 'ID', value: propertyDetails?.id },
@@ -40,6 +42,7 @@ const PropertyView = () => {
             { label: 'Postcode', value: propertyDetails?.postcode },
         ],
     };
+    propertyDetailsConfig = addToDetailsConfig(propertyDetailsConfig, customFields);
 
     const userTableConfig = {
         headers: [

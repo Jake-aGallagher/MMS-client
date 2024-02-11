@@ -6,10 +6,10 @@ import FormHeader from '../../forms/formHeader';
 import FormContainer from '../../forms/formContainer';
 import GeneralForm from '../../forms/generalForm';
 import { useAddEditProperty } from './useAddEditProperty';
-import { yupResolverAddEditProperty } from './addEditPropertyValidation';
 import { addEditPropertyHandler } from './addEditPropertyHandler';
 import { useDispatch } from 'react-redux';
 import LoadingNoDataError from '../../loading/loadingNoDataError';
+import { FieldInputs } from '../../settings/customFields/fieldInputs';
 
 interface ModalProps {
     closeModal: () => void;
@@ -18,7 +18,7 @@ interface ModalProps {
 
 const AddEditProperty = (props: ModalProps) => {
     const dispatch = useDispatch();
-    const { defaultValues, id, loading, error } = useAddEditProperty({ propertyNumber: props.propertyNumber });
+    const { defaultValues, customFields, id, loading, error } = useAddEditProperty({ propertyNumber: props.propertyNumber });
     const typeOptions = [
         { id: 'Factory', value: 'Factory' },
         { id: 'Commercial', value: 'Commercial' },
@@ -31,8 +31,8 @@ const AddEditProperty = (props: ModalProps) => {
         handleSubmit,
         reset,
         formState: { errors },
+        setValue,
     } = useForm({
-        resolver: yupResolverAddEditProperty,
         defaultValues: useMemo(() => {
             return defaultValues;
         }, [defaultValues]),
@@ -57,6 +57,7 @@ const AddEditProperty = (props: ModalProps) => {
                     <GeneralFormInput register={register} label="City" type="text" formName="city" errors={errors} required={true} />
                     <GeneralFormInput register={register} label="County" type="text" formName="county" errors={errors} required={true} />
                     <GeneralFormInput register={register} label="Postcode" type="text" formName="postcode" errors={errors} required={true} />
+                    {FieldInputs(customFields, register, errors, setValue)}
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
             </LoadingNoDataError>

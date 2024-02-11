@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { CustomFieldData } from '../../../commonTypes/CustomFields';
 
 interface Property {
     id: number;
@@ -38,6 +39,7 @@ export const usePropertyDetails = (propertyNumber: string) => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [propertyDetails, setPropertyDetails] = useState<Property>();
+    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const [incompleteJobs, setIncompleteJobs] = useState<IncompleteJobs[]>([]);
@@ -67,6 +69,7 @@ export const usePropertyDetails = (propertyNumber: string) => {
                 setNoData(true);
             } else {
                 setPropertyDetails(data.propDetails[0]);
+                setCustomFields(response.data.customFields);
                 setAssignedUsers(data.assignedUsers);
                 setRecentJobs(data.recentJobs);
                 setIncompleteJobs([
@@ -86,5 +89,5 @@ export const usePropertyDetails = (propertyNumber: string) => {
             setLoading(false);
         }
     };
-    return { propertyDetails, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M , mostUsed6M, sparesCost6M, loading, noData, error, reload };
+    return { propertyDetails, customFields, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M , mostUsed6M, sparesCost6M, loading, noData, error, reload };
 };
