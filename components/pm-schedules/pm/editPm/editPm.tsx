@@ -99,7 +99,7 @@ const EditPM = (props: Props) => {
                         <GeneralFormInput register={register} label="Notes" type="textarea" formName="notes" errors={errors} rows={5} />
 
                         <button className="btnBlue w-48 mx-auto h-8 mt-8 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
-                            Log Spares Used
+                            Log Spare Parts Used
                         </button>
                         {sparesSelected.length > 0 ? (
                             <AltTableContainer className="mb-12">
