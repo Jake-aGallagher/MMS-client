@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
 
 interface Spare {
     id: number;
@@ -19,7 +20,8 @@ interface Spare {
 export const useAddEditSparesItem = (id: number, currentProperty: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [defaultValues, setDefaultValues] = useState({
+    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
+    const [defaultValues, setDefaultValues] = useState<DefaultValues>({
         partNo: '',
         manPartNo: '',
         name: '',
@@ -38,17 +40,33 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
             setError(false);
             getHandler();
         } else {
-            setLoading(false);
+            setLoading(true);
+            setError(false);
+            getFields();
         }
     }, []);
 
-    const getHandler = async () => {
+    const getFields = async () => {
         try {
-            const spare = await axios.get(`${SERVER_URL}/spare/${id}/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/fields/spare`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            const s: Spare = spare.data.spares[0];
-            setDefaultValues({
+            setCustomFields(response.data);
+            setLoading(false);
+        } catch (err) {
+            setError(true);
+            setLoading(false);
+        }
+    }
+
+    const getHandler = async () => {
+        try {
+            const response = await axios.get(`${SERVER_URL}/spare/${id}/${currentProperty}`, {
+                headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
+            });
+            const s: Spare = response.data.spares[0];
+            setCustomFields(response.data.customFields);
+            const defaultVal: DefaultValues = {
                 partNo: s.part_no,
                 manPartNo: s.man_part_no,
                 name: s.name,
@@ -59,12 +77,16 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
                 quantRemaining: s.quant_remain,
                 supplier: s.supplier,
                 cost: s.cost,
+            };
+            response.data.customFields.fields.forEach((field: FieldValue) => {
+                defaultVal[field.id] = field.value;
             });
+            setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { defaultValues, loading, error };
+    return { defaultValues, customFields, loading, error };
 };

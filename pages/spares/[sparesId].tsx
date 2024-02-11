@@ -14,6 +14,8 @@ import Toolbar from '../../components/page/toolbar';
 import DetailsBox from '../../components/detailsBox/detailsBox';
 import SparesDetailsDefaultCharts from '../../components/charts/defaults/sparesDetailsDefaultCharts';
 import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
+import { DetailsConfig } from '../../commonTypes/DetailsConfig';
+import { addToDetailsConfig } from '../../components/settings/customFields/addToDetailsConfig';
 
 const SparesView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -25,10 +27,10 @@ const SparesView = () => {
 
     const spareId = router.asPath.split('/')[2];
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { sparesDetails, recentJobs, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
+    const { sparesDetails, customFields, recentJobs, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
-    const spareConfig = {
+    let spareConfig: DetailsConfig = {
         id: sparesDetails?.id,
         fields: [
             { label: 'Part Number', value: sparesDetails?.part_no },
@@ -48,6 +50,7 @@ const SparesView = () => {
             { label: 'Next Delivery Quantity Expected', value: 'needs implimenting' },
         ],
     };
+    spareConfig = addToDetailsConfig(spareConfig, customFields);
 
     const jobTableConfig = {
         headers: [

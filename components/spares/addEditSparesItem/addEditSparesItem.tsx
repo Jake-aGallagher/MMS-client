@@ -9,8 +9,8 @@ import FormContainer from '../../forms/formContainer';
 import GeneralForm from '../../forms/generalForm';
 import LoadingNoDataError from '../../loading/loadingNoDataError';
 import { useAddEditSparesItem } from './useAddEditSparesItem';
-import { yupResolverAddEditSparesItem } from './addEditSparesItemValidation';
 import { addEditSparesItemHandler } from './addEditSparesItemHandler';
+import { FieldInputs } from '../../settings/customFields/fieldInputs';
 
 interface ModalProps {
     closeModal: () => void;
@@ -19,15 +19,15 @@ interface ModalProps {
 
 const AddEditSparesItem = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { defaultValues, loading, error } = useAddEditSparesItem(props.payload.id, currentProperty);
+    const { defaultValues, customFields, loading, error } = useAddEditSparesItem(props.payload.id, currentProperty);
 
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors },
+        setValue,
     } = useForm({
-        resolver: yupResolverAddEditSparesItem,
         defaultValues: useMemo(() => {
             return defaultValues;
         }, [defaultValues]),
@@ -56,6 +56,7 @@ const AddEditSparesItem = (props: ModalProps) => {
                     <GeneralFormInput register={register} label="Quantity in Stock" type="number" formName="quantRemaining" errors={errors} min={0} />
                     <GeneralFormInput register={register} label="Supplier" type="text" formName="supplier" errors={errors} />
                     <GeneralFormInput register={register} label="Cost per Item" type="number" formName="cost" errors={errors} min={0} />
+                    {FieldInputs(customFields, register, errors, setValue)}
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
             </LoadingNoDataError>
