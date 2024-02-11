@@ -17,6 +17,8 @@ import AssetDetailsDefaultCharts from '../../components/charts/defaults/assetDet
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
+import { DetailsConfig } from '../../commonTypes/DetailsConfig';
+import { addToDetailsConfig } from '../../components/settings/customFields/addToDetailsConfig';
 
 const AssetView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -28,17 +30,18 @@ const AssetView = () => {
 
     const assetId = router.asPath.split('/')[2];
     const [modal, setModal] = useState({ view: false, type: '', payload: {} });
-    const { assetDetails, recentJobs, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload } = useAssetDetails(assetId);
+    const { assetDetails, customFields, recentJobs, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload } = useAssetDetails(assetId);
     const { openBranches, toggle } = useOpenBranches();
     const { allRoots } = useAssetTree({ type: 'details', assetTree: children, openBranches, toggle, setModal });
 
-    const assetConfig = {
+    let assetConfig: DetailsConfig = {
         id: assetDetails?.id,
         fields: [
             { label: 'Name', value: assetDetails?.name },
             { label: 'Notes', value: assetDetails?.notes },
         ],
     };
+    assetConfig = addToDetailsConfig(assetConfig, customFields);
 
     const recentJobTableConfig = {
         headers: [

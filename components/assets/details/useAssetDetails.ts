@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { CustomFieldData } from '../../../commonTypes/CustomFields';
 
 interface Asset {
     id: number;
@@ -42,6 +43,7 @@ export const useAssetDetails = (assetId: string) => {
     const [assetDetails, setAssetDetails] = useState<Asset>();
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
     const [children, setChildren] = useState<Children[]>([]);
+    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [jobsOfComponents6M, setJobsOfComponents6M] = useState<{ name: string; value: number }[]>([]);
     const [incompleteForAsset, setIncompleteForAsset] = useState<IncompleteJobs[]>([]);
 
@@ -65,6 +67,7 @@ export const useAssetDetails = (assetId: string) => {
                 setNoData(true);
             } else {
                 setAssetDetails(response.data.assetDetails[0]);
+                setCustomFields(response.data.customFields);
                 setRecentJobs(response.data.recentJobs);
                 setChildren(response.data.tree);
                 setJobsOfComponents6M(response.data.jobsOfComponents6M);
@@ -81,5 +84,5 @@ export const useAssetDetails = (assetId: string) => {
             setLoading(false);
         }
     };
-    return { assetDetails, recentJobs, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload };
+    return { assetDetails, customFields, recentJobs, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload };
 };
