@@ -12,6 +12,7 @@ import LoadingNoDataError from '../../loading/loadingNoDataError';
 import { useCreateJob } from './useCreateJob';
 import { yupResolverCreateJob } from './createJobValidation';
 import { createJobHandler } from './createJobHandler';
+import { FieldInputs } from '../../settings/customFields/fieldInputs';
 
 interface ModalProps {
     closeModal: () => void;
@@ -19,7 +20,7 @@ interface ModalProps {
 }
 
 const CreateJob = (props: ModalProps) => {
-    const { defaultValues, typeOptions, urgencyOptions, loading, error } = useCreateJob();
+    const { defaultValues, customFields, typeOptions, urgencyOptions, loading, error } = useCreateJob();
     const userId = useSelector((state: RootState) => state.user.value.id);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [viewModal, setViewModal] = useState(false);
@@ -36,8 +37,8 @@ const CreateJob = (props: ModalProps) => {
         watch,
         reset,
         formState: { errors },
+        setValue,
     } = useForm({
-        resolver: yupResolverCreateJob,
         defaultValues: useMemo(() => {
             return defaultValues;
         }, [defaultValues]),
@@ -90,6 +91,7 @@ const CreateJob = (props: ModalProps) => {
                             optionNameString="value"
                             selectOptions={yesNoOptions}
                         />
+                        {FieldInputs(customFields, register, errors, setValue)}
                         <GeneralFormSubmit closeModal={props.closeModal} />
                     </GeneralForm>
                 </LoadingNoDataError>

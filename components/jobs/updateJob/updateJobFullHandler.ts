@@ -38,6 +38,7 @@ export const updateJobFullHandler = async (
             continueSchedule: data.continueSchedule,
             sparesUsed: sparesSelected,
             propertyId: currentProperty,
+            fieldData: data            
         })
     );
     const response = await updateJobFullConn(formData)

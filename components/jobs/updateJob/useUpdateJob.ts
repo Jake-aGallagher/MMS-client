@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
 
 interface StatusOptions {
     id: string;
@@ -29,7 +30,8 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
     const [completed, setCompleted] = useState(0);
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
     const [completableStatus, setCompletableStatus] = useState<number[]>([]);
-    const [defaultValues, setDefaultValues] = useState({
+    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
+    const [defaultValues, setDefaultValues] = useState<DefaultValues>({
         status: '0',
         description: '',
         notes: '',
@@ -61,12 +63,17 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
                 }
                 const data = response.data.jobDetails[0];
                 setCompleted(data.completed);
-                setDefaultValues({
+                setCustomFields(response.data.customFields);
+                const defaultVal: DefaultValues = {
                     status: data.status_id,
                     description: data.description ? data.description : '',
                     notes: data.notes ? data.notes : '',
                     completed: 0,
+                };
+                response.data.customFields.fields.forEach((field: FieldValue) => {
+                    defaultVal[field.id] = field.value;
                 });
+                setDefaultValues(defaultVal);
                 setNoData(false);
             }
             setLoading(false);
@@ -75,5 +82,5 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
             setLoading(false);
         }
     };
-    return { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error };
+    return { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, customFields, loading, noData, error };
 };

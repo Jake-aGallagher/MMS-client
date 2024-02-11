@@ -17,6 +17,7 @@ import AltTableHeaders from '../../dataTable/altTableHeaders';
 import AltTableContainer from '../../dataTable/altTableContainer';
 import SparesAddRemoveTable from '../../sparesSelector/sparesAddRemoveTable';
 import UsersAddRemoveTable from '../../usersSelector/usersAddRemoveTable';
+import { FieldInputs } from '../../settings/customFields/fieldInputs';
 
 interface ModalProps {
     closeModal: () => void;
@@ -33,7 +34,7 @@ interface Modal {
 
 const UpdateJob = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error } = useUpdateJob(
+    const { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, customFields, loading, noData, error } = useUpdateJob(
         currentProperty,
         props.jobId
     );
@@ -47,8 +48,8 @@ const UpdateJob = (props: ModalProps) => {
         reset,
         watch,
         formState: { errors },
+        setValue,
     } = useForm({
-        resolver: yupResolverUpdateJob,
         defaultValues: useMemo(() => {
             return defaultValues;
         }, [defaultValues]),
@@ -72,7 +73,7 @@ const UpdateJob = (props: ModalProps) => {
     };
 
     const handleRegistration = async (data: any) => {
-        if (completableStatus.includes(parseInt(statusWatch[0])) && completed !== 1) {
+        if (completableStatus.includes(parseInt(String(statusWatch[0]))) && completed !== 1) {
             if (confirm('You are about to Complete this Job, once completed the only editable section will be the Notes, are you sure you want to continue') === true) {
                 updateJobFullHandler(true, data, props.jobId, currentProperty, loggedTimeDetails, sparesSelected, files, props.closeModal);
             }
@@ -132,9 +133,10 @@ const UpdateJob = (props: ModalProps) => {
                                         </>
                                     ) : null}
                                 </AltTableContainer>
+                                {FieldInputs(customFields, register, errors, setValue)}
                             </>
                         ) : null}
-                        <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(statusWatch[0])) && completed !== 1 ? 'Complete' : 'Update'} />
+                        <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(String(statusWatch[0]))) && completed !== 1 ? 'Complete' : 'Update'} />
                     </GeneralForm>
                 </LoadingNoDataError>
             </FormContainer>

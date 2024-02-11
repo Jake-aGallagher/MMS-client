@@ -14,6 +14,8 @@ import JobDetailsDefaultCharts from '../../components/charts/defaults/jobDetails
 import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
+import { DetailsConfig } from '../../commonTypes/DetailsConfig';
+import { addToDetailsConfig } from '../../components/settings/customFields/addToDetailsConfig';
 
 const JobView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -24,11 +26,11 @@ const JobView = () => {
     }
 
     const jobId = router.asPath.split('/')[2];
-    const { jobDetails, files, timeDetails, sparesDetails, loading, noData, error, reload } = useJobDetails(jobId);
+    const { jobDetails, customFields, files, timeDetails, sparesDetails, loading, noData, error, reload } = useJobDetails(jobId);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
-    const jobDetailsConfig = {
+    let jobDetailsConfig: DetailsConfig = {
         id: jobDetails?.id,
         fields: [
             { label: 'ID', value: jobDetails?.id },
@@ -47,6 +49,7 @@ const JobView = () => {
             { label: 'Reported By', value: jobDetails?.reported_by },
         ],
     };
+    jobDetailsConfig = addToDetailsConfig(jobDetailsConfig, customFields);
 
     const sparesTableConfig = {
         headers: [

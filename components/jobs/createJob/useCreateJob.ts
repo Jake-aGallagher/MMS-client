@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
 
 interface TypeOptions {
     id: number;
@@ -17,7 +18,8 @@ export const useCreateJob = () => {
     const [error, setError] = useState(false);
     const [typeOptions, setTypeOptions] = useState<TypeOptions[]>([]);
     const [urgencyOptions, setUrgencyOptions] = useState<UrgencyOptions[]>([]);
-    const [defaultValues, setDefaultValues] = useState({
+    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
+    const [defaultValues, setDefaultValues] = useState<DefaultValues>({
         selectedType: '',
         title: '',
         description: '',
@@ -38,16 +40,21 @@ export const useCreateJob = () => {
             });
             setTypeOptions(response.data.types);
             setUrgencyOptions(response.data.urgency);
-            setDefaultValues({
+            setCustomFields(response.data.customFields);
+            const defaultVal: DefaultValues = {
                 ...defaultValues,
                 selectedType: response.data.types[0].id,
                 selectedUrgency: response.data.urgency[0].id,
+            };
+            response.data.customFields.fields.forEach((field: FieldValue) => {
+                defaultVal[field.id] = field.value;
             });
+            setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { defaultValues, typeOptions, urgencyOptions, loading, error };
+    return { defaultValues, customFields, typeOptions, urgencyOptions, loading, error };
 };

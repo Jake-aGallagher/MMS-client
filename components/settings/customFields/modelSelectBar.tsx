@@ -20,9 +20,6 @@ const ModelSelectBar = (props: Props) => {
             >
                 Job
             </button>
-            <button onClick={() => props.setActiveTab('pm')} className={`w-full hover:bg-accent hover:text-background transition-all ${props.activeTab == 'pm' ? 'bg-accent text-background' : null}`}>
-                PM
-            </button>
             <button
                 onClick={() => props.setActiveTab('asset')}
                 className={`w-full hover:bg-accent hover:text-background transition-all ${props.activeTab == 'asset' ? 'bg-accent text-background' : null}`}
@@ -34,12 +31,6 @@ const ModelSelectBar = (props: Props) => {
                 className={`w-full hover:bg-accent hover:text-background transition-all ${props.activeTab == 'spare' ? 'bg-accent text-background' : null}`}
             >
                 Spares
-            </button>
-            <button
-                onClick={() => props.setActiveTab('delivery')}
-                className={`w-full hover:bg-accent hover:text-background transition-all ${props.activeTab == 'delivery' ? 'bg-accent text-background' : null}`}
-            >
-                Delivery
             </button>
         </div>
     );
