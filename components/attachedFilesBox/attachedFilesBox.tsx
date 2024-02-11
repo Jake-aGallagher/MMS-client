@@ -35,7 +35,7 @@ const AttachedFilesBox = (props: Props) => {
     };
 
     return (
-        <div className=" mb-4 mt-2 p-2 w-full bg-secondary rounded-xl shadow-xl">
+        <div className=" mb-4 mt-2 p-2 w-full bg-secondary rounded-md shadow-md">
             <div className="pl-2 mb-2 flex flex-row">
                 <div>Attached Files ({files.length})</div>
                 {permissions.files?.manage || isAdmin ? (

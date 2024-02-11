@@ -33,7 +33,7 @@ const DefaultChartCard = (props: Props) => {
     };
 
     return (
-        <div className="w-full max-w-xl bg-secondary rounded-xl shadow-xl flex flex-col">
+        <div className="w-full max-w-xl bg-secondary rounded-md shadow-md flex flex-col">
             <select className="mt-1 mx-auto bg-secAlt p-1 rounded-md" onChange={(e) => setGraph(e.target.value)}>
                 {props.graphData.map((item) => (
                     <option key={'chart_item_' + item.selectValue} value={item.selectValue}>

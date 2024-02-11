@@ -29,7 +29,7 @@ const SparesNotes = () => {
                 />
             ) : null}
             <div className="px-10 p-5">
-                <div className="bg-background p-6 rounded-md shadow-lg">
+                <div className="bg-background p-6 rounded-md shadow-md">
                     <h2 className="text-xl font-semibold mb-2">
                         Notes
                         {permissions.sparesManagement?.manage || isAdmin ? (

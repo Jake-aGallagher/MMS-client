@@ -15,7 +15,7 @@ const NoteToView = (props: Props) => {
     const focusedNote = props.notes.find((x) => x.id === props.viewNote);
     if (focusedNote) {
         return (
-            <div className="flex flex-col mt-4 ml-6 bg-secondary p-4 rounded-md shadow-lg">
+            <div className="flex flex-col mt-4 ml-6 bg-secondary p-4 rounded-md shadow-md">
                 <div className="flex flex-row mb-2 font-semibold">
                     <div className="mr-5">{focusedNote.title}</div>
                     <div>{focusedNote.created_date}</div>

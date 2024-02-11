@@ -49,7 +49,7 @@ const DataTableSearch = (props: Props) => {
     });
 
     return (
-        <div className={`w-full mx-auto flex flex-row justify-center my-5 p-2 rounded-xl shadow-lg bg-secondary ${viewSearch ? 'max-w-5xl' : 'max-w-lg'}`}>
+        <div className={`w-full mx-auto flex flex-row justify-center my-5 p-2 rounded-md shadow-md bg-secondary ${viewSearch ? 'max-w-5xl' : 'max-w-lg'}`}>
             <DataTableSeachForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                 <div className="flex flex-col min-h-fit">
                     {viewSearch ? <div className="flex flex-row flex-wrap">{searchItems}</div> : <div className="px-4 pb-2 text-center">{`${activeFilters.length} active filters`}</div>}

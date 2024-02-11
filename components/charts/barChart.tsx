@@ -66,7 +66,7 @@ const BarChart = (props: BarPropsOptions | BarPropsDash | BarPropsTitle) => {
                     <Bar data={props.data} options={options} />
                 </div>
             ) : (
-                <div className={`${'dashboard' in props ? 'flex flex-row justify-center items-center' : 'max-w-xl mt-2 w-full bg-secondary rounded-xl p-2'}`}>
+                <div className={`${'dashboard' in props ? 'flex flex-row justify-center items-center' : 'max-w-xl mt-2 w-full bg-secondary rounded-md p-2'}`}>
                     <Bar data={props.data} options={options} />
                 </div>
             )}

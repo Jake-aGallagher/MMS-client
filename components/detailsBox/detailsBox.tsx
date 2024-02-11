@@ -11,7 +11,7 @@ interface Props {
 
 const DetailsBox = (props: Props) => {
     return (
-        <div className=" mb-4 w-full max-w-3xl bg-secondary mt-2 p-2 rounded-xl shadow-xl">
+        <div className=" mb-4 w-full max-w-3xl bg-secondary mt-2 p-2 rounded-md shadow-md">
             {props.data.title ? <div className="text-xl text-center mb-4">{props.data.title}</div> : null}
             {props.data.fields.map((item) => (
                 <div key={item.label} className="flex flex-row mb-3 pb-1 border-b-1 border-text border-opacity-10">

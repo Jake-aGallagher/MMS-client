@@ -67,7 +67,7 @@ const StockWarnings = () => {
 
     return (
         <div className="px-10 pt-5">
-            <div className="bg-background p-6 rounded-md shadow-lg">
+            <div className="bg-background p-6 rounded-md shadow-md">
                 <h2 className="text-xl font-semibold mb-2">Current Stock Warnings:</h2>
                 {numLow > 0 ? (<button className="flex flex-row items-center transition-all hover:text-accent select-none " onClick={() => setShowLow((prev) => !prev)}>
                     <FontAwesomeIcon icon={faCaretRight} className={`mr-1 w-3 transition-all ${showLow ? 'rotate-90' : null}`} />

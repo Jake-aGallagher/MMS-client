@@ -83,7 +83,7 @@ const DataTable = (props: Props) => {
         <LoadingNoDataError loading={loading} error={false}>
             {props.config.searchable ? <DataTableSearch headers={props.config.headers} currentFilters={filtersObj} setFiltersObj={setFiltersObj} /> : null}
             <div className="w-full h-full relative">
-                <div className="overflow-x-auto rounded-xl shadow-lg">
+                <div className="overflow-x-auto rounded-md shadow-md">
                     <table className="w-full table-auto bg-secondary">
                         {props.config.title ? <caption className="w-full bg-secondary text-lg">{props.config.title}</caption> : null}
                         <DataTableHead headers={props.config.headers} currentSort={currentSort} setCurrentSort={setCurrentSort} sortFunction={sortFunction} />

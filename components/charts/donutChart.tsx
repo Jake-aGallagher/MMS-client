@@ -50,7 +50,7 @@ const DonutChart = (props: DonutPropsOptions | DonutPropsTitle) => {
     }
 
     return (
-        <div className='max-w-xl w-full bg-secondary rounded-xl p-2 shadow-xl mt-2'>
+        <div className='max-w-xl w-full bg-secondary rounded-md p-2 shadow-md mt-2'>
             <Doughnut data={props.data} options={options} />
         </div>
     );
