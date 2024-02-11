@@ -18,6 +18,15 @@ module.exports = {
             borderWidth: {
                 1: '1px',
             },
+            animation: {
+                slide: 'slide 0.1s forwards',
+              },
+              keyframes: {
+                slide: {
+                  '0%': { transform: 'scaleX(0)', opacity: '0' },
+                  '100%': { transform: 'scaleX(1)', opacity: '1' },
+                },
+              },
         },
         plugins: [],
     },
