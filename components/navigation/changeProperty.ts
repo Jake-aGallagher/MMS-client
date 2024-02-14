@@ -4,10 +4,9 @@ import { UnknownAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
 
-export const changeProperty = async (dispatch: Dispatch<UnknownAction>, userId: number, newPropIdString: string) => {
+export const changeProperty = async (dispatch: Dispatch<UnknownAction>, userId: number, newPropId: number) => {
     const alertString = 'There has been an issue changing property, please try again.';
     try {
-        const newPropId = parseInt(newPropIdString);
         const response = await axios.put(
             `${SERVER_URL}/properties/Last-property`,
             {

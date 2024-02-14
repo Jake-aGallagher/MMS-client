@@ -30,6 +30,7 @@ import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditF
 import PreviewLog from '../logs/logsManagement/details/formBuilder/previewLog/previewLog';
 import UpdateLog from '../logs/updateLog/updateLog';
 import AddEditField from '../settings/customFields/addEditField/addEditFields';
+import PropertyPicker from '../navigation/propertyPicker';
 
 interface ModalProps {
     closeModal: () => void;
@@ -45,6 +46,8 @@ const ModalBase = (props: ModalProps) => {
 
         switch (modalType) {
             // Property
+            case 'propertyPicker':
+                return <PropertyPicker closeModal={props.closeModal} />;
             case 'addEditProperty':
                 return <AddEditProperty closeModal={props.closeModal} propertyNumber={props.payload} />;
             case 'assignUsers':
