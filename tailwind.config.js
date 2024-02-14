@@ -20,6 +20,7 @@ module.exports = {
             },
             animation: {
                 slide: 'slide 0.1s forwards',
+                slideSlow: 'slide 0.2s forwards',
               },
               keyframes: {
                 slide: {
