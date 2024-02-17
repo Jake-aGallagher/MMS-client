@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../store/userSlice';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import LogoWithName from '../../public/LogoName.svg';
 import { useSearchParams } from 'next/navigation';
 import { setDebug } from '../store/debugSlice';
 import { setPermissions } from '../store/permissionsSlice';
+import LoadingNoDataError from '../loading/loadingNoDataError';
 
 interface Props {
     loginHandler: () => void;
@@ -18,8 +19,9 @@ interface Props {
 }
 
 const Login = (props: Props) => {
+    const [loading, setLoading] = useState(true);
     const searchParams = useSearchParams();
-    const debug = searchParams.get('debug') == process.env.NEXT_PUBLIC_DEBUG_KEY || false;
+    const debug = searchParams?.get('debug') == process.env.NEXT_PUBLIC_DEBUG_KEY || false;
     const dispatch = useDispatch();
     const formValidation = yup.object().shape({
         username: yup.string().required().max(255),
@@ -40,6 +42,7 @@ const Login = (props: Props) => {
     }, []);
 
     const checkLogin = async () => {
+        setLoading(true);
         try {
             const response = await axios.get(`${SERVER_URL}/check-auth`, {
                 headers: {
@@ -61,7 +64,9 @@ const Login = (props: Props) => {
             );
             dispatch(setPermissions({ permissions: response.data.permissions }));
             props.loginHandler();
-        } catch (err) {}
+        } catch (err) {
+            setLoading(false);
+        }
     };
 
     const handleRegistration = async (data: any) => {
@@ -109,42 +114,53 @@ const Login = (props: Props) => {
     };
 
     return (
-        <div className="container mx-auto h-screen w-screen flex flex-col justify-center items-center">
-            <img src={bgImg.src} className="fixed w-screen h-screen object-cover" draggable={false} />
-            <img src={LogoWithName.src} className="fixed top-0 left-0 w-44 h-24 m-4" draggable={false} />
-            <form onSubmit={handleSubmit(handleRegistration)} className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-md z-10 opacity-80">
-                <div className="flex flex-col mx-1 relative mb-2">
-                    <label htmlFor="username" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        maxLength={45}
-                        id="username"
-                        className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.username || errors.password) && 'border-red border-2'}`}
-                        {...register('username', { required: true })}
-                    />
-                </div>
+        <>
+            {loading ? (
+                <LoadingNoDataError loading={true} error={false}>
+                    <></>
+                </LoadingNoDataError>
+            ) : (
+                <div className="container mx-auto h-screen w-screen flex flex-col justify-center items-center">
+                    <img src={bgImg.src} className="fixed w-screen h-screen object-cover" draggable={false} />
+                    <img src={LogoWithName.src} className="fixed top-0 left-0 w-44 h-24 m-4" draggable={false} />
+                    <form
+                        onSubmit={handleSubmit(handleRegistration)}
+                        className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-md z-10 opacity-80"
+                    >
+                        <div className="flex flex-col mx-1 relative mb-2">
+                            <label htmlFor="username" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
+                                Username
+                            </label>
+                            <input
+                                type="text"
+                                maxLength={45}
+                                id="username"
+                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.username || errors.password) && 'border-red border-2'}`}
+                                {...register('username', { required: true })}
+                            />
+                        </div>
 
-                <div className="flex flex-col mx-1 relative mb-2">
-                    <label htmlFor="password" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        maxLength={255}
-                        id="password"
-                        className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.username || errors.password) && 'border-red border-2'}`}
-                        {...register('password', { required: true })}
-                    />
-                </div>
+                        <div className="flex flex-col mx-1 relative mb-2">
+                            <label htmlFor="password" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                maxLength={255}
+                                id="password"
+                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.username || errors.password) && 'border-red border-2'}`}
+                                {...register('password', { required: true })}
+                            />
+                        </div>
 
-                <button type="submit" className="btnBlue h-8 mx-auto w-32">
-                    Login
-                </button>
-                {errors.username || errors.password ? <div className="text-center text-red">There has been a problem logging in, please try again</div> : null}
-            </form>
-        </div>
+                        <button type="submit" className="btnBlue h-8 mx-auto w-32">
+                            Login
+                        </button>
+                        {errors.username || errors.password ? <div className="text-center text-red">There has been a problem logging in, please try again</div> : null}
+                    </form>
+                </div>
+            )}
+        </>
     );
 };
 
