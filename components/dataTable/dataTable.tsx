@@ -57,7 +57,7 @@ const DataTable = (props: Props) => {
 
     useEffect(() => {
         filterData();
-    }, [filtersObj]);
+    }, [props, filtersObj]);
 
     useEffect(() => {
         sortData(currentSort.col, currentSort.dir);
