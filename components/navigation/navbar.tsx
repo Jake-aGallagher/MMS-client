@@ -95,7 +95,7 @@ const NavBar = (props: Props) => {
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Settings</span>
                 </Link>
                 <div className="mt-auto w-full flex flex-col items-center">
-                    <Timer />
+                    <Timer expiryTime={new Date().getTime() + 60 * 60 * 1000} />
                     <div className="h-8 mb-2 select-none">{initials}</div>
                     <button onClick={() => logoutProcess(props.logoutHandler, dispatch)} className="w-full flex flex-row justify-center items-center h-8 mb-4 transition-all hover:text-accent">
                         <FontAwesomeIcon icon={faRightFromBracket} className="mr-1 w-3" />

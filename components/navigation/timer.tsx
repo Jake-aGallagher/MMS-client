@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
 
-const Timer = () => {
+interface Props {
+    expiryTime: number;
+}
+
+const Timer = (props: Props) => {
     const [time, setTime] = useState({ minutes: 60, seconds: 0 });
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setTime((prevTime) => {
-                let minutes = prevTime.minutes;
-                let seconds = prevTime.seconds - 1;
-                if (seconds < 0) {
-                    seconds = 59;
-                    minutes--;
-                }
-                if (minutes < 0) {
+            setTime(() => {
+                const timeLeft = Math.floor((props.expiryTime - new Date().getTime()) / 1000);
+                if (timeLeft < 0) {
                     clearInterval(timer);
                     return { minutes: 0, seconds: 0 };
                 }
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = Math.floor(timeLeft % 60);
                 return { minutes, seconds };
             });
         }, 1000);
