@@ -15,7 +15,6 @@ import LoadingNoDataError from '../loading/loadingNoDataError';
 
 interface Props {
     loginHandler: () => void;
-    refreshExpiry: () => void;
 }
 
 const Login = (props: Props) => {
@@ -45,10 +44,7 @@ const Login = (props: Props) => {
         setLoading(true);
         try {
             const response = await axios.get(`${SERVER_URL}/check-auth`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorisation: 'Bearer ' + localStorage.getItem('token'),
-                },
+                headers: { 'Content-Type': 'application/json', Authorisation: 'Bearer ' + localStorage.getItem('token') },
                 withCredentials: true,
             });
             const user = response.data.user;
@@ -63,27 +59,23 @@ const Login = (props: Props) => {
                 })
             );
             dispatch(setPermissions({ permissions: response.data.permissions }));
+            localStorage.removeItem('token');
+            localStorage.setItem('token', response.data.token);
             props.loginHandler();
         } catch (err) {
             setLoading(false);
         }
     };
 
+    const setErrors = () => {
+        setError('username', { type: 'failedLogin', message: 'Login Failed' });
+        setError('password', { type: 'failedLogin', message: 'Login Failed' });
+    };
+
     const handleRegistration = async (data: any) => {
         try {
-            const response = await axios.post(
-                `${SERVER_URL}/users/login`,
-                {
-                    username: data.username,
-                    password: data.password,
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    withCredentials: true,
-                }
-            );
+            const reqData = { username: data.username, password: data.password };
+            const response = await axios.post(`${SERVER_URL}/users/login`, reqData, { headers: { 'Content-Type': 'application/json' }, withCredentials: true });
             if (response.data.passedValidation) {
                 const user = response.data.user;
                 dispatch(
@@ -97,19 +89,14 @@ const Login = (props: Props) => {
                     })
                 );
                 dispatch(setPermissions({ permissions: response.data.permissions }));
-                if (debug) {
-                    dispatch(setDebug({ debug: true }));
-                }
+                dispatch(setDebug({ debug }));
                 localStorage.setItem('token', response.data.token);
-                props.refreshExpiry();
                 props.loginHandler();
             } else {
-                setError('username', { type: 'failedLogin', message: 'Login Failed' });
-                setError('password', { type: 'failedLogin', message: 'Login Failed' });
+                setErrors();
             }
         } catch (err) {
-            setError('username', { type: 'failedLogin', message: 'Login Failed' });
-            setError('password', { type: 'failedLogin', message: 'Login Failed' });
+            setErrors();
         }
     };
 

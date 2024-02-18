@@ -7,12 +7,12 @@ import Head from 'next/head';
 import NavBar from '../components/navigation/navbar';
 import Login from '../components/login/login';
 import Script from 'next/script';
-import { SERVER_URL } from '../components/routing/addressAPI';
 
 export default function App({ Component, pageProps }: AppProps) {
     const [loggedIn, setLoggedIn] = useState(false);
 
     const loginHandler = () => {
+        refreshExpiry()
         setLoggedIn(true);
     };
 
@@ -20,25 +20,14 @@ export default function App({ Component, pageProps }: AppProps) {
         setLoggedIn(false);
     };
 
-    const forceLogoutHandler = () => {
-        if (loggedIn) {
-            let expiry = localStorage.getItem('expiryDate');
-            if (expiry) {
-                if (Date.now() < parseInt(expiry)) {
-                    refreshExpiry();
-                } else {
-                    logoutHandler();
-                }
-            }
-        }
-        return null;
-    };
-
     const refreshExpiry = () => {
         if (localStorage.getItem('expiryDate')) {
             localStorage.removeItem('expiryDate');
         }
-        const remainingMilliseconds = 30 * 60 * 1000;
+        const remainingMilliseconds = 60 * 60 * 1000;
+        setTimeout(() => {
+            logoutHandler();
+        }, remainingMilliseconds);
         const expiryDate = new Date().getTime() + remainingMilliseconds;
         localStorage.setItem('expiryDate', expiryDate.toString());
     };
@@ -60,7 +49,6 @@ export default function App({ Component, pageProps }: AppProps) {
             <Script src="https://kit.fontawesome.com/5e0bf4683d.js" crossOrigin="anonymous" />
             <main className="h-screen font-sans bg-background text-text">
                 <Provider store={store}>
-                    {forceLogoutHandler()}
                     {loggedIn ? (
                         <>
                             <NavBar logoutHandler={logoutHandler} />
@@ -69,7 +57,7 @@ export default function App({ Component, pageProps }: AppProps) {
                             </div>
                         </>
                     ) : (
-                        <Login loginHandler={loginHandler} refreshExpiry={refreshExpiry} />
+                        <Login loginHandler={loginHandler} />
                     )}
                 </Provider>
             </main>
