@@ -1,11 +1,11 @@
 import { addEditAssetConn } from './addEditAssetConn';
 
-export const addEditAssetHandler = async (data: any, type: string, id: number, currentProperty: number, closeModal: () => void) => {
-    const alertString = `There has been an issue ${type == 'add' ? 'creating' : 'editing'} this Asset, please try again.`;
+export const addEditAssetHandler = async (data: any, parentId: number, id: number, currentProperty: number, closeModal: () => void) => {
+    const alertString = `There has been an issue ${parentId > 0 ? 'creating' : 'editing'} this Asset, please try again.`;
     try {
         const response = await addEditAssetConn({
-            type: type,
-            id: id,
+            parentId,
+            id,
             propertyId: currentProperty,
             name: data.name,
             note: data.note,

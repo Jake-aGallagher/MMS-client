@@ -58,13 +58,13 @@ export const useAssetTree = (props: Props) => {
                     {props.editMode && (permissions.assets?.manage || isAdmin) ? (
                         <div className="absolute right-2 flex flex-row">
                             <button
-                                onClick={() => props.setModal({ view: true, type: 'addEditAsset', payload: { type: 'edit', id: node.id, name: node.name, note: node.note } })}
+                                onClick={() => props.setModal({ view: true, type: 'addEditAsset', payload: { id: node.id, name: node.name, note: node.note } })}
                                 className="btnBlue ml-5 text-sm h-6 px-3"
                             >
                                 Edit
                             </button>
                             <button
-                                onClick={() => props.setModal({ view: true, type: 'addEditAsset', payload: { type: 'add', id: node.id, name: node.name } })}
+                                onClick={() => props.setModal({ view: true, type: 'addEditAsset', payload: { parentId: node.id, id: 0, name: node.name } })}
                                 className="btnBlue ml-5 text-sm h-6 px-3"
                             >
                                 + Add Child Component

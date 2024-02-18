@@ -14,13 +14,13 @@ import LoadingNoDataError from '../../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;
-    payload: { type: 'add' | 'edit'; id: number; name: string; note?: string };
+    payload: { id: number; name: string; parentId?: number; note?: string };
 }
 
 const AddEditAsset = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const formLabel = `${props.payload.type == 'add' ? 'Create New Component of' : 'Edit'} ${props.payload.name}`;
-    const { defaultValues, customFields, loading, error } = useAddEditAsset(props.payload.type == 'add' ? 0 : props.payload.id);
+    const formLabel = `${props.payload.parentId ? 'Create New Component of' : 'Edit'} ${props.payload.name}`;
+    const { defaultValues, customFields, loading, error } = useAddEditAsset(props.payload.parentId ? 0 : props.payload.id);
 
     const {
         register,
@@ -42,7 +42,7 @@ const AddEditAsset = (props: ModalProps) => {
     const watchNote = watch(['note']) as String[];
 
     const handleRegistration = async (data: any) => {
-        await addEditAssetHandler(data, props.payload.type == 'add' ? 'add' : 'edit', props.payload.id, currentProperty, props.closeModal);
+        await addEditAssetHandler(data, props.payload.parentId || 0, props.payload.id, currentProperty, props.closeModal);
     };
 
     return (
