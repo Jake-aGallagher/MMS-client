@@ -23,9 +23,10 @@ export const useUsers = (currentProperty: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/users/all/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/all-users`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            console.log(response.data.users);
             setUsers(response.data.users);
             setLoading(false);
         } catch (err) {
