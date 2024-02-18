@@ -13,7 +13,6 @@ const propertiesTableConfig = {
     headers: [
         { id: 'id', name: 'ID', type: 'link', search: true, order: true },
         { id: 'name', name: 'Name', type: 'string', search: true, order: true },
-        { id: 'type', name: 'Type', type: 'string', search: true, order: true },
         { id: 'address', name: 'Address', type: 'string', search: true, order: true },
         { id: 'city', name: 'City', type: 'string', search: true, order: true },
         { id: 'county', name: 'County', type: 'string', search: true, order: true },

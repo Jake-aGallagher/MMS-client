@@ -14,7 +14,6 @@ export const useAddEditProperty = (props: Props) => {
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [defaultValues, setDefaultValues] = useState<DefaultValues>({
         propertyName: '',
-        type: 'Factory',
         address: '',
         city: '',
         county: '',
@@ -41,7 +40,6 @@ export const useAddEditProperty = (props: Props) => {
             setCustomFields(response.data.customFields);
             const defaultVal: DefaultValues = {
                 propertyName: data.name,
-                type: data.type,
                 address: data.address,
                 city: data.city,
                 county: data.county,

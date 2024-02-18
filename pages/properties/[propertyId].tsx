@@ -35,7 +35,6 @@ const PropertyView = () => {
         fields: [
             { label: 'ID', value: propertyDetails?.id },
             { label: 'Name', value: propertyDetails?.name },
-            { label: 'Type', value: propertyDetails?.type },
             { label: 'Address', value: propertyDetails?.address },
             { label: 'City', value: propertyDetails?.city },
             { label: 'County', value: propertyDetails?.county },

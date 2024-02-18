@@ -9,7 +9,6 @@ export const addEditPropertyHandler = async (data: any, id: number, closeModal: 
         const response = await addEditPropertyConn({
             id: id,
             name: data.propertyName,
-            type: data.type,
             address: data.address,
             city: data.city,
             county: data.county,
