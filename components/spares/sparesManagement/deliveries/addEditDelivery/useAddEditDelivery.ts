@@ -77,7 +77,7 @@ export const useAddEditDelivery = (id: number, currentProperty: number) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setSuppliersList(response.data.suppliers);
-            const delivery = response.data.deliverywithContents[0];
+            const delivery = response.data.deliveries[0];
             formatContents(delivery.contents);
             setDefaultValues({
                 name: delivery.name,

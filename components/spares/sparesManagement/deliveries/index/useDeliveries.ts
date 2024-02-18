@@ -45,7 +45,7 @@ export const useDeliveries = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/spares/deliveries/${props.currentProperty}/0`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            setDeliveriesList(response.data);
+            setDeliveriesList(response.data.deliveries);
             setLoading(false);
         } catch (err) {
             setError(true);
