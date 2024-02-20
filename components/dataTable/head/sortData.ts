@@ -1,5 +1,5 @@
 export const sortTableData = (unorderedData: {[key:string]: any}[], col: string, dir: string, columnType: string) => {
-    if (unorderedData.length > 0) {
+    if (unorderedData?.length > 0) {
         if (columnType == 'date') {
             unorderedData.sort((a, b) => {
                 let aSplit = ['00','00','00'];

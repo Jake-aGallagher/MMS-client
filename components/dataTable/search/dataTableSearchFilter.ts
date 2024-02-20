@@ -2,7 +2,7 @@ export const dataTableSearchFilter = (rawData: { [key: string]: any }[], filters
     const filtersObjKeys = Object.keys(filtersObj);
     const filteredData = <{ [key: string]: any }[]>[];
 
-    if (rawData.length > 0) {
+    if (rawData?.length > 0) {
         rawData.forEach((dataRow) => {
             let passes = true;
             filtersObjKeys.forEach((filter) => {
