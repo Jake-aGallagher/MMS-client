@@ -23,7 +23,7 @@ import AddEditUrgencyType from '../settings/urgencyTypes/addEditUrgencyType/addE
 import { GlobalDebug } from '../debug/globalDebug';
 import AddEditEnumValue from '../settings/enumgroups/enumValues/addEditEnumValues/addEditEnumValue';
 import AddSchedule from '../pm-schedules/addSchedule/addSchedule';
-import EditPM from '../pm-schedules/pm/editPm/editPm';
+import EditPM from '../pms/editPm/editPm';
 import EditSchedule from '../pm-schedules/editSchedule/editSchedule';
 import AddEditLogTemplate from '../logs/logsManagement/addEditLogTemplate/addEditLogTemplate';
 import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditField/addEditLogField';
