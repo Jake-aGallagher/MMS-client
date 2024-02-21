@@ -1,17 +1,17 @@
 import { useForm } from 'react-hook-form';
-import FormContainer from '../../forms/formContainer';
-import FormHeader from '../../forms/formHeader';
-import GeneralForm from '../../forms/generalForm';
-import LoadingNoDataError from '../../loading/loadingNoDataError';
+import FormContainer from '../../../forms/formContainer';
+import FormHeader from '../../../forms/formHeader';
+import GeneralForm from '../../../forms/generalForm';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
 import { useEffect, useMemo } from 'react';
 import { useAddSchedule } from './useAddSchedule';
 import { yupResolverAddSchedule } from './addScheduleValidation';
-import GeneralFormInput from '../../forms/generalFormInput';
-import FormTextCenter from '../../forms/formTextCenter';
+import GeneralFormInput from '../../../forms/generalFormInput';
+import FormTextCenter from '../../../forms/formTextCenter';
 import { addScheduleHandler } from './addScheduleHandler';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import GeneralFormSubmit from '../../forms/generalFormSubmit';
+import { RootState } from '../../../store/store';
+import GeneralFormSubmit from '../../../forms/generalFormSubmit';
 
 interface ModalProps {
     closeModal: () => void;

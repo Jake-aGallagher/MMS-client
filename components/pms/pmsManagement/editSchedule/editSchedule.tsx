@@ -2,13 +2,13 @@ import { useForm } from 'react-hook-form';
 import { useEditSchedule } from './useEditSchedule';
 import { useEffect, useMemo } from 'react';
 import { yupResolverEditSchedule } from './editScheduleValidation';
-import LoadingNoDataError from '../../loading/loadingNoDataError';
-import FormContainer from '../../forms/formContainer';
-import FormHeader from '../../forms/formHeader';
-import GeneralForm from '../../forms/generalForm';
-import GeneralFormInput from '../../forms/generalFormInput';
-import FormTextCenter from '../../forms/formTextCenter';
-import GeneralFormSubmit from '../../forms/generalFormSubmit';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
+import FormContainer from '../../../forms/formContainer';
+import FormHeader from '../../../forms/formHeader';
+import GeneralForm from '../../../forms/generalForm';
+import GeneralFormInput from '../../../forms/generalFormInput';
+import FormTextCenter from '../../../forms/formTextCenter';
+import GeneralFormSubmit from '../../../forms/generalFormSubmit';
 import { editScheduleHandler } from './editScheduleHandler';
 
 interface ModalProps {
@@ -18,7 +18,6 @@ interface ModalProps {
 
 const EditSchedule = (props: ModalProps) => {
     const { defaultValues, typeOptions, loading, error } = useEditSchedule(props.payload.id);
-    console.log(defaultValues);
     const yesNoOptions = [
         { id: 'No', value: 'No' },
         { id: 'Yes', value: 'Yes' },

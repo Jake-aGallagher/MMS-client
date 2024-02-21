@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../../routing/addressAPI';
+import { SERVER_URL } from '../../../routing/addressAPI';
 
 interface TypeOptions {
     id: number;
     value: string;
 }
 
-export const useAddSchedule = () => {
+export const useEditSchedule = (PMScheduleId: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [typeOptions, setTypeOptions] = useState<TypeOptions[]>([]);
@@ -15,7 +15,7 @@ export const useAddSchedule = () => {
         type: '',
         title: '',
         description: '',
-        startNow: 'No',
+        editStart: 'No',
         scheduleStart: '',
         frequencyTime: 1,
         frequencyUnit: 'WEEK',
@@ -24,18 +24,24 @@ export const useAddSchedule = () => {
     useEffect(() => {
         setLoading(true);
         setError(false);
-        getEnums();
+        getHandler();
     }, []);
 
-    const getEnums = async () => {
+    const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/pm-schedules/add-schedule`, {
+            const response = await axios.get(`${SERVER_URL}/pms/schedule/edit-schedule/${PMScheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            console.log(response.data);
             setTypeOptions(response.data.types);
             setDefaultValues({
                 ...defaultValues,
-                type: response.data.types[0].id,
+                type: response.data.PMScheduleDetails[0].type,
+                title: response.data.PMScheduleDetails[0].title,
+                description: response.data.PMScheduleDetails[0].description,
+                frequencyTime: response.data.PMScheduleDetails[0].frequency_time,
+                frequencyUnit: response.data.PMScheduleDetails[0].frequency_unit,
+
             });
             setLoading(false);
         } catch (err) {

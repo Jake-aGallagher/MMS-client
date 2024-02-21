@@ -16,7 +16,7 @@ interface Schedule {
     up_to_date: number;
 }
 
-export const useSchedules = (props: Props) => {
+export const usePmSchedules = (props: Props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [schedules, setSchedules] = useState<Schedule[]>([]);
@@ -33,7 +33,7 @@ export const useSchedules = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const schedulesList = await axios.get(`${SERVER_URL}/pm-schedules/all-schedules/${props.currentProperty}`, {
+            const schedulesList = await axios.get(`${SERVER_URL}/pms/schedules/all-schedules/${props.currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setSchedules(schedulesList.data);

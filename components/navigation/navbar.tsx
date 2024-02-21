@@ -67,16 +67,10 @@ const NavBar = (props: Props) => {
                     </Link>
                 ) : null}
                 {permissions.schedules?.view || isAdmin ? (
-                    <>
-                        <Link href="/pm-schedules" className={'nLink ' + (currentRoute.includes('pm-schedules') ? 'text-accent' : '')}>
-                            <FontAwesomeIcon icon={faClipboardList} className="mr-1 w-3" />
-                            <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">PM</span>
-                        </Link>
-                        <Link href="/pms" className={'nLink ' + (currentRoute.includes('pm-schedules') ? 'text-accent' : '')}>
-                            <FontAwesomeIcon icon={faClipboardList} className="mr-1 w-3" />
-                            <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">PM's</span>
-                        </Link>
-                    </>
+                    <Link href="/pms" className={'nLink ' + (currentRoute.includes('pms') ? 'text-accent' : '')}>
+                        <FontAwesomeIcon icon={faClipboardList} className="mr-1 w-3" />
+                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">PM's</span>
+                    </Link>
                 ) : null}
                 {permissions.assets?.view || isAdmin ? (
                     <Link href="/assets" className={'nLink ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>

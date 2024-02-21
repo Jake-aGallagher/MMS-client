@@ -22,9 +22,9 @@ import AddEditStatusType from '../settings/statusTypes/addEditStatusType/addEdit
 import AddEditUrgencyType from '../settings/urgencyTypes/addEditUrgencyType/addEditUrgencyType';
 import { GlobalDebug } from '../debug/globalDebug';
 import AddEditEnumValue from '../settings/enumgroups/enumValues/addEditEnumValues/addEditEnumValue';
-import AddSchedule from '../pm-schedules/addSchedule/addSchedule';
+import AddSchedule from '../pms/pmsManagement/addSchedule/addSchedule';
 import EditPM from '../pms/editPm/editPm';
-import EditSchedule from '../pm-schedules/editSchedule/editSchedule';
+import EditSchedule from '../pms/pmsManagement/editSchedule/editSchedule';
 import AddEditLogTemplate from '../logs/logsManagement/addEditLogTemplate/addEditLogTemplate';
 import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditField/addEditLogField';
 import PreviewLog from '../logs/logsManagement/details/formBuilder/previewLog/previewLog';
@@ -70,7 +70,7 @@ const ModalBase = (props: ModalProps) => {
             // PMs
             case 'createPmSchedule':
                 return <AddSchedule closeModal={props.closeModal} assetId={props.payload.assetId} />;
-            case 'editPmSchedule':
+            case 'addEditPmSchedule':
                 return <EditSchedule closeModal={props.closeModal} payload={props.payload} />;
             case 'editPm':
                 return <EditPM closeModal={props.closeModal} pmId={props.payload} />;

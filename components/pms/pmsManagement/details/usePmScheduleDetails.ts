@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../../routing/addressAPI';
+import { SERVER_URL } from '../../../routing/addressAPI';
 import axios from 'axios';
 
 interface Schedule {
@@ -14,7 +14,7 @@ interface Schedule {
     up_to_date: number;
 }
 
-interface SchedulePMs {
+interface PMs {
     id: number;
     notes: string;
     created: string;
@@ -25,12 +25,12 @@ interface SchedulePMs {
     status: string;
 }
 
-export const useScheduleDetails = (propertyId: number, scheduleId: number) => {
+export const usePmScheduleDetails = (propertyId: number, scheduleId: number) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [scheduleDetails, setScheduleDetails] = useState<Schedule>();
-    const [schedulePMs, setSchedulePMs] = useState<SchedulePMs[]>([]);
+    const [pms, setPms] = useState<PMs[]>([]);
 
     useEffect(() => {
         reload();
@@ -45,14 +45,14 @@ export const useScheduleDetails = (propertyId: number, scheduleId: number) => {
 
     const getScheduleHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/pm-schedules/${propertyId}/${scheduleId}`, {
+            const response = await axios.get(`${SERVER_URL}/pms/schedules/${propertyId}/${scheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             if (response.data.scheduleDetails.length === 0) {
                 setNoData(true);
             } else {
                 setScheduleDetails(response.data.scheduleDetails[0]);
-                setSchedulePMs(response.data.schedulePMs);
+                setPms(response.data.schedulePMs);
             }
             setLoading(false);
         } catch (err) {
@@ -60,5 +60,5 @@ export const useScheduleDetails = (propertyId: number, scheduleId: number) => {
             setLoading(false);
         }
     };
-    return { scheduleDetails, schedulePMs, loading, noData, error, reload };
+    return { scheduleDetails, pms, loading, noData, error, reload };
 };

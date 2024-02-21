@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import ModalBase from '../../components/modal/modal';
+import ModalBase from '../../../components/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
-import LoadingNoDataError from '../../components/loading/loadingNoDataError';
-import FullPage from '../../components/page/fullPage';
-import Toolbar from '../../components/page/toolbar';
-import DetailsBox from '../../components/detailsBox/detailsBox';
-import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
+import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
+import FullPage from '../../../components/page/fullPage';
+import Toolbar from '../../../components/page/toolbar';
+import DetailsBox from '../../../components/detailsBox/detailsBox';
+import AttachedFilesBox from '../../../components/attachedFilesBox/attachedFilesBox';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../components/store/store';
-import { useScheduleDetails } from '../../components/pm-schedules/details/useScheduleDetails';
-import DataTable from '../../components/dataTable/dataTable';
+import { RootState } from '../../../components/store/store';
+import { usePmScheduleDetails } from '../../../components/pms/pmsManagement/details/usePmScheduleDetails';
+import DataTable from '../../../components/dataTable/dataTable';
 
 const ScheduleView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -22,8 +22,8 @@ const ScheduleView = () => {
         router.push('/');
     }
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const pmScheduleId = parseInt(router.asPath.split('/')[2]);
-    const { scheduleDetails, schedulePMs, loading, noData, error, reload } = useScheduleDetails(currentProperty, pmScheduleId);
+    const pmScheduleId = parseInt(router.asPath.split('/')[3]);
+    const { scheduleDetails, pms, loading, noData, error, reload } = usePmScheduleDetails(currentProperty, pmScheduleId);
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     const scheduleDetailsConfig = {
@@ -60,12 +60,12 @@ const ScheduleView = () => {
     return (
         <FullPage>
             <Toolbar>
-                <Link href="/pm-schedules" className="tLink">
+                <Link href="/pms/pmsManagement" className="tLink">
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to PM Schedules</p>
                 </Link>
                 {permissions.schedules?.manage || isAdmin ? (
-                    <button onClick={() => setModal({ view: true, type: 'editPmSchedule', payload: { id: pmScheduleId, name: scheduleDetails?.title || '' } })} className="tLink">
+                    <button onClick={() => setModal({ view: true, type: 'addEditPmSchedule', payload: { id: pmScheduleId, name: scheduleDetails?.title || '' } })} className="tLink">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Update Schedule
                     </button>
@@ -83,7 +83,7 @@ const ScheduleView = () => {
                             </div>
                         </div>
                     </div>
-                    {schedulePMs.length > 0 ? <DataTable config={PMsTableConfig} data={schedulePMs} /> : null}
+                    {pms.length > 0 ? <DataTable config={PMsTableConfig} data={pms} /> : null}
                 </div>
             </LoadingNoDataError>
         </FullPage>

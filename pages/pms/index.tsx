@@ -26,8 +26,8 @@ const Pms = () => {
     const pmsTableConfig: DataTableConfig = {
         headers: [
             { id: 'id', name: 'ID', type: 'link', search: true, order: true },
-            { id: 'type', name: 'Type', type: 'string', search: true, order: true },
             { id: 'title', name: 'Title', type: 'string', search: true, order: true },
+            { id: 'type', name: 'Type', type: 'string', search: true, order: true },
             { id: 'frequency', name: 'Frequency', type: 'string', search: true, order: true },
             { id: 'created', name: 'Created', type: 'date', search: true, order: true },
             { id: 'required_comp_date', name: 'Due', type: 'date', search: true, order: true },
@@ -44,7 +44,7 @@ const Pms = () => {
     return (
         <FullPage>
             <Toolbar>
-            <Link href="/logs/pmsManagement" className="tLink">
+            <Link href="/pms/pmsManagement" className="tLink">
                     <FontAwesomeIcon icon={faClipboard} className="mr-1 w-3" />
                     PM Management
                 </Link>
