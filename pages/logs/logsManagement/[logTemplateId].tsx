@@ -12,6 +12,7 @@ import { RootState } from '../../../components/store/store';
 import { useRouter } from 'next/router';
 import ModalBase from '../../../components/modal/modal';
 import { useLogTemplateDetails } from '../../../components/logs/logsManagement/details/useLogTemplateDetails';
+import DataTable from '../../../components/dataTable/dataTable';
 
 const LogTemplate = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -24,7 +25,7 @@ const LogTemplate = () => {
     const logTemplateId = parseInt(router.asPath.split('/')[3]);
 
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
-    const { templateDetails, loading, noData, error, reload } = useLogTemplateDetails(currentProperty, logTemplateId);
+    const { templateDetails, logs, loading, noData, error, reload } = useLogTemplateDetails(currentProperty, logTemplateId);
 
     const scheduleDetailsConfig = {
         id: templateDetails?.id,
@@ -32,9 +33,25 @@ const LogTemplate = () => {
         fields: [
             { label: 'ID', value: templateDetails?.id },
             { label: 'Title', value: templateDetails?.title },
+            { label: 'Up to Date', value: templateDetails?.up_to_date == 1 ? <div>&#10004;</div> : <div>&#10060;</div> },
             { label: 'Description', value: templateDetails?.description },
+            { label: 'Last Completed', value: templateDetails?.last_comp_date },
+            { label: 'Next Due', value: templateDetails?.next_due_date },
             { label: 'Frequency', value: templateDetails?.frequency },
         ],
+    };
+
+    const logsTableConfig = {
+        headers: [
+            { id: 'id', name: 'Log ID', type: 'link', search: true, order: true },
+            { id: 'created', name: 'Date Created', type: 'string', search: true, order: true },
+            { id: 'required_comp_date', name: 'Due Date', type: 'string', search: true, order: true },
+            { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
+            { id: 'comp_date', name: 'completion Date', type: 'string', search: true, order: true },
+        ],
+        searchable: true,
+        reverseSort: true,
+        linkColPrefix: '/logs/',
     };
 
     return (
@@ -69,6 +86,7 @@ const LogTemplate = () => {
                             </div>
                         </div>
                     </div>
+                    {logs.length > 0 ? <DataTable config={logsTableConfig} data={logs} /> : null}
                 </div>
             </LoadingNoDataError>
         </FullPage>

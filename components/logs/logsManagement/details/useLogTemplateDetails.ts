@@ -6,18 +6,27 @@ interface LogTemplate {
     id: number;
     title: string;
     description: string;
+    created: string;
     frequency: string;
+    last_comp_date: string;
+    next_due_date: string;
+    up_to_date: number;
 }
 
-/* last_comp_date: string;
-next_due_date: string;
-up_to_date: number; */
+interface Logs {
+    id: number;
+    created: string;
+    required_comp_date: string;
+    completed: number;
+    comp_date: string;
+}
 
 export const useLogTemplateDetails = (propertyId: number, scheduleId: number) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [templateDetails, setTemplateDetails] = useState<LogTemplate>();
+    const [logs, setLogs] = useState<Logs[]>([]);
 
     useEffect(() => {
         reload();
@@ -39,6 +48,7 @@ export const useLogTemplateDetails = (propertyId: number, scheduleId: number) =>
                 setNoData(true);
             } else {
                 setTemplateDetails(response.data.logTemplate);
+                setLogs(response.data.logs);
             }
             setLoading(false);
         } catch (err) {
@@ -46,5 +56,5 @@ export const useLogTemplateDetails = (propertyId: number, scheduleId: number) =>
             setLoading(false);
         }
     };
-    return { templateDetails, loading, noData, error, reload };
+    return { templateDetails, logs, loading, noData, error, reload };
 };
