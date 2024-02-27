@@ -27,8 +27,9 @@ const LogTemplates = () => {
         headers: [
             { id: 'id', name: 'ID', type: 'link', search: true, order: true },
             { id: 'title', name: 'Title', type: 'string', search: true, order: true },
-            { id: 'created', name: 'Created', type: 'date', search: true, order: true },
             { id: 'frequency', name: 'Frequency', type: 'string', search: true, order: true },
+            { id: 'next_due_date', name: 'Next Due', type: 'date', search: true, order: true },
+            { id: 'up_to_date', name: 'Up to Date', type: 'tick', search: true, order: true },
             { id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] }
         ],
         searchable: true,

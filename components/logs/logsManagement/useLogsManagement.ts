@@ -8,6 +8,9 @@ interface LogTemplate {
     description: string;
     created: string;
     frequency: string;
+    last_comp_date: string;
+    next_due_date: string;
+    up_to_date: number;
 }
 
 export const useLogTemplates = (currentProperty: number) => {
