@@ -31,7 +31,7 @@ export const useDashboardJobs = (propertyId: number) => {
 
     useEffect(() => {
         reload();
-    }, []);
+    }, [propertyId]);
 
     const reload = () => {
         setLoading(true);
