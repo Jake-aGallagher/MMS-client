@@ -12,7 +12,7 @@ export interface Fields {
     sort_order: number;
 }
 
-export const useFieldList = (model: string) => {
+export const useFieldList = (model: string, modelId?: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [fields, setFields] = useState<Fields[]>([]);
@@ -20,7 +20,7 @@ export const useFieldList = (model: string) => {
 
     useEffect(() => {
         reload();
-    }, [model]);
+    }, [model, modelId]);
 
     const reload = () => {
         setLoading(true);
@@ -30,7 +30,7 @@ export const useFieldList = (model: string) => {
 
     const getScheduleHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/fields/${model}`, {
+            const response = await axios.get(`${SERVER_URL}/fields/${model}/${modelId ? modelId : 0}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setFields(response.data.fields);

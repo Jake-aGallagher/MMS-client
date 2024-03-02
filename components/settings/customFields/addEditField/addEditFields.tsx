@@ -11,7 +11,7 @@ import { yupResolverAddEditField } from "./addEditFieldValidation";
 import { addEditFieldHandler } from "./addEditFieldHandler";
 
 interface Props {
-    payload: {id : number, name: string, model: string};
+    payload: {id : number, name: string, model: string, modelId?: number};
     closeModal: () => void;
 }
 
@@ -55,7 +55,7 @@ const AddEditField = (props: Props) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addEditFieldHandler(props.payload.id, props.payload.model, data, props.closeModal);
+        await addEditFieldHandler(props.payload.id, props.payload.model, data, props.closeModal, props.payload.modelId);
     };
 
     

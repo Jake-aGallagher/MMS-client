@@ -1,12 +1,12 @@
 import { addEditFieldConn } from './addEditFieldConn';
 
-export const addEditFieldHandler = async (id: number, model: string, data: any, closeModal: () => void) => {
+export const addEditFieldHandler = async (id: number, model: string, data: any, closeModal: () => void, modelId?: number) => {
     const alertString = 'There has been an issue creating this Field, please try again.';
     try {
         const response = await addEditFieldConn({
             id,
             model,
-            modelId: null,
+            modelId: modelId ? modelId : null,
             type: data.type,
             enumGroupId: data.options || null,
             name: data.name,
