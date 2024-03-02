@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { CustomFieldData } from '../../../commonTypes/CustomFields';
 
 interface Props {
     logId: number;
@@ -30,9 +31,7 @@ export const useLogDetails = (props: Props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [log, setLog] = useState<Log>();
-    const [logFields, setLogFields] = useState<LogField[]>([]);
-    const [enumGroups, setEnumGroups] = useState<{ [key: string]: { id: string; value: string }[] }>({});
-    const [fileData, setFileData] = useState<{[key:string]: { id: string; encodedId: string; name: string }[]}>({});
+    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
 
     useEffect(() => {
         reload();
@@ -50,14 +49,12 @@ export const useLogDetails = (props: Props) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setLog(response.data.log);
-            setLogFields(response.data.fields);
-            setEnumGroups(response.data.enumGroups);
-            setFileData(response.data.fileData);
+            setCustomFields(response.data.customFields);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { log, logFields, enumGroups, fileData, loading, error, reload };
+    return { log, customFields, loading, error, reload };
 };

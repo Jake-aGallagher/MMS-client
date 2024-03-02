@@ -11,7 +11,7 @@ import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
 import AddFieldButton from '../../../components/logs/logsManagement/details/formBuilder/addFieldButton';
 
 interface Props {
-    type: 'property' | 'asset' | 'spare' | 'job' | 'pm';
+    type: 'property' | 'asset' | 'spare' | 'job' | 'pm' | 'log';
     modelId?: number;
 }
 
@@ -34,7 +34,7 @@ const FieldSetupBase = (props: Props) => {
 
     return (
         <>
-            {(props.type === 'job' || props.type === 'pm') ? (
+            {['job', 'pm', 'log'].includes(props.type) ? (
                 <>
                     {modal.view ? (
                         <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '', model: '' } }), reload()]} />

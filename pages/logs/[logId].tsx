@@ -13,7 +13,8 @@ import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DetailsBox from '../../components/detailsBox/detailsBox';
 import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
 import { useState } from 'react';
-import { SERVER_URL } from '../../components/routing/addressAPI';
+import { addToDetailsConfig } from '../../components/settings/customFields/addToDetailsConfig';
+import { DetailsConfig } from '../../commonTypes/DetailsConfig';
 
 const LogDetails = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -24,14 +25,14 @@ const LogDetails = () => {
         router.push('/');
     }
 
-    const { log, logFields, enumGroups, fileData, loading, error, reload } = useLogDetails({ logId });
+    const { log, customFields, loading, error, reload } = useLogDetails({ logId });
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name?: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
     GlobalDebug('Log Details', [
         ['Log', log],
-        ['Log Fields', logFields],
+        ['Log Fields', customFields.fields],
     ]);
 
-    const logConfig = {
+    let logConfig: DetailsConfig = {
         id: log?.id,
         title: 'Log Details',
         fields: [
@@ -46,45 +47,12 @@ const LogDetails = () => {
         ],
     };
 
-    const logFieldsConfig: { id: number | undefined; title: string; fields: { label: string; value: any }[] } = {
+    let logFieldsConfig: DetailsConfig = {
         id: log?.id,
         title: 'Log Fields',
-        fields: [],
+        fields: []
     };
-
-    const prettyFieldValues = (fieldId: number, type: string, value: string, enumGroupId: number | null) => {
-        if (value === 'undefined' || value === null || value === '') return '';
-        switch (type) {
-            case 'checkbox':
-                return value ? 'Yes' : 'No';
-            case 'date':
-                return new Date(value).toLocaleDateString();
-            case 'select':
-                return enumGroups[enumGroupId!].find((item) => item.id == value)?.value || 'Enum Group Not Found';
-            case 'file':
-                const values = value.split(',');
-                const fileList = values.map((item, i) => (
-                    <li key={'file_list_' + fileData[fieldId][i].encodedId}>
-                        <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${fileData[fieldId][i].encodedId}`}>
-                            {fileData[fieldId][i].name}
-                        </a>
-                    </li>
-                ));
-                return <ul>{fileList}</ul>;
-            case 'image':
-            case 'signature':
-                return <img src={`${SERVER_URL}/getimage/${fileData[fieldId][0].encodedId}`} alt="Uploaded Photo" className="w-full" />
-            default:
-                return value;
-        }
-    };
-
-    if (logFields.length > 0) {
-        logFields?.forEach((field) => {
-            if (field.type === 'info') return;
-            logFieldsConfig.fields.push({ label: field.name, value: prettyFieldValues(field.id, field.type, field.value || '', field.enumGroupId) });
-        });
-    }
+    logFieldsConfig = addToDetailsConfig(logFieldsConfig, customFields);
 
     return (
         <FullPage>
@@ -93,7 +61,7 @@ const LogDetails = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to all logs</p>
                 </Link>
-                {(permissions.logs?.manage || isAdmin) && log?.completed == 0 ? (
+                {(permissions.logs?.manage || isAdmin) && log?.completed != 1 ? (
                     <button onClick={() => setModal({ view: true, type: 'updateLog', payload: { id: logId, name: log?.title } })} className="tLink">
                         <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         Update Log
@@ -107,7 +75,7 @@ const LogDetails = () => {
                     <div className="flex flex-col xl:flex-row">
                         <div className="w-full">
                             <DetailsBox data={logConfig} />
-                            {logFields.length > 0 ? <DetailsBox data={logFieldsConfig} /> : null}
+                            {logFieldsConfig.fields.length > 0 ? <DetailsBox data={logFieldsConfig} /> : null}
                         </div>
                         <div className="flex flex-col w-full">
                             <div className="w-full xl:pl-8">

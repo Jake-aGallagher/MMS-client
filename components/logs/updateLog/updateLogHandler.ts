@@ -7,7 +7,7 @@ export const updateLogHandler = async (logId: number, data: any, propertyId: num
             logId,
             fieldData: data,
             completedBy: userId,
-            propertyId
+            propertyId,
         });
         if (response.data.updated) {
             closeModal();

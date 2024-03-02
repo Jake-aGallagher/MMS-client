@@ -27,7 +27,6 @@ import EditPM from '../pms/editPm/editPm';
 import EditSchedule from '../pms/pmsManagement/editSchedule/editSchedule';
 import AddEditLogTemplate from '../logs/logsManagement/addEditLogTemplate/addEditLogTemplate';
 import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditField/addEditLogField';
-import PreviewLog from '../logs/logsManagement/details/formBuilder/previewLog/previewLog';
 import UpdateLog from '../logs/updateLog/updateLog';
 import AddEditField from '../settings/customFields/addEditField/addEditFields';
 import PropertyPicker from '../navigation/propertyPicker';
@@ -80,8 +79,6 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditLogTemplate closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditLogField':
                 return <AddEditLogField closeModal={props.closeModal} payload={props.payload} />;
-            case 'previewLogForm':
-                return <PreviewLog closeModal={props.closeModal} payload={props.payload} />;
             case 'updateLog':
                 return <UpdateLog closeModal={props.closeModal} payload={props.payload} />;
 
