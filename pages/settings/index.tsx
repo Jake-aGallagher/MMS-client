@@ -50,9 +50,16 @@ const Settings = () => {
                     </IndexCardLayout>
                 ) : null}
 
-                <IndexCardLayout label="Fields" icon={faPencil}>
-                    <Link href="/settings/customFields" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
-                        Custom Fields
+                <IndexCardLayout label="Custom Fields" icon={faPencil}>
+                    <Link href="/settings/customFields/jobs" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                        Jobs
+                    </Link>
+                    <Link href="/settings/customFields/properties" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                        Properties
+                    </Link><Link href="/settings/customFields/assets" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                        Assets
+                    </Link><Link href="/settings/customFields/spares" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                        Spares
                     </Link>
                 </IndexCardLayout>
 
