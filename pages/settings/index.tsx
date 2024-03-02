@@ -39,7 +39,7 @@ const Settings = () => {
                             Enums (Select Options)
                         </Link>
                         <Link href="/settings/taskTypes" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
-                            Task Types
+                            Job/PM Types
                         </Link>
                         <Link href="/settings/statusTypes" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
                             Status Types
@@ -52,7 +52,7 @@ const Settings = () => {
 
                 <IndexCardLayout label="Custom Fields" icon={faPencil}>
                     <Link href="/settings/customFields/jobs" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
-                        Jobs
+                        Job/PM
                     </Link>
                     <Link href="/settings/customFields/properties" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
                         Properties
