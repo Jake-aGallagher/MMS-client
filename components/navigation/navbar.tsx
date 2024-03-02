@@ -26,7 +26,7 @@ const NavBar = (props: Props) => {
     const userDetails = useSelector((state: RootState) => state.user.value);
     const { availProps } = useRetrieveProperty({ currentProperty, userId });
     const initials = userDetails.first.split('')[0].toUpperCase() + '.' + userDetails.last.split('')[0].toUpperCase();
-    const currentRoute = router.pathname;
+    const currentRoute = router.pathname.split('/')[1];
     const [modal, setModal] = useState<{ view: boolean; type: string }>({ view: false, type: '' });
 
     return (
@@ -50,47 +50,47 @@ const NavBar = (props: Props) => {
                     </button>
                 </div>
 
-                <Link href="/" className={'nLink ' + (currentRoute == '/' ? 'text-accent' : '')}>
+                <Link href="/" className={'nLink ' + (currentRoute == '' ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faChartColumn} className="w-3" />
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Dashboard</span>
                 </Link>
                 {permissions.properties?.view || isAdmin ? (
-                    <Link href="/properties" className={'nLink ' + (currentRoute.includes('properties') ? 'text-accent' : '')}>
+                    <Link href="/properties" className={'nLink ' + (currentRoute == 'properties' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faBuilding} className="w-3" />
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Properties</span>
                     </Link>
                 ) : null}
                 {permissions.jobs?.view || isAdmin ? (
-                    <Link href="/jobs" className={'nLink ' + (currentRoute.includes('jobs') ? 'text-accent' : '')}>
+                    <Link href="/jobs" className={'nLink ' + (currentRoute == 'jobs' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faScrewdriverWrench} className="mr-1 w-3" />
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Jobs</span>
                     </Link>
                 ) : null}
                 {permissions.schedules?.view || isAdmin ? (
-                    <Link href="/pms" className={'nLink ' + (currentRoute.includes('pms') ? 'text-accent' : '')}>
+                    <Link href="/pms" className={'nLink ' + (currentRoute == 'pms' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faClipboardList} className="mr-1 w-3" />
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">PM's</span>
                     </Link>
                 ) : null}
                 {permissions.assets?.view || isAdmin ? (
-                    <Link href="/assets" className={'nLink ' + (currentRoute.includes('assets') ? 'text-accent' : '')}>
+                    <Link href="/assets" className={'nLink ' + (currentRoute == 'assets' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faFolderTree} className="mr-1 w-3" />
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Assets</span>
                     </Link>
                 ) : null}
                 {permissions.jobs?.view || isAdmin ? (
-                    <Link href="/logs" className={'nLink ' + (currentRoute.includes('logs') ? 'text-accent' : '')}>
+                    <Link href="/logs" className={'nLink ' + (currentRoute == 'logs' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faFileContract} className="mr-1 w-3" />
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Logs</span>
                     </Link>
                 ) : null}
                 {permissions.spares?.view || isAdmin ? (
-                    <Link href="/spares" className={'nLink ' + (currentRoute.includes('spares') ? 'text-accent' : '')}>
+                    <Link href="/spares" className={'nLink ' + (currentRoute == 'spares' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faTruckFast} className="mr-1 w-3" />
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Spares</span>
                     </Link>
                 ) : null}
-                <Link href="/settings" className={'nLink ' + (currentRoute.includes('settings') ? 'text-accent' : '')}>
+                <Link href="/settings" className={'nLink ' + (currentRoute == 'settings' ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faGear} className="mr-1 w-3" />
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Settings</span>
                 </Link>
