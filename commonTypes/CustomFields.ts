@@ -1,5 +1,6 @@
 export interface FieldValue {
     id: number;
+    model_id: number | null;
     type: string;
     enumGroupId: number | null;
     name: string;

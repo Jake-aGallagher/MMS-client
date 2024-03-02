@@ -17,7 +17,10 @@ const Settings = () => {
                 {permissions.users?.view || permissions.userGroups?.view || isAdmin ? (
                     <IndexCardLayout label="Users" icon={faUser}>
                         {permissions.users?.view || isAdmin ? (
-                            <Link href="/settings/users" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all transition-all">
+                            <Link
+                                href="/settings/users"
+                                className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all transition-all"
+                            >
                                 Users
                             </Link>
                         ) : null}
@@ -51,18 +54,22 @@ const Settings = () => {
                 ) : null}
 
                 <IndexCardLayout label="Custom Fields" icon={faPencil}>
-                    <Link href="/settings/customFields/jobs" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
-                        Job/PM
-                    </Link>
                     <Link href="/settings/customFields/properties" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
                         Properties
-                    </Link><Link href="/settings/customFields/assets" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                    </Link>
+                    <Link href="/settings/customFields/jobs" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                        Jobs
+                    </Link>
+                    <Link href="/settings/customFields/pms" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                        PMs
+                    </Link>
+                    <Link href="/settings/customFields/assets" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
                         Assets
-                    </Link><Link href="/settings/customFields/spares" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                    </Link>
+                    <Link href="/settings/customFields/spares" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
                         Spares
                     </Link>
                 </IndexCardLayout>
-
             </div>
         </FullPage>
     );

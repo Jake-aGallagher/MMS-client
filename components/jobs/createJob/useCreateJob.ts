@@ -18,7 +18,6 @@ export const useCreateJob = () => {
     const [error, setError] = useState(false);
     const [typeOptions, setTypeOptions] = useState<TypeOptions[]>([]);
     const [urgencyOptions, setUrgencyOptions] = useState<UrgencyOptions[]>([]);
-    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [defaultValues, setDefaultValues] = useState<DefaultValues>({
         selectedType: '',
         title: '',
@@ -40,21 +39,16 @@ export const useCreateJob = () => {
             });
             setTypeOptions(response.data.types);
             setUrgencyOptions(response.data.urgency);
-            setCustomFields(response.data.customFields);
-            const defaultVal: DefaultValues = {
+            setDefaultValues({
                 ...defaultValues,
                 selectedType: response.data.types[0].id,
                 selectedUrgency: response.data.urgency[0].id,
-            };
-            response.data.customFields.fields.forEach((field: FieldValue) => {
-                defaultVal[field.id] = field.value;
             });
-            setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
         }
     };
-    return { defaultValues, customFields, typeOptions, urgencyOptions, loading, error };
+    return { defaultValues, typeOptions, urgencyOptions, loading, error };
 };

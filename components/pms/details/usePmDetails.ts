@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import axios from 'axios';
+import { CustomFieldData } from '../../../commonTypes/CustomFields';
 
 interface PM {
     id: number;
@@ -37,6 +38,7 @@ export const usePMDetails = (PMId: string) => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [pmDetails, setPmDetails] = useState<PM>();
+    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [timeDetails, setTimeDetails] = useState<TimeDetails[]>([]);
     const [sparesDetails, setSparesDetails] = useState<UsedSpares[]>([]);
 
@@ -60,6 +62,7 @@ export const usePMDetails = (PMId: string) => {
                 setNoData(true);
             } else {
                 setPmDetails(response.data.pm[0]);
+                setCustomFields(response.data.customFields);
                 setTimeDetails(response.data.timeDetails || []);
                 setSparesDetails(response.data.usedSpares || []);
             }
@@ -69,5 +72,5 @@ export const usePMDetails = (PMId: string) => {
             setLoading(false);
         }
     };
-    return { pmDetails, timeDetails, sparesDetails, loading, noData, error, reload };
+    return { pmDetails, customFields, timeDetails, sparesDetails, loading, noData, error, reload };
 };

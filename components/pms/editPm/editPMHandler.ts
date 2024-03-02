@@ -13,7 +13,7 @@ interface SparesSelected {
 }
 
 export const editPMHandler = async (
-    data: { status: string; notes: string; continueSchedule: string },
+    data: { status: string; notes: string; continueSchedule: string, [key: string]: any},
     PMId: number,
     complete: boolean,
     currentProperty: number,
@@ -37,6 +37,7 @@ export const editPMHandler = async (
             loggedTimeDetails,
             continueSchedule: data.continueSchedule,
             sparesUsed: sparesSelected,
+            fieldData: data
         })
     );
     const response = await editPMConn(formData)

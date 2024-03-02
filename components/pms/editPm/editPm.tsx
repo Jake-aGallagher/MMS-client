@@ -13,10 +13,10 @@ import AltTableHeaders from '../../dataTable/altTableHeaders';
 import UsersAddRemoveTable from '../../usersSelector/usersAddRemoveTable';
 import SparesAddRemoveTable from '../../sparesSelector/sparesAddRemoveTable';
 import { useEditPM } from './useEditPm';
-import { yupResolverEditPM } from './editPMValidation';
 import ModalBase from '../../modal/modal';
 import FormTextCenter from '../../forms/formTextCenter';
 import { editPMHandler } from './editPMHandler';
+import { FieldInputs } from '../../settings/customFields/fieldInputs';
 
 interface Props {
     closeModal: () => void;
@@ -33,7 +33,7 @@ interface Modal {
 
 const EditPM = (props: Props) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { statusOptions, completableStatus, sparesSelected, setSparesSelected, scheduleDates, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error } = useEditPM(
+    const { statusOptions, completableStatus, sparesSelected, setSparesSelected, scheduleDates, loggedTimeDetails, setLoggedTimeDetails, defaultValues, customFields, loading, noData, error } = useEditPM(
         currentProperty,
         props.pmId
     );
@@ -50,8 +50,8 @@ const EditPM = (props: Props) => {
         reset,
         watch,
         formState: { errors },
+        setValue,
     } = useForm({
-        resolver: yupResolverEditPM,
         defaultValues: useMemo(() => {
             return defaultValues;
         }, [defaultValues]),
@@ -97,6 +97,7 @@ const EditPM = (props: Props) => {
                             selectOptions={statusOptions}
                         />
                         <GeneralFormInput register={register} label="Notes" type="textarea" formName="notes" errors={errors} rows={5} />
+                        {FieldInputs(customFields, register, errors, setValue)}
 
                         <button className="btnBlue w-48 mx-auto h-8 mt-8 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
                             Log Spare Parts Used
@@ -117,7 +118,7 @@ const EditPM = (props: Props) => {
                                 <UsersAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
                             </AltTableContainer>
                         ) : <div className='h-12'></div>}
-                        {completableStatus.includes(parseInt(statusWatch[0])) ? (
+                        {completableStatus.includes(parseInt(String(statusWatch[0]))) ? (
                             <>
                                 <GeneralFormInput
                                     register={register}
@@ -134,7 +135,7 @@ const EditPM = (props: Props) => {
                                 </div>
                             </>
                         ) : null}
-                        <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(statusWatch[0])) ? 'Complete' : 'Update'} />
+                        <GeneralFormSubmit closeModal={props.closeModal} submitLabel={completableStatus.includes(parseInt(String(statusWatch[0]))) ? 'Complete' : 'Update'} />
                     </GeneralForm>
                 </LoadingNoDataError>
             </FormContainer>

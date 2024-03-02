@@ -13,6 +13,8 @@ import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox
 import DataTable from '../../components/dataTable/dataTable';
 import { useState } from 'react';
 import ModalBase from '../../components/modal/modal';
+import { addToDetailsConfig } from '../../components/settings/customFields/addToDetailsConfig';
+import { DetailsConfig } from '../../commonTypes/DetailsConfig';
 
 const PMDetails = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -24,9 +26,9 @@ const PMDetails = () => {
 
     const pmId = router.asPath.split('/')[2];
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: number }>({ view: false, type: '', payload: 0 });
-    const { pmDetails, timeDetails, sparesDetails, loading, noData, error, reload } = usePMDetails(pmId);
+    const { pmDetails, customFields, timeDetails, sparesDetails, loading, noData, error, reload } = usePMDetails(pmId);
 
-    const schedulePMConfig = {
+    let schedulePMConfig: DetailsConfig = {
         id: pmDetails?.id,
         title: 'PM Details',
         fields: [
@@ -44,6 +46,7 @@ const PMDetails = () => {
             { label: 'Total Logged Time', value: pmDetails?.logged_time },
         ],
     };
+    schedulePMConfig = addToDetailsConfig(schedulePMConfig, customFields);
 
     const sparesTableConfig = {
         headers: [

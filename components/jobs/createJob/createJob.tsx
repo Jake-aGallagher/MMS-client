@@ -20,7 +20,7 @@ interface ModalProps {
 }
 
 const CreateJob = (props: ModalProps) => {
-    const { defaultValues, customFields, typeOptions, urgencyOptions, loading, error } = useCreateJob();
+    const { defaultValues, typeOptions, urgencyOptions, loading, error } = useCreateJob();
     const userId = useSelector((state: RootState) => state.user.value.id);
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [viewModal, setViewModal] = useState(false);
@@ -34,10 +34,8 @@ const CreateJob = (props: ModalProps) => {
     const {
         register,
         handleSubmit,
-        watch,
         reset,
         formState: { errors },
-        setValue,
     } = useForm({
         defaultValues: useMemo(() => {
             return defaultValues;
@@ -91,7 +89,6 @@ const CreateJob = (props: ModalProps) => {
                             optionNameString="value"
                             selectOptions={yesNoOptions}
                         />
-                        {FieldInputs(customFields, register, errors, setValue)}
                         <GeneralFormSubmit closeModal={props.closeModal} />
                     </GeneralForm>
                 </LoadingNoDataError>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
 
 interface StatusOptions {
     id: string;
@@ -29,7 +30,8 @@ export const useEditPM = (currentProperty: number, PMId: number) => {
     const [scheduleDates, setScheduleDates] = useState<{ current_schedule: string; new_schedule: string }[]>([{ current_schedule: '', new_schedule: '' }]);
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
     const [completableStatus, setCompletableStatus] = useState<number[]>([]);
-    const [defaultValues, setDefaultValues] = useState({
+    const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
+    const [defaultValues, setDefaultValues] = useState<DefaultValues>({
         status: '0',
         notes: '',
         continueSchedule: 'Yes',
@@ -60,11 +62,16 @@ export const useEditPM = (currentProperty: number, PMId: number) => {
                 }
                 const data = response.data.PMDetails[0];
                 setScheduleDates(response.data.scheduleDates);
-                setDefaultValues({
+                setCustomFields(response.data.customFields);
+                const defaultVal: DefaultValues = {
                     status: data.status,
                     notes: data.notes ? data.notes : '',
                     continueSchedule: 'Yes',
+                };
+                response.data.customFields.fields.forEach((field: FieldValue) => {
+                    defaultVal[field.id] = field.value;
                 });
+                setDefaultValues(defaultVal);
                 setNoData(false);
             }
             setLoading(false);
@@ -73,5 +80,5 @@ export const useEditPM = (currentProperty: number, PMId: number) => {
             setLoading(false);
         }
     };
-    return { statusOptions, completableStatus, sparesSelected, setSparesSelected, scheduleDates, loggedTimeDetails, setLoggedTimeDetails, defaultValues, loading, noData, error };
+    return { statusOptions, completableStatus, sparesSelected, setSparesSelected, scheduleDates, loggedTimeDetails, setLoggedTimeDetails, defaultValues, customFields, loading, noData, error };
 };
