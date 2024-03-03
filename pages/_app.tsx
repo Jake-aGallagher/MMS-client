@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
         if (localStorage.getItem('expiryDate')) {
             localStorage.removeItem('expiryDate');
         }
-        const remainingMilliseconds = 60 * 60 * 1000;
+        const remainingMilliseconds = (60 * 60 * 1000) + 1000; // the extra thousand is to give time for token to expire on serverside
         setTimeout(() => {
             logoutHandler();
         }, remainingMilliseconds);
