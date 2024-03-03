@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const [loggedIn, setLoggedIn] = useState(false);
 
     const loginHandler = () => {
-        refreshExpiry()
+        refreshExpiry();
         setLoggedIn(true);
     };
 
@@ -24,10 +24,10 @@ export default function App({ Component, pageProps }: AppProps) {
         if (localStorage.getItem('expiryDate')) {
             localStorage.removeItem('expiryDate');
         }
-        const remainingMilliseconds = (60 * 60 * 1000) + 1000; // the extra thousand is to give time for token to expire on serverside
+        const remainingMilliseconds = 60 * 60 * 1000;
         setTimeout(() => {
             logoutHandler();
-        }, remainingMilliseconds);
+        }, remainingMilliseconds + 1000); // the extra thousand is to give time for token to expire on serverside
         const expiryDate = new Date().getTime() + remainingMilliseconds;
         localStorage.setItem('expiryDate', expiryDate.toString());
     };
@@ -39,12 +39,11 @@ export default function App({ Component, pageProps }: AppProps) {
                 <meta name="description" content="A Maintenance Management System" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-                <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png"/>
-                <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png"/>
-                <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png"/>
-
+                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+                <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+                <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+                <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
             </Head>
             <Script src="https://kit.fontawesome.com/5e0bf4683d.js" crossOrigin="anonymous" />
             <main className="h-screen font-sans bg-background text-text">
