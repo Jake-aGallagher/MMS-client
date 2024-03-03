@@ -1,31 +1,36 @@
+import Loading from '../loading/loading';
 import DashChartComponent from './dashChartComponent';
-import { formatNumeric } from './formatNumeric';
 
-const SparesCosts = () => {
-    const costsThisMonth = 5250;
-    const avgData = { value: -20, flipped: false };
+interface Props {
+    data: {
+        thisMonth: number;
+        avgData: { value: number; flipped: boolean };
+        mainData: { label: string; value: number }[];
+    };
+    loading: boolean;
+    error: boolean;
+}
 
-    const mainData = [
-        { label: 'June', value: 6000 },
-        { label: 'July', value: 4800 },
-        { label: 'August', value: 4700 },
-        { label: 'September', value: 5300 },
-        { label: 'October', value: 5600 },
-        { label: 'November', value: 6200 },
-    ];
+const SparesCosts = (props: Props) => {
     const text = {
-        title: 'Spares Costs',
+        title: 'Spares Ordered Costs',
         mainUnit: '£',
-        labels: 'Spares Costs (£)',
-        totalString: '',
+        labels: 'Spares Ordered Costs (£)',
+        totalString: props.data?.thisMonth.toString(),
         afterTotalString: '',
     };
 
-    const { numText, afterText } = formatNumeric(costsThisMonth);
-    text.totalString = numText;
-    text.afterTotalString = afterText;
-
-    return <DashChartComponent avgData={avgData} mainData={mainData} text={text} />;
+    return (
+        <>
+            {props.loading ? (
+                <div className="w-full h-full bg-secondary rounded-md relative">
+                    <Loading />
+                </div>
+            ) : (
+                <DashChartComponent avgData={props.data.avgData} mainData={props.data.mainData} text={text} />
+            )}
+        </>
+    );
 };
 
 export default SparesCosts;

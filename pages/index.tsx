@@ -12,6 +12,7 @@ import RevenueLostByAsset from '../components/dashboard/RevenueLostByAsset';
 import { useSelector } from 'react-redux';
 import { RootState } from '../components/store/store';
 import { useDashboardJobs } from '../components/dashboard/dataHooks/useDashboardJobs';
+import { useDashboardSpares } from '../components/dashboard/dataHooks/useDashboardSpares';
 
 const Dashboard = () => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
@@ -19,13 +20,14 @@ const Dashboard = () => {
     // jobs hook
     const { raised, completed, open, planned, jobLoading, jobError } = useDashboardJobs(currentProperty);
     // spares hook
+    const { sparesCost, sparesLoading, sparesError } = useDashboardSpares(currentProperty);
 
     return (
         <FullPage>
             <Toolbar></Toolbar>
             <div className="my-4 h-full w-full flex flex-col lg:grid lg:grid-cols-3 lg:grid-rows-3 gap-2 ">
                 <LostRevenue />
-                <SparesCosts />
+                <SparesCosts data={sparesCost} loading={sparesLoading} error={sparesError} />
                 <IncidentsOfNoSpares />
                 <Downtime />
                 <JobsRaised data={raised} loading={jobLoading} error={jobError}/>
