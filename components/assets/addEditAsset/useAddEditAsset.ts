@@ -26,7 +26,7 @@ export const useAddEditAsset = (assetId: number) => {
 
     const getFields = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/fields/asset`, {
+            const response = await axios.get(`${SERVER_URL}/fields/asset/0`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setCustomFields(response.data);

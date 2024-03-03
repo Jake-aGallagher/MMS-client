@@ -48,7 +48,7 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
 
     const getFields = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/fields/spare`, {
+            const response = await axios.get(`${SERVER_URL}/fields/spare/0`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             setCustomFields(response.data);

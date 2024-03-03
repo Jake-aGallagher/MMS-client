@@ -55,7 +55,7 @@ const AddEditSparesItem = (props: ModalProps) => {
                     <GeneralFormInput register={register} label="Location" type="text" formName="location" errors={errors} />
                     <GeneralFormInput register={register} label="Quantity in Stock" type="number" formName="quantRemaining" errors={errors} min={0} />
                     <GeneralFormInput register={register} label="Supplier" type="text" formName="supplier" errors={errors} />
-                    <GeneralFormInput register={register} label="Cost per Item" type="number" formName="cost" errors={errors} min={0} />
+                    <GeneralFormInput register={register} label="Cost per Item (£)" type="number" formName="cost" errors={errors} min={0} step={'.01'} />
                     {FieldInputs(customFields, register, errors, setValue)}
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>

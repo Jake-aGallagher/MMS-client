@@ -45,7 +45,7 @@ const SparesView = () => {
             { label: 'Reorder Frequency', value: sparesDetails?.reorder_freq },
             { label: 'Reorder Amount', value: sparesDetails?.reorder_num },
             { label: 'Avg Usage per Month', value: sparesDetails?.avg_usage },
-            { label: 'Cost per Item', value: sparesDetails?.cost },
+            { label: 'Cost per Item (£)', value: sparesDetails?.cost },
             { label: 'Next Delivery Due', value: deliveryInfo?.due ? new Date(deliveryInfo?.due).toLocaleDateString() : 'Not on Order' },
             { label: 'Next Delivery Quantity Expected', value: deliveryInfo?.quantity },
         ],
