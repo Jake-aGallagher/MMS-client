@@ -46,7 +46,9 @@ export const useJobDetails = (jobId: string) => {
     const [sparesDetails, setSparesDetails] = useState<UsedSpares[]>([]);
 
     useEffect(() => {
-        reload();
+        if (jobId !== '') {
+            reload();
+        }
     }, []);
 
     const reload = () => {
