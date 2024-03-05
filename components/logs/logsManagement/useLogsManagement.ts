@@ -19,7 +19,9 @@ export const useLogTemplates = (currentProperty: number) => {
     const [logTemplates, setLogTemplates] = useState<LogTemplate[]>([]);
 
     useEffect(() => {
-        reload();
+        if (currentProperty !== 0) {
+            reload();
+        }
     }, [currentProperty]);
 
     const reload = () => {

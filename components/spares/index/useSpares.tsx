@@ -30,7 +30,9 @@ export const useSpares = (props: Props) => {
     const [spares, setSpares] = useState<Spare[]>([]);
 
     useEffect(() => {
-        reload();
+        if (props.currentProperty !== 0) {
+            reload();
+        }
     }, [props.currentProperty]);
 
     const reload = () => {

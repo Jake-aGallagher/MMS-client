@@ -17,7 +17,9 @@ export const useAssets = (currentProperty: number) => {
     const [assetTree, setAssetTree] = useState<AssetTreeItem[]>([]);
 
     useEffect(() => {
-        reload();
+        if (currentProperty !== 0) {
+            reload();
+        }
     }, [currentProperty]);
 
     const reload = () => {

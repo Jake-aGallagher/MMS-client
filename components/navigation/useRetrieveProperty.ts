@@ -20,8 +20,10 @@ export const useRetrieveProperty = (props: Props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        getHandler();
-    }, [props.currentProperty]);
+        if (props.userId !== 0) {
+            getHandler();
+        }
+    }, [props.currentProperty, props.userId]);
 
     const getHandler = async () => {
         try {

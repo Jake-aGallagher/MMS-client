@@ -6,8 +6,10 @@ export const useGetFiles = (model: string, id: number) => {
     const [files, setFiles] = useState<{ id: string; name: string }[]>([]);
     
     useEffect(() => {
-        reload();
-    }, []);
+        if (model && id) {
+            reload();
+        }
+    }, [model, id]);
 
     const reload = () => {
         getfilesHandler();

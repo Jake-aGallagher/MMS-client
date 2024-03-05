@@ -33,8 +33,10 @@ export const usePmScheduleDetails = (propertyId: number, scheduleId: number) => 
     const [pms, setPms] = useState<PMs[]>([]);
 
     useEffect(() => {
-        reload();
-    }, []);
+        if (propertyId !== 0 && scheduleId !== 0) {
+            reload();
+        }
+    }, [propertyId, scheduleId]);
 
     const reload = () => {
         setLoading(true);

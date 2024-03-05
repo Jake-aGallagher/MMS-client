@@ -29,8 +29,10 @@ export const useLogTemplateDetails = (propertyId: number, scheduleId: number) =>
     const [logs, setLogs] = useState<Logs[]>([]);
 
     useEffect(() => {
-        reload();
-    }, []);
+        if (propertyId !== 0 && scheduleId !== 0) {
+            reload();
+        }
+    }, [propertyId, scheduleId]);
 
     const reload = () => {
         setLoading(true);

@@ -26,7 +26,9 @@ export const useSuppliers = (props: Props) => {
     const [suppliersList, setSuppliersList] = useState<Suppliers[]>([]);
 
     useEffect(() => {
-        reload();
+        if (props.currentProperty !== 0) {
+            reload();
+        }
     }, [props.currentProperty]);
 
     const reload = () => {

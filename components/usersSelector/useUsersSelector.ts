@@ -23,8 +23,10 @@ export const useUsersSelector = (usersSelected: UserSelected[]) => {
     const [userslist, setUsersList] = useState<UserSelected[]>([]);
 
     useEffect(() => {
-        getHandler();
-    }, []);
+        if (currentProperty !== 0) {
+            getHandler();
+        }
+    }, [currentProperty]);
 
     const getHandler = async () => {
         try {

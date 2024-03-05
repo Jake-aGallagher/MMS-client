@@ -22,7 +22,9 @@ export const usePms = (props: Props) => {
     const [pms, setPms] = useState<PM[]>([]);
 
     useEffect(() => {
-        reload();
+        if (props.currentProperty !== 0) {
+            reload();
+        }
     }, [props.currentProperty]);
 
     const reload = () => {

@@ -41,8 +41,10 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
     const [used6M, setUsed6M] = useState<{ month: string; value: number }[]>([])
 
     useEffect(() => {
-        reload();
-    }, []);
+        if (spareId !== '' && currentProperty !== '') {
+            reload();
+        }
+    }, [spareId, currentProperty]);
 
     const reload = () => {
         setLoading(true);

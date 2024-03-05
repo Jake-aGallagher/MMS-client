@@ -14,7 +14,9 @@ export const useSparesNotes = (currentProperty: number) => {
     const [notes, setNotes] = useState<Note[]>([]);
 
     useEffect(() => {
-        reload();
+        if (currentProperty !== 0) {
+            reload();
+        }
     }, [currentProperty]);
 
     const reload = () => {

@@ -34,7 +34,9 @@ export const useLogDetails = (props: Props) => {
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
 
     useEffect(() => {
-        reload();
+        if (props.logId !== 0) {
+            reload();
+        }
     }, [props.logId]);
 
     const reload = () => {

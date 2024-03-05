@@ -14,8 +14,10 @@ export const useEnumValues = (enumGroupId: number) => {
     const [enumValues, setEnumValues] = useState<EnumValue[]>([]);
 
     useEffect(() => {
-        reload();
-    }, []);
+        if (enumGroupId !== 0) {
+            reload();
+        }
+    }, [enumGroupId]);
 
     const reload = () => {
         setLoading(true);

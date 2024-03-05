@@ -43,8 +43,10 @@ export const usePMDetails = (PMId: string) => {
     const [sparesDetails, setSparesDetails] = useState<UsedSpares[]>([]);
 
     useEffect(() => {
-        reload();
-    }, []);
+        if (PMId !== '') {
+            reload();
+        }
+    }, [PMId]);
 
     const reload = () => {
         setLoading(true);

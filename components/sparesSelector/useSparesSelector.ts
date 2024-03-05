@@ -21,8 +21,10 @@ export const useSparesSelector = (sparesSelected: SparesSelected[]) => {
     const [spareslist, setSparesList] = useState<SparesSelected[]>([]);
 
     useEffect(() => {
-        getHandler();
-    }, []);
+        if (currentProperty !== 0) {
+            getHandler();
+        }
+    }, [currentProperty]);
 
     const getHandler = async () => {
         try {

@@ -19,7 +19,9 @@ export const useFieldList = (model: string, modelId?: number) => {
     const [enumGroups, setEnumGroups] = useState<{[key: string]:{ id: string; value: string }[]}>({});
 
     useEffect(() => {
-        reload();
+        if (model != '') {
+            reload();
+        }
     }, [model, modelId]);
 
     const reload = () => {

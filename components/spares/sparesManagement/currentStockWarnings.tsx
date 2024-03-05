@@ -50,7 +50,9 @@ const StockWarnings = () => {
     };
 
     useEffect(() => {
-        getStockWarnings();
+        if (currentProperty !== 0) {
+            getStockWarnings();
+        }
     }, [currentProperty]);
 
     const getStockWarnings = async () => {

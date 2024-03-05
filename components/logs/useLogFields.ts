@@ -22,8 +22,10 @@ export const useLogFields = (logId: number) => {
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
 
     useEffect(() => {
-        reload();
-    }, []);
+        if (logId !== 0) {
+            reload();
+        }
+    }, [logId]);
 
     const reload = () => {
         setLoading(true);

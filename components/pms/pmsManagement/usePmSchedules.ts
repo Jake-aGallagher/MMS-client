@@ -22,7 +22,9 @@ export const usePmSchedules = (props: Props) => {
     const [schedules, setSchedules] = useState<Schedule[]>([]);
 
     useEffect(() => {
-        reload();
+        if (props.currentProperty !== 0) {
+            reload();
+        }
     }, [props.currentProperty]);
 
     const reload = () => {

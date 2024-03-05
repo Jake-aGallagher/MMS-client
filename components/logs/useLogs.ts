@@ -22,7 +22,9 @@ export const useLogs = (props: Props) => {
     const [logs, setLogs] = useState<Log[]>([]);
 
     useEffect(() => {
-        reload();
+        if (props.currentProperty !== 0) {
+            reload();
+        }
     }, [props.currentProperty]);
 
     const reload = () => {

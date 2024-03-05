@@ -30,10 +30,16 @@ export const useJobs = (props: Props) => {
     const [jobs, setJobs] = useState<Job[]>([]);
 
     useEffect(() => {
+        if (props.currentProperty !== 0) {
+            reload();
+        }
+    }, [props.currentProperty]);
+
+    const reload = () => {
         setLoading(true);
         setError(false);
         getHandler();
-    }, [props.currentProperty]);
+    };
 
     const getHandler = async () => {
         try {
@@ -47,5 +53,5 @@ export const useJobs = (props: Props) => {
             setLoading(false);
         }
     };
-    return { jobs, loading, error };
+    return { jobs, loading, error, reload };
 };

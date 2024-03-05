@@ -31,7 +31,9 @@ export const useDeliveries = (props: Props) => {
     const [deliveriesList, setDeliveriesList] = useState<Delivery[]>([]);
 
     useEffect(() => {
-        reload();
+        if (props.currentProperty !== 0) {
+            reload();
+        }
     }, [props.currentProperty]);
 
     const reload = () => {

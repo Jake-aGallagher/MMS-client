@@ -48,7 +48,9 @@ export const useAssetDetails = (assetId: string) => {
     const [incompleteForAsset, setIncompleteForAsset] = useState<IncompleteJobs[]>([]);
 
     useEffect(() => {
-        reload();
+        if (assetId !== '') {
+            reload();
+        }
     }, [assetId]);
 
     const reload = () => {

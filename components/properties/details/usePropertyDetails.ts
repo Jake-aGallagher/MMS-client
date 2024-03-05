@@ -49,8 +49,10 @@ export const usePropertyDetails = (propertyNumber: string) => {
     const [sparesCost6M, setSparesCost6M] = useState<{ month: string; value: number }[]>([]);
 
     useEffect(() => {
-        reload();
-    }, []);
+        if (propertyNumber !== '') {
+            reload();
+        }
+    }, [propertyNumber]);
 
     const reload = () => {
         setLoading(true);

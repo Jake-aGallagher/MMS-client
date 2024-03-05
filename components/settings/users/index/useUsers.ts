@@ -6,7 +6,7 @@ interface User {
     id: number;
 }
 
-export const useUsers = (currentProperty: number) => {
+export const useUsers = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [users, setUsers] = useState<User[]>([]);
@@ -26,7 +26,6 @@ export const useUsers = (currentProperty: number) => {
             const response = await axios.get(`${SERVER_URL}/all-users`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            console.log(response.data.users);
             setUsers(response.data.users);
             setLoading(false);
         } catch (err) {
