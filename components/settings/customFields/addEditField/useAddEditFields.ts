@@ -30,6 +30,7 @@ export const useAddEditFields = (fieldId: number) => {
             const response = await axios.get(`${SERVER_URL}/enumgroups`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditFields/getHandlerOnlyEnums', [['response', response]]);
             setEnumOptions(response.data.enumGroups)
             setLoading(false);
         } catch (err) {
@@ -46,6 +47,7 @@ export const useAddEditFields = (fieldId: number) => {
             const response = await axios.get(`${SERVER_URL}/field/${fieldId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditFields/getHandler', [['response', response]]);
             setDefaultValues({
                 type: response.data.field.type,
                 options: response.data.field.enum_group_id,

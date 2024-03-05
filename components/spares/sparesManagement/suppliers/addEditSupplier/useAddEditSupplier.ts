@@ -34,6 +34,7 @@ export const useAddEditSupplier = (id: number) => {
             const response = await axios.get(`${SERVER_URL}/spares/supplier/${id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditSupplier/getHandler', [['response', response]]);
             const supply = response.data[0];
             if (supply.length === 0) {
                 setError(true);

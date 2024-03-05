@@ -36,6 +36,7 @@ export const useAddEditProperty = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/properties/${props.propertyNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditProperty/getPropertyHandler', [['response', response]]);
             const data = response.data.propDetails[0];
             setId(parseInt(data.id));
             setCustomFields(response.data.customFields);

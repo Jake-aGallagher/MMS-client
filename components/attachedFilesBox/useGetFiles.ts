@@ -21,6 +21,7 @@ export const useGetFiles = (model: string, id: number) => {
             const response = await axios.get(`${SERVER_URL}/files/${model}/${id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useGetFiles/getfilesHandler', [['response', response]]);
             if (response.data.files) {
                 setFiles(response.data.files);
             }

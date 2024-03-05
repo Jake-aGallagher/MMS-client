@@ -28,6 +28,7 @@ export const useEnumGroups = () => {
             const enumsList = await axios.get(`${SERVER_URL}/enumgroups`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useEnumGroups/getHandler', [['response', enumsList]]);
             setEnumGroups(enumsList.data.enumGroups);
             setLoading(false);
         } catch (err) {

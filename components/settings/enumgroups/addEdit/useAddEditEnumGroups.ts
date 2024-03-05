@@ -29,6 +29,7 @@ export const useAddEditEnumGroups = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/enumgroup/${props.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditEnumGroups/getHandler', [['response', response]]);
             setDefaultValues({
                 name: response.data.enumGroup[0].value,
             });

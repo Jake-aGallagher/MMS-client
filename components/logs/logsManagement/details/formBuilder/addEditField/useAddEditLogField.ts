@@ -30,6 +30,7 @@ export const useAddEditLogField = (fieldId: number) => {
             const response = await axios.get(`${SERVER_URL}/enumgroups`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditLogField/getHandlerOnlyEnums', [['response', response]]);
             setEnumOptions(response.data.enumGroups)
             setLoading(false);
         } catch (err) {
@@ -46,6 +47,7 @@ export const useAddEditLogField = (fieldId: number) => {
             const response = await axios.get(`${SERVER_URL}/logs/edit-log-field/${fieldId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditLogField/getHandler', [['response', response]]);
             setDefaultValues({
                 type: response.data.logField.type,
                 options: response.data.logField.options,

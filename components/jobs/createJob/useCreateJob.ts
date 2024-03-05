@@ -38,6 +38,7 @@ export const useCreateJob = () => {
             const response = await axios.get(`${SERVER_URL}/jobs/create-job`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useCreateJob/getEnums', [['response', response]]);
             setTypeOptions(response.data.types);
             setUrgencyOptions(response.data.urgency);
             setDefaultValues({

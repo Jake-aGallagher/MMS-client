@@ -32,6 +32,7 @@ export const useAddEditStatusType = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/statustypes/${props.statusTypeNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditStatusType/getStatusTypeHandler', [['response', response]]);
             const data = response.data.statusType[0];
             setDefaultValues({
                 value: data.value,

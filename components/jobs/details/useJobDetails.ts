@@ -64,6 +64,7 @@ export const useJobDetails = (jobId: string) => {
             const response = await axios.get(`${SERVER_URL}/jobs/${jobId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useJobDetails/getJobHandler', [['response', response]]);
             if (response.data.jobDetails.length === 0) {
                 setNoData(true);
             } else {

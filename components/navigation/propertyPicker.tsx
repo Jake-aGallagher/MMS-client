@@ -35,6 +35,7 @@ const PropertyPicker = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/properties/availabletouser`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('PropertyPicker/getProperties', [['response', response]]);
             setProperties(response.data.allProps);
             setError(false);
             setLoading(false);

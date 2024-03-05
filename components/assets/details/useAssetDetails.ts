@@ -66,6 +66,7 @@ export const useAssetDetails = (assetId: string) => {
             const response = await axios.get(`${SERVER_URL}/asset/${assetId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAssetDetails/getAssetHandler', [['response', response]]);
             if (response.data.length === 0) {
                 setNoData(true);
             } else {

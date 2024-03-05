@@ -31,6 +31,7 @@ export const useRetrieveProperty = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/properties/last-property/${props.userId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useRetrieveProperty/getHandler', [['response', response]]);
             if (response.data.length === 0) {
                 alert('You are not assigned to any Properties, please speak to your Line Manager');
             } else {

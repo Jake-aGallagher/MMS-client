@@ -39,6 +39,7 @@ export const useAddEditLogTemplate = (logTemplateId: number) => {
             const response = await axios.get(`${SERVER_URL}/logs/edit-log-template/${logTemplateId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditLogTemplate/getHandler', [['response', response]]);
             setDefaultValues({
                 ...defaultValues,
                 title: response.data.logTemplate.title,

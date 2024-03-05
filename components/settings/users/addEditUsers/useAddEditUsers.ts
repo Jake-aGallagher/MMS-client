@@ -34,6 +34,7 @@ export const useAddEditUsers = (id: number, user_group_id: number) => {
             const response = await axios.get(`${SERVER_URL}/users/byuserid/${id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditUsers/getHandlerFull', [['response', response]]);
             const data = response.data.users[0];
             setUserGroups(response.data.userGroups);
             setDefaultValues({
@@ -59,6 +60,7 @@ export const useAddEditUsers = (id: number, user_group_id: number) => {
             const response = await axios.get(`${SERVER_URL}/usergroups/all`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditUsers/getHandlerUserGroups', [['response', response]]);
             setUserGroups(response.data.userGroups);
             setLoading(false);
         } catch (err) {

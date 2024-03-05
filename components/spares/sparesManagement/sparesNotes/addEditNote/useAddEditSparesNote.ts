@@ -23,6 +23,7 @@ export const useAddEditSparesNote = (id: number) => {
             const response = await axios.get(`${SERVER_URL}/spares/note/${id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditSparesNote/getHandler', [['response', response]]);
             setDefaultValues({ title: response.data[0].title, note: response.data[0].content });
             setLoading(false);
         } catch (err) {

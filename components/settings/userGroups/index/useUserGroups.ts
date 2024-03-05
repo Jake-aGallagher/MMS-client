@@ -28,6 +28,7 @@ export const useUserGroups = () => {
             const response = await axios.get(`${SERVER_URL}/usergroups/all`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useUserGroups/getHandler', [['response', response]]);
             setUserGroups(response.data.userGroups);
             setLoading(false);
         } catch (err) {

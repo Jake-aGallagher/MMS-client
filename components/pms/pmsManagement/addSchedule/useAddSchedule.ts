@@ -33,6 +33,8 @@ export const useAddSchedule = () => {
             const response = await axios.get(`${SERVER_URL}/pms/schedules/add-schedule`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddSchedule/getEnums', [['response', response]]);
+
             setTypeOptions(response.data.types);
             setDefaultValues({
                 ...defaultValues,

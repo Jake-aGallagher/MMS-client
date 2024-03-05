@@ -48,7 +48,7 @@ const DeleteAsset = (props: ModalProps) => {
                 alert(alertString);
             }
         } catch (err) {
-            GlobalDebug('DeleteAsset', [
+            GlobalDebug('DeleteAsset/handleRegistration', [
                 ['error', err],
                 ['data', data],
             ]);

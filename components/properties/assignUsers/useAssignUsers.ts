@@ -34,6 +34,7 @@ export const useAssignUsers = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/properties/users-for-assigning/${props.propertyNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAssignUsers/getUsersForAssign', [['response', response]]);
             if (response.data.length === 0) {
                 setNoData(true);
             } else {

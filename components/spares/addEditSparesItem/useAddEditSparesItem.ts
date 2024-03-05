@@ -52,6 +52,7 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
             const response = await axios.get(`${SERVER_URL}/fields/spare/0`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditSparesItem/getFields', [['response', response]]);
             setCustomFields(response.data);
             setLoading(false);
         } catch (err) {
@@ -68,6 +69,7 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
             const response = await axios.get(`${SERVER_URL}/spare/${id}/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditSparesItem/getHandler', [['response', response]]);
             const s: Spare = response.data.spares[0];
             setCustomFields(response.data.customFields);
             const defaultVal: DefaultValues = {

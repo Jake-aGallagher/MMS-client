@@ -47,6 +47,7 @@ export const useDashboardJobs = (propertyId: number) => {
             const response = await axios.get(`${SERVER_URL}/dashboard/jobs/${propertyId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useDashboardJobs/getHandler', [['response', response]]);
             setRaised(response.data.raised);
             setCompleted(response.data.completed);
             setOpen(response.data.open);

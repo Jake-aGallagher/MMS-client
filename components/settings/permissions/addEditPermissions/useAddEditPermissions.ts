@@ -31,6 +31,7 @@ export const useAddEditPermissions = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/permissions/group/${props.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditPermissions/getPermissionsForGroup', [['response', response]]);
             setPermissionsList(response.data.permissionsList);
             setLoading(false);
         } catch (err) {

@@ -51,6 +51,7 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
             const response = await axios.get(`${SERVER_URL}/jobs/update/${currentProperty}/${jobId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useUpdateJob/getJobUpdate', [['response', response]]);
             if (response.data.jobDetails === 0) {
                 setNoData(true);
             } else {

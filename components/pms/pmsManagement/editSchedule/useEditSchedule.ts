@@ -33,6 +33,7 @@ export const useEditSchedule = (PMScheduleId: number) => {
             const response = await axios.get(`${SERVER_URL}/pms/schedule/edit-schedule/${PMScheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useEditSchedule/getHandler', [['response', response]]);
             setTypeOptions(response.data.types);
             setDefaultValues({
                 ...defaultValues,

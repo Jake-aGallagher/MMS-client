@@ -31,6 +31,7 @@ export const useUrgencyTypes = () => {
             const response = await axios.get(`${SERVER_URL}/urgencytypes`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useUrgencyTypes/getHandler', [['response', response]]);
             setUrgencyTypes(response.data.urgencyTypes);
             setLoading(false);
         } catch (err) {

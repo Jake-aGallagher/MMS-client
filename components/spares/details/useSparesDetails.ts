@@ -59,6 +59,7 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
             const response = await axios.get(`${SERVER_URL}/spare/${spareId}/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useSparesDetails/getSpareItemHandler', [['response', response]]);
             if (response.data.spares.length === 0) {
                 setNoData(true);
             } else {

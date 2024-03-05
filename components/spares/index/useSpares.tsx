@@ -47,6 +47,7 @@ export const useSpares = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/all-spares/${props.currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useSpares/getHandler', [['response', response]]);
             setSpares(response.data);
             setLoading(false);
         } catch (err) {

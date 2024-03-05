@@ -43,6 +43,7 @@ export const useSuppliers = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/spares/suppliers/${props.currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useSuppliers/getHandler', [['response', response]]);
             setSuppliersList(response.data);
             setLoading(false);
         } catch (err) {

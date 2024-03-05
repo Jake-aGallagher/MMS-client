@@ -39,6 +39,7 @@ export const usePms = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/pms/${props.currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('usePms/getHandler', [['response', response]]);
             setPms(response.data.pms);
             setLoading(false);
         } catch (err) {

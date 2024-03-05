@@ -37,6 +37,7 @@ export const useDashboardSpares = (propertyId: number) => {
             const response = await axios.get(`${SERVER_URL}/dashboard/spares/${propertyId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useDashboardSpares/getHandler', [['response', response]]);
             setSparesCosts(response.data.sparesCost);
             setLoading(false);
         } catch (err) {

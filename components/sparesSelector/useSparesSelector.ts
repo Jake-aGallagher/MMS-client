@@ -32,6 +32,7 @@ export const useSparesSelector = (sparesSelected: SparesSelected[]) => {
             const response = await axios.get(`${SERVER_URL}/spares-for-use/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useSparesSelector/getHandler', [['response', response]]);
             mergeArrays(response.data.spares);
             setLoading(false);
         } catch (err) {

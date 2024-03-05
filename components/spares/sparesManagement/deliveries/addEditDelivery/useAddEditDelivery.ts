@@ -63,6 +63,7 @@ export const useAddEditDelivery = (id: number, currentProperty: number) => {
             const response = await axios.get(`${SERVER_URL}/spares/suppliers/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditDelivery/getHandlerLimited', [['response', response]]);
             setSuppliersList(response.data);
             setDefaultValues({ ...defaultValues, supplier: response.data[0].id });
             setLoading(false);
@@ -80,6 +81,7 @@ export const useAddEditDelivery = (id: number, currentProperty: number) => {
             const response = await axios.get(`${SERVER_URL}/spares/deliveries/${currentProperty}/${id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditDelivery/getHandlerFull', [['response', response]]);
             setSuppliersList(response.data.suppliers);
             const delivery = response.data.deliveries[0];
             formatContents(delivery.contents);

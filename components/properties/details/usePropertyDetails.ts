@@ -67,6 +67,7 @@ export const usePropertyDetails = (propertyNumber: string) => {
             const response = await axios.get(`${SERVER_URL}/properties/${propertyNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('usePropertyDetails/getPropertyHandler', [['response', response]]);
             const data = response.data;
             if (data.propDetails.length === 0) {
                 setNoData(true);

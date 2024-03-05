@@ -34,6 +34,7 @@ export const useAssets = (currentProperty: number) => {
             const response = await axios.get(`${SERVER_URL}/asset-tree/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAssets/getAssetTree', [['response', response]]);
             setAssetTree(response.data);
             setLoading(false);
         } catch (err) {

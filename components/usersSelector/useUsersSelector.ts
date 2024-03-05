@@ -34,6 +34,7 @@ export const useUsersSelector = (usersSelected: UserSelected[]) => {
             const response = await axios.get(`${SERVER_URL}/users/all/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useUsersSelector/getHandler', [['response', response]]);
             mergeArrays(response.data.users);
             setLoading(false);
         } catch (err) {

@@ -39,6 +39,7 @@ export const useLogs = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/logs/all-logs/${props.currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useLogs/getHandler', [['response', response]]);
             setLogs(response.data.logs);
             setLoading(false);
         } catch (err) {

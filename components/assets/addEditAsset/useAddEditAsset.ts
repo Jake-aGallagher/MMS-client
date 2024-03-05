@@ -30,22 +30,22 @@ export const useAddEditAsset = (assetId: number) => {
             const response = await axios.get(`${SERVER_URL}/fields/asset/0`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditAsset/getFields', [['response', response]]);
             setCustomFields(response.data);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditAsset/getFields', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditAsset/getFields', [['error', err]]);
             setError(true);
             setLoading(false);
         }
-    }
+    };
 
     const getHandler = async () => {
         try {
             const response = await axios.get(`${SERVER_URL}/asset/${assetId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditAsset/getHandler', [['response', response]]);
             setCustomFields(response.data.customFields);
             const defaultVal: DefaultValues = {
                 name: response.data.assetDetails[0].name,
@@ -57,9 +57,7 @@ export const useAddEditAsset = (assetId: number) => {
             setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditAsset/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditAsset/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

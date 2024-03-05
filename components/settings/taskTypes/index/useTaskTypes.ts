@@ -30,6 +30,7 @@ export const useTaskTypes = () => {
             const response = await axios.get(`${SERVER_URL}/tasktypes`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useTaskTypes/getHandler', [['response', response]]);
             setTaskTypes(response.data.taskTypes);
             setLoading(false);
         } catch (err) {

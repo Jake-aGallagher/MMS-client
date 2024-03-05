@@ -30,6 +30,7 @@ export const useAddEditEnumValues = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/enumvalue/${props.id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAddEditEnumValues/getHandler', [['response', response]]);
             setDefaultValues({
                 name: response.data.enums[0].value,
                 order: response.data.enums[0].list_priority,

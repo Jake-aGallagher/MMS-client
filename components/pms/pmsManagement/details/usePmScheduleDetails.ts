@@ -51,6 +51,7 @@ export const usePmScheduleDetails = (propertyId: number, scheduleId: number) => 
             const response = await axios.get(`${SERVER_URL}/pms/schedules/${propertyId}/${scheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('usePmScheduleDetails/getScheduleHandler', [['response', response]]);
             if (response.data.scheduleDetails.length === 0) {
                 setNoData(true);
             } else {

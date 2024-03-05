@@ -39,6 +39,7 @@ export const useLogFields = (logId: number) => {
             const response = await axios.get(`${SERVER_URL}/logs/log-fields/${logId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useLogFields/getScheduleHandler', [['response', response]]);
             setCustomFields(response.data.customFields);
             setLogDates(response.data.logDates);
             const defaultVal: { [key: string]: string | number | boolean } = {};

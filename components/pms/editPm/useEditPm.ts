@@ -50,6 +50,7 @@ export const useEditPM = (currentProperty: number, PMId: number) => {
             const response = await axios.get(`${SERVER_URL}/pms/edit/${currentProperty}/${PMId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useEditPM/getUpdate', [['response', response]]);
             if (response.data.PMDetails === 0) {
                 setNoData(true);
             } else {

@@ -48,6 +48,7 @@ const Login = (props: Props) => {
                 headers: { 'Content-Type': 'application/json', Authorisation: 'Bearer ' + localStorage.getItem('token') },
                 withCredentials: true,
             });
+            GlobalDebug('Login/checkLogin', [['response', response]]);
             const user = response.data.user;
             dispatch(
                 setUser({

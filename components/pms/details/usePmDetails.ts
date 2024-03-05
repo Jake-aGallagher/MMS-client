@@ -61,6 +61,7 @@ export const usePMDetails = (PMId: string) => {
             const response = await axios.get(`${SERVER_URL}/pms/pm/${PMId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('usePMDetails/getHandler', [['response', response]]);
             if (response.data.pm.length === 0) {
                 setNoData(true);
             } else {

@@ -27,6 +27,7 @@ export const useUsers = () => {
             const response = await axios.get(`${SERVER_URL}/all-users`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useUsers/getHandler', [['response', response]]);
             setUsers(response.data.users);
             setLoading(false);
         } catch (err) {

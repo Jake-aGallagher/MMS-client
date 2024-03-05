@@ -29,6 +29,7 @@ export const useSparesNotes = (currentProperty: number) => {
             const response = await axios.get(`${SERVER_URL}/spares/notes/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useSparesNotes/getHandler', [['response', response]]);
             setNotes(response.data);
             setNumOfNotes(response.data.length);
         } catch (err) {

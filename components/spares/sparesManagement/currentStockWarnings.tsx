@@ -61,6 +61,7 @@ const StockWarnings = () => {
             const response = await axios.get(`${SERVER_URL}/spares/warnings/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('StockWarnings/getStockWarnings', [['response', response]]);
             setLow(response.data.warningsArray);
             setOut(response.data.outArray);
             setNumLow(response.data.warningsArray.length);

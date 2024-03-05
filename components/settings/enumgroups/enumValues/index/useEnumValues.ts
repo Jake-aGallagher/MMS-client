@@ -31,6 +31,7 @@ export const useEnumValues = (enumGroupId: number) => {
             const enumsList = await axios.get(`${SERVER_URL}/enumgroups/${enumGroupId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useEnumValues/getHandler', [['response', enumsList]]);
             setEnumValues(enumsList.data.enums);
             setLoading(false);
         } catch (err) {

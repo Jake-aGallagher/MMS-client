@@ -36,6 +36,7 @@ export const useLogTemplates = (currentProperty: number) => {
             const logTemplates = await axios.get(`${SERVER_URL}/logs/all-log-templates/${currentProperty}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useLogTemplates/getHandler', [['response', logTemplates]]);
             setLogTemplates(logTemplates.data.logTemplates);
             setLoading(false);
         } catch (err) {

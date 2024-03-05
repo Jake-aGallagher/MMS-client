@@ -33,6 +33,7 @@ export const useProperties = () => {
             const propertiesList = await axios.get(`${SERVER_URL}/properties/all-properties`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useProperties/getHandler', [['response', propertiesList]]);
             setAllProperties(propertiesList.data);
             setLoading(false);
         } catch (err) {

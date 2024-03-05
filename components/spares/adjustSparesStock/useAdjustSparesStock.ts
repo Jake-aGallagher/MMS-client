@@ -23,6 +23,7 @@ export const useAdjustSparesStock = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/spares/instock/${props.SpareId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useAdjustSparesStock/getHandler', [['response', response]]);
             setSpareStock(response.data[0].quant_remain);
             setLoading(false);
         } catch (err) {

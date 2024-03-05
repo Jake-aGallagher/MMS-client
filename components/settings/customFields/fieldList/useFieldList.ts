@@ -36,6 +36,7 @@ export const useFieldList = (model: string, modelId?: number) => {
             const response = await axios.get(`${SERVER_URL}/fields/${model}/${modelId ? modelId : 0}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
+            GlobalDebug('useFieldList/getScheduleHandler', [['response', response]]);
             setFields(response.data.fields);
             setEnumGroups(response.data.enumGroups);
             setLoading(false);
