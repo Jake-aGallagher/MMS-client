@@ -49,7 +49,7 @@ export const useJobDetails = (jobId: string) => {
         if (jobId !== '') {
             reload();
         }
-    }, []);
+    }, [jobId]);
 
     const reload = () => {
         setLoading(true);
