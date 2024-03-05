@@ -60,9 +60,7 @@ export const usePmScheduleDetails = (propertyId: number, scheduleId: number) => 
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('usePmScheduleDetails/getScheduleHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('usePmScheduleDetails/getScheduleHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

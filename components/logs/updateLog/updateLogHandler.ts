@@ -1,7 +1,7 @@
 import { GlobalDebug } from '../../debug/globalDebug';
 import { updateLogConn } from './updateLogConn';
 
-export const updateLogHandler = async (logId: number, data: any, propertyId: number, userId:number, closeModal: () => void) => {
+export const updateLogHandler = async (logId: number, data: any, propertyId: number, userId: number, closeModal: () => void) => {
     const alertString = 'There has been an issue Updating this log, please try again.';
     try {
         const response = await updateLogConn({
@@ -21,7 +21,7 @@ export const updateLogHandler = async (logId: number, data: any, propertyId: num
             ['data', data],
             ['propertyId', propertyId],
             ['logId', logId],
-            ['userId', userId]
+            ['userId', userId],
         ]);
         alert(alertString);
     }

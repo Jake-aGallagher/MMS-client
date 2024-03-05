@@ -76,9 +76,7 @@ export const useJobDetails = (jobId: string) => {
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useJobDetails/getJobHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useJobDetails/getJobHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

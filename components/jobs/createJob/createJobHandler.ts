@@ -24,7 +24,7 @@ export const createJobHandler = async (props: Props) => {
             description: props.data.description,
             urgency: props.data.selectedUrgency,
             reported_by: props.userId,
-            fieldData: props.data
+            fieldData: props.data,
         });
         if (response.data.created && props.data.compNow == 'No') {
             props.closeModal();

@@ -42,9 +42,7 @@ export const useAddEditStatusType = (props: Props) => {
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditStatusType/getStatusTypeHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditStatusType/getStatusTypeHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

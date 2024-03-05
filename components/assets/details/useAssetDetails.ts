@@ -84,9 +84,7 @@ export const useAssetDetails = (assetId: string) => {
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAssetDetails/getAssetHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAssetDetails/getAssetHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

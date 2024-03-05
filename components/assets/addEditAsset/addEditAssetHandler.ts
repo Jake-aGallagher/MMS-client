@@ -10,7 +10,7 @@ export const addEditAssetHandler = async (data: any, parentId: number, id: numbe
             propertyId: currentProperty,
             name: data.name,
             note: data.note,
-            fieldData: data
+            fieldData: data,
         });
         if (response.data.created) {
             closeModal();

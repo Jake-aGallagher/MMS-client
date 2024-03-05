@@ -65,9 +65,7 @@ const Login = (props: Props) => {
             localStorage.setItem('token', response.data.token);
             props.loginHandler();
         } catch (err) {
-            GlobalDebug('Login/checkLogin', [
-                ['error', err],
-            ]);
+            GlobalDebug('Login/checkLogin', [['error', err]]);
             setLoading(false);
         }
     };
@@ -103,7 +101,7 @@ const Login = (props: Props) => {
         } catch (err) {
             GlobalDebug('Login/handleRegistration', [
                 ['error', err],
-                ['data', data]
+                ['data', data],
             ]);
             setErrors();
         }

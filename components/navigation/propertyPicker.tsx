@@ -40,9 +40,7 @@ const PropertyPicker = (props: Props) => {
             setError(false);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('PropertyPicker/getProperties', [
-                ['error', err],
-            ]);
+            GlobalDebug('PropertyPicker/getProperties', [['error', err]]);
             setError(true);
             setLoading(false);
         }
@@ -51,12 +49,14 @@ const PropertyPicker = (props: Props) => {
     const propertyChange = async (id: number) => {
         await changeProperty(dispatch, userId, id);
         props.closeModal();
-    }
+    };
 
     const propertySelection = properties.map((p) => (
         <div key={p.id} className="hover:outline-dashed outline-1 outline-accent rounded-md pl-2 flex flex-row items-center mb-4">
             <div>{p.name}</div>
-            <button onClick={() => propertyChange(p.id)} className="btnBlue w-20 ml-auto h-8">Select</button>
+            <button onClick={() => propertyChange(p.id)} className="btnBlue w-20 ml-auto h-8">
+                Select
+            </button>
         </div>
     ));
 

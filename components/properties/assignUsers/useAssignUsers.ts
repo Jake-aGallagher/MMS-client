@@ -42,9 +42,7 @@ export const useAssignUsers = (props: Props) => {
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAssignUsers/getUsersForAssign', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAssignUsers/getUsersForAssign', [['error', err]]);
             setError(true);
             setLoading(false);
         }

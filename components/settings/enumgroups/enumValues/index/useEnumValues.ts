@@ -35,9 +35,7 @@ export const useEnumValues = (enumGroupId: number) => {
             setEnumValues(enumsList.data.enums);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useEnumValues/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useEnumValues/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

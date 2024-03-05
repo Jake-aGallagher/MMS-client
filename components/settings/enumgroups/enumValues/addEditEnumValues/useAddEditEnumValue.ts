@@ -37,9 +37,7 @@ export const useAddEditEnumValues = (props: Props) => {
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditEnumValues/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditEnumValues/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

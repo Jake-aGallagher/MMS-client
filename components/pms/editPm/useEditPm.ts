@@ -78,9 +78,7 @@ export const useEditPM = (currentProperty: number, PMId: number) => {
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useEditPM/getUpdate', [
-                ['error', err],
-            ]);
+            GlobalDebug('useEditPM/getUpdate', [['error', err]]);
             setError(true);
             setLoading(false);
         }

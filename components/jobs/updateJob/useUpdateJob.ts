@@ -80,9 +80,7 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useUpdateJob/getJobUpdate', [
-                ['error', err],
-            ]);
+            GlobalDebug('useUpdateJob/getJobUpdate', [['error', err]]);
             setError(true);
             setLoading(false);
         }

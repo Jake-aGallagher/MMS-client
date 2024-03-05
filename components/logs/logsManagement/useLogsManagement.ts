@@ -40,9 +40,7 @@ export const useLogTemplates = (currentProperty: number) => {
             setLogTemplates(logTemplates.data.logTemplates);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useLogTemplates/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useLogTemplates/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

@@ -51,9 +51,7 @@ export const useJobs = (props: Props) => {
             setJobs(jobsList.data);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useJobs/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useJobs/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

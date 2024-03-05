@@ -9,7 +9,6 @@ interface TaskType {
     list_priority: number;
 }
 
-
 export const useTaskTypes = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -34,9 +33,7 @@ export const useTaskTypes = () => {
             setTaskTypes(response.data.taskTypes);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useTaskTypes/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useTaskTypes/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

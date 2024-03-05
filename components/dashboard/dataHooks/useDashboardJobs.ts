@@ -5,23 +5,23 @@ import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Base {
     thisMonth: number;
-    mainData: {label: string; value: number}[]
+    mainData: { label: string; value: number }[];
 }
 
 interface RaisedCompleted extends Base {
-    avgData: {value: number; flipped: boolean};
+    avgData: { value: number; flipped: boolean };
 }
 
 export const useDashboardJobs = (propertyId: number) => {
     const baseEmpty: Base = {
         thisMonth: 0,
-        mainData: []
-    }
+        mainData: [],
+    };
     const empty: RaisedCompleted = {
         thisMonth: 0,
-        avgData: {value: 0, flipped: false},
-        mainData: []
-    }
+        avgData: { value: 0, flipped: false },
+        mainData: [],
+    };
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -54,9 +54,7 @@ export const useDashboardJobs = (propertyId: number) => {
             setPlanned(response.data.breakdownVsPlanned);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useDashboardJobs/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useDashboardJobs/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

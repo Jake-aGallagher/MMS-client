@@ -43,9 +43,7 @@ export const usePms = (props: Props) => {
             setPms(response.data.pms);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('usePms/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('usePms/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

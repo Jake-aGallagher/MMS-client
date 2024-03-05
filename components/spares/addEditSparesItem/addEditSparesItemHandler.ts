@@ -17,7 +17,7 @@ export const addEditSparesItemHandler = async (data: any, currentProperty: numbe
             cost: data.cost,
             propertyId: currentProperty,
             id: id,
-            fieldData: data
+            fieldData: data,
         });
         if (response.data.created) {
             closeModal();
@@ -30,7 +30,7 @@ export const addEditSparesItemHandler = async (data: any, currentProperty: numbe
             ['data', data],
             ['id', id],
             ['currentProperty', currentProperty],
-            ['name', name]
+            ['name', name],
         ]);
         alert(alertString);
     }

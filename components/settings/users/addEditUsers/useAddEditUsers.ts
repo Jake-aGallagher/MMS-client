@@ -5,7 +5,7 @@ import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface UserGroup {
     id: number;
-    name: string
+    name: string;
 }
 
 export const useAddEditUsers = (id: number, user_group_id: number) => {
@@ -25,7 +25,7 @@ export const useAddEditUsers = (id: number, user_group_id: number) => {
         if (id > 0) {
             getHandlerFull();
         } else {
-            getHandlerUserGroups()
+            getHandlerUserGroups();
         }
     }, []);
 
@@ -47,9 +47,7 @@ export const useAddEditUsers = (id: number, user_group_id: number) => {
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditUsers/getHandlerFull', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditUsers/getHandlerFull', [['error', err]]);
             setError(true);
             setLoading(false);
         }
@@ -64,9 +62,7 @@ export const useAddEditUsers = (id: number, user_group_id: number) => {
             setUserGroups(response.data.userGroups);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditUsers/getHandlerUserGroups', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditUsers/getHandlerUserGroups', [['error', err]]);
             setError(true);
             setLoading(false);
         }

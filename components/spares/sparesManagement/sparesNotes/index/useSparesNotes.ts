@@ -33,9 +33,7 @@ export const useSparesNotes = (currentProperty: number) => {
             setNotes(response.data);
             setNumOfNotes(response.data.length);
         } catch (err) {
-            GlobalDebug('useSparesNotes/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useSparesNotes/getHandler', [['error', err]]);
             alert('There has been an error retrieving you Notes');
         }
     };

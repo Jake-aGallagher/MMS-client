@@ -156,7 +156,7 @@ const ModalBase = (props: ModalProps) => {
         'deleteLogTemplate',
         'deleteLogField',
         'deleteAsset',
-        'adjustStockSparesItem'
+        'adjustStockSparesItem',
     ];
 
     return (

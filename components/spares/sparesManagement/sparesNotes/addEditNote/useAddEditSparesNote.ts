@@ -27,9 +27,7 @@ export const useAddEditSparesNote = (id: number) => {
             setDefaultValues({ title: response.data[0].title, note: response.data[0].content });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditSparesNote/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditSparesNote/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

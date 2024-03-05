@@ -50,7 +50,7 @@ const LogDetails = () => {
     let logFieldsConfig: DetailsConfig = {
         id: log?.id,
         title: 'Log Fields',
-        fields: []
+        fields: [],
     };
     logFieldsConfig = addToDetailsConfig(logFieldsConfig, customFields);
 

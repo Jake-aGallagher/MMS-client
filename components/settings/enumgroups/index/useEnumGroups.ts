@@ -32,9 +32,7 @@ export const useEnumGroups = () => {
             setEnumGroups(enumsList.data.enumGroups);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useEnumGroups/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useEnumGroups/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

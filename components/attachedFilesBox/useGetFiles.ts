@@ -1,11 +1,11 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { SERVER_URL } from "../routing/addressAPI";
-import { GlobalDebug } from "../debug/globalDebug";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { SERVER_URL } from '../routing/addressAPI';
+import { GlobalDebug } from '../debug/globalDebug';
 
 export const useGetFiles = (model: string, id: number) => {
     const [files, setFiles] = useState<{ id: string; name: string }[]>([]);
-    
+
     useEffect(() => {
         if (model && id) {
             reload();
@@ -14,7 +14,7 @@ export const useGetFiles = (model: string, id: number) => {
 
     const reload = () => {
         getfilesHandler();
-    }
+    };
 
     const getfilesHandler = async () => {
         try {
@@ -26,12 +26,10 @@ export const useGetFiles = (model: string, id: number) => {
                 setFiles(response.data.files);
             }
         } catch (err) {
-            GlobalDebug('useGetFiles/getfilesHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useGetFiles/getfilesHandler', [['error', err]]);
             alert('There has been an issue retrieving files, please try again.');
         }
     };
-    
-    return {files, reload}
-}
+
+    return { files, reload };
+};

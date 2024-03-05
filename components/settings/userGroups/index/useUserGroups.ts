@@ -32,9 +32,7 @@ export const useUserGroups = () => {
             setUserGroups(response.data.userGroups);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useUserGroups/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useUserGroups/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

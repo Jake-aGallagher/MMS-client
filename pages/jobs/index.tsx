@@ -37,7 +37,6 @@ const Jobs = () => {
 
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { jobs, loading, error } = useJobs({ currentProperty });
-    GlobalDebug('Jobs Index', [['Jobs list', jobs]]);
 
     return (
         <FullPage>

@@ -52,9 +52,7 @@ export const useDeliveries = (props: Props) => {
             setDeliveriesList(response.data.deliveries);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useDeliveries/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useDeliveries/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

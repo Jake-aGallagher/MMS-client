@@ -10,7 +10,6 @@ interface StatusType {
     list_priority: number;
 }
 
-
 export const useStatusTypes = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -35,9 +34,7 @@ export const useStatusTypes = () => {
             setStatusTypes(response.data.statusTypes);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useStatusTypes/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useStatusTypes/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

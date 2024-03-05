@@ -21,7 +21,6 @@ const Schedules = () => {
     }
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { schedules, loading, error, reload } = usePmSchedules({ currentProperty });
-    GlobalDebug('Schedules Index', [['Schedules list', schedules]]);
 
     const schedulesTableConfig: DataTableConfig = {
         headers: [

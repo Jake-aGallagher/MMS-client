@@ -5,16 +5,16 @@ import { GlobalDebug } from '../../debug/globalDebug';
 
 interface RaisedCompleted {
     thisMonth: number;
-    mainData: {label: string; value: number}[]
-    avgData: {value: number; flipped: boolean};
+    mainData: { label: string; value: number }[];
+    avgData: { value: number; flipped: boolean };
 }
 
 export const useDashboardSpares = (propertyId: number) => {
     const empty: RaisedCompleted = {
         thisMonth: 0,
-        avgData: {value: 0, flipped: false},
-        mainData: []
-    }
+        avgData: { value: 0, flipped: false },
+        mainData: [],
+    };
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -41,9 +41,7 @@ export const useDashboardSpares = (propertyId: number) => {
             setSparesCosts(response.data.sparesCost);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useDashboardSpares/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useDashboardSpares/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

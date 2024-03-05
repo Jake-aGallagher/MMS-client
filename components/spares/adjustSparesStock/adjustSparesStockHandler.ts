@@ -18,7 +18,7 @@ export const adjustSparesStockHandler = async (data: any, id: number, quantityRe
             ['error', err],
             ['data', data],
             ['id', id],
-            ['quantityRemaining', quantityRemaining]
+            ['quantityRemaining', quantityRemaining],
         ]);
         alert(alertString);
     }

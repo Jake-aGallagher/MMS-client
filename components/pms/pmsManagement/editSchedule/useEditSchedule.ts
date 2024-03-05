@@ -42,13 +42,10 @@ export const useEditSchedule = (PMScheduleId: number) => {
                 description: response.data.PMScheduleDetails[0].description,
                 frequencyTime: response.data.PMScheduleDetails[0].frequency_time,
                 frequencyUnit: response.data.PMScheduleDetails[0].frequency_unit,
-
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useEditSchedule/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useEditSchedule/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

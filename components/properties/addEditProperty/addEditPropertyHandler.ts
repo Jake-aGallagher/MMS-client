@@ -14,7 +14,7 @@ export const addEditPropertyHandler = async (data: any, id: number, closeModal: 
             city: data.city,
             county: data.county,
             postcode: data.postcode,
-            fieldData: data
+            fieldData: data,
         });
         if (response.data.created) {
             dispatch(setCurrentProperty({ currentProperty: response.data.newPropId }));
@@ -27,7 +27,7 @@ export const addEditPropertyHandler = async (data: any, id: number, closeModal: 
             ['error', err],
             ['data', data],
             ['id', id],
-            ['propertyNumber', propertyNumber]
+            ['propertyNumber', propertyNumber],
         ]);
         alert(alertString);
     }

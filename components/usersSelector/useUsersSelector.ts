@@ -38,9 +38,7 @@ export const useUsersSelector = (usersSelected: UserSelected[]) => {
             mergeArrays(response.data.users);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useUsersSelector/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useUsersSelector/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

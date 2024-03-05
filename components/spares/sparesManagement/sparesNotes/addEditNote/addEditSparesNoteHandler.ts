@@ -20,7 +20,7 @@ export const addEditSparesNoteHandler = async (data: any, id: number, currentPro
             ['error', err],
             ['data', data],
             ['id', id],
-            ['currentProperty', currentProperty]
+            ['currentProperty', currentProperty],
         ]);
         alert(alertString);
     }

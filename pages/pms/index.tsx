@@ -44,7 +44,7 @@ const Pms = () => {
     return (
         <FullPage>
             <Toolbar>
-            <Link href="/pms/pmsManagement" className="tLink">
+                <Link href="/pms/pmsManagement" className="tLink">
                     <FontAwesomeIcon icon={faClipboard} className="mr-1 w-3" />
                     PM Management
                 </Link>

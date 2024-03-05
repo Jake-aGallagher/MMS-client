@@ -39,13 +39,10 @@ export const useAddEditUrgencyType = (props: Props) => {
                 urgencyNumber: data.urgency_number,
                 urgencyPeriod: data.urgency_period,
                 listPriority: data.list_priority,
-                
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditUrgencyType/getUrgencyTypeHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditUrgencyType/getUrgencyTypeHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

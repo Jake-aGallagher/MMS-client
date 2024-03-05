@@ -50,9 +50,7 @@ export const useLogFields = (logId: number) => {
             setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useLogFields/getScheduleHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useLogFields/getScheduleHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

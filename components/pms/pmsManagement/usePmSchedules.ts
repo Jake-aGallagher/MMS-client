@@ -43,9 +43,7 @@ export const usePmSchedules = (props: Props) => {
             setSchedules(schedulesList.data);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('usePmSchedules/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('usePmSchedules/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

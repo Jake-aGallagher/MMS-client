@@ -37,9 +37,7 @@ export const useProperties = () => {
             setAllProperties(propertiesList.data);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useProperties/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useProperties/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

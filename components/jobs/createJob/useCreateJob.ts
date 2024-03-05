@@ -48,9 +48,7 @@ export const useCreateJob = () => {
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useCreateJob/getEnums', [
-                ['error', err],
-            ]);
+            GlobalDebug('useCreateJob/getEnums', [['error', err]]);
             setError(true);
             setLoading(false);
         }

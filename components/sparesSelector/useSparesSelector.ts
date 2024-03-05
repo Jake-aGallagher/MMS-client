@@ -36,9 +36,7 @@ export const useSparesSelector = (sparesSelected: SparesSelected[]) => {
             mergeArrays(response.data.spares);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useSparesSelector/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useSparesSelector/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

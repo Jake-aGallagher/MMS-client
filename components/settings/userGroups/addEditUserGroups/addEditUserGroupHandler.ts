@@ -1,5 +1,5 @@
-import { GlobalDebug } from "../../../debug/globalDebug";
-import { addEditUserGroupConn } from "./addEditUserGroupConn";
+import { GlobalDebug } from '../../../debug/globalDebug';
+import { addEditUserGroupConn } from './addEditUserGroupConn';
 
 export const addEditUserGroupHandler = async (data: any, id: number, closeModal: () => void) => {
     const alertString = `There has been an issue ${id > 0 ? 'editing' : 'creating'} this User Group, please try again.`;

@@ -28,7 +28,7 @@ export const addEditSupplierHandler = async (data: any, currentProperty: number,
             ['error', err],
             ['data', data],
             ['id', id],
-            ['currentProperty', currentProperty]
+            ['currentProperty', currentProperty],
         ]);
         alert(alertString);
     }

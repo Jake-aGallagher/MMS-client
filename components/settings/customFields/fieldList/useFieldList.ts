@@ -17,7 +17,7 @@ export const useFieldList = (model: string, modelId?: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [fields, setFields] = useState<Fields[]>([]);
-    const [enumGroups, setEnumGroups] = useState<{[key: string]:{ id: string; value: string }[]}>({});
+    const [enumGroups, setEnumGroups] = useState<{ [key: string]: { id: string; value: string }[] }>({});
 
     useEffect(() => {
         if (model != '') {
@@ -41,9 +41,7 @@ export const useFieldList = (model: string, modelId?: number) => {
             setEnumGroups(response.data.enumGroups);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useFieldList/getScheduleHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useFieldList/getScheduleHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

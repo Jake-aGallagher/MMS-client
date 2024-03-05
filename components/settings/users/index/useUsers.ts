@@ -31,9 +31,7 @@ export const useUsers = () => {
             setUsers(response.data.users);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useUsers/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useUsers/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

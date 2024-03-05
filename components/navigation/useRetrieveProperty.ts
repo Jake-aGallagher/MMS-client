@@ -56,9 +56,7 @@ export const useRetrieveProperty = (props: Props) => {
                 }
             }
         } catch (err) {
-            GlobalDebug('useRetrieveProperty/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useRetrieveProperty/getHandler', [['error', err]]);
             alert('There has been an error whilst attempting to retrive your assigned properties, please try again');
         }
     };

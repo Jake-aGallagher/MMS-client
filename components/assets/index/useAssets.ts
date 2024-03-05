@@ -38,9 +38,7 @@ export const useAssets = (currentProperty: number) => {
             setAssetTree(response.data);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAssets/getAssetTree', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAssets/getAssetTree', [['error', err]]);
             setError(true);
             setLoading(false);
         }

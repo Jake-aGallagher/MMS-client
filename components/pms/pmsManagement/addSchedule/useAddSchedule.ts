@@ -42,9 +42,7 @@ export const useAddSchedule = () => {
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddSchedule/getEnums', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddSchedule/getEnums', [['error', err]]);
             setError(true);
             setLoading(false);
         }

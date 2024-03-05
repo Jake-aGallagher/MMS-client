@@ -6,7 +6,7 @@ import { GlobalDebug } from '../../../debug/globalDebug';
 export const useAddEditFields = (fieldId: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [enumOptions, setEnumOptions] = useState<{id: string; value:string;}[]>([]);
+    const [enumOptions, setEnumOptions] = useState<{ id: string; value: string }[]>([]);
     const [defaultValues, setDefaultValues] = useState({
         type: 'text',
         options: '',
@@ -31,16 +31,14 @@ export const useAddEditFields = (fieldId: number) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditFields/getHandlerOnlyEnums', [['response', response]]);
-            setEnumOptions(response.data.enumGroups)
+            setEnumOptions(response.data.enumGroups);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditFields/getHandlerOnlyEnums', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditFields/getHandlerOnlyEnums', [['error', err]]);
             setError(true);
             setLoading(false);
         }
-    }
+    };
 
     const getHandler = async () => {
         try {
@@ -55,12 +53,10 @@ export const useAddEditFields = (fieldId: number) => {
                 required: response.data.field.required ? 'Yes' : 'No',
                 order: response.data.field.sort_order,
             });
-            setEnumOptions(response.data.enums)
+            setEnumOptions(response.data.enums);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditFields/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditFields/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

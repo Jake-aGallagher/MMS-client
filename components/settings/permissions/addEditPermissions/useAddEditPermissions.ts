@@ -35,9 +35,7 @@ export const useAddEditPermissions = (props: Props) => {
             setPermissionsList(response.data.permissionsList);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditPermissions/getPermissionsForGroup', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditPermissions/getPermissionsForGroup', [['error', err]]);
             setError(true);
             setLoading(false);
         }

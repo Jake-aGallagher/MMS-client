@@ -49,9 +49,7 @@ export const useAddEditLogTemplate = (logTemplateId: number) => {
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditLogTemplate/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditLogTemplate/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

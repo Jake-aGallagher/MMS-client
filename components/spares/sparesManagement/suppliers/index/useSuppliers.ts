@@ -47,9 +47,7 @@ export const useSuppliers = (props: Props) => {
             setSuppliersList(response.data);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useSuppliers/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useSuppliers/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

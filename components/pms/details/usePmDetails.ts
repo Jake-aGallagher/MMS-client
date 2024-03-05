@@ -72,9 +72,7 @@ export const usePMDetails = (PMId: string) => {
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('usePMDetails/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('usePMDetails/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

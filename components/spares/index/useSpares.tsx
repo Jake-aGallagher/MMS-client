@@ -51,9 +51,7 @@ export const useSpares = (props: Props) => {
             setSpares(response.data);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useSpares/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useSpares/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

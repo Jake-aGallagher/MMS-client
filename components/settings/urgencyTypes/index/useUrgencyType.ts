@@ -10,7 +10,6 @@ interface UrgencyType {
     list_priority: number;
 }
 
-
 export const useUrgencyTypes = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -35,9 +34,7 @@ export const useUrgencyTypes = () => {
             setUrgencyTypes(response.data.urgencyTypes);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useUrgencyTypes/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useUrgencyTypes/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

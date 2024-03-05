@@ -89,12 +89,10 @@ export const usePropertyDetails = (propertyNumber: string) => {
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('usePropertyDetails/getPropertyHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('usePropertyDetails/getPropertyHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }
     };
-    return { propertyDetails, customFields, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M , mostUsed6M, sparesCost6M, loading, noData, error, reload };
+    return { propertyDetails, customFields, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M, mostUsed6M, sparesCost6M, loading, noData, error, reload };
 };

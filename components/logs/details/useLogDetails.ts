@@ -56,9 +56,7 @@ export const useLogDetails = (props: Props) => {
             setCustomFields(response.data.customFields);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useLogDetails/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useLogDetails/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

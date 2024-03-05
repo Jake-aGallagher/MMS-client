@@ -17,7 +17,6 @@ interface LowWarnings {
     monthly_usage: number | string;
 }
 
-
 const StockWarnings = () => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const [numLow, setNumLow] = useState(0);
@@ -36,9 +35,9 @@ const StockWarnings = () => {
             { id: 'monthly_usage', name: 'AVG Monthly Usage', type: 'number', search: true, order: true },
         ],
         searchable: false,
-        linkColPrefix: '/spares/'
+        linkColPrefix: '/spares/',
     };
-    
+
     const outTableConfig = {
         headers: [
             { id: 'id', name: 'Part Number', type: 'linkWithName', nameParam: 'part_no', search: true, order: true },
@@ -47,7 +46,7 @@ const StockWarnings = () => {
             { id: 'monthly_usage', name: 'AVG Monthly Usage', type: 'number', search: true, order: true },
         ],
         searchable: false,
-        linkColPrefix: '/spares/'
+        linkColPrefix: '/spares/',
     };
 
     useEffect(() => {
@@ -67,9 +66,7 @@ const StockWarnings = () => {
             setNumLow(response.data.warningsArray.length);
             setNumOut(response.data.outArray.length);
         } catch (err) {
-            GlobalDebug('StockWarnings/getStockWarnings', [
-                ['error', err],
-            ]);
+            GlobalDebug('StockWarnings/getStockWarnings', [['error', err]]);
         }
     };
 
@@ -77,16 +74,20 @@ const StockWarnings = () => {
         <div className="px-10 pt-5">
             <div className="bg-background p-6 rounded-md shadow-md">
                 <h2 className="text-xl font-semibold mb-2">Current Stock Warnings:</h2>
-                {numLow > 0 ? (<button className="flex flex-row items-center transition-all hover:text-accent select-none " onClick={() => setShowLow((prev) => !prev)}>
-                    <FontAwesomeIcon icon={faCaretRight} className={`mr-1 w-3 transition-all ${showLow ? 'rotate-90' : null}`} />
-                    <div className="text-yellow text-lg font-semibold">{numLow} Low Stock</div>
-                </button>) : null}
+                {numLow > 0 ? (
+                    <button className="flex flex-row items-center transition-all hover:text-accent select-none " onClick={() => setShowLow((prev) => !prev)}>
+                        <FontAwesomeIcon icon={faCaretRight} className={`mr-1 w-3 transition-all ${showLow ? 'rotate-90' : null}`} />
+                        <div className="text-yellow text-lg font-semibold">{numLow} Low Stock</div>
+                    </button>
+                ) : null}
                 {showLow ? <DataTable config={lowTableConfig} data={low} /> : null}
-                
-                {numOut > 0 ? (<button className="flex flex-row items-center transition-all hover:text-accent select-none " onClick={() => setShowOut((prev) => !prev)}>
-                    <FontAwesomeIcon icon={faCaretRight} className={`mr-1 w-3 transition-all ${showOut ? 'rotate-90' : null}`} />
-                    <div className="text-red text-lg font-semibold">{numOut} Out of Stock</div>
-                </button>) : null}
+
+                {numOut > 0 ? (
+                    <button className="flex flex-row items-center transition-all hover:text-accent select-none " onClick={() => setShowOut((prev) => !prev)}>
+                        <FontAwesomeIcon icon={faCaretRight} className={`mr-1 w-3 transition-all ${showOut ? 'rotate-90' : null}`} />
+                        <div className="text-red text-lg font-semibold">{numOut} Out of Stock</div>
+                    </button>
+                ) : null}
                 {showOut ? <DataTable config={outTableConfig} data={out} /> : null}
                 {numLow == 0 && numOut == 0 && 'No Stock Wanings'}
             </div>

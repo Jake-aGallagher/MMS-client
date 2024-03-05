@@ -54,9 +54,7 @@ export const useAddEditSupplier = (id: number) => {
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditSupplier/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditSupplier/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

@@ -27,9 +27,7 @@ export const useAdjustSparesStock = (props: Props) => {
             setSpareStock(response.data[0].quant_remain);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAdjustSparesStock/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAdjustSparesStock/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

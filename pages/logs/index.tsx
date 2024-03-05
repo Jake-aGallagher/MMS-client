@@ -21,7 +21,6 @@ const Logs = () => {
 
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const { logs, loading, error, reload } = useLogs({ currentProperty });
-    GlobalDebug('Logs Index', [['Logs list', logs]]);
 
     const LogTableConfig = {
         headers: [

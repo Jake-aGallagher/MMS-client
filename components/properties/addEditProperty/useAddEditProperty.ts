@@ -53,9 +53,7 @@ export const useAddEditProperty = (props: Props) => {
             setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditProperty/getPropertyHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditProperty/getPropertyHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

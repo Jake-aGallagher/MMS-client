@@ -56,13 +56,11 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
             setCustomFields(response.data);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditSparesItem/getFields', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditSparesItem/getFields', [['error', err]]);
             setError(true);
             setLoading(false);
         }
-    }
+    };
 
     const getHandler = async () => {
         try {
@@ -90,9 +88,7 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
             setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditSparesItem/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditSparesItem/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

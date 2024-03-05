@@ -35,9 +35,7 @@ export const useAddEditEnumGroups = (props: Props) => {
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditEnumGroups/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditEnumGroups/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

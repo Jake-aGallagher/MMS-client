@@ -56,9 +56,7 @@ export const useLogTemplateDetails = (propertyId: number, scheduleId: number) =>
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useLogTemplateDetails/getScheduleHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useLogTemplateDetails/getScheduleHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

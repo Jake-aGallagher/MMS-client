@@ -35,13 +35,10 @@ export const useAddEditTaskType = (props: Props) => {
             setDefaultValues({
                 value: data.value,
                 listPriority: data.list_priority,
-                
             });
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditTaskType/getTaskTypeHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useAddEditTaskType/getTaskTypeHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

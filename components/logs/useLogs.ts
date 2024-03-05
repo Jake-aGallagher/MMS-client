@@ -43,9 +43,7 @@ export const useLogs = (props: Props) => {
             setLogs(response.data.logs);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useLogs/getHandler', [
-                ['error', err],
-            ]);
+            GlobalDebug('useLogs/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }
