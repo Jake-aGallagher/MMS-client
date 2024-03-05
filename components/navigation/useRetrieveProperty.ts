@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../routing/addressAPI';
 import { useDispatch } from 'react-redux';
 import { setCurrentProperty } from '../store/propertySlice';
+import { GlobalDebug } from '../debug/globalDebug';
 
 interface Props {
     currentProperty: number;
@@ -54,6 +55,9 @@ export const useRetrieveProperty = (props: Props) => {
                 }
             }
         } catch (err) {
+            GlobalDebug('useRetrieveProperty/getHandler', [
+                ['error', err],
+            ]);
             alert('There has been an error whilst attempting to retrive your assigned properties, please try again');
         }
     };

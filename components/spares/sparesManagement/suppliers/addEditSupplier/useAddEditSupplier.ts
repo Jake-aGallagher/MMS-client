@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../../routing/addressAPI';
+import { GlobalDebug } from '../../../../debug/globalDebug';
 
 export const useAddEditSupplier = (id: number) => {
     const [loading, setLoading] = useState(true);
@@ -52,6 +53,9 @@ export const useAddEditSupplier = (id: number) => {
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditSupplier/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

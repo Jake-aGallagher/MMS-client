@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
     logId: number;
@@ -54,6 +55,9 @@ export const useLogDetails = (props: Props) => {
             setCustomFields(response.data.customFields);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useLogDetails/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../../routing/addressAPI';
+import { GlobalDebug } from '../../../../debug/globalDebug';
 
 export const useAddEditSparesNote = (id: number) => {
     const [loading, setLoading] = useState(true);
@@ -25,6 +26,9 @@ export const useAddEditSparesNote = (id: number) => {
             setDefaultValues({ title: response.data[0].title, note: response.data[0].content });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditSparesNote/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

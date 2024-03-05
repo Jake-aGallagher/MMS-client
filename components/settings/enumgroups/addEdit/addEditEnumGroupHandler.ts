@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../debug/globalDebug';
 import { addEditEnumGroupConn } from './addEditEnumGroupConn';
 
 export const addEditEnumGroupHandler = async (data: any, id: number, closeModal: () => void) => {
@@ -13,6 +14,11 @@ export const addEditEnumGroupHandler = async (data: any, id: number, closeModal:
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditEnumGroupHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+        ]);
         alert(alertString);
     }
 };

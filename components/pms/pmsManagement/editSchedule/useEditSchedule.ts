@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface TypeOptions {
     id: number;
@@ -32,7 +33,6 @@ export const useEditSchedule = (PMScheduleId: number) => {
             const response = await axios.get(`${SERVER_URL}/pms/schedule/edit-schedule/${PMScheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            console.log(response.data);
             setTypeOptions(response.data.types);
             setDefaultValues({
                 ...defaultValues,
@@ -45,6 +45,9 @@ export const useEditSchedule = (PMScheduleId: number) => {
             });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useEditSchedule/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

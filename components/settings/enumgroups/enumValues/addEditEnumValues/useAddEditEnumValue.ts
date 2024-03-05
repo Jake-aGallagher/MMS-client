@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../../routing/addressAPI';
+import { GlobalDebug } from '../../../../debug/globalDebug';
 
 interface Props {
     id: number;
@@ -35,6 +36,9 @@ export const useAddEditEnumValues = (props: Props) => {
             });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditEnumValues/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

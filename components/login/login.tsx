@@ -12,6 +12,7 @@ import { useSearchParams } from 'next/navigation';
 import { setDebug } from '../store/debugSlice';
 import { setPermissions } from '../store/permissionsSlice';
 import LoadingNoDataError from '../loading/loadingNoDataError';
+import { GlobalDebug } from '../debug/globalDebug';
 
 interface Props {
     loginHandler: () => void;
@@ -63,6 +64,9 @@ const Login = (props: Props) => {
             localStorage.setItem('token', response.data.token);
             props.loginHandler();
         } catch (err) {
+            GlobalDebug('Login/checkLogin', [
+                ['error', err],
+            ]);
             setLoading(false);
         }
     };
@@ -96,6 +100,10 @@ const Login = (props: Props) => {
                 setErrors();
             }
         } catch (err) {
+            GlobalDebug('Login/handleRegistration', [
+                ['error', err],
+                ['data', data]
+            ]);
             setErrors();
         }
     };

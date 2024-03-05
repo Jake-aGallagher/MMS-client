@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface UrgencyType {
     id: number;
@@ -33,6 +34,9 @@ export const useUrgencyTypes = () => {
             setUrgencyTypes(response.data.urgencyTypes);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useUrgencyTypes/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

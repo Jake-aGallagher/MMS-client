@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 export const useAddEditAsset = (assetId: number) => {
     const [loading, setLoading] = useState(true);
@@ -32,6 +33,9 @@ export const useAddEditAsset = (assetId: number) => {
             setCustomFields(response.data);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditAsset/getFields', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }
@@ -53,6 +57,9 @@ export const useAddEditAsset = (assetId: number) => {
             setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditAsset/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

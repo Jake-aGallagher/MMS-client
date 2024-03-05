@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface UserGroup {
     id: number;
@@ -45,6 +46,9 @@ export const useAddEditUsers = (id: number, user_group_id: number) => {
             });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditUsers/getHandlerFull', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }
@@ -58,6 +62,9 @@ export const useAddEditUsers = (id: number, user_group_id: number) => {
             setUserGroups(response.data.userGroups);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditUsers/getHandlerUserGroups', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

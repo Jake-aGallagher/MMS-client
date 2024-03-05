@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../debug/globalDebug';
 import { updateLogConn } from './updateLogConn';
 
 export const updateLogHandler = async (logId: number, data: any, propertyId: number, userId:number, closeModal: () => void) => {
@@ -15,6 +16,13 @@ export const updateLogHandler = async (logId: number, data: any, propertyId: num
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('updateLogHandler', [
+            ['error', err],
+            ['data', data],
+            ['propertyId', propertyId],
+            ['logId', logId],
+            ['userId', userId]
+        ]);
         alert(alertString);
     }
 };

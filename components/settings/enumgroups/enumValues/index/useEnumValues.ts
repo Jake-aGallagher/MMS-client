@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../../routing/addressAPI';
+import { GlobalDebug } from '../../../../debug/globalDebug';
 
 interface EnumValue {
     id: number;
@@ -33,6 +34,9 @@ export const useEnumValues = (enumGroupId: number) => {
             setEnumValues(enumsList.data.enums);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useEnumValues/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

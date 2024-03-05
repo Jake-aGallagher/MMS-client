@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface StatusOptions {
     id: string;
@@ -76,6 +77,9 @@ export const useEditPM = (currentProperty: number, PMId: number) => {
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useEditPM/getUpdate', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

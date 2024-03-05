@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface Props {
     taskTypeNumber: number;
@@ -37,6 +38,9 @@ export const useAddEditTaskType = (props: Props) => {
             });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditTaskType/getTaskTypeHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

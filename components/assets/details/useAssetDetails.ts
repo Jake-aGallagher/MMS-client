@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Asset {
     id: number;
@@ -82,6 +83,9 @@ export const useAssetDetails = (assetId: string) => {
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAssetDetails/getAssetHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

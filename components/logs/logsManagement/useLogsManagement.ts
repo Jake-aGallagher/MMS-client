@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface LogTemplate {
     id: number;
@@ -38,6 +39,9 @@ export const useLogTemplates = (currentProperty: number) => {
             setLogTemplates(logTemplates.data.logTemplates);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useLogTemplates/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface TaskType {
     id: number;
@@ -32,6 +33,9 @@ export const useTaskTypes = () => {
             setTaskTypes(response.data.taskTypes);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useTaskTypes/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

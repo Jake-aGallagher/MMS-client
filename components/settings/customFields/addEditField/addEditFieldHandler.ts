@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../debug/globalDebug';
 import { addEditFieldConn } from './addEditFieldConn';
 
 export const addEditFieldHandler = async (id: number, model: string, data: any, closeModal: () => void, modelId?: number) => {
@@ -19,6 +20,13 @@ export const addEditFieldHandler = async (id: number, model: string, data: any, 
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditFieldHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+            ['model', model],
+            ['modelId', modelId],
+        ]);
         alert(alertString);
     }
 };

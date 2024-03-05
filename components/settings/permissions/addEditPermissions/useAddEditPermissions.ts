@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface Props {
     id: number;
@@ -33,6 +34,9 @@ export const useAddEditPermissions = (props: Props) => {
             setPermissionsList(response.data.permissionsList);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditPermissions/getPermissionsForGroup', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

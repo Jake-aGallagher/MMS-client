@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 export const useAddEditFields = (fieldId: number) => {
     const [loading, setLoading] = useState(true);
@@ -32,6 +33,9 @@ export const useAddEditFields = (fieldId: number) => {
             setEnumOptions(response.data.enumGroups)
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditFields/getHandlerOnlyEnums', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }
@@ -52,6 +56,9 @@ export const useAddEditFields = (fieldId: number) => {
             setEnumOptions(response.data.enums)
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditFields/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

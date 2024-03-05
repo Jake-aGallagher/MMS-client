@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Spare {
     id: number;
@@ -54,6 +55,9 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
             setCustomFields(response.data);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditSparesItem/getFields', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }
@@ -84,6 +88,9 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
             setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditSparesItem/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../debug/globalDebug';
 import { addEditUrgencyTypeConn } from './addEditUrgencyTypeConn';
 
 export const addEditUrgencyTypeHandler = async (data: any, id: number, closeModal: () => void) => {
@@ -16,6 +17,11 @@ export const addEditUrgencyTypeHandler = async (data: any, id: number, closeModa
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditUrgencyTypeHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+        ]);
         alert(alertString);
     }
 };

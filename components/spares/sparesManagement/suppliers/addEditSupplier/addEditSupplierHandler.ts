@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../../debug/globalDebug';
 import { addEditSupplierConn } from './addEditSupplierConn';
 
 export const addEditSupplierHandler = async (data: any, currentProperty: number, id: number, closeModal: () => void) => {
@@ -23,6 +24,12 @@ export const addEditSupplierHandler = async (data: any, currentProperty: number,
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditSupplierHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+            ['currentProperty', currentProperty]
+        ]);
         alert(alertString);
     }
 };

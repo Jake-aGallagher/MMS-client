@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../../debug/globalDebug';
 import { addEditDeliveryConn } from './addEditDeliveryConn';
 
 interface Contents {
@@ -29,6 +30,14 @@ export const addEditDeliveryHandler = async (data: any, contents: Contents[], id
                 alert(alertString);
             }
         } catch (err) {
+            GlobalDebug('addEditDeliveryHandler', [
+                ['error', err],
+                ['data', data],
+                ['id', id],
+                ['currentProperty', currentProperty],
+                ['name', name],
+                ['contents', contents],
+            ]);
             alert(alertString);
         }
     }

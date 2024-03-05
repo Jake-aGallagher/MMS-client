@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
     currentProperty: number;
@@ -49,6 +50,9 @@ export const useSpares = (props: Props) => {
             setSpares(response.data);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useSpares/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

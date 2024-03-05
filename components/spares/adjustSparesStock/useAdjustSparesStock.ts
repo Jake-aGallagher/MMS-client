@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
     SpareId: number;
@@ -25,6 +26,9 @@ export const useAdjustSparesStock = (props: Props) => {
             setSpareStock(response.data[0].quant_remain);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAdjustSparesStock/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

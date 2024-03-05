@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../debug/globalDebug';
 import { addEditAssetConn } from './addEditAssetConn';
 
 export const addEditAssetHandler = async (data: any, parentId: number, id: number, currentProperty: number, closeModal: () => void) => {
@@ -17,6 +18,10 @@ export const addEditAssetHandler = async (data: any, parentId: number, id: numbe
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditAssetHandler', [
+            ['error', err],
+            ['data', data],
+        ]);
         alert(alertString);
     }
 };

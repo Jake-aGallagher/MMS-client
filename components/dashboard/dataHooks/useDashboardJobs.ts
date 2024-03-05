@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Base {
     thisMonth: number;
@@ -52,6 +53,9 @@ export const useDashboardJobs = (propertyId: number) => {
             setPlanned(response.data.breakdownVsPlanned);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useDashboardJobs/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

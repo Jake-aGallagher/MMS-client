@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
+import { GlobalDebug } from '../debug/globalDebug';
 
 interface UserFound {
     id: number;
@@ -36,6 +37,9 @@ export const useUsersSelector = (usersSelected: UserSelected[]) => {
             mergeArrays(response.data.users);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useUsersSelector/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

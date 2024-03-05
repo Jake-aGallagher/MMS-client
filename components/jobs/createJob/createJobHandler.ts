@@ -1,5 +1,6 @@
 import { SetStateAction } from 'react';
 import { createJobConn } from './createJobConn';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
     data: any;
@@ -35,6 +36,13 @@ export const createJobHandler = async (props: Props) => {
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('createJobHandler', [
+            ['error', err],
+            ['data', props.data],
+            ['currentProperty', props.currentProperty],
+            ['assetId', props.assetId],
+            ['userId', props.userId],
+        ]);
         alert(alertString);
     }
 };

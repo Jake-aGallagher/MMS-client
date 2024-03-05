@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../../routing/addressAPI';
+import { GlobalDebug } from '../../../../debug/globalDebug';
 
 interface Note {
     id: number;
@@ -31,6 +32,9 @@ export const useSparesNotes = (currentProperty: number) => {
             setNotes(response.data);
             setNumOfNotes(response.data.length);
         } catch (err) {
+            GlobalDebug('useSparesNotes/getHandler', [
+                ['error', err],
+            ]);
             alert('There has been an error retrieving you Notes');
         }
     };

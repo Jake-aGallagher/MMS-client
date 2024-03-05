@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface Props {
     statusTypeNumber: number;
@@ -40,6 +41,9 @@ export const useAddEditStatusType = (props: Props) => {
             });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditStatusType/getStatusTypeHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

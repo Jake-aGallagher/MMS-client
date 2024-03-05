@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 export const assignUsersdHandler = async (data: any, propertyNumber: number, closeModal: () => void) => {
     const alertString = `There has been an issue Assigning Users to this Property, please try again.`;
@@ -25,6 +26,11 @@ export const assignUsersdHandler = async (data: any, propertyNumber: number, clo
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('assignUsersdHandler', [
+            ['error', err],
+            ['data', data],
+            ['propertyNumber', propertyNumber],
+        ]);
         alert(alertString);
     }
 };

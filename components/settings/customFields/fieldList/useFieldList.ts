@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
 import axios from 'axios';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 export interface Fields {
     id: number;
@@ -39,6 +40,9 @@ export const useFieldList = (model: string, modelId?: number) => {
             setEnumGroups(response.data.enumGroups);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useFieldList/getScheduleHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

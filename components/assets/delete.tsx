@@ -9,6 +9,7 @@ import GeneralFormInput from '../forms/generalFormInput';
 import FormContainer from '../forms/formContainer';
 import GeneralForm from '../forms/generalForm';
 import FormTextCenter from '../forms/formTextCenter';
+import { GlobalDebug } from '../debug/globalDebug';
 
 interface ModalProps {
     closeModal: () => void;
@@ -47,6 +48,10 @@ const DeleteAsset = (props: ModalProps) => {
                 alert(alertString);
             }
         } catch (err) {
+            GlobalDebug('DeleteAsset', [
+                ['error', err],
+                ['data', data],
+            ]);
             alert(alertString);
         }
     };
@@ -66,7 +71,7 @@ const DeleteAsset = (props: ModalProps) => {
                     optionNameString="value"
                     selectOptions={deleteOptions}
                 />
-                <GeneralFormSubmit closeModal={props.closeModal} submitLabel='Delete' />
+                <GeneralFormSubmit closeModal={props.closeModal} submitLabel="Delete" />
             </GeneralForm>
         </FormContainer>
     );

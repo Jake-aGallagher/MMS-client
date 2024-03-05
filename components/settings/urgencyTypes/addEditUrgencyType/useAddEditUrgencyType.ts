@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface Props {
     urgencyTypeNumber: number;
@@ -41,6 +42,9 @@ export const useAddEditUrgencyType = (props: Props) => {
             });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditUrgencyType/getUrgencyTypeHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

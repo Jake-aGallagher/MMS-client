@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../../debug/globalDebug';
 import { addEditSparesNoteConn } from './addEditSparesNoteConn';
 
 export const addEditSparesNoteHandler = async (data: any, id: number, currentProperty: number, closeModal: () => void) => {
@@ -15,6 +16,12 @@ export const addEditSparesNoteHandler = async (data: any, id: number, currentPro
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditSparesNoteHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+            ['currentProperty', currentProperty]
+        ]);
         alert(alertString);
     }
 };

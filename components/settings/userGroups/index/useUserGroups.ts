@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface User {
     id: number;
@@ -30,6 +31,9 @@ export const useUserGroups = () => {
             setUserGroups(response.data.userGroups);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useUserGroups/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

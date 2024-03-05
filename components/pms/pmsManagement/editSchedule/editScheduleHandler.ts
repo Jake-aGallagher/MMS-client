@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../debug/globalDebug';
 import { addScheduleConn } from './editScheduleConn';
 
 export const editScheduleHandler = async (id: number, data: any, closeModal: () => void) => {
@@ -19,6 +20,11 @@ export const editScheduleHandler = async (id: number, data: any, closeModal: () 
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('editScheduleHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+        ]);
         alert(alertString);
     }
 };

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../../routing/addressAPI';
+import { GlobalDebug } from '../../../../debug/globalDebug';
 
 interface Supplier {
     id: number;
@@ -66,6 +67,9 @@ export const useAddEditDelivery = (id: number, currentProperty: number) => {
             setDefaultValues({ ...defaultValues, supplier: response.data[0].id });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditDelivery/getHandlerLimited', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }
@@ -89,6 +93,9 @@ export const useAddEditDelivery = (id: number, currentProperty: number) => {
             });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAddEditDelivery/getHandlerFull', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

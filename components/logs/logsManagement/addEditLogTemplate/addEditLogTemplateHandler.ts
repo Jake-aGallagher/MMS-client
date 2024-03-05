@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../debug/globalDebug';
 import { addEditLogTemplateConn } from './addEditLogTemplateConn';
 
 export const addEditLogTemplateHandler = async (id: number, data: any, propertyId: number, closeModal: () => void) => {
@@ -19,6 +20,12 @@ export const addEditLogTemplateHandler = async (id: number, data: any, propertyI
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditLogTemplateHandler', [
+            ['error', err],
+            ['data', data],
+            ['propertyId', propertyId],
+            ['id', id],
+        ]);
         alert(alertString);
     }
 };

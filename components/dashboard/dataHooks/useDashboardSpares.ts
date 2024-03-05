@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface RaisedCompleted {
     thisMonth: number;
@@ -39,6 +40,9 @@ export const useDashboardSpares = (propertyId: number) => {
             setSparesCosts(response.data.sparesCost);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useDashboardSpares/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

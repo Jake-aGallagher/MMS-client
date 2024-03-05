@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface StatusType {
     id: number;
@@ -33,6 +34,9 @@ export const useStatusTypes = () => {
             setStatusTypes(response.data.statusTypes);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useStatusTypes/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

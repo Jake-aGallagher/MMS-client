@@ -6,6 +6,7 @@ import { SERVER_URL } from '../../routing/addressAPI';
 import DataTable from '../../dataTable/dataTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface LowWarnings {
     id: number;
@@ -64,7 +65,11 @@ const StockWarnings = () => {
             setOut(response.data.outArray);
             setNumLow(response.data.warningsArray.length);
             setNumOut(response.data.outArray.length);
-        } catch (err) {}
+        } catch (err) {
+            GlobalDebug('StockWarnings/getStockWarnings', [
+                ['error', err],
+            ]);
+        }
     };
 
     return (

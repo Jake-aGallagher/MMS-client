@@ -8,6 +8,7 @@ import { SERVER_URL } from '../routing/addressAPI';
 import { changeProperty } from './changeProperty';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { GlobalDebug } from '../debug/globalDebug';
 
 interface AvailProps {
     id: number;
@@ -38,6 +39,9 @@ const PropertyPicker = (props: Props) => {
             setError(false);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('PropertyPicker/getProperties', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

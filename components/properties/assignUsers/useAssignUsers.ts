@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
     propertyNumber: number;
@@ -40,6 +41,9 @@ export const useAssignUsers = (props: Props) => {
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAssignUsers/getUsersForAssign', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

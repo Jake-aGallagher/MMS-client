@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface StatusOptions {
     id: string;
@@ -78,6 +79,9 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useUpdateJob/getJobUpdate', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

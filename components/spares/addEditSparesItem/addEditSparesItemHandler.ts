@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../debug/globalDebug';
 import { addEditSparesItemConn } from './addEditSparesItemConn';
 
 export const addEditSparesItemHandler = async (data: any, currentProperty: number, id: number, closeModal: () => void, name: string) => {
@@ -24,6 +25,13 @@ export const addEditSparesItemHandler = async (data: any, currentProperty: numbe
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditSparesItemHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+            ['currentProperty', currentProperty],
+            ['name', name]
+        ]);
         alert(alertString);
     }
 };

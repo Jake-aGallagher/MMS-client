@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../routing/addressAPI';
 import axios from 'axios';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface LogTemplate {
     id: number;
@@ -54,6 +55,9 @@ export const useLogTemplateDetails = (propertyId: number, scheduleId: number) =>
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useLogTemplateDetails/getScheduleHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

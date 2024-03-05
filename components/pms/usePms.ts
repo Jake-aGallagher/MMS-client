@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../routing/addressAPI';
+import { GlobalDebug } from '../debug/globalDebug';
 
 interface Props {
     currentProperty: number;
@@ -41,6 +42,9 @@ export const usePms = (props: Props) => {
             setPms(response.data.pms);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('usePms/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

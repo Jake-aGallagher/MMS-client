@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface AssetTreeItem {
     id: number;
@@ -36,6 +37,9 @@ export const useAssets = (currentProperty: number) => {
             setAssetTree(response.data);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useAssets/getAssetTree', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

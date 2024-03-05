@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../debug/globalDebug';
 import { addScheduleConn } from './addScheduleConn';
 
 interface Props {
@@ -27,6 +28,12 @@ export const addScheduleHandler = async (props: Props) => {
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addScheduleHandler', [
+            ['error', err],
+            ['data', props.data],
+            ['propertyId', props.propertyId],
+            ['assetId', props.assetId],
+        ]);
         alert(alertString);
     }
 };

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../routing/addressAPI';
 import axios from 'axios';
 import { CustomFieldData } from '../../commonTypes/CustomFields';
+import { GlobalDebug } from '../debug/globalDebug';
 
 export interface LogTemplateFields {
     id: number;
@@ -48,6 +49,9 @@ export const useLogFields = (logId: number) => {
             setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useLogFields/getScheduleHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

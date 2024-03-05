@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { SERVER_URL } from "../routing/addressAPI";
+import { GlobalDebug } from "../debug/globalDebug";
 
 export const useGetFiles = (model: string, id: number) => {
     const [files, setFiles] = useState<{ id: string; name: string }[]>([]);
@@ -24,6 +25,9 @@ export const useGetFiles = (model: string, id: number) => {
                 setFiles(response.data.files);
             }
         } catch (err) {
+            GlobalDebug('useGetFiles/getfilesHandler', [
+                ['error', err],
+            ]);
             alert('There has been an issue retrieving files, please try again.');
         }
     };

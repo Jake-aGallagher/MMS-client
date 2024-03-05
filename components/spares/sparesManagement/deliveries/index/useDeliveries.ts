@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../../routing/addressAPI';
+import { GlobalDebug } from '../../../../debug/globalDebug';
 
 interface Props {
     currentProperty: number;
@@ -50,6 +51,9 @@ export const useDeliveries = (props: Props) => {
             setDeliveriesList(response.data.deliveries);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useDeliveries/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Property {
     id: number;
@@ -87,6 +88,9 @@ export const usePropertyDetails = (propertyNumber: string) => {
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('usePropertyDetails/getPropertyHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

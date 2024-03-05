@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Property {
     id: number;
@@ -35,6 +36,9 @@ export const useProperties = () => {
             setAllProperties(propertiesList.data);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useProperties/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

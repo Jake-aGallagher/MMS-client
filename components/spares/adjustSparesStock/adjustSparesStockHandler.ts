@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../debug/globalDebug';
 import { adjustSparesStockConn } from './adjustSparesStockConn';
 
 export const adjustSparesStockHandler = async (data: any, id: number, quantityRemaining: number, closeModal: () => void) => {
@@ -13,6 +14,12 @@ export const adjustSparesStockHandler = async (data: any, id: number, quantityRe
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('adjustSparesStockHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+            ['quantityRemaining', quantityRemaining]
+        ]);
         alert(alertString);
     }
 };

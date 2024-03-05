@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Spare {
     id: number;
@@ -71,6 +72,9 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useSparesDetails/getSpareItemHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

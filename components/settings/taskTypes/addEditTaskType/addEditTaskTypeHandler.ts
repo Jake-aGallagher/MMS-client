@@ -1,3 +1,4 @@
+import { GlobalDebug } from '../../../debug/globalDebug';
 import { addEditTaskTypeConn } from './addEditTaskTypeConn';
 
 export const addEditTaskTypeHandler = async (data: any, id: number, closeModal: () => void) => {
@@ -14,6 +15,11 @@ export const addEditTaskTypeHandler = async (data: any, id: number, closeModal: 
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditTaskTypeHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+        ]);
         alert(alertString);
     }
 };

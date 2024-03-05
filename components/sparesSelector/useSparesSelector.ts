@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
+import { GlobalDebug } from '../debug/globalDebug';
 
 interface Spare {
     id: number;
@@ -34,6 +35,9 @@ export const useSparesSelector = (sparesSelected: SparesSelected[]) => {
             mergeArrays(response.data.spares);
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useSparesSelector/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import axios from 'axios';
 import { CustomFieldData } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Job {
     id: number;
@@ -74,6 +75,9 @@ export const useJobDetails = (jobId: string) => {
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useJobDetails/getJobHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

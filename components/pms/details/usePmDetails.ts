@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import axios from 'axios';
 import { CustomFieldData } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface PM {
     id: number;
@@ -70,6 +71,9 @@ export const usePMDetails = (PMId: string) => {
             }
             setLoading(false);
         } catch (err) {
+            GlobalDebug('usePMDetails/getHandler', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

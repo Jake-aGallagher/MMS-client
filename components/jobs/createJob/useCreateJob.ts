@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface TypeOptions {
     id: number;
@@ -46,6 +47,9 @@ export const useCreateJob = () => {
             });
             setLoading(false);
         } catch (err) {
+            GlobalDebug('useCreateJob/getEnums', [
+                ['error', err],
+            ]);
             setError(true);
             setLoading(false);
         }

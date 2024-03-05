@@ -1,3 +1,4 @@
+import { GlobalDebug } from "../../../debug/globalDebug";
 import { addEditUserGroupConn } from "./addEditUserGroupConn";
 
 export const addEditUserGroupHandler = async (data: any, id: number, closeModal: () => void) => {
@@ -13,6 +14,11 @@ export const addEditUserGroupHandler = async (data: any, id: number, closeModal:
             alert(alertString);
         }
     } catch (err) {
+        GlobalDebug('addEditUserGroupHandler', [
+            ['error', err],
+            ['data', data],
+            ['id', id],
+        ]);
         alert(alertString);
     }
 };
