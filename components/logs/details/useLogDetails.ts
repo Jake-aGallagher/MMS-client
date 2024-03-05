@@ -50,7 +50,7 @@ export const useLogDetails = (props: Props) => {
             const response = await axios.get(`${SERVER_URL}/logs/log/${props.logId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            setLog(response.data.log);
+            setLog(response.data.log[0]);
             setCustomFields(response.data.customFields);
             setLoading(false);
         } catch (err) {
