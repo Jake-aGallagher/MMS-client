@@ -89,7 +89,7 @@ export const useAddEditDelivery = (id: number, currentProperty: number) => {
                 courier: delivery.courier,
                 placed: delivery.placed,
                 due: delivery.due,
-                arrived: false,
+                arrived: delivery.arrived,
             });
             setLoading(false);
         } catch (err) {
