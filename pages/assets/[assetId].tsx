@@ -30,7 +30,7 @@ const AssetView = () => {
 
     const assetId = router.asPath.split('/')[2];
     const [modal, setModal] = useState({ view: false, type: '', payload: {} });
-    const { assetDetails, customFields, recentJobs, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload } = useAssetDetails(assetId);
+    const { assetDetails, customFields, recentJobs, recentPms, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload } = useAssetDetails(assetId);
     const { openBranches, toggle } = useOpenBranches();
     const { allRoots } = useAssetTree({ type: 'details', assetTree: children, openBranches, toggle, setModal });
 
@@ -54,6 +54,21 @@ const AssetView = () => {
         title: `5 Most recent Maintenance Tasks for Components of ${assetDetails?.name}`,
         searchable: false,
         linkColPrefix: '/jobs/',
+    };
+
+    const recentPmTableConfig = {
+        headers: [
+            { id: 'id', name: 'ID', type: 'link', search: true, order: true },
+            { id: 'asset_name', name: 'Asset', type: 'string', search: true, order: true },
+            { id: 'type', name: 'Type', type: 'string', search: true, order: true },
+            { id: 'title', name: 'Title', type: 'string', search: true, order: true },
+            { id: 'required_comp_date', name: 'Due', type: 'date', search: true, order: true },
+            { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
+            { id: 'frequency', name: 'Frequency', type: 'string', search: true, order: true },
+        ],
+        title: `5 Most recent PMs for Components of ${assetDetails?.name}`,
+        searchable: false,
+        linkColPrefix: '/pms/',
     };
 
     return (
@@ -107,8 +122,13 @@ const AssetView = () => {
                         ) : null}
 
                         {recentJobs.length > 0 ? (
-                            <div className="mt-4">
+                            <div className="mt-4 pb-4">
                                 <DataTable config={recentJobTableConfig} data={recentJobs} />
+                            </div>
+                        ) : null}
+                        {recentPms.length > 0 ? (
+                            <div className="mt-4 pb-4">
+                                <DataTable config={recentPmTableConfig} data={recentPms} />
                             </div>
                         ) : null}
                     </div>

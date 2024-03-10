@@ -27,7 +27,7 @@ const SparesView = () => {
 
     const spareId = router.asPath.split('/')[2];
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { sparesDetails, customFields, deliveryInfo, recentJobs, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
+    const { sparesDetails, customFields, deliveryInfo, recentJobs, recentPms, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     let spareConfig: DetailsConfig = {
@@ -66,6 +66,21 @@ const SparesView = () => {
         linkColPrefix: '/jobs/',
     };
 
+    const recentPmTableConfig = {
+        headers: [
+            { id: 'id', name: 'ID', type: 'link', search: true, order: true },
+            { id: 'asset_name', name: 'Asset', type: 'string', search: true, order: true },
+            { id: 'type', name: 'Type', type: 'string', search: true, order: true },
+            { id: 'title', name: 'Title', type: 'string', search: true, order: true },
+            { id: 'required_comp_date', name: 'Due', type: 'date', search: true, order: true },
+            { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
+            { id: 'frequency', name: 'Frequency', type: 'string', search: true, order: true },
+        ],
+        title: `5 Most recent PMs where ${sparesDetails?.name} was used`,
+        searchable: false,
+        linkColPrefix: '/pms/',
+    };
+
     const editStock = () => {
         setModal({ view: true, type: 'addEditSparesItem', payload: { id: parseInt(spareId), name: sparesDetails ? sparesDetails.name : '' } });
     };
@@ -97,8 +112,13 @@ const SparesView = () => {
                         </div>
                     </div>
                     {recentJobs.length > 0 ? (
-                        <div className="mt-4">
+                        <div className="mt-4 pb-4">
                             <DataTable config={jobTableConfig} data={recentJobs} />
+                        </div>
+                    ) : null}
+                    {recentPms.length > 0 ? (
+                        <div className="mt-4 pb-4">
+                            <DataTable config={recentPmTableConfig} data={recentPms} />
                         </div>
                     ) : null}
                 </div>

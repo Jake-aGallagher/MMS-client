@@ -23,6 +23,16 @@ interface RecentJobs {
     completed: number;
 }
 
+interface RecentPms {
+    id: number;
+    asset_name: string;
+    type: string;
+    title: string;
+    required_comp_date: string;
+    completed: number;
+    frequency: string;
+}
+
 interface Children {
     id: number;
     name: string;
@@ -43,6 +53,7 @@ export const useAssetDetails = (assetId: string) => {
     const [error, setError] = useState(false);
     const [assetDetails, setAssetDetails] = useState<Asset>();
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
+    const [recentPms, setRecentPms] = useState<RecentPms[]>([]);
     const [children, setChildren] = useState<Children[]>([]);
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [jobsOfComponents6M, setJobsOfComponents6M] = useState<{ name: string; value: number }[]>([]);
@@ -73,6 +84,7 @@ export const useAssetDetails = (assetId: string) => {
                 setAssetDetails(response.data.assetDetails[0]);
                 setCustomFields(response.data.customFields);
                 setRecentJobs(response.data.recentJobs);
+                setRecentPms(response.data.recentPms);
                 setChildren(response.data.tree);
                 setJobsOfComponents6M(response.data.jobsOfComponents6M);
                 setIncompleteForAsset([
@@ -89,5 +101,5 @@ export const useAssetDetails = (assetId: string) => {
             setLoading(false);
         }
     };
-    return { assetDetails, customFields, recentJobs, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload };
+    return { assetDetails, customFields, recentJobs, recentPms, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload };
 };

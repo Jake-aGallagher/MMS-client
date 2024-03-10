@@ -31,6 +31,16 @@ interface RecentJobs {
     completed: boolean;
 }
 
+interface RecentPms {
+    id: number;
+    asset_name: string;
+    type: string;
+    title: string;
+    required_comp_date: string;
+    completed: number;
+    frequency: string;
+}
+
 export const useSparesDetails = (spareId: string, currentProperty: string) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
@@ -39,6 +49,7 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
     const [deliveryInfo, setDeliveryInfo] = useState<{ due: string; quantity: number }>({ due: '', quantity: 0 });
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
+    const [recentPms, setRecentPms] = useState<RecentPms[]>([]);
     const [used6M, setUsed6M] = useState<{ month: string; value: number }[]>([]);
 
     useEffect(() => {
@@ -67,9 +78,8 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
                 setCustomFields(response.data.customFields);
                 setDeliveryInfo(response.data.deliveryInfo[0]);
                 setUsed6M(response.data.used6M);
-                if (response.data.recentJobs.length > 0) {
-                    setRecentJobs(response.data.recentJobs);
-                }
+                setRecentJobs(response.data.recentJobs);
+                setRecentPms(response.data.recentPms);
             }
             setLoading(false);
         } catch (err) {
@@ -78,5 +88,5 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
             setLoading(false);
         }
     };
-    return { sparesDetails, customFields, deliveryInfo, recentJobs, used6M, loading, noData, error, reload };
+    return { sparesDetails, customFields, deliveryInfo, recentJobs, recentPms, used6M, loading, noData, error, reload };
 };
