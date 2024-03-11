@@ -6,7 +6,6 @@ import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
-import { GlobalDebug } from '../../components/debug/globalDebug';
 import { useRouter } from 'next/router';
 
 const jobTableConfig = {
