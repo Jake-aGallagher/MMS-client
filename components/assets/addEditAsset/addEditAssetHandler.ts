@@ -9,6 +9,7 @@ export const addEditAssetHandler = async (data: any, parentId: number, id: numbe
             id,
             propertyId: currentProperty,
             name: data.name,
+            revenue: data.revenue,
             note: data.note,
             fieldData: data,
         });

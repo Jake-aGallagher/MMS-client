@@ -15,6 +15,7 @@ interface Props<T extends FieldValues> extends OptionNameString {
     extraClasses?: string;
     rows?: number;
     min?: number;
+    max?: number;
     step?: string;
     checked?: boolean;
 }
@@ -38,6 +39,7 @@ const GeneralFormInput = (props: Props<any>) => {
                     id={props.formName}
                     type={props.type}
                     min={props.min}
+                    max={props.max}
                     step={props.step}
                     className={`h-10 pl-1 my-2 rounded-md w-full border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${
                         props.errors[props.formName] && 'border-red border-2'

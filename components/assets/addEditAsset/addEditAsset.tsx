@@ -11,6 +11,7 @@ import { useAddEditAsset } from './useAddEditAsset';
 import { FieldInputs } from '../../settings/customFields/fieldInputs';
 import { useEffect, useMemo } from 'react';
 import LoadingNoDataError from '../../loading/loadingNoDataError';
+import InfoField from '../../forms/infoField';
 
 interface ModalProps {
     closeModal: () => void;
@@ -21,6 +22,10 @@ const AddEditAsset = (props: ModalProps) => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     const formLabel = `${props.payload.parentId ? 'Create New Component of' : 'Edit'} ${props.payload.name}`;
     const { defaultValues, customFields, loading, error } = useAddEditAsset(props.payload.parentId ? 0 : props.payload.id);
+    const rpmString = `
+        Revenue per Minute is used to calculate the cost of downtime and to accuratly assess the financial impact of missing spare parts.
+        Assign this asset an RPM value if downtime on this equipment would have a financial impact.
+        If you are unsure, leave this field blank.`;
 
     const {
         register,
@@ -51,8 +56,10 @@ const AddEditAsset = (props: ModalProps) => {
                 <FormHeader label={formLabel} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="Component Name" type="text" formName="name" errors={errors} required={true} />
+                    <InfoField name={rpmString} />
+                    <GeneralFormInput register={register} label="Revenue per Minute (£)" type="number" formName="revenue" errors={errors} required={true} min={0} max={10000} />
                     <GeneralFormInput register={register} label="Notes" type="textarea" formName="note" errors={errors} rows={10} />
-                    <div className="text-center">{watchNote[0]?.length} / 1000 Charachters</div>
+                    <div className="text-right -mt-4 pr-4 mb-8">{watchNote[0]?.length} / 1000 Charachters</div>
                     {FieldInputs(customFields, register, errors, setValue)}
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
