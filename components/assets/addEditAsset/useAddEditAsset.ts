@@ -10,6 +10,7 @@ export const useAddEditAsset = (assetId: number) => {
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [defaultValues, setDefaultValues] = useState<DefaultValues>({
         name: '',
+        revenue: null,
         note: '',
     });
 
@@ -49,6 +50,7 @@ export const useAddEditAsset = (assetId: number) => {
             setCustomFields(response.data.customFields);
             const defaultVal: DefaultValues = {
                 name: response.data.assetDetails[0].name,
+                revenue: response.data.assetDetails[0].revenue || null,
                 note: response.data.assetDetails[0].notes || '',
             };
             response.data.customFields.fields.forEach((field: FieldValue) => {

@@ -31,5 +31,5 @@ export interface CustomFieldData {
 }
 
 export interface DefaultValues {
-    [key: string]: string | number | boolean;
+    [key: string]: string | number | boolean | null;
 }

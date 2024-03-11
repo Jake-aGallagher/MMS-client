@@ -38,6 +38,7 @@ const AssetView = () => {
         id: assetDetails?.id,
         fields: [
             { label: 'Name', value: assetDetails?.name },
+            { label: 'Revenue per Minute (£)', value: assetDetails?.revenue },
             { label: 'Notes', value: assetDetails?.notes },
         ],
     };

@@ -8,6 +8,7 @@ interface Asset {
     id: number;
     property_id: number;
     name: string;
+    revenue: number | null;
     notes: string;
     parent_id: number;
     parent_name: string;
