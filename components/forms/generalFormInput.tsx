@@ -27,9 +27,9 @@ const GeneralFormInput = (props: Props<any>) => {
     const checkboxTypes = ['checkbox'];
 
     return (
-        <div className="flex flex-col relative mb-4 w-full">
+        <div className="flex flex-col relative mb-5 w-full group">
             {props.label && props.type != 'checkbox' ? (
-                <label htmlFor={props.formName} className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-background">
+                <label htmlFor={props.formName} className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-background group-hover:text-accent group-focus-within:text-accent transition-all">
                     {props.label}
                 </label>
             ) : null}
@@ -79,7 +79,7 @@ const GeneralFormInput = (props: Props<any>) => {
                 <div
                     className={`rounded-md my-2 p-2 border-1 border-primary w-full flex flex-row ${props.extraClasses && props.extraClasses} ${props.errors[props.formName] && 'border-red border-2'}`}
                 >
-                    <label htmlFor={props.formName} className="w-full select-none hover:cursor-pointer">
+                    <label htmlFor={props.formName} className="w-full select-none hover:cursor-pointer group-hover:text-accent group-focus:text-accent transition-all">
                         {props.label}
                     </label>
                     <input id={props.formName} type="checkbox" className="mx-2" {...props.register(props.formName, { required: props.required, value: props.checked })} />

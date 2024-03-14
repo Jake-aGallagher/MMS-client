@@ -46,8 +46,8 @@ const FileInput = (props: Props<any>) => {
     };
 
     return (
-        <div className="flex flex-col w-full relative mb-2">
-            <label htmlFor="fileAttachment" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-background rounded-b-md">
+        <div className="flex flex-col w-full relative mb-2 group">
+            <label htmlFor="fileAttachment" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-background rounded-b-md group-hover:text-accent group-focus-within:text-accent transition-all">
                 {props.label}
             </label>
             <div className={`mb-4 mt-2 p-2 w-full rounded-md border-1 ${props.errors[props.formName] ? 'border-red border-2' : 'border-primary'} border-solid`}>
