@@ -21,7 +21,7 @@ export const DateData = (props: { dateString: string }) => {
 
 export const UrlData = (props: { urlString: string }) => {
     return (
-        <a className="border-b-2 border-black hover:text-accent hover:border-accent" href={props.urlString} target="_blank" rel="noreferrer">
+        <a className="border-b-1 border-black hover:text-accent hover:border-accent" href={props.urlString} target="_blank" rel="noreferrer">
             {props.urlString}
         </a>
     );
