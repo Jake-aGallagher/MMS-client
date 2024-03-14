@@ -9,7 +9,7 @@ export const StringData = (props: { string: string }) => {
 
 export const LinkData = (props: { name: string | number; linkColPrefix: string; link: string }) => {
     return (
-        <Link href={props.linkColPrefix + props.link} className="border-b-2 border-black hover:text-accent hover:border-accent">
+        <Link href={props.linkColPrefix + props.link} className="border-b-1 border-black hover:text-accent hover:border-accent">
             {props.name}
         </Link>
     );
