@@ -7,7 +7,7 @@ interface Props extends PropsWithChildren {
 const AltTableContainer = (props: Props) => {
     return (
         <div className={`w-full relative ${props.className && props.className}`}>
-            <div className="overflow-x-auto rounded-md">
+            <div className="overflow-x-auto border-1 border-solid border-primary rounded-md">
                 <table className="w-full table-auto">{props.children}</table>
             </div>
         </div>

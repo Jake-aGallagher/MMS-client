@@ -29,7 +29,7 @@ const UsersAddRemoveTable = (props: Props) => {
     };
 
     const sparesTable = props.usersSelected.map((user) => (
-        <tr className="border-t-1 border-solid border-primary" key={'current_item_' + user.id}>
+        <tr className="border-t-1 h-12 border-solid border-primary" key={'current_item_' + user.id}>
             <td className="text-center">{user.name}</td>
             <td className="text-center">{user.time}</td>
             <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateSparesSelected(user.id, 'add')}>
