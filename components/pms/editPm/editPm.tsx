@@ -10,7 +10,7 @@ import { RootState } from '../../store/store';
 import { useForm } from 'react-hook-form';
 import AltTableContainer from '../../dataTable/altTableContainer';
 import AltTableHeaders from '../../dataTable/altTableHeaders';
-import UsersAddRemoveTable from '../../usersSelector/usersAddRemoveTable';
+import TimeAddRemoveTable from '../../usersSelector/timeAddRemoveTable';
 import SparesAddRemoveTable from '../../sparesSelector/sparesAddRemoveTable';
 import { useEditPM } from './useEditPm';
 import ModalBase from '../../modal/modal';
@@ -97,27 +97,30 @@ const EditPM = (props: Props) => {
                             selectOptions={statusOptions}
                         />
                         <GeneralFormInput register={register} label="Notes" type="textarea" formName="notes" errors={errors} rows={5} />
-                        {FieldInputs(customFields, register, errors, setValue)}
+                        
 
-                        <button className="btnBlue w-48 mx-auto h-8 mt-8 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
+                        <button className="btnBlue w-48 h-8 mb-1" onClick={(e) => modalHandler(e, 'spares')}>
                             Log Spare Parts Used
                         </button>
                         {sparesSelected.length > 0 ? (
-                            <AltTableContainer className="mb-12">
+                            <AltTableContainer className="mb-4">
                                 <AltTableHeaders headers={['Part Number', 'Name', 'Quantity', 'Add One', 'Remove One', 'Remove']} />
                                 <SparesAddRemoveTable sparesSelected={sparesSelected} setSparesSelected={setSparesSelected} />
                             </AltTableContainer>
                         ) : null}
 
-                        <button className="btnBlue w-48 mx-auto h-8 mt-8 mb-1" onClick={(e) => modalHandler(e, 'users')}>
+                        <button className="btnBlue w-48 h-8 mt-4 mb-1" onClick={(e) => modalHandler(e, 'users')}>
                             Log Time
                         </button>
                         {loggedTimeDetails.length > 0 ? (
-                            <AltTableContainer className="mb-12">
+                            <AltTableContainer className="mb-8">
                                 <AltTableHeaders headers={['Name', 'Time Logged', 'Add 5 Mins', 'Reduce 5 Mins', 'Remove']} />
-                                <UsersAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
+                                <TimeAddRemoveTable usersSelected={loggedTimeDetails} setUsersSelected={setLoggedTimeDetails} />
                             </AltTableContainer>
-                        ) : <div className='h-12'></div>}
+                        ) : <div className='h-8'></div>}
+
+                        {FieldInputs(customFields, register, errors, setValue)}
+
                         {completableStatus.includes(parseInt(String(statusWatch[0]))) ? (
                             <>
                                 <GeneralFormInput
