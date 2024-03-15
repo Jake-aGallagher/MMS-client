@@ -21,6 +21,18 @@ interface SparesSelected {
 
 const SparesSelector = (props: ModalProps) => {
     const { spareslist, loading, error } = useSparesSelector(props.payload.sparesSelected);
+    const header = () => {
+        switch (props.payload.type) {
+            case 'delivery':
+                return 'Add to Delivery';
+            case 'spares':
+                return 'Spares Used';
+            case 'missing':
+                return 'Missing Spares';
+            default:
+                return '';
+        }
+    };
 
     const updateSparesSelected = (item: SparesSelected) => {
         props.passbackDetails([...props.payload.sparesSelected, { ...item, quantity: 1 }]);
@@ -30,7 +42,7 @@ const SparesSelector = (props: ModalProps) => {
     return (
         <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
-                <FormHeader label={props.payload.type === 'delivery' ? 'Add to Delivery' : 'Spares Used'} />
+                <FormHeader label={header()} />
                 <div className="flex flex-col justify-start px-4 pt-2 overflow-y-auto h-[calc(100%-104px)]">
                     <AltTableContainer>
                         <AltTableHeaders headers={['Part Number', 'Name', 'Add']} />
