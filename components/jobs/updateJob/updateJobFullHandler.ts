@@ -12,6 +12,12 @@ interface SparesSelected {
     quantity: number;
 }
 
+interface Downtime {
+    id: number;
+    name: string;
+    time: number;
+}
+
 export const updateJobFullHandler = async (
     complete: boolean,
     data: any,
@@ -19,6 +25,8 @@ export const updateJobFullHandler = async (
     currentProperty: number,
     loggedTimeDetails: LoggedTime[],
     sparesSelected: SparesSelected[],
+    sparesMissing: SparesSelected[],
+    downtime: Downtime[],
     files: Blob[],
     closeModal: () => void
 ) => {
@@ -37,6 +45,8 @@ export const updateJobFullHandler = async (
             complete,
             continueSchedule: data.continueSchedule,
             sparesUsed: sparesSelected,
+            sparesMissing,
+            downtime,
             propertyId: currentProperty,
             fieldData: data
         })

@@ -9,7 +9,7 @@ interface StatusOptions {
     value: string;
 }
 
-interface SparesSelected {
+interface Spare {
     id: number;
     part_no: string;
     name: string;
@@ -22,12 +22,20 @@ interface LoggedTime {
     time: number;
 }
 
+interface Downtime {
+    id: number;
+    name: string;
+    time: number;
+}
+
 export const useUpdateJob = (currentProperty: number, jobId: number) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [statusOptions, setStatusOptions] = useState<StatusOptions[]>([]);
-    const [sparesSelected, setSparesSelected] = useState<SparesSelected[]>([]);
+    const [sparesSelected, setSparesSelected] = useState<Spare[]>([]);
+    const [sparesMissing, setSparesMissing] = useState<Spare[]>([]);
+    const [downtime, setDowntime] = useState<Downtime[]>([]);
     const [completed, setCompleted] = useState(0);
     const [loggedTimeDetails, setLoggedTimeDetails] = useState<LoggedTime[]>([]);
     const [completableStatus, setCompletableStatus] = useState<number[]>([]);
@@ -63,6 +71,12 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
                 if (response.data.timeDetails) {
                     setLoggedTimeDetails(response.data.timeDetails);
                 }
+                if (response.data.missingSpares) {
+                    setSparesMissing(response.data.missingSpares);
+                }
+                if (response.data.downtime) {
+                    setDowntime(response.data.downtime);
+                }
                 const data = response.data.jobDetails[0];
                 setCompleted(data.completed);
                 setCustomFields(response.data.customFields);
@@ -85,5 +99,22 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
             setLoading(false);
         }
     };
-    return { statusOptions, completableStatus, sparesSelected, setSparesSelected, completed, loggedTimeDetails, setLoggedTimeDetails, defaultValues, customFields, loading, noData, error };
+    return {
+        statusOptions,
+        completableStatus,
+        sparesSelected,
+        setSparesSelected,
+        loggedTimeDetails,
+        setLoggedTimeDetails,
+        sparesMissing,
+        setSparesMissing,
+        downtime,
+        setDowntime,
+        completed,
+        defaultValues,
+        customFields,
+        loading,
+        noData,
+        error,
+    };
 };

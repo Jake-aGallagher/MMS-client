@@ -30,6 +30,7 @@ import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditF
 import UpdateLog from '../logs/updateLog/updateLog';
 import AddEditField from '../settings/customFields/addEditField/addEditFields';
 import PropertyPicker from '../navigation/propertyPicker';
+import DowntimeSelector from '../assets/downtimeSelector/downtimeSelector';
 
 interface ModalProps {
     closeModal: () => void;
@@ -53,6 +54,8 @@ const ModalBase = (props: ModalProps) => {
                 return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
 
             // Asset
+            case 'downtimeSelector':
+                return <DowntimeSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
             case 'addEditAsset':
                 return <AddEditAsset closeModal={props.closeModal} payload={props.payload} />;
             case 'deleteAsset':
