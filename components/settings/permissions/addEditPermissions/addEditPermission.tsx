@@ -38,7 +38,7 @@ const AddEditPermission = (props: Props) => {
                         <GeneralFormInput
                             key={permission.id}
                             register={register}
-                            label={permission.area.toUpperCase() + ' / ' + permission.permission.toUpperCase()}
+                            label={permission.area + ' - ' + permission.permission}
                             type="checkbox"
                             formName={permission.id.toString()}
                             errors={errors}
