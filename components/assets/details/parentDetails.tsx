@@ -23,7 +23,7 @@ const ParentDetails = (props: Props) => {
     return (
         <>
             {props.grand_parent_id && props.grand_parent_id > 0 ? (
-                <div className="w-full pl-4">
+                <div className="w-full mt-5">
                     <div>Parent:</div>
                     <div className="flex flex-row outline-primary hover:outline-1 hover:outline py-1 rounded-md">
                         <div className="pl-8">{props.parent_name}</div>

@@ -111,17 +111,19 @@ const AssetView = () => {
                                 <AssetDetailsDefaultCharts assetDetailsName={assetDetails?.name} jobsOfComponents6M={jobsOfComponents6M} incompleteForAsset={incompleteForAsset} />
                             </div>
                         </div>
-
-                        {assetDetails ? (
-                            <ParentDetails grand_parent_id={assetDetails.grand_parent_id} parent_id={assetDetails.parent_id} parent_name={assetDetails.parent_name} setModal={setModal} />
-                        ) : null}
-                        {allRoots.length > 0 ? (
-                            <div className="w-full my-5 pl-4">
-                                Children:
-                                {allRoots}
+                        {assetDetails || allRoots.length > 0 ? (
+                            <div className='bg-secondary rounded-md shadow-md my-4 pb-5 pl-4'>
+                                {assetDetails ? (
+                                    <ParentDetails grand_parent_id={assetDetails.grand_parent_id} parent_id={assetDetails.parent_id} parent_name={assetDetails.parent_name} setModal={setModal} />
+                                ) : null}
+                                {allRoots.length > 0 ? (
+                                    <div className="w-full mt-5">
+                                        Children:
+                                        {allRoots}
+                                    </div>
+                                ) : null}
                             </div>
                         ) : null}
-
                         {recentJobs.length > 0 ? (
                             <div className="mt-4 pb-4">
                                 <DataTable config={recentJobTableConfig} data={recentJobs} />
