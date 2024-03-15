@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                <title>UpTime</title>
+                <title>Gallagtic Maintenance</title>
                 <meta name="description" content="A Maintenance Management System" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
