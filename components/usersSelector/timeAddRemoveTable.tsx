@@ -3,18 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SetStateAction } from 'react';
 
 interface Props {
-    usersSelected: User[];
-    setUsersSelected: (value: SetStateAction<User[]>) => void;
+    usersSelected: TimeItem[];
+    setUsersSelected: (value: SetStateAction<TimeItem[]>) => void;
 }
 
-interface User {
+interface TimeItem {
     id: number;
     name: string;
     time: number;
 }
 
-const UsersAddRemoveTable = (props: Props) => {
-    const updateSparesSelected = (id: number, type: 'add' | 'minus' | 'remove') => {
+const TimeAddRemoveTable = (props: Props) => {
+    const updateTimeSelected = (id: number, type: 'add' | 'minus' | 'remove') => {
         const index = props.usersSelected.findIndex((item) => item.id == id);
         const user = props.usersSelected[index];
         const newArr = [...props.usersSelected];
@@ -32,13 +32,13 @@ const UsersAddRemoveTable = (props: Props) => {
         <tr className="border-t-1 h-12 border-solid border-primary" key={'current_item_' + user.id}>
             <td className="text-center">{user.name}</td>
             <td className="text-center">{user.time}</td>
-            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateSparesSelected(user.id, 'add')}>
+            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateTimeSelected(user.id, 'add')}>
                 <FontAwesomeIcon icon={faPlus} className="h-5 m-auto" />
             </td>
-            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateSparesSelected(user.id, 'minus')}>
+            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateTimeSelected(user.id, 'minus')}>
                 <FontAwesomeIcon icon={faMinus} className="h-5 m-auto" />
             </td>
-            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateSparesSelected(user.id, 'remove')}>
+            <td className="hover:text-primary transition-all cursor-pointer" onClick={() => updateTimeSelected(user.id, 'remove')}>
                 <FontAwesomeIcon icon={faTrashCan} className="h-5 m-auto" />
             </td>
         </tr>
@@ -46,4 +46,4 @@ const UsersAddRemoveTable = (props: Props) => {
     return <tbody>{sparesTable}</tbody>;
 };
 
-export default UsersAddRemoveTable;
+export default TimeAddRemoveTable;
