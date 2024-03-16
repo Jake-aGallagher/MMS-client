@@ -19,6 +19,7 @@ export const useDashboardSpares = (propertyId: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [sparesCost, setSparesCosts] = useState<RaisedCompleted>(empty);
+    const [missingSpares, setMissingSpares] = useState<RaisedCompleted>(empty);
 
     useEffect(() => {
         if (propertyId > 0) {
@@ -39,6 +40,7 @@ export const useDashboardSpares = (propertyId: number) => {
             });
             GlobalDebug('useDashboardSpares/getHandler', [['response', response]]);
             setSparesCosts(response.data.sparesCost);
+            setMissingSpares(response.data.missingSpares);
             setLoading(false);
         } catch (err) {
             GlobalDebug('useDashboardSpares/getHandler', [['error', err]]);
@@ -46,5 +48,5 @@ export const useDashboardSpares = (propertyId: number) => {
             setLoading(false);
         }
     };
-    return { sparesCost, sparesLoading: loading, sparesError: error };
+    return { sparesCost, missingSpares, sparesLoading: loading, sparesError: error };
 };

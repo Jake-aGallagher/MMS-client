@@ -20,7 +20,7 @@ const Dashboard = () => {
     // jobs hook
     const { raised, completed, open, planned, jobLoading, jobError } = useDashboardJobs(currentProperty);
     // spares hook
-    const { sparesCost, sparesLoading, sparesError } = useDashboardSpares(currentProperty);
+    const { sparesCost, missingSpares, sparesLoading, sparesError } = useDashboardSpares(currentProperty);
 
     return (
         <FullPage>
@@ -28,7 +28,7 @@ const Dashboard = () => {
             <div className="my-4 h-full w-full flex flex-col lg:grid lg:grid-cols-3 lg:grid-rows-3 gap-2 ">
                 <LostRevenue />
                 <SparesCosts data={sparesCost} loading={sparesLoading} error={sparesError} />
-                <IncidentsOfNoSpares />
+                <IncidentsOfNoSpares data={missingSpares} loading={sparesLoading} error={sparesError}  />
                 <Downtime />
                 <JobsRaised data={raised} loading={jobLoading} error={jobError}/>
                 <JobsCompleted data={completed} loading={jobLoading} error={jobError}/>
