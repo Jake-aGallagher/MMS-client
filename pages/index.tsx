@@ -18,7 +18,7 @@ import { useDashboardRevenues } from '../components/dashboard/dataHooks/useDashb
 const Dashboard = () => {
     const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
     // lost revenue hook
-    const { downtime, revenuesLoading, revenuesError } = useDashboardRevenues(currentProperty);
+    const { revenue, downtime, revenuesLoading, revenuesError } = useDashboardRevenues(currentProperty);
     // jobs hook
     const { raised, completed, open, planned, jobLoading, jobError } = useDashboardJobs(currentProperty);
     // spares hook
@@ -28,15 +28,15 @@ const Dashboard = () => {
         <FullPage>
             <Toolbar></Toolbar>
             <div className="my-4 h-full w-full flex flex-col lg:grid lg:grid-cols-3 lg:grid-rows-3 gap-2 ">
-                <LostRevenue />
+                <LostRevenue data={revenue} loading={revenuesLoading} error={revenuesError} />
                 <SparesCosts data={sparesCost} loading={sparesLoading} error={sparesError} />
-                <IncidentsOfNoSpares data={missingSpares} loading={sparesLoading} error={sparesError}  />
-                <Downtime data={downtime} loading={revenuesLoading} error={revenuesError}  />
-                <JobsRaised data={raised} loading={jobLoading} error={jobError}/>
-                <JobsCompleted data={completed} loading={jobLoading} error={jobError}/>
+                <IncidentsOfNoSpares data={missingSpares} loading={sparesLoading} error={sparesError} />
+                <Downtime data={downtime} loading={revenuesLoading} error={revenuesError} />
+                <JobsRaised data={raised} loading={jobLoading} error={jobError} />
+                <JobsCompleted data={completed} loading={jobLoading} error={jobError} />
                 <RevenueLostByAsset />
-                <JobsOpen data={open} loading={jobLoading} error={jobError}/>
-                <BreakdownVsPlannned data={planned} loading={jobLoading} error={jobError}/>
+                <JobsOpen data={open} loading={jobLoading} error={jobError} />
+                <BreakdownVsPlannned data={planned} loading={jobLoading} error={jobError} />
             </div>
         </FullPage>
     );

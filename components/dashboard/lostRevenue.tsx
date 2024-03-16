@@ -3,42 +3,33 @@ import DashChartComponent from './dashChartComponent';
 import { formatNumeric } from './formatNumeric';
 import Loading from '../loading/loading';
 
-const LostRevenue = () => {
-    const lostRevenue = 58682;
-    const avgData = { value: -4, flipped: false };
+interface Props {
+    data: {
+        thisMonth: number;
+        avgData: { value: number; flipped: boolean };
+        mainData: { label: string; value: number }[];
+    };
+    loading: boolean;
+    error: boolean;
+}
 
-    const [loading, setLoading] = useState(true);
-
-    setTimeout(() => setLoading(false), 2000);
-
-    const mainData = [
-        { label: 'June', value: 70000 },
-        { label: 'July', value: 48000 },
-        { label: 'August', value: 27000 },
-        { label: 'September', value: 63000 },
-        { label: 'October', value: 86000 },
-        { label: 'November', value: 82000 },
-    ];
+const LostRevenue = (props: Props) => {
     const text = {
         title: 'Lost Revenue',
         mainUnit: '£',
         labels: 'Lost Revenue (£)',
-        totalString: '',
+        totalString: props.data?.thisMonth.toString(),
         afterTotalString: '',
     };
 
-    const { numText, afterText } = formatNumeric(lostRevenue);
-    text.totalString = numText;
-    text.afterTotalString = afterText;
-
     return (
         <>
-            {loading ? (
+            {props.loading ? (
                 <div className="w-full h-full bg-secondary rounded-md relative">
                     <Loading />
                 </div>
             ) : (
-                <DashChartComponent avgData={avgData} mainData={mainData} text={text} />
+                <DashChartComponent avgData={props.data.avgData} mainData={props.data.mainData} text={text} />
             )}
         </>
     );

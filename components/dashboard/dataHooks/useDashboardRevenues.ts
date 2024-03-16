@@ -18,6 +18,7 @@ export const useDashboardRevenues = (propertyId: number) => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [revenue, setRevenue] = useState<BaseData>(empty);
     const [downtime, setDowntime] = useState<BaseData>(empty);
 
     useEffect(() => {
@@ -38,6 +39,7 @@ export const useDashboardRevenues = (propertyId: number) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useDashboardRevenues/getHandler', [['response', response]]);
+            setRevenue(response.data.revenue);
             setDowntime(response.data.downtime);
             setLoading(false);
         } catch (err) {
@@ -46,5 +48,5 @@ export const useDashboardRevenues = (propertyId: number) => {
             setLoading(false);
         }
     };
-    return { downtime, revenuesLoading: loading, revenuesError: error };
+    return { revenue, downtime, revenuesLoading: loading, revenuesError: error };
 };
