@@ -29,11 +29,20 @@ interface TimeDetails {
     last: string;
 }
 
-interface UsedSpares {
+interface Spare {
     id: number;
-    quantity: number;
     part_no: string;
     name: string;
+}
+
+interface UsedSpares extends Spare {
+    quantity: number;
+}
+
+interface Downtime {
+    id: number;
+    name: string;
+    time: number;
 }
 
 export const useJobDetails = (jobId: string) => {
@@ -45,6 +54,8 @@ export const useJobDetails = (jobId: string) => {
     const [files, setFiles] = useState<{ id: string; name: string }[]>([]);
     const [timeDetails, setTimeDetails] = useState<TimeDetails[]>([]);
     const [sparesDetails, setSparesDetails] = useState<UsedSpares[]>([]);
+    const [missingSpares, setMissingSpares] = useState<Spare[]>([]);
+    const [downtime, setDowntime] = useState<Downtime[]>([]);
 
     useEffect(() => {
         if (jobId !== '') {
@@ -73,6 +84,8 @@ export const useJobDetails = (jobId: string) => {
                 setFiles(response.data.files || []);
                 setTimeDetails(response.data.timeDetails || []);
                 setSparesDetails(response.data.usedSpares || []);
+                setMissingSpares(response.data.missingSpares || []);
+                setDowntime(response.data.downtime || []);
             }
             setLoading(false);
         } catch (err) {
@@ -81,5 +94,5 @@ export const useJobDetails = (jobId: string) => {
             setLoading(false);
         }
     };
-    return { jobDetails, customFields, files, timeDetails, sparesDetails, loading, noData, error, reload };
+    return { jobDetails, customFields, files, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload };
 };

@@ -26,7 +26,7 @@ const JobView = () => {
     }
 
     const jobId = router.asPath.split('/')[2];
-    const { jobDetails, customFields, files, timeDetails, sparesDetails, loading, noData, error, reload } = useJobDetails(jobId);
+    const { jobDetails, customFields, files, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload } = useJobDetails(jobId);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
@@ -72,6 +72,27 @@ const JobView = () => {
         searchable: false,
     };
 
+    const missingSparesTableConfig = {
+        headers: [
+            { id: 'id', name: 'Part Number', type: 'linkWithName', nameParam: 'part_no', search: true, order: true },
+            { id: 'name', name: 'Name', type: 'string', search: true, order: true },
+        ],
+        title: 'Missing Spares',
+        searchable: false,
+        linkColPrefix: '/spares/',
+    };
+
+    const downtimeTableConfig = {
+        headers: [
+            { id: 'id', name: 'ID', type: 'link', search: true, order: true },
+            { id: 'name', name: 'Asset', type: 'string', search: true, order: true },
+            { id: 'time', name: 'Time (Mins)', type: 'number', search: true, order: true },
+        ],
+        title: 'Downtime',
+        searchable: false,
+        linkColPrefix: '/assets/',
+    };
+
     return (
         <FullPage>
             <Toolbar>
@@ -104,13 +125,23 @@ const JobView = () => {
                         </div>
                     </div>
                     {sparesDetails.length > 0 ? (
-                        <div className="mt-4">
+                        <div className="mt-4 pb-4">
                             <DataTable config={sparesTableConfig} data={sparesDetails} />
                         </div>
                     ) : null}
                     {timeDetails.length > 0 ? (
-                        <div className="mt-4">
+                        <div className="mt-4 pb-4">
                             <DataTable config={timeTableConfig} data={timeDetails} />
+                        </div>
+                    ) : null}
+                    {missingSpares.length > 0 ? (
+                        <div className="mt-4 pb-4">
+                            <DataTable config={missingSparesTableConfig} data={missingSpares} />
+                        </div>
+                    ) : null}
+                    {downtime.length > 0 ? (
+                        <div className="mt-4 pb-4">
+                            <DataTable config={downtimeTableConfig} data={downtime} />
                         </div>
                     ) : null}
                     <div className="pb-10"></div>
