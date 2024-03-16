@@ -1,21 +1,33 @@
+import Loading from '../loading/loading';
 import DashChartComponent from './dashChartComponent';
 
-const RevenueLostByAsset = () => {
-    const mainData = [
-        { label: 'Corrugator', value: 80000 },
-        { label: 'LMC 3', value: 69000 },
-        { label: 'LMC 1', value: 60000 },
-        { label: 'LMC 2', value: 48000 },
-        { label: 'Palletisers', value: 45000 },
-        { label: 'Other', value: 82000 },
-    ];
+interface Props {
+    data: {
+        mainData: { label: string; value: number }[];
+    };
+    loading: boolean;
+    error: boolean;
+}
+
+const RevenueLostByAsset = (props: Props) => {
     const text = {
-        title: 'Lost Revenue by Asset',
+        title: 'Lost Revenue by Asset (6 Months)',
         mainUnit: '£',
         labels: 'Lost Revenue (£)',
+        removeMonthSoFar: true,
     };
 
-    return <DashChartComponent mainData={mainData} text={text} />;
+    return (
+        <>
+            {props.loading ? (
+                <div className="w-full h-full bg-secondary rounded-md relative">
+                    <Loading />
+                </div>
+            ) : (
+                <DashChartComponent mainData={props.data.mainData} text={text} />
+            )}
+        </>
+    );
 };
 
 export default RevenueLostByAsset;

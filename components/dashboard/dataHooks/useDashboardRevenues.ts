@@ -4,13 +4,18 @@ import { SERVER_URL } from '../../routing/addressAPI';
 import { GlobalDebug } from '../../debug/globalDebug';
 
 interface BaseData {
+    mainData: { label: string; value: number }[];
+}
+
+interface Data extends BaseData {
     thisMonth: number;
     mainData: { label: string; value: number }[];
     avgData: { value: number; flipped: boolean };
 }
 
 export const useDashboardRevenues = (propertyId: number) => {
-    const empty: BaseData = {
+    const emptyBase: BaseData = { mainData: [] };
+    const empty: Data = {
         thisMonth: 0,
         avgData: { value: 0, flipped: false },
         mainData: [],
@@ -18,8 +23,9 @@ export const useDashboardRevenues = (propertyId: number) => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [revenue, setRevenue] = useState<BaseData>(empty);
-    const [downtime, setDowntime] = useState<BaseData>(empty);
+    const [revenue, setRevenue] = useState<Data>(empty);
+    const [downtime, setDowntime] = useState<Data>(empty);
+    const [assetRevenue, setAssetRevenue] = useState<BaseData>(emptyBase);
 
     useEffect(() => {
         if (propertyId > 0) {
@@ -41,6 +47,7 @@ export const useDashboardRevenues = (propertyId: number) => {
             GlobalDebug('useDashboardRevenues/getHandler', [['response', response]]);
             setRevenue(response.data.revenue);
             setDowntime(response.data.downtime);
+            setAssetRevenue(response.data.assetRevenue);
             setLoading(false);
         } catch (err) {
             GlobalDebug('useDashboardRevenues/getHandler', [['error', err]]);
@@ -48,5 +55,5 @@ export const useDashboardRevenues = (propertyId: number) => {
             setLoading(false);
         }
     };
-    return { revenue, downtime, revenuesLoading: loading, revenuesError: error };
+    return { revenue, downtime, assetRevenue, revenuesLoading: loading, revenuesError: error };
 };
