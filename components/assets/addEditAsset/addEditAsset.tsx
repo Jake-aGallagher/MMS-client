@@ -57,7 +57,7 @@ const AddEditAsset = (props: ModalProps) => {
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="Component Name" type="text" formName="name" errors={errors} required={true} />
                     <InfoField name={rpmString} />
-                    <GeneralFormInput register={register} label="Revenue per Minute (£)" type="number" formName="revenue" errors={errors} required={true} min={0} max={10000} />
+                    <GeneralFormInput register={register} label="Revenue per Minute (£)" type="number" formName="revenue" errors={errors} min={0} max={10000} />
                     <GeneralFormInput register={register} label="Notes" type="textarea" formName="note" errors={errors} rows={10} />
                     <div className="text-right -mt-4 pr-4 mb-8">{watchNote[0]?.length} / 1000 Charachters</div>
                     {FieldInputs(customFields, register, errors, setValue)}
