@@ -97,12 +97,12 @@ const PMDetails = () => {
                     </div>
                 </div>
                 {sparesDetails.length > 0 ? (
-                    <div className="mt-4">
+                    <div className="mt-4 pb-4">
                         <DataTable config={sparesTableConfig} data={sparesDetails} />
                     </div>
                 ) : null}
                 {timeDetails.length > 0 ? (
-                    <div className="mt-4">
+                    <div className="mt-4 pb-4">
                         <DataTable config={timeTableConfig} data={timeDetails} />
                     </div>
                 ) : null}

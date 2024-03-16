@@ -107,12 +107,12 @@ const PropertyView = () => {
                         </div>
                     </div>
                     {assignedUsers.length > 0 ? (
-                        <div className="mt-4">
+                        <div className="mt-4 pb-4">
                             <DataTable config={userTableConfig} data={assignedUsers} />
                         </div>
                     ) : null}
                     {recentJobs.length > 0 ? (
-                        <div className="mt-4">
+                        <div className="mt-4 pb-4">
                             <DataTable config={recentJobTableConfig} data={recentJobs} />
                         </div>
                     ) : null}
