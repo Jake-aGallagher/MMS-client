@@ -9,7 +9,7 @@ interface BaseData {
     avgData: { value: number; flipped: boolean };
 }
 
-export const useDashboardSpares = (propertyId: number) => {
+export const useDashboardRevenues = (propertyId: number) => {
     const empty: BaseData = {
         thisMonth: 0,
         avgData: { value: 0, flipped: false },
@@ -18,8 +18,7 @@ export const useDashboardSpares = (propertyId: number) => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [sparesCost, setSparesCosts] = useState<BaseData>(empty);
-    const [missingSpares, setMissingSpares] = useState<BaseData>(empty);
+    const [downtime, setDowntime] = useState<BaseData>(empty);
 
     useEffect(() => {
         if (propertyId > 0) {
@@ -35,18 +34,17 @@ export const useDashboardSpares = (propertyId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/dashboard/spares/${propertyId}`, {
+            const response = await axios.get(`${SERVER_URL}/dashboard/revenue/${propertyId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            GlobalDebug('useDashboardSpares/getHandler', [['response', response]]);
-            setSparesCosts(response.data.sparesCost);
-            setMissingSpares(response.data.missingSpares);
+            GlobalDebug('useDashboardRevenues/getHandler', [['response', response]]);
+            setDowntime(response.data.downtime);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useDashboardSpares/getHandler', [['error', err]]);
+            GlobalDebug('useDashboardRevenues/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }
     };
-    return { sparesCost, missingSpares, sparesLoading: loading, sparesError: error };
+    return { downtime, revenuesLoading: loading, revenuesError: error };
 };

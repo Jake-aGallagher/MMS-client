@@ -1,24 +1,36 @@
+import Loading from '../loading/loading';
 import DashChartComponent from './dashChartComponent';
 
-const Downtime = () => {
-    const downtime = '186 h 45 m';
-    const avgData = { value: 3, flipped: false };
+interface Props {
+    data: {
+        thisMonth: number;
+        avgData: { value: number; flipped: boolean };
+        mainData: { label: string; value: number }[];
+    };
+    loading: boolean;
+    error: boolean;
+}
 
-    const mainData = [
-        { label: 'June', value: 6000 },
-        { label: 'July', value: 4800 },
-        { label: 'August', value: 4700 },
-        { label: 'September', value: 5300 },
-        { label: 'October', value: 5600 },
-        { label: 'November', value: 6200 },
-    ];
+const Downtime = (props: Props) => {
     const text = {
         title: 'Downtime',
         labels: 'Downtime (mins)',
         yAxisLabel: 'minutes',
-        totalString: downtime,
+        totalString: props.data?.thisMonth.toString(),
+        afterTotalString: '',
     };
-    return <DashChartComponent avgData={avgData} mainData={mainData} text={text} />;
+
+    return (
+        <>
+            {props.loading ? (
+                <div className="w-full h-full bg-secondary rounded-md relative">
+                    <Loading />
+                </div>
+            ) : (
+                <DashChartComponent avgData={props.data.avgData} mainData={props.data.mainData} text={text} />
+            )}
+        </>
+    );
 };
 
 export default Downtime;
