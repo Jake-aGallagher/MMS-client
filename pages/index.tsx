@@ -16,10 +16,10 @@ import { useDashboardSpares } from '../components/dashboard/dataHooks/useDashboa
 import { useDashboardRevenues } from '../components/dashboard/dataHooks/useDashboardRevenues';
 
 const Dashboard = () => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { revenue, downtime, assetRevenue, revenuesLoading, revenuesError } = useDashboardRevenues(currentProperty);
-    const { raised, completed, open, planned, jobLoading, jobError } = useDashboardJobs(currentProperty);
-    const { sparesCost, missingSpares, sparesLoading, sparesError } = useDashboardSpares(currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { revenue, downtime, assetRevenue, revenuesLoading, revenuesError } = useDashboardRevenues(currentFacility);
+    const { raised, completed, open, planned, jobLoading, jobError } = useDashboardJobs(currentFacility);
+    const { sparesCost, missingSpares, sparesLoading, sparesError } = useDashboardSpares(currentFacility);
 
     return (
         <FullPage>

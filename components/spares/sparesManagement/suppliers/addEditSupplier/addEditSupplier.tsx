@@ -19,7 +19,7 @@ interface ModalProps {
 
 const AddEditSupplier = (props: ModalProps) => {
     const { defaultValues, loading, error } = useAddEditSupplier(props.payload.id);
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
 
     const {
         register,
@@ -38,7 +38,7 @@ const AddEditSupplier = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addEditSupplierHandler(data, currentProperty, props.payload.id, props.closeModal);
+        await addEditSupplierHandler(data, currentFacility, props.payload.id, props.closeModal);
     };
 
     return (

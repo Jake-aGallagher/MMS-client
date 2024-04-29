@@ -4,7 +4,7 @@ import { SERVER_URL } from '../routing/addressAPI';
 import { GlobalDebug } from '../debug/globalDebug';
 
 interface Props {
-    currentProperty: number;
+    currentFacility: number;
 }
 
 interface PM {
@@ -23,10 +23,10 @@ export const usePms = (props: Props) => {
     const [pms, setPms] = useState<PM[]>([]);
 
     useEffect(() => {
-        if (props.currentProperty !== 0) {
+        if (props.currentFacility !== 0) {
             reload();
         }
-    }, [props.currentProperty]);
+    }, [props.currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -36,7 +36,7 @@ export const usePms = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/pms/${props.currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/pms/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('usePms/getHandler', [['response', response]]);

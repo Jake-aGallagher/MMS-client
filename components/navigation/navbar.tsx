@@ -7,7 +7,7 @@ import LogoWithName from '../../public/LogoName.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faChartColumn, faClipboardList, faCoins, faFileContract, faFolderTree, faGear, faRetweet, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { logoutProcess } from './logoutProcess';
-import { useRetrieveProperty } from './useRetrieveProperty';
+import { useRetrieveFacility } from './useRetrieveFacility';
 import { useState } from 'react';
 import ModalBase from '../modal/modal';
 import Timer from './timer';
@@ -22,9 +22,9 @@ const NavBar = (props: Props) => {
     const dispatch = useDispatch();
     const router = useRouter();
     const userId = useSelector((state: RootState) => state.user.value.id);
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const userDetails = useSelector((state: RootState) => state.user.value);
-    const { availProps } = useRetrieveProperty({ currentProperty, userId });
+    const { availFacilities } = useRetrieveFacility({ currentFacility, userId });
     const initials = userDetails.first.split('')[0].toUpperCase() + '.' + userDetails.last.split('')[0].toUpperCase();
     const currentRoute = router.pathname.split('/')[1];
     const [modal, setModal] = useState<{ view: boolean; type: string }>({ view: false, type: '' });
@@ -38,12 +38,12 @@ const NavBar = (props: Props) => {
                     <img className="w-12 h-24 transition-all block xl:hidden group-hover:hidden" src={Logo.src} />
                 </div>
                 <div className="xl:hidden group-hover:hidden w-full h-8 mb-2 flex flex-row justify-center items-center overflow-hidden text-accent">
-                    {availProps.find((item) => item.id == currentProperty)?.name.slice(0, 5) || 'None'}
+                    {availFacilities.find((item) => item.id == currentFacility)?.name.slice(0, 5) || 'None'}
                 </div>
                 <div className="xl:flex group-hover:flex w-full h-8 pl-6 mb-2 hidden flex-row items-center overflow-hidden relative animate-slideSlow">
-                    <div className="animate-slideSlow text-accent">{availProps.find((item) => item.id == currentProperty)?.name.slice(0, 17) || 'None'}</div>
+                    <div className="animate-slideSlow text-accent">{availFacilities.find((item) => item.id == currentFacility)?.name.slice(0, 17) || 'None'}</div>
                     <button
-                        onClick={() => setModal({ view: true, type: 'propertyPicker' })}
+                        onClick={() => setModal({ view: true, type: 'facilityPicker' })}
                         className="absolute right-0 w-10 h-full flex flex-row justify-center items-center transition-all hover:text-accent animate-slideSlow"
                     >
                         <FontAwesomeIcon icon={faRetweet} className="w-5" />
@@ -58,10 +58,10 @@ const NavBar = (props: Props) => {
                     <FontAwesomeIcon icon={faCoins} className="w-3" />
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Revenue</span>
                 </Link>
-                {permissions.properties?.view || isAdmin ? (
-                    <Link href="/properties" className={'nLink ' + (currentRoute == 'properties' ? 'text-accent' : '')}>
+                {permissions.facilities?.view || isAdmin ? (
+                    <Link href="/facilities" className={'nLink ' + (currentRoute == 'facilities' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faBuilding} className="w-3" />
-                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Properties</span>
+                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Facilities</span>
                     </Link>
                 ) : null}
                 {permissions.jobs?.view || isAdmin ? (

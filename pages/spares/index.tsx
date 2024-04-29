@@ -28,8 +28,8 @@ const Spares = () => {
         router.push('/');
     }
 
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { spares, loading, error, reload } = useSpares({ currentProperty });
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { spares, loading, error, reload } = useSpares({ currentFacility });
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: PropsForModal }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     const sparesTableConfig: DataTableConfig = {

@@ -32,7 +32,7 @@ interface Delivery {
     contents: Contents[];
 }
 
-export const useAddEditDelivery = (id: number, currentProperty: number) => {
+export const useAddEditDelivery = (id: number, currentFacility: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [suppliersList, setSuppliersList] = useState<Supplier[]>();
@@ -60,7 +60,7 @@ export const useAddEditDelivery = (id: number, currentProperty: number) => {
 
     const getHandlerLimited = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/suppliers/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/suppliers/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditDelivery/getHandlerLimited', [['response', response]]);
@@ -76,7 +76,7 @@ export const useAddEditDelivery = (id: number, currentProperty: number) => {
 
     const getHandlerFull = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/deliveries/${currentProperty}/${id}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/deliveries/${currentFacility}/${id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditDelivery/getHandlerFull', [['response', response]]);

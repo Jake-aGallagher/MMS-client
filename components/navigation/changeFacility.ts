@@ -1,18 +1,18 @@
 import { Dispatch } from 'react';
-import { setCurrentProperty } from '../store/propertySlice';
+import { setCurrentFacility } from '../store/facilitySlice';
 import { UnknownAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
 import { GlobalDebug } from '../debug/globalDebug';
 
-export const changeProperty = async (dispatch: Dispatch<UnknownAction>, userId: number, newPropId: number) => {
-    const alertString = 'There has been an issue changing property, please try again.';
+export const changeFacility = async (dispatch: Dispatch<UnknownAction>, userId: number, newFacilityId: number) => {
+    const alertString = 'There has been an issue changing facility, please try again.';
     try {
         const response = await axios.put(
-            `${SERVER_URL}/properties/Last-property`,
+            `${SERVER_URL}/facilities/Last-facility`,
             {
                 userId: userId,
-                propertyId: newPropId,
+                facilityId: newFacilityId,
             },
             {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
@@ -20,18 +20,18 @@ export const changeProperty = async (dispatch: Dispatch<UnknownAction>, userId: 
         );
         if (response.data.created) {
             dispatch(
-                setCurrentProperty({
-                    currentProperty: newPropId,
+                setCurrentFacility({
+                    currentFacility: newFacilityId,
                 })
             );
         } else {
             alert(alertString);
         }
     } catch (err) {
-        GlobalDebug('changeProperty', [
+        GlobalDebug('changeFacility', [
             ['error', err],
             ['userId', userId],
-            ['newPropId', newPropId],
+            ['newFacilityId', newFacilityId],
         ]);
         alert(alertString);
     }

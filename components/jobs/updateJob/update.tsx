@@ -33,7 +33,7 @@ interface Modal {
 }
 
 const UpdateJob = (props: ModalProps) => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const {
         statusOptions,
         completableStatus,
@@ -51,7 +51,7 @@ const UpdateJob = (props: ModalProps) => {
         loading,
         noData,
         error,
-    } = useUpdateJob(currentProperty, props.jobId);
+    } = useUpdateJob(currentFacility, props.jobId);
     const [viewModal, setViewModal] = useState(false);
     const [modal, setModal] = useState<Modal>({ modalType: '', payload: {}, fullSize: true, passbackDeatails: null, closeModal: () => setViewModal(false) });
     const [files, setFiles] = useState<File[]>([]);
@@ -106,10 +106,10 @@ const UpdateJob = (props: ModalProps) => {
     const handleRegistration = async (data: any) => {
         if (completableStatus.includes(parseInt(String(statusWatch[0]))) && completed !== 1) {
             if (confirm('You are about to Complete this Job, once completed the only editable section will be the Notes, are you sure you want to continue') === true) {
-                updateJobFullHandler(true, data, props.jobId, currentProperty, loggedTimeDetails, sparesSelected, sparesMissing, downtime, files, props.closeModal);
+                updateJobFullHandler(true, data, props.jobId, currentFacility, loggedTimeDetails, sparesSelected, sparesMissing, downtime, files, props.closeModal);
             }
         } else if (completed !== 1) {
-            updateJobFullHandler(false, data, props.jobId, currentProperty, loggedTimeDetails, sparesSelected, sparesMissing, downtime, files, props.closeModal);
+            updateJobFullHandler(false, data, props.jobId, currentFacility, loggedTimeDetails, sparesSelected, sparesMissing, downtime, files, props.closeModal);
         } else {
             updatejobNotesHandler(data, props.jobId, props.closeModal);
         }

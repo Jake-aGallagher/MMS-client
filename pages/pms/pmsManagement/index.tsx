@@ -19,8 +19,8 @@ const Schedules = () => {
     if (!permissions.schedules?.view && !isAdmin) {
         router.push('/');
     }
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { schedules, loading, error, reload } = usePmSchedules({ currentProperty });
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { schedules, loading, error, reload } = usePmSchedules({ currentFacility });
 
     const schedulesTableConfig: DataTableConfig = {
         headers: [

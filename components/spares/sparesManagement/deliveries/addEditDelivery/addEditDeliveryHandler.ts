@@ -8,7 +8,7 @@ interface Contents {
     quantity: number;
 }
 
-export const addEditDeliveryHandler = async (data: any, contents: Contents[], id: number, currentProperty: number, closeModal: () => void, name: string) => {
+export const addEditDeliveryHandler = async (data: any, contents: Contents[], id: number, currentFacility: number, closeModal: () => void, name: string) => {
     const alertString = `There has been an issue ${name.length > 0 ? 'editing' : 'creating'} this Delivery, please try again.`;
     const contentsRemovedNone = contents.filter((item) => item.quantity > 0);
     if (contentsRemovedNone.length > 0) {
@@ -22,7 +22,7 @@ export const addEditDeliveryHandler = async (data: any, contents: Contents[], id
                 due: data.due,
                 arrived: data.arrived,
                 contents: contentsRemovedNone,
-                propertyId: currentProperty,
+                facilityId: currentFacility,
             });
             if (response.data.created) {
                 closeModal();
@@ -34,7 +34,7 @@ export const addEditDeliveryHandler = async (data: any, contents: Contents[], id
                 ['error', err],
                 ['data', data],
                 ['id', id],
-                ['currentProperty', currentProperty],
+                ['currentFacility', currentFacility],
                 ['name', name],
                 ['contents', contents],
             ]);

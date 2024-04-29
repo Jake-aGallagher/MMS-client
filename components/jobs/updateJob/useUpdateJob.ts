@@ -28,7 +28,7 @@ interface Downtime {
     time: number;
 }
 
-export const useUpdateJob = (currentProperty: number, jobId: number) => {
+export const useUpdateJob = (currentFacility: number, jobId: number) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
@@ -56,7 +56,7 @@ export const useUpdateJob = (currentProperty: number, jobId: number) => {
 
     const getJobUpdate = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/jobs/update/${currentProperty}/${jobId}`, {
+            const response = await axios.get(`${SERVER_URL}/jobs/update/${currentFacility}/${jobId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useUpdateJob/getJobUpdate', [['response', response]]);

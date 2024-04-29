@@ -11,7 +11,7 @@ import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
 import AddFieldButton from '../../../components/logs/logsManagement/details/formBuilder/addFieldButton';
 
 interface Props {
-    type: 'property' | 'asset' | 'spare' | 'job' | 'pm' | 'log';
+    type: 'facility' | 'asset' | 'spare' | 'job' | 'pm' | 'log';
     modelId?: number;
 }
 

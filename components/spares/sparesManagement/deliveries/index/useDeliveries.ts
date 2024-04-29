@@ -4,7 +4,7 @@ import { SERVER_URL } from '../../../../routing/addressAPI';
 import { GlobalDebug } from '../../../../debug/globalDebug';
 
 interface Props {
-    currentProperty: number;
+    currentFacility: number;
 }
 
 interface Contents {
@@ -32,10 +32,10 @@ export const useDeliveries = (props: Props) => {
     const [deliveriesList, setDeliveriesList] = useState<Delivery[]>([]);
 
     useEffect(() => {
-        if (props.currentProperty !== 0) {
+        if (props.currentFacility !== 0) {
             reload();
         }
-    }, [props.currentProperty]);
+    }, [props.currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -45,7 +45,7 @@ export const useDeliveries = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/deliveries/${props.currentProperty}/0`, {
+            const response = await axios.get(`${SERVER_URL}/spares/deliveries/${props.currentFacility}/0`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useDeliveries/getHandler', [['response', response]]);

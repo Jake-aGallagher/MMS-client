@@ -13,7 +13,7 @@ interface Data extends BaseData {
     avgData: { value: number; flipped: boolean };
 }
 
-export const useDashboardRevenues = (propertyId: number) => {
+export const useDashboardRevenues = (facilityId: number) => {
     const emptyBase: BaseData = { mainData: [] };
     const empty: Data = {
         thisMonth: 0,
@@ -28,10 +28,10 @@ export const useDashboardRevenues = (propertyId: number) => {
     const [assetRevenue, setAssetRevenue] = useState<BaseData>(emptyBase);
 
     useEffect(() => {
-        if (propertyId > 0) {
+        if (facilityId > 0) {
             reload();
         }
-    }, [propertyId]);
+    }, [facilityId]);
 
     const reload = () => {
         setLoading(true);
@@ -41,7 +41,7 @@ export const useDashboardRevenues = (propertyId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/dashboard/revenue/${propertyId}`, {
+            const response = await axios.get(`${SERVER_URL}/dashboard/revenue/${facilityId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useDashboardRevenues/getHandler', [['response', response]]);

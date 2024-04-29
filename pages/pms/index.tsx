@@ -19,8 +19,8 @@ const Pms = () => {
     if (!permissions.schedules?.view && !isAdmin) {
         router.push('/');
     }
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { pms, loading, error, reload } = usePms({ currentProperty });
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { pms, loading, error, reload } = usePms({ currentFacility });
     GlobalDebug('PM Index', [['PM list', pms]]);
 
     const pmsTableConfig: DataTableConfig = {

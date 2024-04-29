@@ -4,7 +4,7 @@ import { SERVER_URL } from '../../routing/addressAPI';
 import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
-    currentProperty: number;
+    currentFacility: number;
 }
 
 interface Spare {
@@ -31,10 +31,10 @@ export const useSpares = (props: Props) => {
     const [spares, setSpares] = useState<Spare[]>([]);
 
     useEffect(() => {
-        if (props.currentProperty !== 0) {
+        if (props.currentFacility !== 0) {
             reload();
         }
-    }, [props.currentProperty]);
+    }, [props.currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -44,7 +44,7 @@ export const useSpares = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/all-spares/${props.currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/all-spares/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useSpares/getHandler', [['response', response]]);

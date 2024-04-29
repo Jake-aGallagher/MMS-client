@@ -41,7 +41,7 @@ interface RecentPms {
     frequency: string;
 }
 
-export const useSparesDetails = (spareId: string, currentProperty: string) => {
+export const useSparesDetails = (spareId: string, currentFacility: string) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
@@ -53,10 +53,10 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
     const [used6M, setUsed6M] = useState<{ month: string; value: number }[]>([]);
 
     useEffect(() => {
-        if (spareId !== '' && currentProperty !== '') {
+        if (spareId !== '' && currentFacility !== '') {
             reload();
         }
-    }, [spareId, currentProperty]);
+    }, [spareId, currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -67,7 +67,7 @@ export const useSparesDetails = (spareId: string, currentProperty: string) => {
 
     const getSpareItemHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spare/${spareId}/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spare/${spareId}/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useSparesDetails/getSpareItemHandler', [['response', response]]);

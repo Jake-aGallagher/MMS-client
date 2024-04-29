@@ -19,8 +19,8 @@ const Logs = () => {
         router.push('/');
     }
 
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { logs, loading, error, reload } = useLogs({ currentProperty });
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { logs, loading, error, reload } = useLogs({ currentFacility });
 
     const LogTableConfig = {
         headers: [

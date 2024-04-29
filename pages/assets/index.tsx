@@ -21,8 +21,8 @@ const Assets = () => {
         router.push('/');
     }
 
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { assetTree, loading, error, reload } = useAssets(currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { assetTree, loading, error, reload } = useAssets(currentFacility);
     const { openBranches, toggle } = useOpenBranches();
     const [editMode, setEditMode] = useState(false);
     const [modal, setModal] = useState({ view: false, type: '', payload: {} });

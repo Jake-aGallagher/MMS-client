@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { GlobalDebug } from '../../debug/globalDebug';
 
-interface Property {
+interface Facility {
     id: number;
     name: string;
     type: string;
@@ -13,10 +13,10 @@ interface Property {
     postcode: string;
 }
 
-export const useProperties = () => {
+export const useFacilities = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [allProperties, setAllProperties] = useState<Property[]>([]);
+    const [allFacilities, setAllFacilities] = useState<Facility[]>([]);
 
     useEffect(() => {
         reload();
@@ -30,17 +30,17 @@ export const useProperties = () => {
 
     const getHandler = async () => {
         try {
-            const propertiesList = await axios.get(`${SERVER_URL}/properties/all-properties`, {
+            const facilitiesList = await axios.get(`${SERVER_URL}/facilities/all-facilities`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            GlobalDebug('useProperties/getHandler', [['response', propertiesList]]);
-            setAllProperties(propertiesList.data);
+            GlobalDebug('useFacilities/getHandler', [['response', facilitiesList]]);
+            setAllFacilities(facilitiesList.data);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useProperties/getHandler', [['error', err]]);
+            GlobalDebug('useFacilities/getHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }
     };
-    return { allProperties, loading, error, reload };
+    return { allFacilities, loading, error, reload };
 };

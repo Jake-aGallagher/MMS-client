@@ -20,7 +20,7 @@ interface ModalProps {
 }
 
 const UpdateLog = (props: ModalProps) => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const userId = useSelector((state: RootState) => state.user.value.id);
     const { customFields, logTitleDescription, defaultValues, logDates, loading, error } = useLogFields(props.payload.id);
     const continueScheduleOptions = [
@@ -48,7 +48,7 @@ const UpdateLog = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await updateLogHandler(props.payload.id, data, currentProperty, userId, props.closeModal);
+        await updateLogHandler(props.payload.id, data, currentFacility, userId, props.closeModal);
     };
 
     return (

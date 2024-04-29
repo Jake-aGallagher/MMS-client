@@ -2,7 +2,7 @@ import DefaultChartCard from "../defaultChartCard";
 import { generateColour } from "../generateColour";
 
 interface Props {
-    propertyDetailsName: string | undefined;
+    facilityDetailsName: string | undefined;
     incompleteJobs: IncompleteJobs[];
     raised6M: { month: string; value: number }[];
     sparesUsed6M: { month: string; value: number }[];
@@ -15,13 +15,13 @@ interface IncompleteJobs {
     count: number;
 }
 
-const PropertyDetailsDefaultCharts = (props: Props) => {
+const FacilityDetailsDefaultCharts = (props: Props) => {
     const graphData = [
         {
             chartType: 'bar',
             selectValue: 'outstanding',
             selectLabel: 'Outstanding Jobs & PMs',
-            chartTitle: `Outstanding Jobs & PMs for ${props.propertyDetailsName}`,
+            chartTitle: `Outstanding Jobs & PMs for ${props.facilityDetailsName}`,
             data: {
                 labels: props.incompleteJobs.map((data) => data.type),
                 datasets: [
@@ -39,7 +39,7 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
             chartType: 'bar',
             selectValue: 'created',
             selectLabel: 'Maintenance Tasks Created in the Last 6 Months',
-            chartTitle: `Maintenance Tasks Created in last 6 Months for ${props.propertyDetailsName}`,
+            chartTitle: `Maintenance Tasks Created in last 6 Months for ${props.facilityDetailsName}`,
             data: {
                 labels: props.raised6M.map((data) => data.month),
                 datasets: [
@@ -57,7 +57,7 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
             chartType: 'bar',
             selectValue: 'spares_used',
             selectLabel: 'Spares used in the last 6 Months',
-            chartTitle: `Spares used in the last 6 Months for ${props.propertyDetailsName}`,
+            chartTitle: `Spares used in the last 6 Months for ${props.facilityDetailsName}`,
             data: {
                 labels: props.sparesUsed6M.map((data) => data.month),
                 datasets: [
@@ -75,7 +75,7 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
             chartType: 'bar',
             selectValue: 'most_used',
             selectLabel: 'Most used Spares in the last 6 Months',
-            chartTitle: `Most used Spares in the last 6 Months for ${props.propertyDetailsName}`,
+            chartTitle: `Most used Spares in the last 6 Months for ${props.facilityDetailsName}`,
             data: {
                 labels: props.mostUsed6M.map((data) => data.name),
                 datasets: [
@@ -93,7 +93,7 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
             chartType: 'bar',
             selectValue: 'spares_cost',
             selectLabel: 'Spares costs for the last 6 Months',
-            chartTitle: `Cost of spares used in the last 6 Months for ${props.propertyDetailsName} (£)`,
+            chartTitle: `Cost of spares used in the last 6 Months for ${props.facilityDetailsName} (£)`,
             data: {
                 labels: props.sparesCost6M.map((data) => data.month),
                 datasets: [
@@ -115,4 +115,4 @@ const PropertyDetailsDefaultCharts = (props: Props) => {
     );
 };
 
-export default PropertyDetailsDefaultCharts;
+export default FacilityDetailsDefaultCharts;

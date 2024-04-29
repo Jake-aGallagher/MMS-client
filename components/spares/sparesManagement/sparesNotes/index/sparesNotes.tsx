@@ -11,8 +11,8 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 const SparesNotes = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { notes, numOfNotes, reload } = useSparesNotes(currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { notes, numOfNotes, reload } = useSparesNotes(currentFacility);
     const [showNotes, setShowNotes] = useState(false);
     const [viewNote, setViewNote] = useState(0);
     const [viewModal, setViewModal] = useState(false);

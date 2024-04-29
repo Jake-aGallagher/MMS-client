@@ -4,7 +4,7 @@ import { SERVER_URL } from '../../routing/addressAPI';
 import { CustomFieldData } from '../../../commonTypes/CustomFields';
 import { GlobalDebug } from '../../debug/globalDebug';
 
-interface Property {
+interface Facility {
     id: number;
     name: string;
     type: string;
@@ -35,11 +35,11 @@ interface IncompleteJobs {
     count: number;
 }
 
-export const usePropertyDetails = (propertyNumber: string) => {
+export const useFacilityDetails = (facilityNumber: string) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
-    const [propertyDetails, setPropertyDetails] = useState<Property>();
+    const [facilityDetails, setFacilityDetails] = useState<Facility>();
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
     const [recentJobs, setRecentJobs] = useState<RecentJobs[]>([]);
@@ -50,29 +50,29 @@ export const usePropertyDetails = (propertyNumber: string) => {
     const [sparesCost6M, setSparesCost6M] = useState<{ month: string; value: number }[]>([]);
 
     useEffect(() => {
-        if (propertyNumber !== '') {
+        if (facilityNumber !== '') {
             reload();
         }
-    }, [propertyNumber]);
+    }, [facilityNumber]);
 
     const reload = () => {
         setLoading(true);
         setError(false);
         setNoData(false);
-        getPropertyHandler();
+        getFacilityHandler();
     };
 
-    const getPropertyHandler = async () => {
+    const getFacilityHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/properties/${propertyNumber}`, {
+            const response = await axios.get(`${SERVER_URL}/facilities/${facilityNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            GlobalDebug('usePropertyDetails/getPropertyHandler', [['response', response]]);
+            GlobalDebug('useFacilityDetails/getFacilityHandler', [['response', response]]);
             const data = response.data;
-            if (data.propDetails.length === 0) {
+            if (data.facilityDetails.length === 0) {
                 setNoData(true);
             } else {
-                setPropertyDetails(data.propDetails[0]);
+                setFacilityDetails(data.facilityDetails[0]);
                 setCustomFields(response.data.customFields);
                 setAssignedUsers(data.assignedUsers);
                 setRecentJobs(data.recentJobs);
@@ -89,10 +89,10 @@ export const usePropertyDetails = (propertyNumber: string) => {
             }
             setLoading(false);
         } catch (err) {
-            GlobalDebug('usePropertyDetails/getPropertyHandler', [['error', err]]);
+            GlobalDebug('useFacilityDetails/getFacilityHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }
     };
-    return { propertyDetails, customFields, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M, mostUsed6M, sparesCost6M, loading, noData, error, reload };
+    return { facilityDetails, customFields, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M, mostUsed6M, sparesCost6M, loading, noData, error, reload };
 };

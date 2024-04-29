@@ -22,7 +22,7 @@ interface ModalProps {
 const CreateJob = (props: ModalProps) => {
     const { defaultValues, typeOptions, urgencyOptions, loading, error } = useCreateJob();
     const userId = useSelector((state: RootState) => state.user.value.id);
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
     const [modalPayload, setModalPayload] = useState(0);
@@ -47,7 +47,7 @@ const CreateJob = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await createJobHandler({ data, currentProperty, assetId: props.assetId, userId, closeModal: props.closeModal, setModalPayload, setModalType, setViewModal });
+        await createJobHandler({ data, currentFacility, assetId: props.assetId, userId, closeModal: props.closeModal, setModalPayload, setModalType, setViewModal });
     };
 
     return (

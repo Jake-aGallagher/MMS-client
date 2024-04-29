@@ -4,7 +4,7 @@ import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
     data: any;
-    currentProperty: number;
+    currentFacility: number;
     assetId: number;
     userId: number;
     closeModal: () => void;
@@ -17,7 +17,7 @@ export const createJobHandler = async (props: Props) => {
     const alertString = 'There has been an issue creating this Job, please try again.';
     try {
         const response = await createJobConn({
-            propertyNumber: props.currentProperty,
+            facilityNumber: props.currentFacility,
             assetNumber: props.assetId,
             type: props.data.selectedType,
             title: props.data.title,
@@ -39,7 +39,7 @@ export const createJobHandler = async (props: Props) => {
         GlobalDebug('createJobHandler', [
             ['error', err],
             ['data', props.data],
-            ['currentProperty', props.currentProperty],
+            ['currentFacility', props.currentFacility],
             ['assetId', props.assetId],
             ['userId', props.userId],
         ]);

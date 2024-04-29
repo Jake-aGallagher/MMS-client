@@ -17,18 +17,18 @@ interface AssetDowntime extends Asset {
 export const useDowntimeSelector = (assetsSelected: AssetDowntime[]) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const [assetList, setAssetList] = useState<AssetDowntime[]>([]);
 
     useEffect(() => {
-        if (currentProperty !== 0) {
+        if (currentFacility !== 0) {
             getHandler();
         }
-    }, [currentProperty]);
+    }, [currentFacility]);
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/assets/revenues/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/assets/revenues/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useDowntimeSelector/getHandler', [['response', response]]);

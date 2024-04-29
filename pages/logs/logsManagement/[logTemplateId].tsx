@@ -21,11 +21,11 @@ const LogTemplate = () => {
     if (!permissions.logsManagement?.view && !isAdmin) {
         router.push('/logs');
     }
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const logTemplateId = parseInt(router.asPath.split('/')[3]);
 
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
-    const { templateDetails, logs, loading, noData, error, reload } = useLogTemplateDetails(currentProperty, logTemplateId);
+    const { templateDetails, logs, loading, noData, error, reload } = useLogTemplateDetails(currentFacility, logTemplateId);
 
     const scheduleDetailsConfig = {
         id: templateDetails?.id,

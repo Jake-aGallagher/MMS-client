@@ -20,18 +20,18 @@ interface UserSelected {
 export const useUsersSelector = (usersSelected: UserSelected[]) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const [userslist, setUsersList] = useState<UserSelected[]>([]);
 
     useEffect(() => {
-        if (currentProperty !== 0) {
+        if (currentFacility !== 0) {
             getHandler();
         }
-    }, [currentProperty]);
+    }, [currentFacility]);
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/users/all/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/users/all/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useUsersSelector/getHandler', [['response', response]]);

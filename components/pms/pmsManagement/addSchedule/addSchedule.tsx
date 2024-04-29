@@ -19,7 +19,7 @@ interface ModalProps {
 }
 
 const AddSchedule = (props: ModalProps) => {
-    const propertyId = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const facilityId = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const { defaultValues, typeOptions, loading, error } = useAddSchedule();
     const yesNoOptions = [
         { id: 'No', value: 'No' },
@@ -52,7 +52,7 @@ const AddSchedule = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addScheduleHandler({ data, propertyId, assetId: props.assetId, closeModal: props.closeModal });
+        await addScheduleHandler({ data, facilityId, assetId: props.assetId, closeModal: props.closeModal });
     };
 
     return (

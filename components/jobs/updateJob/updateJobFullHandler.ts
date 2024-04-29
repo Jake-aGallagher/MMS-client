@@ -22,7 +22,7 @@ export const updateJobFullHandler = async (
     complete: boolean,
     data: any,
     jobId: number,
-    currentProperty: number,
+    currentFacility: number,
     loggedTimeDetails: LoggedTime[],
     sparesSelected: SparesSelected[],
     sparesMissing: SparesSelected[],
@@ -47,7 +47,7 @@ export const updateJobFullHandler = async (
             sparesUsed: sparesSelected,
             sparesMissing,
             downtime,
-            propertyId: currentProperty,
+            facilityId: currentFacility,
             fieldData: data
         })
     );

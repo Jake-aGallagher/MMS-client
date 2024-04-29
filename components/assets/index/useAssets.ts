@@ -12,16 +12,16 @@ interface AssetTreeItem {
     children: [];
 }
 
-export const useAssets = (currentProperty: number) => {
+export const useAssets = (currentFacility: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [assetTree, setAssetTree] = useState<AssetTreeItem[]>([]);
 
     useEffect(() => {
-        if (currentProperty !== 0) {
+        if (currentFacility !== 0) {
             reload();
         }
-    }, [currentProperty]);
+    }, [currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -31,7 +31,7 @@ export const useAssets = (currentProperty: number) => {
 
     const getAssetTree = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/asset-tree/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/asset-tree/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAssets/getAssetTree', [['response', response]]);

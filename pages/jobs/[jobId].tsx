@@ -36,7 +36,7 @@ const JobView = () => {
             { label: 'ID', value: jobDetails?.id },
             { label: 'Title', value: jobDetails?.title },
             { label: 'Completed', value: jobDetails?.completed == 1 ? <div>&#10004;</div> : <div>&#10060;</div> },
-            { label: 'Facility', value: jobDetails?.property_name },
+            { label: 'Facility', value: jobDetails?.facility_name },
             { label: 'Asset', value: jobDetails?.asset_name },
             { label: 'Type', value: jobDetails?.type },
             { label: 'Description', value: jobDetails?.description },

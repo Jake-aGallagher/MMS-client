@@ -4,7 +4,7 @@ import { SERVER_URL } from '../routing/addressAPI';
 import { GlobalDebug } from '../debug/globalDebug';
 
 interface Props {
-    currentProperty: number;
+    currentFacility: number;
 }
 
 interface Log {
@@ -23,10 +23,10 @@ export const useLogs = (props: Props) => {
     const [logs, setLogs] = useState<Log[]>([]);
 
     useEffect(() => {
-        if (props.currentProperty !== 0) {
+        if (props.currentFacility !== 0) {
             reload();
         }
-    }, [props.currentProperty]);
+    }, [props.currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -36,7 +36,7 @@ export const useLogs = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/logs/all-logs/${props.currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/logs/all-logs/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useLogs/getHandler', [['response', response]]);

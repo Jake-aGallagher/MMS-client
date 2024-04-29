@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ModalBase from '../../components/modal/modal';
-import { useProperties } from '../../components/properties/index/useProperties';
+import { useFacilities } from '../../components/facilities/index/useFacilities';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import { useRouter } from 'next/router';
 
-const propertiesTableConfig = {
+const facilitiesTableConfig = {
     headers: [
         { id: 'id', name: 'ID', type: 'link', search: true, order: true },
         { id: 'name', name: 'Name', type: 'string', search: true, order: true },
@@ -19,37 +19,37 @@ const propertiesTableConfig = {
         { id: 'postcode', name: 'Postcode', type: 'string', search: true, order: true },
     ],
     searchable: true,
-    linkColPrefix: '/properties/',
+    linkColPrefix: '/facilities/',
 };
 
-const Properties = () => {
+const Facilities = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
-    if (!permissions.properties?.vieew && !isAdmin) {
+    if (!permissions.facilities?.vieew && !isAdmin) {
         router.push('/');
     }
 
-    const { allProperties, loading, error, reload } = useProperties();
+    const { allFacilities, loading, error, reload } = useFacilities();
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setmodalType] = useState('');
 
     return (
         <FullPage>
             <Toolbar>
-                {permissions.properties?.manage || isAdmin ? (
-                    <button onClick={() => [setViewModal(true), setmodalType('addEditProperty')]} className="tLink">
+                {permissions.facilities?.manage || isAdmin ? (
+                    <button onClick={() => [setViewModal(true), setmodalType('addEditFacility')]} className="tLink">
                         <div className="text-2xl mr-1 pb-1">+</div>
-                        Add Property
+                        Add Facility
                     </button>
                 ) : null}
             </Toolbar>
             {viewModal ? <ModalBase modalType={modalType} payload={0} closeModal={() => [setViewModal(false), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error}>
-                <DataTable config={propertiesTableConfig} data={allProperties} />
+                <DataTable config={facilitiesTableConfig} data={allFacilities} />
             </LoadingNoDataError>
         </FullPage>
     );
 };
 
-export default Properties;
+export default Facilities;

@@ -4,7 +4,7 @@ import { SERVER_URL } from '../../routing/addressAPI';
 import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
-    propertyNumber: number;
+    facilityNumber: number;
 }
 
 interface UsersList {
@@ -31,7 +31,7 @@ export const useAssignUsers = (props: Props) => {
 
     const getUsersForAssign = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/properties/users-for-assigning/${props.propertyNumber}`, {
+            const response = await axios.get(`${SERVER_URL}/facilities/users-for-assigning/${props.facilityNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAssignUsers/getUsersForAssign', [['response', response]]);

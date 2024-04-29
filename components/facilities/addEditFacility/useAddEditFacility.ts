@@ -5,16 +5,16 @@ import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes
 import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
-    propertyNumber: number;
+    facilityNumber: number;
 }
 
-export const useAddEditProperty = (props: Props) => {
+export const useAddEditFacility = (props: Props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [id, setId] = useState(props.propertyNumber);
+    const [id, setId] = useState(props.facilityNumber);
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [defaultValues, setDefaultValues] = useState<DefaultValues>({
-        propertyName: '',
+        facilityName: '',
         address: '',
         city: '',
         county: '',
@@ -22,26 +22,26 @@ export const useAddEditProperty = (props: Props) => {
     });
 
     useEffect(() => {
-        if (props.propertyNumber > 0) {
+        if (props.facilityNumber > 0) {
             setLoading(true);
             setError(false);
-            getPropertyHandler();
+            getFacilityHandler();
         } else {
             setLoading(false);
         }
     }, []);
 
-    const getPropertyHandler = async () => {
+    const getFacilityHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/properties/${props.propertyNumber}`, {
+            const response = await axios.get(`${SERVER_URL}/facilities/${props.facilityNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            GlobalDebug('useAddEditProperty/getPropertyHandler', [['response', response]]);
-            const data = response.data.propDetails[0];
+            GlobalDebug('useAddEditFacility/getFacilityHandler', [['response', response]]);
+            const data = response.data.facilityDetails[0];
             setId(parseInt(data.id));
             setCustomFields(response.data.customFields);
             const defaultVal: DefaultValues = {
-                propertyName: data.name,
+                facilityName: data.name,
                 address: data.address,
                 city: data.city,
                 county: data.county,
@@ -53,7 +53,7 @@ export const useAddEditProperty = (props: Props) => {
             setDefaultValues(defaultVal);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('useAddEditProperty/getPropertyHandler', [['error', err]]);
+            GlobalDebug('useAddEditFacility/getFacilityHandler', [['error', err]]);
             setError(true);
             setLoading(false);
         }

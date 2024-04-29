@@ -34,8 +34,8 @@ const Jobs = () => {
         router.push('/');
     }
 
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { jobs, loading, error } = useJobs({ currentProperty });
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { jobs, loading, error } = useJobs({ currentFacility });
 
     return (
         <FullPage>

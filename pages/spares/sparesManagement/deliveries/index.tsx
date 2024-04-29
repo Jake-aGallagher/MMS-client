@@ -29,8 +29,8 @@ const Deliveries = () => {
         router.push('/spares');
     }
 
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { deliveriesList, loading, error, reload } = useDeliveries({ currentProperty });
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { deliveriesList, loading, error, reload } = useDeliveries({ currentFacility });
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { contents: Contents[]; name: string } | { id: number; name: string; url?: string } }>({
         view: false,
         type: '',

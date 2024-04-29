@@ -5,20 +5,20 @@ import GeneralFormInput from '../../forms/generalFormInput';
 import FormHeader from '../../forms/formHeader';
 import FormContainer from '../../forms/formContainer';
 import GeneralForm from '../../forms/generalForm';
-import { useAddEditProperty } from './useAddEditProperty';
-import { addEditPropertyHandler } from './addEditPropertyHandler';
+import { useAddEditFacility } from './useAddEditFacility';
+import { addEditFacilityHandler } from './addEditFacilityHandler';
 import { useDispatch } from 'react-redux';
 import LoadingNoDataError from '../../loading/loadingNoDataError';
 import { FieldInputs } from '../../settings/customFields/fieldInputs';
 
 interface ModalProps {
     closeModal: () => void;
-    propertyNumber: number;
+    facilityNumber: number;
 }
 
-const AddEditProperty = (props: ModalProps) => {
+const AddEditFacility = (props: ModalProps) => {
     const dispatch = useDispatch();
-    const { defaultValues, customFields, id, loading, error } = useAddEditProperty({ propertyNumber: props.propertyNumber });
+    const { defaultValues, customFields, id, loading, error } = useAddEditFacility({ facilityNumber: props.facilityNumber });
 
     const {
         register,
@@ -37,15 +37,15 @@ const AddEditProperty = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addEditPropertyHandler(data, id, props.closeModal, dispatch, props.propertyNumber);
+        await addEditFacilityHandler(data, id, props.closeModal, dispatch, props.facilityNumber);
     };
 
     return (
         <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
-                <FormHeader label={props.propertyNumber > 0 ? 'Edit ' + defaultValues.propertyName : 'Add Property'} />
+                <FormHeader label={props.facilityNumber > 0 ? 'Edit ' + defaultValues.facilityName : 'Add Facility'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
-                    <GeneralFormInput register={register} label="Facility Name" type="text" formName="propertyName" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="Facility Name" type="text" formName="facilityName" errors={errors} required={true} />
                     <GeneralFormInput register={register} label="Address" type="text" formName="address" errors={errors} required={true} />
                     <GeneralFormInput register={register} label="City" type="text" formName="city" errors={errors} required={true} />
                     <GeneralFormInput register={register} label="County" type="text" formName="county" errors={errors} required={true} />
@@ -58,4 +58,4 @@ const AddEditProperty = (props: ModalProps) => {
     );
 };
 
-export default AddEditProperty;
+export default AddEditFacility;

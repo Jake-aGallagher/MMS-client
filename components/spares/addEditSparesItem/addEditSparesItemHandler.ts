@@ -1,7 +1,7 @@
 import { GlobalDebug } from '../../debug/globalDebug';
 import { addEditSparesItemConn } from './addEditSparesItemConn';
 
-export const addEditSparesItemHandler = async (data: any, currentProperty: number, id: number, closeModal: () => void, name: string) => {
+export const addEditSparesItemHandler = async (data: any, currentFacility: number, id: number, closeModal: () => void, name: string) => {
     const alertString = `There has been an issue ${name.length > 0 ? 'editing' : 'creating'} this Spares Item, please try again.`;
     try {
         const response = await addEditSparesItemConn({
@@ -15,7 +15,7 @@ export const addEditSparesItemHandler = async (data: any, currentProperty: numbe
             quantRemaining: data.quantRemaining,
             supplier: data.supplier,
             cost: data.cost,
-            propertyId: currentProperty,
+            facilityId: currentFacility,
             id: id,
             fieldData: data,
         });
@@ -29,7 +29,7 @@ export const addEditSparesItemHandler = async (data: any, currentProperty: numbe
             ['error', err],
             ['data', data],
             ['id', id],
-            ['currentProperty', currentProperty],
+            ['currentFacility', currentFacility],
             ['name', name],
         ]);
         alert(alertString);

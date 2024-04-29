@@ -5,43 +5,43 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import DetailsBox from '../../components/detailsBox/detailsBox';
-import { usePropertyDetails } from '../../components/properties/details/usePropertyDetails';
+import { useFacilityDetails } from '../../components/facilities/details/useFacilityDetails';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
 import Toolbar from '../../components/page/toolbar';
-import PropertyDetailsDefaultCharts from '../../components/charts/defaults/propertyDetailsDefaultCharts';
+import FacilityDetailsDefaultCharts from '../../components/charts/defaults/facilityDetailsDefaultCharts';
 import { RootState } from '../../components/store/store';
 import { useSelector } from 'react-redux';
 import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
 import { DetailsConfig } from '../../commonTypes/DetailsConfig';
 import { addToDetailsConfig } from '../../components/settings/customFields/addToDetailsConfig';
 
-const PropertyView = () => {
+const FacilityView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
-    if (!permissions.properties?.view && !isAdmin) {
+    if (!permissions.facilities?.view && !isAdmin) {
         router.push('/');
     }
 
-    const propertyNumber = router.asPath.split('/')[2];
-    const { propertyDetails, customFields, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M, mostUsed6M, sparesCost6M, loading, noData, error, reload } = usePropertyDetails(propertyNumber);
+    const facilityNumber = router.asPath.split('/')[2];
+    const { facilityDetails, customFields, assignedUsers, recentJobs, incompleteJobs, raised6M, sparesUsed6M, mostUsed6M, sparesCost6M, loading, noData, error, reload } = useFacilityDetails(facilityNumber);
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
-    let propertyDetailsConfig: DetailsConfig = {
-        id: propertyDetails?.id,
+    let facilityDetailsConfig: DetailsConfig = {
+        id: facilityDetails?.id,
         fields: [
-            { label: 'ID', value: propertyDetails?.id },
-            { label: 'Name', value: propertyDetails?.name },
-            { label: 'Address', value: propertyDetails?.address },
-            { label: 'City', value: propertyDetails?.city },
-            { label: 'County', value: propertyDetails?.county },
-            { label: 'Postcode', value: propertyDetails?.postcode },
+            { label: 'ID', value: facilityDetails?.id },
+            { label: 'Name', value: facilityDetails?.name },
+            { label: 'Address', value: facilityDetails?.address },
+            { label: 'City', value: facilityDetails?.city },
+            { label: 'County', value: facilityDetails?.county },
+            { label: 'Postcode', value: facilityDetails?.postcode },
         ],
     };
-    propertyDetailsConfig = addToDetailsConfig(propertyDetailsConfig, customFields);
+    facilityDetailsConfig = addToDetailsConfig(facilityDetailsConfig, customFields);
 
     const userTableConfig = {
         headers: [
@@ -62,7 +62,7 @@ const PropertyView = () => {
             { id: 'created', name: 'Created', type: 'date', search: true, order: true },
             { id: 'completed', name: 'Completed', type: 'tick', search: true, order: true },
         ],
-        title: `5 Most recent Maintenance Tasks for ${propertyDetails?.name}`,
+        title: `5 Most recent Maintenance Tasks for ${facilityDetails?.name}`,
         searchable: false,
         linkColPrefix: '/jobs/',
     };
@@ -70,15 +70,15 @@ const PropertyView = () => {
     return (
         <FullPage>
             <Toolbar>
-                <Link href="/properties" className="tLink">
+                <Link href="/facilities" className="tLink">
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                    <p>Return to all Properties</p>
+                    <p>Return to all Facilities</p>
                 </Link>
-                {permissions.properties?.manage || isAdmin ? (
+                {permissions.facilities?.manage || isAdmin ? (
                     <>
-                        <button className="tLink" onClick={() => [setViewModal(true), setModalType('addEditProperty')]}>
+                        <button className="tLink" onClick={() => [setViewModal(true), setModalType('addEditFacility')]}>
                             <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
-                            Edit Property
+                            Edit Facility
                         </button>
                         <button className="tLink" onClick={() => [setViewModal(true), setModalType('assignUsers')]}>
                             <FontAwesomeIcon icon={faUserPlus} className="mr-1 w-3" />
@@ -87,17 +87,17 @@ const PropertyView = () => {
                     </>
                 ) : null}
             </Toolbar>
-            {viewModal ? <ModalBase modalType={modalType} payload={parseInt(propertyNumber)} closeModal={() => [setViewModal(false), reload()]} /> : null}
+            {viewModal ? <ModalBase modalType={modalType} payload={parseInt(facilityNumber)} closeModal={() => [setViewModal(false), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error} noData={noData}>
                 <div className="flex flex-col">
                     <div className="flex flex-col xl:flex-row">
-                        <DetailsBox data={propertyDetailsConfig} />
+                        <DetailsBox data={facilityDetailsConfig} />
                         <div className="flex flex-col w-full">
                             <div className="w-full xl:pl-8">
-                                <AttachedFilesBox model="property" id={parseInt(propertyNumber)} />
+                                <AttachedFilesBox model="facility" id={parseInt(facilityNumber)} />
                             </div>
-                            <PropertyDetailsDefaultCharts
-                                propertyDetailsName={propertyDetails?.name}
+                            <FacilityDetailsDefaultCharts
+                                facilityDetailsName={facilityDetails?.name}
                                 incompleteJobs={incompleteJobs}
                                 raised6M={raised6M}
                                 sparesUsed6M={sparesUsed6M}
@@ -122,4 +122,4 @@ const PropertyView = () => {
     );
 };
 
-export default PropertyView;
+export default FacilityView;

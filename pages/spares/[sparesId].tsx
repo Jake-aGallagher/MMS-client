@@ -26,8 +26,8 @@ const SparesView = () => {
     }
 
     const spareId = router.asPath.split('/')[2];
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { sparesDetails, customFields, deliveryInfo, recentJobs, recentPms, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentProperty.toString());
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { sparesDetails, customFields, deliveryInfo, recentJobs, recentPms, loading, used6M, noData, error, reload } = useSparesDetails(spareId, currentFacility.toString());
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     let spareConfig: DetailsConfig = {

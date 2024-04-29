@@ -22,7 +22,7 @@ interface Logs {
     comp_date: string;
 }
 
-export const useLogTemplateDetails = (propertyId: number, scheduleId: number) => {
+export const useLogTemplateDetails = (facilityId: number, scheduleId: number) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
@@ -30,10 +30,10 @@ export const useLogTemplateDetails = (propertyId: number, scheduleId: number) =>
     const [logs, setLogs] = useState<Logs[]>([]);
 
     useEffect(() => {
-        if (propertyId !== 0 && scheduleId !== 0) {
+        if (facilityId !== 0 && scheduleId !== 0) {
             reload();
         }
-    }, [propertyId, scheduleId]);
+    }, [facilityId, scheduleId]);
 
     const reload = () => {
         setLoading(true);
@@ -44,7 +44,7 @@ export const useLogTemplateDetails = (propertyId: number, scheduleId: number) =>
 
     const getScheduleHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/logs/log-templates/${propertyId}/${scheduleId}`, {
+            const response = await axios.get(`${SERVER_URL}/logs/log-templates/${facilityId}/${scheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useLogTemplateDetails/getScheduleHandler', [['response', response]]);

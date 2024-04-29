@@ -9,7 +9,7 @@ interface BaseData {
     avgData: { value: number; flipped: boolean };
 }
 
-export const useDashboardSpares = (propertyId: number) => {
+export const useDashboardSpares = (facilityId: number) => {
     const empty: BaseData = {
         thisMonth: 0,
         avgData: { value: 0, flipped: false },
@@ -22,10 +22,10 @@ export const useDashboardSpares = (propertyId: number) => {
     const [missingSpares, setMissingSpares] = useState<BaseData>(empty);
 
     useEffect(() => {
-        if (propertyId > 0) {
+        if (facilityId > 0) {
             reload();
         }
-    }, [propertyId]);
+    }, [facilityId]);
 
     const reload = () => {
         setLoading(true);
@@ -35,7 +35,7 @@ export const useDashboardSpares = (propertyId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/dashboard/spares/${propertyId}`, {
+            const response = await axios.get(`${SERVER_URL}/dashboard/spares/${facilityId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useDashboardSpares/getHandler', [['response', response]]);

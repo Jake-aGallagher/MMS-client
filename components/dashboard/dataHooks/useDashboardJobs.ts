@@ -12,7 +12,7 @@ interface RaisedCompleted extends Base {
     avgData: { value: number; flipped: boolean };
 }
 
-export const useDashboardJobs = (propertyId: number) => {
+export const useDashboardJobs = (facilityId: number) => {
     const baseEmpty: Base = {
         thisMonth: 0,
         mainData: [],
@@ -31,10 +31,10 @@ export const useDashboardJobs = (propertyId: number) => {
     const [planned, setPlanned] = useState(baseEmpty);
 
     useEffect(() => {
-        if (propertyId > 0) {
+        if (facilityId > 0) {
             reload();
         }
-    }, [propertyId]);
+    }, [facilityId]);
 
     const reload = () => {
         setLoading(true);
@@ -44,7 +44,7 @@ export const useDashboardJobs = (propertyId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/dashboard/jobs/${propertyId}`, {
+            const response = await axios.get(`${SERVER_URL}/dashboard/jobs/${facilityId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useDashboardJobs/getHandler', [['response', response]]);

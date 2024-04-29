@@ -19,7 +19,7 @@ interface ModalProps {
 }
 
 const AddEditLogTemplate = (props: ModalProps) => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const { defaultValues, loading, error } = useAddEditLogTemplate(props.payload.id);
     const yesNoOptions = [
         { id: 'No', value: 'No' },
@@ -52,7 +52,7 @@ const AddEditLogTemplate = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addEditLogTemplateHandler(props.payload.id, data, currentProperty, props.closeModal);
+        await addEditLogTemplateHandler(props.payload.id, data, currentFacility, props.closeModal);
     };
 
     return (

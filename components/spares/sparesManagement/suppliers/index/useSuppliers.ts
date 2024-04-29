@@ -4,7 +4,7 @@ import axios from 'axios';
 import { GlobalDebug } from '../../../../debug/globalDebug';
 
 interface Props {
-    currentProperty: number;
+    currentFacility: number;
 }
 
 interface Suppliers {
@@ -27,10 +27,10 @@ export const useSuppliers = (props: Props) => {
     const [suppliersList, setSuppliersList] = useState<Suppliers[]>([]);
 
     useEffect(() => {
-        if (props.currentProperty !== 0) {
+        if (props.currentFacility !== 0) {
             reload();
         }
-    }, [props.currentProperty]);
+    }, [props.currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -40,7 +40,7 @@ export const useSuppliers = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/suppliers/${props.currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/suppliers/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useSuppliers/getHandler', [['response', response]]);

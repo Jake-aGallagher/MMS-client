@@ -10,11 +10,11 @@ import LoadingNoDataError from '../../loading/loadingNoDataError';
 
 interface ModalProps {
     closeModal: () => void;
-    propertyNumber: number;
+    facilityNumber: number;
 }
 
 const AssignUsers = (props: ModalProps) => {
-    const { users, loading, noData, error } = useAssignUsers({ propertyNumber: props.propertyNumber });
+    const { users, loading, noData, error } = useAssignUsers({ facilityNumber: props.facilityNumber });
 
     const {
         register,
@@ -23,7 +23,7 @@ const AssignUsers = (props: ModalProps) => {
     } = useForm();
 
     const handleRegistration = async (data: any) => {
-        await assignUsersdHandler(data, props.propertyNumber, props.closeModal);
+        await assignUsersdHandler(data, props.facilityNumber, props.closeModal);
     };
 
     return (

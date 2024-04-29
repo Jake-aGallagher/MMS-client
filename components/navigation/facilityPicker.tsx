@@ -5,7 +5,7 @@ import GeneralFormSubmit from '../forms/generalFormSubmit';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { SERVER_URL } from '../routing/addressAPI';
-import { changeProperty } from './changeProperty';
+import { changeFacility } from './changeFacility';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { GlobalDebug } from '../debug/globalDebug';
@@ -19,42 +19,42 @@ interface Props {
     closeModal: () => void;
 }
 
-const PropertyPicker = (props: Props) => {
+const FacilityPicker = (props: Props) => {
     const userId = useSelector((state: RootState) => state.user.value.id);
     const dispatch = useDispatch();
-    const [properties, setProperties] = useState<AvailProps[]>([]);
+    const [facilities, setFacilities] = useState<AvailProps[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        getProperties();
+        getFacilities();
     }, []);
 
-    const getProperties = async () => {
+    const getFacilities = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/properties/availabletouser`, {
+            const response = await axios.get(`${SERVER_URL}/facilities/availabletouser`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            GlobalDebug('PropertyPicker/getProperties', [['response', response]]);
-            setProperties(response.data.allProps);
+            GlobalDebug('FacilityPicker/getFacilities', [['response', response]]);
+            setFacilities(response.data.allFacilities);
             setError(false);
             setLoading(false);
         } catch (err) {
-            GlobalDebug('PropertyPicker/getProperties', [['error', err]]);
+            GlobalDebug('FacilityPicker/getFacilities', [['error', err]]);
             setError(true);
             setLoading(false);
         }
     };
 
-    const propertyChange = async (id: number) => {
-        await changeProperty(dispatch, userId, id);
+    const facilityChange = async (id: number) => {
+        await changeFacility(dispatch, userId, id);
         props.closeModal();
     };
 
-    const propertySelection = properties.map((p) => (
+    const facilitySelection = facilities.map((p) => (
         <div key={p.id} className="hover:outline-dashed outline-1 outline-accent rounded-md pl-2 flex flex-row items-center mb-4">
             <div>{p.name}</div>
-            <button onClick={() => propertyChange(p.id)} className="btnBlue w-20 ml-auto h-8">
+            <button onClick={() => facilityChange(p.id)} className="btnBlue w-20 ml-auto h-8">
                 Select
             </button>
         </div>
@@ -63,11 +63,11 @@ const PropertyPicker = (props: Props) => {
     return (
         <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
-                <FormHeader label={'Change Property'} />
-                <div className="flex flex-col px-4 pt-8 overflow-y-auto h-[calc(100%-104px)]">{propertySelection}</div>
+                <FormHeader label={'Change Facility'} />
+                <div className="flex flex-col px-4 pt-8 overflow-y-auto h-[calc(100%-104px)]">{facilitySelection}</div>
                 <GeneralFormSubmit closeModal={props.closeModal} cancelOnly={true} />
             </LoadingNoDataError>
         </FormContainer>
     );
 };
-export default PropertyPicker;
+export default FacilityPicker;

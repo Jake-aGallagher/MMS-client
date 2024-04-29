@@ -21,8 +21,8 @@ const Users = () => {
         router.push('/settings');
     }
 
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { users, loading, error, reload } = useUsers(currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { users, loading, error, reload } = useUsers(currentFacility);
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     const usersTableConfig: DataTableConfig = {

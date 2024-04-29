@@ -6,7 +6,7 @@ import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Job {
     id: number;
-    property_name: string;
+    facility_name: string;
     asset_name: string;
     comp_date: null | string;
     completed: number;

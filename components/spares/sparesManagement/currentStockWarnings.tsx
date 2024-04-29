@@ -18,7 +18,7 @@ interface LowWarnings {
 }
 
 const StockWarnings = () => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const [numLow, setNumLow] = useState(0);
     const [low, setLow] = useState<LowWarnings[]>([]);
     const [showLow, setShowLow] = useState(false);
@@ -50,14 +50,14 @@ const StockWarnings = () => {
     };
 
     useEffect(() => {
-        if (currentProperty !== 0) {
+        if (currentFacility !== 0) {
             getStockWarnings();
         }
-    }, [currentProperty]);
+    }, [currentFacility]);
 
     const getStockWarnings = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/warnings/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/warnings/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('StockWarnings/getStockWarnings', [['response', response]]);

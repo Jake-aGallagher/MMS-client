@@ -19,8 +19,8 @@ const LogTemplates = () => {
     if (!permissions.jobs?.view && !isAdmin) {
         router.push('/');
     }
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { logTemplates, loading, error, reload } = useLogTemplates(currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { logTemplates, loading, error, reload } = useLogTemplates(currentFacility);
     const [modal, setModal] = useState({ view: false, type: '' });
 
     const logTemplatesTableConfig = {

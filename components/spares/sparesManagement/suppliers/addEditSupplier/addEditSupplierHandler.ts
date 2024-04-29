@@ -1,11 +1,11 @@
 import { GlobalDebug } from '../../../../debug/globalDebug';
 import { addEditSupplierConn } from './addEditSupplierConn';
 
-export const addEditSupplierHandler = async (data: any, currentProperty: number, id: number, closeModal: () => void) => {
+export const addEditSupplierHandler = async (data: any, currentFacility: number, id: number, closeModal: () => void) => {
     const alertString = `There has been an issue ${id > 0 ? 'editing' : 'creating'} this Note, please try again.`;
     try {
         const response = await addEditSupplierConn({
-            propertyId: currentProperty,
+            facilityId: currentFacility,
             id: id,
             name: data.name,
             website: data.website,
@@ -28,7 +28,7 @@ export const addEditSupplierHandler = async (data: any, currentProperty: number,
             ['error', err],
             ['data', data],
             ['id', id],
-            ['currentProperty', currentProperty],
+            ['currentFacility', currentFacility],
         ]);
         alert(alertString);
     }

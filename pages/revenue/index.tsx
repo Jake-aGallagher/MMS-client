@@ -7,8 +7,8 @@ import { useRevenue } from "../../components/revenue/index/useRevenue";
 import { RootState } from "../../components/store/store";
 
 const RevenueCenter = () => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { assets, loading, error, reload } = useRevenue({ currentProperty });
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { assets, loading, error, reload } = useRevenue({ currentFacility });
 
     const assetsTableConfig = {
         headers: [

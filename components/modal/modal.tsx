@@ -1,6 +1,6 @@
 import AddEditUser from '../settings/users/addEditUsers/addEditUsers';
-import AddEditProperty from '../properties/addEditProperty/addEditProperty';
-import AssignUsers from '../properties/assignUsers/assignUsers';
+import AddEditFacility from '../facilities/addEditFacility/addEditFacility';
+import AssignUsers from '../facilities/assignUsers/assignUsers';
 import DeleteAsset from '../assets/delete';
 import CreateJob from '../jobs/createJob/createJob';
 import UpdateJob from '../jobs/updateJob/update';
@@ -29,7 +29,7 @@ import AddEditLogTemplate from '../logs/logsManagement/addEditLogTemplate/addEdi
 import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditField/addEditLogField';
 import UpdateLog from '../logs/updateLog/updateLog';
 import AddEditField from '../settings/customFields/addEditField/addEditFields';
-import PropertyPicker from '../navigation/propertyPicker';
+import FacilityPicker from '../navigation/facilityPicker';
 import DowntimeSelector from '../assets/downtimeSelector/downtimeSelector';
 
 interface ModalProps {
@@ -45,13 +45,13 @@ const ModalBase = (props: ModalProps) => {
         GlobalDebug('Modal', [['modal type', modalType]]);
 
         switch (modalType) {
-            // Property
-            case 'propertyPicker':
-                return <PropertyPicker closeModal={props.closeModal} />;
-            case 'addEditProperty':
-                return <AddEditProperty closeModal={props.closeModal} propertyNumber={props.payload} />;
+            // Facility
+            case 'facilityPicker':
+                return <FacilityPicker closeModal={props.closeModal} />;
+            case 'addEditFacility':
+                return <AddEditFacility closeModal={props.closeModal} facilityNumber={props.payload} />;
             case 'assignUsers':
-                return <AssignUsers closeModal={props.closeModal} propertyNumber={props.payload} />;
+                return <AssignUsers closeModal={props.closeModal} facilityNumber={props.payload} />;
 
             // Asset
             case 'downtimeSelector':

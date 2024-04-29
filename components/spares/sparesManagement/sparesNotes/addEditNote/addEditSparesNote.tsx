@@ -18,7 +18,7 @@ interface ModalProps {
 }
 
 const AddEditSparesNote = (props: ModalProps) => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const { defaultValues, loading, error } = useAddEditSparesNote(props.payload.id);
 
     const {
@@ -41,7 +41,7 @@ const AddEditSparesNote = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addEditSparesNoteHandler(data, props.payload.id, currentProperty, props.closeModal);
+        await addEditSparesNoteHandler(data, props.payload.id, currentFacility, props.closeModal);
     };
 
     return (

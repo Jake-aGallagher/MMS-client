@@ -26,7 +26,7 @@ interface PMs {
     status: string;
 }
 
-export const usePmScheduleDetails = (propertyId: number, scheduleId: number) => {
+export const usePmScheduleDetails = (facilityId: number, scheduleId: number) => {
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
@@ -34,10 +34,10 @@ export const usePmScheduleDetails = (propertyId: number, scheduleId: number) => 
     const [pms, setPms] = useState<PMs[]>([]);
 
     useEffect(() => {
-        if (propertyId !== 0 && scheduleId !== 0) {
+        if (facilityId !== 0 && scheduleId !== 0) {
             reload();
         }
-    }, [propertyId, scheduleId]);
+    }, [facilityId, scheduleId]);
 
     const reload = () => {
         setLoading(true);
@@ -48,7 +48,7 @@ export const usePmScheduleDetails = (propertyId: number, scheduleId: number) => 
 
     const getScheduleHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/pms/schedules/${propertyId}/${scheduleId}`, {
+            const response = await axios.get(`${SERVER_URL}/pms/schedules/${facilityId}/${scheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('usePmScheduleDetails/getScheduleHandler', [['response', response]]);

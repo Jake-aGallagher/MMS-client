@@ -32,9 +32,9 @@ interface Modal {
 }
 
 const EditPM = (props: Props) => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const { statusOptions, completableStatus, sparesSelected, setSparesSelected, scheduleDates, loggedTimeDetails, setLoggedTimeDetails, defaultValues, customFields, loading, noData, error } = useEditPM(
-        currentProperty,
+        currentFacility,
         props.pmId
     );
     const continueScheduleOptions = [
@@ -76,7 +76,7 @@ const EditPM = (props: Props) => {
 
     const handleRegistration = async (data: any) => {
         const complete = completableStatus.includes(parseInt(data.status));
-        editPMHandler(data, props.pmId, complete, currentProperty, loggedTimeDetails, sparesSelected, props.closeModal, []);
+        editPMHandler(data, props.pmId, complete, currentFacility, loggedTimeDetails, sparesSelected, props.closeModal, []);
     };
 
     return (

@@ -4,12 +4,12 @@ import { SERVER_URL } from '../../routing/addressAPI';
 import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
-    currentProperty: number;
+    currentFacility: number;
 }
 
 interface Job {
     id: number;
-    property_id: number;
+    facility_id: number;
     asset_name: string;
     comp_date: null | string;
     completed: number;
@@ -31,10 +31,10 @@ export const useJobs = (props: Props) => {
     const [jobs, setJobs] = useState<Job[]>([]);
 
     useEffect(() => {
-        if (props.currentProperty !== 0) {
+        if (props.currentFacility !== 0) {
             reload();
         }
-    }, [props.currentProperty]);
+    }, [props.currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -44,7 +44,7 @@ export const useJobs = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const jobsList = await axios.get(`${SERVER_URL}/jobs/all-jobs/${props.currentProperty}`, {
+            const jobsList = await axios.get(`${SERVER_URL}/jobs/all-jobs/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useJobs/getHandler', [['response', jobsList]]);

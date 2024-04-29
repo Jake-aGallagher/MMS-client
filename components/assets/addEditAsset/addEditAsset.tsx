@@ -19,7 +19,7 @@ interface ModalProps {
 }
 
 const AddEditAsset = (props: ModalProps) => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const formLabel = `${props.payload.parentId ? 'Create New Component of' : 'Edit'} ${props.payload.name}`;
     const { defaultValues, customFields, loading, error } = useAddEditAsset(props.payload.parentId ? 0 : props.payload.id);
     const rpmString = `
@@ -47,7 +47,7 @@ const AddEditAsset = (props: ModalProps) => {
     const watchNote = watch(['note']) as String[];
 
     const handleRegistration = async (data: any) => {
-        await addEditAssetHandler(data, props.payload.parentId || 0, props.payload.id, currentProperty, props.closeModal);
+        await addEditAssetHandler(data, props.payload.parentId || 0, props.payload.id, currentFacility, props.closeModal);
     };
 
     return (

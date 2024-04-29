@@ -18,7 +18,7 @@ interface Spare {
     cost: number;
 }
 
-export const useAddEditSparesItem = (id: number, currentProperty: number) => {
+export const useAddEditSparesItem = (id: number, currentFacility: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
@@ -64,7 +64,7 @@ export const useAddEditSparesItem = (id: number, currentProperty: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spare/${id}/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spare/${id}/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditSparesItem/getHandler', [['response', response]]);

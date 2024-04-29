@@ -21,8 +21,8 @@ const Suppliers = () => {
         router.push('/spares');
     }
 
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { suppliersList, loading, error, reload } = useSuppliers({ currentProperty });
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { suppliersList, loading, error, reload } = useSuppliers({ currentFacility });
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string; url?: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     const suppliersTableConfig: DataTableConfig = {

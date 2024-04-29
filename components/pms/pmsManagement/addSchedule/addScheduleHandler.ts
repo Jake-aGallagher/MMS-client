@@ -3,7 +3,7 @@ import { addScheduleConn } from './addScheduleConn';
 
 interface Props {
     data: any;
-    propertyId: number;
+    facilityId: number;
     assetId: number;
     closeModal: () => void;
 }
@@ -12,7 +12,7 @@ export const addScheduleHandler = async (props: Props) => {
     const alertString = 'There has been an issue creating this PM Schedule, please try again.';
     try {
         const response = await addScheduleConn({
-            propertyId: props.propertyId,
+            facilityId: props.facilityId,
             assetId: props.assetId,
             type: props.data.type,
             title: props.data.title,
@@ -31,7 +31,7 @@ export const addScheduleHandler = async (props: Props) => {
         GlobalDebug('addScheduleHandler', [
             ['error', err],
             ['data', props.data],
-            ['propertyId', props.propertyId],
+            ['facilityId', props.facilityId],
             ['assetId', props.assetId],
         ]);
         alert(alertString);

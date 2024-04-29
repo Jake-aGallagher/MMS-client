@@ -4,7 +4,7 @@ import { SERVER_URL } from '../../routing/addressAPI';
 import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Props {
-    currentProperty: number;
+    currentFacility: number;
 }
 
 interface Schedule {
@@ -23,10 +23,10 @@ export const usePmSchedules = (props: Props) => {
     const [schedules, setSchedules] = useState<Schedule[]>([]);
 
     useEffect(() => {
-        if (props.currentProperty !== 0) {
+        if (props.currentFacility !== 0) {
             reload();
         }
-    }, [props.currentProperty]);
+    }, [props.currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -36,7 +36,7 @@ export const usePmSchedules = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const schedulesList = await axios.get(`${SERVER_URL}/pms/schedules/all-schedules/${props.currentProperty}`, {
+            const schedulesList = await axios.get(`${SERVER_URL}/pms/schedules/all-schedules/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('usePmSchedules/getUpdate', [['response', schedulesList]]);

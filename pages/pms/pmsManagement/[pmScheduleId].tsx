@@ -21,9 +21,9 @@ const ScheduleView = () => {
     if (!permissions.schedules?.view && !isAdmin) {
         router.push('/');
     }
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
     const pmScheduleId = parseInt(router.asPath.split('/')[3]);
-    const { scheduleDetails, pms, loading, noData, error, reload } = usePmScheduleDetails(currentProperty, pmScheduleId);
+    const { scheduleDetails, pms, loading, noData, error, reload } = usePmScheduleDetails(currentFacility, pmScheduleId);
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     const scheduleDetailsConfig = {

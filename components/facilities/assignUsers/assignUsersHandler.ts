@@ -2,8 +2,8 @@ import axios from 'axios';
 import { SERVER_URL } from '../../routing/addressAPI';
 import { GlobalDebug } from '../../debug/globalDebug';
 
-export const assignUsersdHandler = async (data: any, propertyNumber: number, closeModal: () => void) => {
-    const alertString = `There has been an issue Assigning Users to this Property, please try again.`;
+export const assignUsersdHandler = async (data: any, facilityNumber: number, closeModal: () => void) => {
+    const alertString = `There has been an issue Assigning Users to this Facility, please try again.`;
     let assignedUsers: string[] = [];
     const dataKeys = Object.keys(data);
     if (dataKeys.length > 0) {
@@ -11,9 +11,9 @@ export const assignUsersdHandler = async (data: any, propertyNumber: number, clo
     }
     try {
         const response = await axios.put(
-            `${SERVER_URL}/properties/assign-users`,
+            `${SERVER_URL}/facilities/assign-users`,
             {
-                propertyNo: propertyNumber,
+                facilityNo: facilityNumber,
                 assignedUsers: assignedUsers,
             },
             {
@@ -29,7 +29,7 @@ export const assignUsersdHandler = async (data: any, propertyNumber: number, clo
         GlobalDebug('assignUsersdHandler', [
             ['error', err],
             ['data', data],
-            ['propertyNumber', propertyNumber],
+            ['facilityNumber', facilityNumber],
         ]);
         alert(alertString);
     }

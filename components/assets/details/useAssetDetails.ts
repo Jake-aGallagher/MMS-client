@@ -6,7 +6,7 @@ import { GlobalDebug } from '../../debug/globalDebug';
 
 interface Asset {
     id: number;
-    property_id: number;
+    facility_id: number;
     name: string;
     revenue: number | null;
     notes: string;

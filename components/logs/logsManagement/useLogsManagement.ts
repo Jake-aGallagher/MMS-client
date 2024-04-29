@@ -14,16 +14,16 @@ interface LogTemplate {
     up_to_date: number;
 }
 
-export const useLogTemplates = (currentProperty: number) => {
+export const useLogTemplates = (currentFacility: number) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [logTemplates, setLogTemplates] = useState<LogTemplate[]>([]);
 
     useEffect(() => {
-        if (currentProperty !== 0) {
+        if (currentFacility !== 0) {
             reload();
         }
-    }, [currentProperty]);
+    }, [currentFacility]);
 
     const reload = () => {
         setLoading(true);
@@ -33,7 +33,7 @@ export const useLogTemplates = (currentProperty: number) => {
 
     const getHandler = async () => {
         try {
-            const logTemplates = await axios.get(`${SERVER_URL}/logs/all-log-templates/${currentProperty}`, {
+            const logTemplates = await axios.get(`${SERVER_URL}/logs/all-log-templates/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useLogTemplates/getHandler', [['response', logTemplates]]);

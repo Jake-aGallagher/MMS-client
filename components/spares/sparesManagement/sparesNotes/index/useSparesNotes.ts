@@ -10,15 +10,15 @@ interface Note {
     created_date: string;
 }
 
-export const useSparesNotes = (currentProperty: number) => {
+export const useSparesNotes = (currentFacility: number) => {
     const [numOfNotes, setNumOfNotes] = useState(0);
     const [notes, setNotes] = useState<Note[]>([]);
 
     useEffect(() => {
-        if (currentProperty !== 0) {
+        if (currentFacility !== 0) {
             reload();
         }
-    }, [currentProperty]);
+    }, [currentFacility]);
 
     const reload = () => {
         getHandler();
@@ -26,7 +26,7 @@ export const useSparesNotes = (currentProperty: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/notes/${currentProperty}`, {
+            const response = await axios.get(`${SERVER_URL}/spares/notes/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useSparesNotes/getHandler', [['response', response]]);

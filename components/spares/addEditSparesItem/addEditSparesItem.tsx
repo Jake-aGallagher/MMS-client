@@ -18,8 +18,8 @@ interface ModalProps {
 }
 
 const AddEditSparesItem = (props: ModalProps) => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { defaultValues, customFields, loading, error } = useAddEditSparesItem(props.payload.id, currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { defaultValues, customFields, loading, error } = useAddEditSparesItem(props.payload.id, currentFacility);
 
     const {
         register,
@@ -38,7 +38,7 @@ const AddEditSparesItem = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addEditSparesItemHandler(data, currentProperty, props.payload.id, props.closeModal, props.payload.name);
+        await addEditSparesItemHandler(data, currentFacility, props.payload.id, props.closeModal, props.payload.name);
     };
 
     return (

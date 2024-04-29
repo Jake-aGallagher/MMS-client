@@ -30,8 +30,8 @@ interface Spare {
 }
 
 const AddEditDelivery = (props: ModalProps) => {
-    const currentProperty = useSelector((state: RootState) => state.currentProperty.value.currentProperty);
-    const { defaultValues, suppliersList, contents, loading, error, setContents } = useAddEditDelivery(props.payload.id, currentProperty);
+    const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
+    const { defaultValues, suppliersList, contents, loading, error, setContents } = useAddEditDelivery(props.payload.id, currentFacility);
     const [viewModal, setViewModal] = useState(false);
 
     const {
@@ -55,7 +55,7 @@ const AddEditDelivery = (props: ModalProps) => {
     };
 
     const handleRegistration = async (data: any) => {
-        await addEditDeliveryHandler(data, contents, props.payload.id, currentProperty, props.closeModal, props.payload.name);
+        await addEditDeliveryHandler(data, contents, props.payload.id, currentFacility, props.closeModal, props.payload.name);
     };
 
     return (

@@ -1,12 +1,12 @@
 import { GlobalDebug } from '../../../debug/globalDebug';
 import { addEditLogTemplateConn } from './addEditLogTemplateConn';
 
-export const addEditLogTemplateHandler = async (id: number, data: any, propertyId: number, closeModal: () => void) => {
+export const addEditLogTemplateHandler = async (id: number, data: any, facilityId: number, closeModal: () => void) => {
     const alertString = 'There has been an issue creating this Log Template, please try again.';
     try {
         const response = await addEditLogTemplateConn({
             id,
-            propertyId: propertyId,
+            facilityId: facilityId,
             title: data.title,
             description: data.description,
             startNow: data.startNow,
@@ -23,7 +23,7 @@ export const addEditLogTemplateHandler = async (id: number, data: any, propertyI
         GlobalDebug('addEditLogTemplateHandler', [
             ['error', err],
             ['data', data],
-            ['propertyId', propertyId],
+            ['facilityId', facilityId],
             ['id', id],
         ]);
         alert(alertString);

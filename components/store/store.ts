@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import CurrentPropertySlice from './propertySlice';
+import CurrentFacilitySlice from './facilitySlice';
 import UserSlice from './userSlice';
 import DebugSlice from './debugSlice';
 import PermissionsSlice from './permissionsSlice';
@@ -7,7 +7,7 @@ import PermissionsSlice from './permissionsSlice';
 export const store = configureStore({
     reducer: {
         user: UserSlice,
-        currentProperty: CurrentPropertySlice,
+        currentFacility: CurrentFacilitySlice,
         permissions: PermissionsSlice,
         debug: DebugSlice,
     },
