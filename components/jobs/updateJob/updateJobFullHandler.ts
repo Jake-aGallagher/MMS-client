@@ -1,4 +1,4 @@
-import { updateJobFullConn } from "./updateJobFullConn";
+import { updateJobFullConn } from './updateJobFullConn';
 
 interface LoggedTime {
     id: number;
@@ -27,31 +27,22 @@ export const updateJobFullHandler = async (
     sparesSelected: SparesSelected[],
     sparesMissing: SparesSelected[],
     downtime: Downtime[],
-    files: Blob[],
     closeModal: () => void
 ) => {
-    const formData = new FormData();
-    if (files.length > 0) {
-        files.forEach((file) => formData.append('files', file));
-    }
-    formData.append(
-        'data',
-        JSON.stringify({
-            id: jobId,
-            status: data.status,
-            description: data.description,
-            notes: data.notes,
-            logged_time_details: loggedTimeDetails,
-            complete,
-            continueSchedule: data.continueSchedule,
-            sparesUsed: sparesSelected,
-            sparesMissing,
-            downtime,
-            facilityId: currentFacility,
-            fieldData: data
-        })
-    );
-    const response = await updateJobFullConn(formData)
+    const response = await updateJobFullConn({
+        id: jobId,
+        status: data.status,
+        description: data.description,
+        notes: data.notes,
+        logged_time_details: loggedTimeDetails,
+        complete,
+        continueSchedule: data.continueSchedule,
+        sparesUsed: sparesSelected,
+        sparesMissing,
+        downtime,
+        facilityId: currentFacility,
+        fieldData: data,
+    });
     if (response.data.created) {
         closeModal();
     } else {

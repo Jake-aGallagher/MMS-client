@@ -1,4 +1,4 @@
-import { editPMConn } from "./editPMConn";
+import { editPMConn } from './editPMConn';
 
 interface LoggedTime {
     id: number;
@@ -13,34 +13,25 @@ interface SparesSelected {
 }
 
 export const editPMHandler = async (
-    data: { status: string; notes: string; continueSchedule: string, [key: string]: any},
+    data: { status: string; notes: string; continueSchedule: string; [key: string]: any },
     PMId: number,
     complete: boolean,
     currentFacility: number,
     loggedTimeDetails: LoggedTime[],
     sparesSelected: SparesSelected[],
-    closeModal: () => void,
-    files: Blob[]
+    closeModal: () => void
 ) => {
-    const formData = new FormData();
-    if (files.length > 0) {
-        files.forEach((file) => formData.append('files', file));
-    }
-    formData.append(
-        'data',
-        JSON.stringify({
-            id: PMId,
-            status: data.status,
-            notes: data.notes,
-            complete,
-            facilityId: currentFacility,
-            loggedTimeDetails,
-            continueSchedule: data.continueSchedule,
-            sparesUsed: sparesSelected,
-            fieldData: data
-        })
-    );
-    const response = await editPMConn(formData)
+    const response = await editPMConn({
+        id: PMId,
+        status: data.status,
+        notes: data.notes,
+        complete,
+        facilityId: currentFacility,
+        loggedTimeDetails,
+        continueSchedule: data.continueSchedule,
+        sparesUsed: sparesSelected,
+        fieldData: data,
+    });
     if (response.data.updated) {
         closeModal();
     } else {
