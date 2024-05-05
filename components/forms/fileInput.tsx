@@ -27,7 +27,7 @@ const FileInput = (props: Props<any>) => {
 
     const addFile = async (file: File) => {
         const formData = new FormData();
-        formData.append('files', file);
+        formData.append('file', file);
         const response = await axios.post(`${SERVER_URL}/file/field-file`, formData, { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } });
         const resFile = response.data;
         setFileList((prev) => [...prev, { id: resFile.fileId, encodedId: resFile.encodedId, name: resFile.fileName }]);

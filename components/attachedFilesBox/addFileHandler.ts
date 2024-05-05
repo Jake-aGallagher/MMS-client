@@ -3,7 +3,7 @@ import { SERVER_URL } from '../routing/addressAPI';
 
 export const addFileHandler = async (file: Blob, model: string, id: number, reload: () => void) => {
     const formData = new FormData();
-    formData.append('files', file);
+    formData.append('file', file);
     formData.append(
         'data',
         JSON.stringify({
