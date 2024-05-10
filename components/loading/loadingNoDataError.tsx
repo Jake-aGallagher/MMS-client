@@ -13,7 +13,7 @@ const LoadingNoDataError = (props: Props) => {
     if (props.loading) {
         return <Loading />;
     } else if (props.noData) {
-        return <div>There has been an issue getting the Data</div>;
+        return <div className='text-center pt-10'>No Data Found</div>;
     } else if (props.error) {
         return <RetrieveError />;
     } else {
