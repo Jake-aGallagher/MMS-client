@@ -22,8 +22,10 @@ const Login = (props: Props) => {
     const [loading, setLoading] = useState(true);
     const searchParams = useSearchParams();
     const debug = searchParams?.get('debug') == process.env.NEXT_PUBLIC_DEBUG_KEY || false;
+    const client = searchParams?.get('client') || '';
     const dispatch = useDispatch();
     const formValidation = yup.object().shape({
+        client: yup.string().required().min(4).max(4),
         username: yup.string().required().max(255),
         password: yup.string().required().min(8).max(45),
     });
@@ -52,6 +54,7 @@ const Login = (props: Props) => {
             const user = response.data.user;
             dispatch(
                 setUser({
+                    client: response.data.client,
                     username: user.username,
                     first: user.first_name,
                     last: user.last_name,
@@ -71,18 +74,20 @@ const Login = (props: Props) => {
     };
 
     const setErrors = () => {
+        setError('client', { type: 'failedLogin', message: 'Login Failed' });
         setError('username', { type: 'failedLogin', message: 'Login Failed' });
         setError('password', { type: 'failedLogin', message: 'Login Failed' });
     };
 
     const handleRegistration = async (data: any) => {
         try {
-            const reqData = { username: data.username, password: data.password };
+            const reqData = { client: data.client, username: data.username, password: data.password };
             const response = await axios.post(`${SERVER_URL}/users/login`, reqData, { headers: { 'Content-Type': 'application/json' }, withCredentials: true });
             if (response.data.passedValidation) {
                 const user = response.data.user;
                 dispatch(
                     setUser({
+                        client: response.data.client,
                         username: user.username,
                         first: user.first,
                         last: user.last,
@@ -122,6 +127,20 @@ const Login = (props: Props) => {
                         className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-md z-10 opacity-80"
                     >
                         <div className="flex flex-col mx-1 relative mb-2">
+                            <label htmlFor="client" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
+                                Client Code (4 letters)
+                            </label>
+                            <input
+                                type="text"
+                                maxLength={4}
+                                id="client"
+                                defaultValue={client}
+                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.client || errors.username || errors.password) && 'border-red border-2'}`}
+                                {...register('client', { required: true })}
+                            />
+                        </div>
+
+                        <div className="flex flex-col mx-1 relative mb-2">
                             <label htmlFor="username" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
                                 Username
                             </label>
@@ -129,7 +148,7 @@ const Login = (props: Props) => {
                                 type="text"
                                 maxLength={45}
                                 id="username"
-                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.username || errors.password) && 'border-red border-2'}`}
+                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.client || errors.username || errors.password) && 'border-red border-2'}`}
                                 {...register('username', { required: true })}
                             />
                         </div>
@@ -142,7 +161,7 @@ const Login = (props: Props) => {
                                 type="password"
                                 maxLength={255}
                                 id="password"
-                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.username || errors.password) && 'border-red border-2'}`}
+                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.client || errors.username || errors.password) && 'border-red border-2'}`}
                                 {...register('password', { required: true })}
                             />
                         </div>
