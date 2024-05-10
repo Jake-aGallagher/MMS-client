@@ -64,8 +64,13 @@ export const useAddEditDelivery = (id: number, currentFacility: number) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditDelivery/getHandlerLimited', [['response', response]]);
-            setSuppliersList(response.data);
-            setDefaultValues({ ...defaultValues, supplier: response.data[0].id });
+            if (response.data.length === 0) {
+                setSuppliersList([{ id: 0, name: 'No suppliers available' }]);
+                setDefaultValues({ ...defaultValues, supplier: 0 });
+            } else {
+                setSuppliersList(response.data);
+                setDefaultValues({ ...defaultValues, supplier: response.data[0].id });
+            }
             setLoading(false);
         } catch (err) {
             GlobalDebug('useAddEditDelivery/getHandlerLimited', [['error', err]]);
@@ -80,7 +85,11 @@ export const useAddEditDelivery = (id: number, currentFacility: number) => {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditDelivery/getHandlerFull', [['response', response]]);
-            setSuppliersList(response.data.suppliers);
+            if (response.data.suppliers.length === 0) {
+                setSuppliersList([{ id: 0, name: 'No suppliers available' }]);
+            } else {
+                setSuppliersList(response.data.suppliers);
+            }
             const delivery = response.data.deliveries[0];
             formatContents(delivery.contents);
             setDefaultValues({
