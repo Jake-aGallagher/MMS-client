@@ -4,10 +4,10 @@
 
 @layer components {
     .btnBlue {
-        @apply rounded-md bg-background border-1 border-primary hover:bg-primary hover:text-background focus:bg-primary focus:text-background transition-all;
+        @apply rounded-md bg-background border-1 border-primary hover:bg-primary hover:text-background transition-all;
     }
     .btnRed {
-        @apply rounded-md bg-background border-1 border-red hover:bg-red hover:text-background focus:bg-red focus:text-background transition-all;
+        @apply rounded-md bg-background border-1 border-red hover:bg-red hover:text-background transition-all;
     }
     .tLink {
         @apply mr-8 hover:text-accent focus:text-accent flex flex-row items-center transition-all;
