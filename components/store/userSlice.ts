@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface PayloadData {
+    client: string;
     username: string;
     first: string;
     last: string;
@@ -10,7 +11,7 @@ interface PayloadData {
 }
 
 const initialState = {
-    value: { username: '', first: '', last: '', user_group_id: 0, id: 0, isAdmin: false },
+    value: { client: '', username: '', first: '', last: '', user_group_id: 0, id: 0, isAdmin: false },
 };
 
 export const UserSlice = createSlice({
@@ -18,6 +19,7 @@ export const UserSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<PayloadData>) => {
+            state.value.client = action.payload.client;
             state.value.username = action.payload.username;
             state.value.first = action.payload.first;
             state.value.last = action.payload.last;
