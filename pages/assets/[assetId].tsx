@@ -23,6 +23,7 @@ import { addToDetailsConfig } from '../../components/settings/customFields/addTo
 const AssetView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const clientId = useSelector((state: RootState) => state.user.value.client);
     const router = useRouter();
     if (!permissions.assets?.view && !isAdmin) {
         router.push('/');
@@ -42,7 +43,7 @@ const AssetView = () => {
             { label: 'Notes', value: assetDetails?.notes },
         ],
     };
-    assetConfig = addToDetailsConfig(assetConfig, customFields);
+    assetConfig = addToDetailsConfig(clientId, assetConfig, customFields);
 
     const recentJobTableConfig = {
         headers: [

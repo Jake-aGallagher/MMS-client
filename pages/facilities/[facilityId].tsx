@@ -20,6 +20,7 @@ import { addToDetailsConfig } from '../../components/settings/customFields/addTo
 const FacilityView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const clientId = useSelector((state: RootState) => state.user.value.client);
     const router = useRouter();
     if (!permissions.facilities?.view && !isAdmin) {
         router.push('/');
@@ -41,7 +42,7 @@ const FacilityView = () => {
             { label: 'Postcode', value: facilityDetails?.postcode },
         ],
     };
-    facilityDetailsConfig = addToDetailsConfig(facilityDetailsConfig, customFields);
+    facilityDetailsConfig = addToDetailsConfig(clientId, facilityDetailsConfig, customFields);
 
     const userTableConfig = {
         headers: [

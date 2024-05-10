@@ -16,6 +16,7 @@ interface Props {
 const AttachedFilesBox = (props: Props) => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const clientId = useSelector((state: RootState) => state.user.value.client);
     const hiddenFileInput = useRef<HTMLInputElement>(null);
     const { files, reload } = useGetFiles(props.model, props.id);
 
@@ -57,10 +58,10 @@ const AttachedFilesBox = (props: Props) => {
 
             {files.map((item) => (
                 <div key={'file_' + item.id} className="w-full mb-1 pl-2 flex flex-row hover:outline-dotted hover:outline-1 outline-accent rounded-md">
-                    <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${item.id}`}>
+                    <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${clientId}/${item.id}`}>
                         {item.name}
                     </a>
-                    <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${item.id}`}>
+                    <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${clientId}/${item.id}`}>
                         <FontAwesomeIcon icon={faCircleDown} className="h-5 m-auto" />
                     </a>
                     {permissions.files?.manage || isAdmin ? (

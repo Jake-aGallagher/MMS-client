@@ -19,6 +19,7 @@ import { DetailsConfig } from '../../commonTypes/DetailsConfig';
 const LogDetails = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const clientId = useSelector((state: RootState) => state.user.value.client);
     const router = useRouter();
     const logId = parseInt(router.asPath.split('/')[2]);
     if (!permissions.logs?.view && !isAdmin) {
@@ -52,7 +53,7 @@ const LogDetails = () => {
         title: 'Log Fields',
         fields: [],
     };
-    logFieldsConfig = addToDetailsConfig(logFieldsConfig, customFields);
+    logFieldsConfig = addToDetailsConfig(clientId, logFieldsConfig, customFields);
 
     return (
         <FullPage>

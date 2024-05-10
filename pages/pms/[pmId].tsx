@@ -19,6 +19,7 @@ import { DetailsConfig } from '../../commonTypes/DetailsConfig';
 const PMDetails = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const clientId = useSelector((state: RootState) => state.user.value.client);
     const router = useRouter();
     if (!permissions.schedules?.view && !isAdmin) {
         router.push('/');
@@ -46,7 +47,7 @@ const PMDetails = () => {
             { label: 'Total Logged Time', value: pmDetails?.logged_time },
         ],
     };
-    schedulePMConfig = addToDetailsConfig(schedulePMConfig, customFields);
+    schedulePMConfig = addToDetailsConfig(clientId, schedulePMConfig, customFields);
 
     const sparesTableConfig = {
         headers: [

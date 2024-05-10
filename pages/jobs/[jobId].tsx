@@ -20,6 +20,7 @@ import { addToDetailsConfig } from '../../components/settings/customFields/addTo
 const JobView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const clientId = useSelector((state: RootState) => state.user.value.client);
     const router = useRouter();
     if (!permissions.jobs?.view && !isAdmin) {
         router.push('/');
@@ -49,7 +50,7 @@ const JobView = () => {
             { label: 'Reported By', value: jobDetails?.reported_by },
         ],
     };
-    jobDetailsConfig = addToDetailsConfig(jobDetailsConfig, customFields);
+    jobDetailsConfig = addToDetailsConfig(clientId, jobDetailsConfig, customFields);
 
     const sparesTableConfig = {
         headers: [

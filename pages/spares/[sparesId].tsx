@@ -20,6 +20,7 @@ import { addToDetailsConfig } from '../../components/settings/customFields/addTo
 const SparesView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
+    const clientId = useSelector((state: RootState) => state.user.value.client);
     const router = useRouter();
     if (!permissions.spares?.view && !isAdmin) {
         router.push('/');
@@ -50,7 +51,7 @@ const SparesView = () => {
             { label: 'Next Delivery Quantity Expected', value: deliveryInfo?.quantity },
         ],
     };
-    spareConfig = addToDetailsConfig(spareConfig, customFields);
+    spareConfig = addToDetailsConfig(clientId, spareConfig, customFields);
 
     const jobTableConfig = {
         headers: [
