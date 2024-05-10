@@ -1,7 +1,7 @@
 import { EnumGroups, FileData } from "../../../commonTypes/CustomFields";
 import { SERVER_URL } from "../../routing/addressAPI";
 
-export const prettyFieldValues = (fieldId: number, type: string, value: string, enumGroups: EnumGroups, fileData: FileData, enumGroupId: number | null) => {
+export const prettyFieldValues = (clientId: string, fieldId: number, type: string, value: string, enumGroups: EnumGroups, fileData: FileData, enumGroupId: number | null) => {
     if (value === 'undefined' || value === null || value === '') return '';
     switch (type) {
         case 'checkbox':
@@ -14,7 +14,7 @@ export const prettyFieldValues = (fieldId: number, type: string, value: string, 
             const values = value.split(',');
             const fileList = values.map((item, i) => (
                 <li key={'file_list_' + fileData[fieldId][i].encodedId}>
-                    <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${fileData[fieldId][i].encodedId}`}>
+                    <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${clientId}/${fileData[fieldId][i].encodedId}`}>
                         {fileData[fieldId][i].name}
                     </a>
                 </li>
@@ -22,7 +22,7 @@ export const prettyFieldValues = (fieldId: number, type: string, value: string, 
             return <ul>{fileList}</ul>;
         case 'image':
         case 'signature':
-            return <img src={`${SERVER_URL}/getimage/${fileData[fieldId][0].encodedId}`} alt="Uploaded Photo" className="w-full" />
+            return <img src={`${SERVER_URL}/getimage/${clientId}/${fileData[fieldId][0].encodedId}`} alt="Uploaded Photo" className="w-full" />
         default:
             return value;
     }

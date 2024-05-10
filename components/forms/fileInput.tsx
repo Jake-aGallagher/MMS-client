@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleDown, faPaperclip, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { deleteFileHandler } from '../attachedFilesBox/deleteFileHandler';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 interface Props<T extends FieldValues> {
     register: UseFormRegister<T>;
@@ -18,6 +20,7 @@ interface Props<T extends FieldValues> {
 }
 
 const FileInput = (props: Props<any>) => {
+    const clientId = useSelector((state: RootState) => state.user.value.client);
     const hiddenFileInput = useRef<HTMLInputElement>(null);
     const [fileList, setFileList] = useState<{ id: string; encodedId: string; name: string }[]>(props.existingFiles);
 
@@ -77,10 +80,10 @@ const FileInput = (props: Props<any>) => {
                 {props.type != 'image' &&
                     fileList.map((item) => (
                         <div key={'file_' + item.id} className="w-full mb-1 pl-2 flex flex-row hover:outline-dotted hover:outline-1 outline-accent rounded-md">
-                            <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
+                            <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${clientId}/${item.encodedId}`}>
                                 {item.name}
                             </a>
-                            <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
+                            <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${clientId}/${item.encodedId}`}>
                                 <FontAwesomeIcon icon={faCircleDown} className="h-5 m-auto" />
                             </a>
                             <button onClick={() => deleteFile(item.encodedId)} className="btnRed w-12 h-8">
@@ -91,8 +94,8 @@ const FileInput = (props: Props<any>) => {
                 {props.type == 'image' &&
                     fileList.map((item) => (
                         <div key={'file_' + item.encodedId} className="flex flex-row">
-                            <img src={`${SERVER_URL}/getimage/${item.encodedId}`} alt="Uploaded Photo" className="w-96" />
-                            <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
+                            <img src={`${SERVER_URL}/getimage/${clientId}/${item.encodedId}`} alt="Uploaded Photo" className="w-96" />
+                            <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${clientId}/${item.encodedId}`}>
                                 <FontAwesomeIcon icon={faCircleDown} className="h-5 m-auto" />
                             </a>
                             <button onClick={() => deleteFile(item.encodedId)} className="btnRed w-12 h-8">

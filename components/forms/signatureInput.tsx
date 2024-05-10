@@ -7,6 +7,8 @@ import { deleteFileHandler } from '../attachedFilesBox/deleteFileHandler';
 import { useEffect, useRef, useState } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 interface Props<T extends FieldValues> {
     register: UseFormRegister<T>;
@@ -20,6 +22,7 @@ interface Props<T extends FieldValues> {
 }
 
 const SignatureInput = (props: Props<any>) => {
+    const clientId = useSelector((state: RootState) => state.user.value.client);
     const sigPadRef = useRef<SignaturePad | null>(null);
     const [fileList, setFileList] = useState<{ id: string; encodedId: string; name: string }[]>(props.existingFiles);
 
@@ -54,8 +57,8 @@ const SignatureInput = (props: Props<any>) => {
                 {fileList.length > 0 ? (
                     fileList.map((item) => (
                         <div key={item.encodedId} className="flex flex-row">
-                            <img src={`${SERVER_URL}/getimage/${item.encodedId}`} alt="Uploaded Photo" className="w-full h-48 bg-secAlt mr-2 rounded-md" />
-                            <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${item.encodedId}`}>
+                            <img src={`${SERVER_URL}/getimage/${clientId}/${item.encodedId}`} alt="Uploaded Photo" className="w-full h-48 bg-secAlt mr-2 rounded-md" />
+                            <a className="btnBlue w-12 h-8 flex flex-col justify-center items-center ml-auto mr-4" href={`${SERVER_URL}/getfile/${clientId}/${item.encodedId}`}>
                                 <FontAwesomeIcon icon={faCircleDown} className="h-5 m-auto" />
                             </a>
                             <button onClick={() => deleteFile(item.encodedId)} className="btnRed w-12 h-8">
