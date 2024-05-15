@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import ModalBase from '../../components/modal/modal';
-import { useFacilities } from '../../components/facilities/index/useFacilities';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
 import FullPage from '../../components/page/fullPage';
@@ -8,8 +7,9 @@ import Toolbar from '../../components/page/toolbar';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import { useRouter } from 'next/router';
+import { useProducts } from '../../components/products/index/useProducts';
 
-const facilitiesTableConfig = {
+const productsTableConfig = {
     headers: [
         { id: 'id', name: 'ID', type: 'link', search: true, order: true },
         { id: 'name', name: 'Name', type: 'string', search: true, order: true },
@@ -19,37 +19,37 @@ const facilitiesTableConfig = {
         { id: 'postcode', name: 'Postcode', type: 'string', search: true, order: true },
     ],
     searchable: true,
-    linkColPrefix: '/facilities/',
+    linkColPrefix: '/products/',
 };
 
-const Facilities = () => {
+const Products = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
-    if (!permissions.facilities?.view && !isAdmin) {
+    if (!permissions.products?.view && !isAdmin) {
         router.push('/');
     }
 
-    const { allFacilities, loading, error, reload } = useFacilities();
+    const { allProducts, loading, error, reload } = useProducts();
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setmodalType] = useState('');
 
     return (
         <FullPage>
             <Toolbar>
-                {permissions.facilities?.manage || isAdmin ? (
-                    <button onClick={() => [setViewModal(true), setmodalType('addEditFacility')]} className="tLink">
+                {permissions.products?.manage || isAdmin ? (
+                    <button onClick={() => [setViewModal(true), setmodalType('addEditProducts')]} className="tLink">
                         <div className="text-2xl mr-1 pb-1">+</div>
-                        Add Facility
+                        Add Product
                     </button>
                 ) : null}
             </Toolbar>
             {viewModal ? <ModalBase modalType={modalType} payload={0} closeModal={() => [setViewModal(false), reload()]} /> : null}
             <LoadingNoDataError loading={loading} error={error}>
-                <DataTable config={facilitiesTableConfig} data={allFacilities} />
+                <DataTable config={productsTableConfig} data={allProducts} />
             </LoadingNoDataError>
         </FullPage>
     );
 };
 
-export default Facilities;
+export default Products;

@@ -5,7 +5,7 @@ import { RootState } from '../store/store';
 import Logo from '../../public/Logo.svg';
 import LogoWithName from '../../public/LogoName.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faChartColumn, faClipboardList, faCoins, faFileContract, faFolderTree, faGear, faRetweet, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import { faBoxOpen, faBuilding, faChartColumn, faClipboardList, faCoins, faFileContract, faFolderTree, faGear, faRetweet, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { logoutProcess } from './logoutProcess';
 import { useRetrieveFacility } from './useRetrieveFacility';
 import { useState } from 'react';
@@ -58,6 +58,12 @@ const NavBar = (props: Props) => {
                     <FontAwesomeIcon icon={faCoins} className="w-3" />
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Revenue</span>
                 </Link>
+                {permissions.products?.view || isAdmin ? (
+                    <Link href="/products" className={'nLink ' + (currentRoute == 'products' ? 'text-accent' : '')}>
+                        <FontAwesomeIcon icon={faBoxOpen} className="w-3" />
+                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Products</span>
+                    </Link>
+                ) : null}
                 {permissions.facilities?.view || isAdmin ? (
                     <Link href="/facilities" className={'nLink ' + (currentRoute == 'facilities' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faBuilding} className="w-3" />
