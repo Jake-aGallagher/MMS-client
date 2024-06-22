@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../../../../routing/addressAPI';
-import { GlobalDebug } from '../../../../debug/globalDebug';
+import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 export const useAddEditSupplier = (id: number) => {
     const [loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ export const useAddEditSupplier = (id: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/supplier/${id}`, {
+            const response = await axios.get(`${SERVER_URL}/supplier/${id}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditSupplier/getHandler', [['response', response]]);

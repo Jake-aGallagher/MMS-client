@@ -5,7 +5,7 @@ import DeleteAsset from '../assets/delete';
 import CreateJob from '../jobs/createJob/createJob';
 import UpdateJob from '../jobs/updateJob/update';
 import AddEditSparesNote from '../spares/sparesManagement/sparesNotes/addEditNote/addEditSparesNote';
-import AddEditSupplier from '../spares/sparesManagement/suppliers/addEditSupplier/addEditSupplier';
+import AddEditSupplier from '../supplyChain/suppliers/addEditSupplier/addEditSupplier';
 import AddSparesItem from '../spares/addEditSparesItem/addEditSparesItem';
 import AdjustSparesStock from '../spares/adjustSparesStock/adjustSparesStock';
 import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelivery/addEditDelivery';
@@ -92,14 +92,16 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditDelivery closeModal={props.closeModal} payload={props.payload} />;
             case 'viewExtraSpares':
                 return <ViewExtraItems closeModal={props.closeModal} payload={props.payload} />;
-            case 'addEditSupplier':
-                return <AddEditSupplier closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditSparesItem':
                 return <AddSparesItem closeModal={props.closeModal} payload={props.payload} />;
             case 'adjustStockSparesItem':
                 return <AdjustSparesStock closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditSparesNote':
                 return <AddEditSparesNote closeModal={props.closeModal} payload={props.payload} />;
+
+            // Supply Chain
+            case 'addEditSupplier':
+                return <AddEditSupplier closeModal={props.closeModal} payload={props.payload} />;
 
             // Settings
             case 'addEditUser':

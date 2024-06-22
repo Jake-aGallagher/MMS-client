@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../../../../routing/addressAPI';
+import { SERVER_URL } from '../../../routing/addressAPI';
 import axios from 'axios';
-import { GlobalDebug } from '../../../../debug/globalDebug';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface Props {
     currentFacility: number;
@@ -40,7 +40,7 @@ export const useSuppliers = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/suppliers/${props.currentFacility}`, {
+            const response = await axios.get(`${SERVER_URL}/suppliers/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useSuppliers/getHandler', [['response', response]]);

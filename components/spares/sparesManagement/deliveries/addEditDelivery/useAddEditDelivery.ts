@@ -60,7 +60,7 @@ export const useAddEditDelivery = (id: number, currentFacility: number) => {
 
     const getHandlerLimited = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/spares/suppliers/${currentFacility}`, {
+            const response = await axios.get(`${SERVER_URL}/suppliers/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditDelivery/getHandlerLimited', [['response', response]]);

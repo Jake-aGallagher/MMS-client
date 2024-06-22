@@ -4,7 +4,6 @@ import SparesNotes from '../../../components/spares/sparesManagement/sparesNotes
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import DeliveriesCard from '../../../components/spares/sparesManagement/deliveriesCard';
-import SuppliersCard from '../../../components/spares/sparesManagement/suppliersCard';
 import FullPage from '../../../components/page/fullPage';
 import Toolbar from '../../../components/page/toolbar';
 import { useSelector } from 'react-redux';
@@ -33,7 +32,6 @@ const SparesManagement = () => {
                     {permissions.sparesManagement?.view || isAdmin ? (
                         <>
                             <DeliveriesCard />
-                            <SuppliersCard />
                             <SparesNotes />
                         </>
                     ) : null}

@@ -1,24 +1,24 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import ModalBase from '../../../../components/modal/modal';
-import { RootState } from '../../../../components/store/store';
+import ModalBase from '../../../components/modal/modal';
+import { RootState } from '../../../components/store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useSuppliers } from '../../../../components/spares/sparesManagement/suppliers/index/useSuppliers';
-import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
-import DataTable from '../../../../components/dataTable/dataTable';
-import FullPage from '../../../../components/page/fullPage';
-import Toolbar from '../../../../components/page/toolbar';
+import { useSuppliers } from '../../../components/supplyChain/suppliers/index/useSuppliers';
+import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
+import DataTable from '../../../components/dataTable/dataTable';
+import FullPage from '../../../components/page/fullPage';
+import Toolbar from '../../../components/page/toolbar';
 import { useRouter } from 'next/navigation';
-import { DataTableConfig } from '../../../../components/dataTable/types/configType';
+import { DataTableConfig } from '../../../components/dataTable/types/configType';
 
 const Suppliers = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
-    if (!permissions.sparesManagement?.view && !isAdmin) {
-        router.push('/spares');
+    if (!permissions.supply?.view && !isAdmin) {
+        router.push('/');
     }
 
     const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
@@ -56,9 +56,9 @@ const Suppliers = () => {
     return (
         <FullPage>
             <Toolbar>
-                <Link href="/spares/sparesManagement" className="tLink">
+                <Link href="/supply-chain" className="tLink">
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                    <p>Return to Spares Management</p>
+                    <p>Return to Supply Chain</p>
                 </Link>
                 {permissions.sparesManagement?.manage || isAdmin ? (
                     <button className="tLink" onClick={addEditSupplier}>
