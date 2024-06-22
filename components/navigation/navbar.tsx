@@ -5,7 +5,7 @@ import { RootState } from '../store/store';
 import Logo from '../../public/Logo.svg';
 import LogoWithName from '../../public/LogoName.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxOpen, faBuilding, faChartColumn, faClipboardList, faCoins, faFileContract, faFolderTree, faGear, faRetweet, faRightFromBracket, faScrewdriverWrench, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import { faBoxOpen, faBuilding, faChartColumn, faClipboardList, faCoins, faFileContract, faFolderTree, faGear, faRetweet, faRightFromBracket, faScrewdriverWrench, faTruck, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { logoutProcess } from './logoutProcess';
 import { useRetrieveFacility } from './useRetrieveFacility';
 import { useState } from 'react';
@@ -98,6 +98,12 @@ const NavBar = (props: Props) => {
                     <Link href="/spares" className={'nLink ' + (currentRoute == 'spares' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faTruckFast} className="mr-1 w-3" />
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Spares</span>
+                    </Link>
+                ) : null}
+                {permissions.supply?.view || isAdmin ? (
+                    <Link href="/supply-chain" className={'nLink ' + (currentRoute == 'supply-chain' ? 'text-accent' : '')}>
+                        <FontAwesomeIcon icon={faTruck} className="mr-1 w-3" />
+                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide text-nowrap">Supply Chain</span>
                     </Link>
                 ) : null}
                 <Link href="/settings" className={'nLink ' + (currentRoute == 'settings' ? 'text-accent' : '')}>
