@@ -1,17 +1,12 @@
 import Link from "next/link";
+import IndexCard from "../../layout/indexCard";
 
 const OrdersCard = () => {
-    return (
-        <div className="px-10 pt-5">
-            <div className="bg-background p-6 rounded-md shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Orders</h2>
-                <p className="">Manage current Orders and Create new Orders from Suppliers</p>
-                <button className="btnBlue h-8 px-4 mt-4">
-                    <Link href="/supply-chain/orders">Manage Orders</Link>
-                </button>
-            </div>
-        </div>
-    );
+    const title = 'Orders';
+    const description = 'Manage current Orders and Create new Orders from Suppliers';
+    const link = '/supply-chain/orders';
+    const linkDescription = 'Manage Orders';
+    return <IndexCard title={title} description={description} link={link} linkDescription={linkDescription} />;
 };
 
 export default OrdersCard;
