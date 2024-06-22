@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../../routing/addressAPI';
+import { SERVER_URL } from '../../../routing/addressAPI';
 import axios from 'axios';
-import { CustomFieldData } from '../../../commonTypes/CustomFields';
-import { GlobalDebug } from '../../debug/globalDebug';
+import { CustomFieldData } from '../../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface Job {
     id: number;

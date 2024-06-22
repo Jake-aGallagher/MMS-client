@@ -1,23 +1,23 @@
 import { useState, useEffect, useMemo } from 'react';
-import { RootState } from '../../store/store';
+import { RootState } from '../../../store/store';
 import { useSelector } from 'react-redux';
-import ModalBase from '../../modal/modal';
+import ModalBase from '../../../modal/modal';
 import { useForm } from 'react-hook-form';
-import FormHeader from '../../forms/formHeader';
-import GeneralFormSubmit from '../../forms/generalFormSubmit';
-import GeneralFormInput from '../../forms/generalFormInput';
-import FormContainer from '../../forms/formContainer';
-import GeneralForm from '../../forms/generalForm';
-import LoadingNoDataError from '../../loading/loadingNoDataError';
+import FormHeader from '../../../forms/formHeader';
+import GeneralFormSubmit from '../../../forms/generalFormSubmit';
+import GeneralFormInput from '../../../forms/generalFormInput';
+import FormContainer from '../../../forms/formContainer';
+import GeneralForm from '../../../forms/generalForm';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
 import { useUpdateJob } from './useUpdateJob';
 import { yupResolverUpdateJob } from './updateJobValidation';
 import { updatejobNotesHandler } from './updateJobNotesHandler';
 import { updateJobFullHandler } from './updateJobFullHandler';
-import AltTableHeaders from '../../dataTable/altTableHeaders';
-import AltTableContainer from '../../dataTable/altTableContainer';
-import SparesAddRemoveTable from '../../sparesSelector/sparesAddRemoveTable';
-import TimeAddRemoveTable from '../../usersSelector/timeAddRemoveTable';
-import { FieldInputs } from '../../settings/customFields/fieldInputs';
+import AltTableHeaders from '../../../dataTable/altTableHeaders';
+import AltTableContainer from '../../../dataTable/altTableContainer';
+import SparesAddRemoveTable from '../../../sparesSelector/sparesAddRemoveTable';
+import TimeAddRemoveTable from '../../../usersSelector/timeAddRemoveTable';
+import { FieldInputs } from '../../../settings/customFields/fieldInputs';
 
 interface ModalProps {
     closeModal: () => void;

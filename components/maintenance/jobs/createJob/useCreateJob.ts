@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../../routing/addressAPI';
-import { CustomFieldData, DefaultValues, FieldValue } from '../../../commonTypes/CustomFields';
-import { GlobalDebug } from '../../debug/globalDebug';
+import { SERVER_URL } from '../../../routing/addressAPI';
+import { CustomFieldData, DefaultValues, FieldValue } from '../../../../commonTypes/CustomFields';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface TypeOptions {
     id: number;

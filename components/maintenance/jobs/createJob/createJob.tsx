@@ -1,18 +1,18 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import ModalBase from '../../modal/modal';
+import { RootState } from '../../../store/store';
+import ModalBase from '../../../modal/modal';
 import { useForm } from 'react-hook-form';
-import FormHeader from '../../forms/formHeader';
-import GeneralFormSubmit from '../../forms/generalFormSubmit';
-import GeneralFormInput from '../../forms/generalFormInput';
-import FormContainer from '../../forms/formContainer';
-import GeneralForm from '../../forms/generalForm';
-import LoadingNoDataError from '../../loading/loadingNoDataError';
+import FormHeader from '../../../forms/formHeader';
+import GeneralFormSubmit from '../../../forms/generalFormSubmit';
+import GeneralFormInput from '../../../forms/generalFormInput';
+import FormContainer from '../../../forms/formContainer';
+import GeneralForm from '../../../forms/generalForm';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
 import { useCreateJob } from './useCreateJob';
 import { yupResolverCreateJob } from './createJobValidation';
 import { createJobHandler } from './createJobHandler';
-import { FieldInputs } from '../../settings/customFields/fieldInputs';
+import { FieldInputs } from '../../../settings/customFields/fieldInputs';
 
 interface ModalProps {
     closeModal: () => void;
