@@ -55,7 +55,7 @@ const AssetView = () => {
         ],
         title: `5 Most recent Maintenance Tasks for Components of ${assetDetails?.name}`,
         searchable: false,
-        linkColPrefix: '/jobs/',
+        linkColPrefix: '/maintenance/jobs/',
     };
 
     const recentPmTableConfig = {

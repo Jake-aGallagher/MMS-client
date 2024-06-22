@@ -64,7 +64,7 @@ const SparesView = () => {
         ],
         title: 'Recent Jobs',
         searchable: false,
-        linkColPrefix: '/jobs/',
+        linkColPrefix: '/maintenance/jobs/',
     };
 
     const recentPmTableConfig = {

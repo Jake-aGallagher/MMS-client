@@ -65,7 +65,7 @@ const FacilityView = () => {
         ],
         title: `5 Most recent Maintenance Tasks for ${facilityDetails?.name}`,
         searchable: false,
-        linkColPrefix: '/jobs/',
+        linkColPrefix: '/maintenance/jobs/',
     };
 
     return (
