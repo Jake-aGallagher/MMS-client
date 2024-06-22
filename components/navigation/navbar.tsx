@@ -71,6 +71,12 @@ const NavBar = (props: Props) => {
                     </Link>
                 ) : null}
                 {permissions.jobs?.view || isAdmin ? (
+                    <Link href="/maintenance" className={'nLink ' + (currentRoute == 'maintenance' ? 'text-accent' : '')}>
+                        <FontAwesomeIcon icon={faScrewdriverWrench} className="mr-1 w-3" />
+                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Maintenance</span>
+                    </Link>
+                ) : null}
+                {permissions.jobs?.view || isAdmin ? (
                     <Link href="/jobs" className={'nLink ' + (currentRoute == 'jobs' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faScrewdriverWrench} className="mr-1 w-3" />
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Jobs</span>
