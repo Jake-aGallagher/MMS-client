@@ -6,7 +6,7 @@ import { SERVER_URL } from '../routing/addressAPI';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import bgImg from '../../public/stock-vector-gear-blueprint-technical-background-cogs-and-wheels-in-gray-color-abstract-parts-of-engine-1764788840.jpg';
+import factorySkyline from '../../public/Factory-Skyline-Mirror.png';
 import LogoWithName from '../../public/LogoName.svg';
 import { useSearchParams } from 'next/navigation';
 import { setDebug } from '../store/debugSlice';
@@ -120,14 +120,14 @@ const Login = (props: Props) => {
                 </LoadingNoDataError>
             ) : (
                 <div className="container mx-auto h-screen w-screen flex flex-col justify-center items-center">
-                    <img src={bgImg.src} className="fixed w-screen h-screen object-cover" draggable={false} />
+                    <img src={factorySkyline.src} className="fixed w-screen h-screen object-cover" draggable={false} />
                     <img src={LogoWithName.src} className="fixed top-0 left-0 w-44 h-24 m-4" draggable={false} />
                     <form
                         onSubmit={handleSubmit(handleRegistration)}
-                        className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-secondary flex flex-col justify-center px-4 p-5 shadow-md z-10 opacity-80"
+                        className="rounded-md w-8/12 md:w-1/2 lg:w-1/3 mx-auto bg-background flex flex-col justify-center px-4 p-5 shadow-lg z-10 opacity-95 border-accent border-solid border-1 border-opacity-10"
                     >
                         <div className="flex flex-col mx-1 relative mb-2">
-                            <label htmlFor="client" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
+                            <label htmlFor="client" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-background">
                                 Client Code (4 letters)
                             </label>
                             <input
@@ -135,33 +135,33 @@ const Login = (props: Props) => {
                                 maxLength={4}
                                 id="client"
                                 defaultValue={client}
-                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.client || errors.username || errors.password) && 'border-red border-2'}`}
+                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-background border-primary border-solid ${(errors.client || errors.username || errors.password) && 'border-red border-2'}`}
                                 {...register('client', { required: true })}
                             />
                         </div>
 
                         <div className="flex flex-col mx-1 relative mb-2">
-                            <label htmlFor="username" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
+                            <label htmlFor="username" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-background">
                                 Username
                             </label>
                             <input
                                 type="text"
                                 maxLength={45}
                                 id="username"
-                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.client || errors.username || errors.password) && 'border-red border-2'}`}
+                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-background border-primary border-solid ${(errors.client || errors.username || errors.password) && 'border-red border-2'}`}
                                 {...register('username', { required: true })}
                             />
                         </div>
 
                         <div className="flex flex-col mx-1 relative mb-2">
-                            <label htmlFor="password" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-secondary">
+                            <label htmlFor="password" className="text-sm absolute ml-3 px-1 -top-1 z-10 bg-background">
                                 Password
                             </label>
                             <input
                                 type="password"
                                 maxLength={255}
                                 id="password"
-                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-secondary border-primary border-solid ${(errors.client || errors.username || errors.password) && 'border-red border-2'}`}
+                                className={`h-10 pl-1 my-2 rounded-md w-full border-1 bg-background border-primary border-solid ${(errors.client || errors.username || errors.password) && 'border-red border-2'}`}
                                 {...register('password', { required: true })}
                             />
                         </div>
