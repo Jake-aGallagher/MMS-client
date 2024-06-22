@@ -1,17 +1,17 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState } from '../../../store/store';
 import { useForm } from 'react-hook-form';
-import FormHeader from '../../forms/formHeader';
-import GeneralFormSubmit from '../../forms/generalFormSubmit';
-import GeneralFormInput from '../../forms/generalFormInput';
-import FormContainer from '../../forms/formContainer';
-import GeneralForm from '../../forms/generalForm';
+import FormHeader from '../../../forms/formHeader';
+import GeneralFormSubmit from '../../../forms/generalFormSubmit';
+import GeneralFormInput from '../../../forms/generalFormInput';
+import FormContainer from '../../../forms/formContainer';
+import GeneralForm from '../../../forms/generalForm';
 import { addEditAssetHandler } from './addEditAssetHandler';
 import { useAddEditAsset } from './useAddEditAsset';
-import { FieldInputs } from '../../settings/customFields/fieldInputs';
+import { FieldInputs } from '../../../settings/customFields/fieldInputs';
 import { useEffect, useMemo } from 'react';
-import LoadingNoDataError from '../../loading/loadingNoDataError';
-import InfoField from '../../forms/infoField';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
+import InfoField from '../../../forms/infoField';
 
 interface ModalProps {
     closeModal: () => void;

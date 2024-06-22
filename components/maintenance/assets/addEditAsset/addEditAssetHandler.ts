@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../debug/globalDebug';
+import { GlobalDebug } from '../../../debug/globalDebug';
 import { addEditAssetConn } from './addEditAssetConn';
 
 export const addEditAssetHandler = async (data: any, parentId: number, id: number, currentFacility: number, closeModal: () => void) => {

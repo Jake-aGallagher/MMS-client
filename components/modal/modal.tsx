@@ -1,7 +1,7 @@
 import AddEditUser from '../settings/users/addEditUsers/addEditUsers';
 import AddEditFacility from '../facilities/addEditFacility/addEditFacility';
 import AssignUsers from '../facilities/assignUsers/assignUsers';
-import DeleteAsset from '../assets/delete';
+import DeleteAsset from '../maintenance/assets/delete';
 import CreateJob from '../maintenance/jobs/createJob/createJob';
 import UpdateJob from '../maintenance/jobs/updateJob/update';
 import AddEditSparesNote from '../spares/sparesManagement/sparesNotes/addEditNote/addEditSparesNote';
@@ -12,7 +12,7 @@ import AddEditDelivery from '../spares/sparesManagement/deliveries/addEditDelive
 import ViewExtraItems from '../spares/sparesManagement/deliveries/viewExtraItems/viewExtraItems';
 import AddEditEnumGroup from '../settings/enumgroups/addEdit/addEditEnumGroup';
 import DeleteForm from '../forms/deleteForm/DeleteForm';
-import AddEditAsset from '../assets/addEditAsset/addEditAsset';
+import AddEditAsset from '../maintenance/assets/addEditAsset/addEditAsset';
 import AddEditUserGroup from '../settings/userGroups/addEditUserGroups/addEditUserGroup';
 import AddEditPermission from '../settings/permissions/addEditPermissions/addEditPermission';
 import SparesSelector from '../sparesSelector/sparesSelector';
@@ -30,7 +30,7 @@ import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditF
 import UpdateLog from '../logs/updateLog/updateLog';
 import AddEditField from '../settings/customFields/addEditField/addEditFields';
 import FacilityPicker from '../navigation/facilityPicker';
-import DowntimeSelector from '../assets/downtimeSelector/downtimeSelector';
+import DowntimeSelector from '../maintenance/assets/downtimeSelector/downtimeSelector';
 
 interface ModalProps {
     closeModal: () => void;

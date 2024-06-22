@@ -1,15 +1,15 @@
 import axios from 'axios';
-import { SERVER_URL } from '../routing/addressAPI';
+import { SERVER_URL } from '../../routing/addressAPI';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import FormHeader from '../forms/formHeader';
-import GeneralFormSubmit from '../forms/generalFormSubmit';
-import GeneralFormInput from '../forms/generalFormInput';
-import FormContainer from '../forms/formContainer';
-import GeneralForm from '../forms/generalForm';
-import FormTextCenter from '../forms/formTextCenter';
-import { GlobalDebug } from '../debug/globalDebug';
+import FormHeader from '../../forms/formHeader';
+import GeneralFormSubmit from '../../forms/generalFormSubmit';
+import GeneralFormInput from '../../forms/generalFormInput';
+import FormContainer from '../../forms/formContainer';
+import GeneralForm from '../../forms/generalForm';
+import FormTextCenter from '../../forms/formTextCenter';
+import { GlobalDebug } from '../../debug/globalDebug';
 
 interface ModalProps {
     closeModal: () => void;

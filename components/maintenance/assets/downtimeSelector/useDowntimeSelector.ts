@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState } from '../../../store/store';
 import axios from 'axios';
-import { SERVER_URL } from '../../routing/addressAPI';
-import { GlobalDebug } from '../../debug/globalDebug';
+import { SERVER_URL } from '../../../routing/addressAPI';
+import { GlobalDebug } from '../../../debug/globalDebug';
 
 interface Asset {
     id: number;

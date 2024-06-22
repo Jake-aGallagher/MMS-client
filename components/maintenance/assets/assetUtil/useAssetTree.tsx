@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState } from '../../../store/store';
 
 interface Props {
     type: string;
@@ -81,7 +81,7 @@ export const useAssetTree = (props: Props) => {
                         <div className="absolute right-2">
                             {node.parentId != 0 ? (
                                 <button className="btnBlue ml-5 text-sm h-6 px-3">
-                                    <Link href={'/assets/' + node.id}>View</Link>
+                                    <Link href={'/maintenance/assets/' + node.id}>View</Link>
                                 </button>
                             ) : null}
                             {permissions.jobs?.manage || isAdmin ? (

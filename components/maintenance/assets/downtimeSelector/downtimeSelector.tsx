@@ -1,9 +1,9 @@
-import LoadingNoDataError from '../../loading/loadingNoDataError';
-import FormContainer from '../../forms/formContainer';
-import FormHeader from '../../forms/formHeader';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
+import FormContainer from '../../../forms/formContainer';
+import FormHeader from '../../../forms/formHeader';
 import AssetsAvailableTable from './assetsAvailableTable';
-import AltTableContainer from '../../dataTable/altTableContainer';
-import AltTableHeaders from '../../dataTable/altTableHeaders';
+import AltTableContainer from '../../../dataTable/altTableContainer';
+import AltTableHeaders from '../../../dataTable/altTableHeaders';
 import { useDowntimeSelector } from './useDowntimeSelector';
 
 interface ModalProps {

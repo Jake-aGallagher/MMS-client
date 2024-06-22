@@ -18,7 +18,7 @@ const RevenueCenter = () => {
         ],
         title: 'Assets with recorded Revenue per Minute',
         searchable: true,
-        linkColPrefix: '/assets/',
+        linkColPrefix: '/maintenance/assets/',
     };
 
     return (

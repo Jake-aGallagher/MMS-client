@@ -52,7 +52,7 @@ const Schedules = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to PMs</p>
                 </Link>
-                <Link href="/assets" className="tLink">
+                <Link href="/maintenance/assets" className="tLink">
                     <div className="text-2xl mr-1 pb-1">+</div>Create PM Schedule
                 </Link>
             </Toolbar>

@@ -82,12 +82,6 @@ const NavBar = (props: Props) => {
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">PMs</span>
                     </Link>
                 ) : null}
-                {permissions.assets?.view || isAdmin ? (
-                    <Link href="/assets" className={'nLink ' + (currentRoute == 'assets' ? 'text-accent' : '')}>
-                        <FontAwesomeIcon icon={faFolderTree} className="mr-1 w-3" />
-                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Assets</span>
-                    </Link>
-                ) : null}
                 {permissions.jobs?.view || isAdmin ? (
                     <Link href="/logs" className={'nLink ' + (currentRoute == 'logs' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faFileContract} className="mr-1 w-3" />

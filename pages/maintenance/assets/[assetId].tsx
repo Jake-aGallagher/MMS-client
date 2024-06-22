@@ -3,22 +3,22 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
-import ModalBase from '../../components/modal/modal';
-import { useAssetDetails } from '../../components/assets/details/useAssetDetails';
-import { useOpenBranches } from '../../components/assets/assetUtil/useOpenBranches';
-import ParentDetails from '../../components/assets/details/parentDetails';
-import { useAssetTree } from '../../components/assets/assetUtil/useAssetTree';
-import LoadingNoDataError from '../../components/loading/loadingNoDataError';
-import DataTable from '../../components/dataTable/dataTable';
-import FullPage from '../../components/page/fullPage';
-import Toolbar from '../../components/page/toolbar';
-import DetailsBox from '../../components/detailsBox/detailsBox';
-import AssetDetailsDefaultCharts from '../../components/charts/defaults/assetDetailsDefaultCharts';
+import ModalBase from '../../../components/modal/modal';
+import { useAssetDetails } from '../../../components/maintenance/assets/details/useAssetDetails';
+import { useOpenBranches } from '../../../components/maintenance/assets/assetUtil/useOpenBranches';
+import ParentDetails from '../../../components/maintenance/assets/details/parentDetails';
+import { useAssetTree } from '../../../components/maintenance/assets/assetUtil/useAssetTree';
+import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
+import DataTable from '../../../components/dataTable/dataTable';
+import FullPage from '../../../components/page/fullPage';
+import Toolbar from '../../../components/page/toolbar';
+import DetailsBox from '../../../components/detailsBox/detailsBox';
+import AssetDetailsDefaultCharts from '../../../components/charts/defaults/assetDetailsDefaultCharts';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../components/store/store';
-import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
-import { DetailsConfig } from '../../commonTypes/DetailsConfig';
-import { addToDetailsConfig } from '../../components/settings/customFields/addToDetailsConfig';
+import { RootState } from '../../../components/store/store';
+import AttachedFilesBox from '../../../components/attachedFilesBox/attachedFilesBox';
+import { DetailsConfig } from '../../../commonTypes/DetailsConfig';
+import { addToDetailsConfig } from '../../../components/settings/customFields/addToDetailsConfig';
 
 const AssetView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -26,10 +26,10 @@ const AssetView = () => {
     const clientId = useSelector((state: RootState) => state.user.value.client);
     const router = useRouter();
     if (!permissions.assets?.view && !isAdmin) {
-        router.push('/');
+        router.push('/maintenance');
     }
 
-    const assetId = router.asPath.split('/')[2];
+    const assetId = router.asPath.split('/')[3];
     const [modal, setModal] = useState({ view: false, type: '', payload: {} });
     const { assetDetails, customFields, recentJobs, recentPms, children, jobsOfComponents6M, incompleteForAsset, loading, noData, error, reload } = useAssetDetails(assetId);
     const { openBranches, toggle } = useOpenBranches();
@@ -77,7 +77,7 @@ const AssetView = () => {
         <>
             <FullPage>
                 <Toolbar>
-                    <Link href="/assets" className="tLink">
+                    <Link href="/maintenance/assets" className="tLink">
                         <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                         <p>Return to all Assets</p>
                     </Link>

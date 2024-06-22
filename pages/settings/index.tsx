@@ -19,7 +19,7 @@ const Settings = () => {
                         {permissions.users?.view || isAdmin ? (
                             <Link
                                 href="/settings/users"
-                                className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all transition-all"
+                                className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all"
                             >
                                 Users
                             </Link>

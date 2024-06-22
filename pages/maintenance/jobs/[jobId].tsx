@@ -91,7 +91,7 @@ const JobView = () => {
         ],
         title: 'Downtime',
         searchable: false,
-        linkColPrefix: '/assets/',
+        linkColPrefix: '/maintenance/assets/',
     };
 
     return (
