@@ -1,20 +1,20 @@
 import { useSelector } from 'react-redux';
-import { usePMDetails } from '../../components/pms/details/usePmDetails';
-import { RootState } from '../../components/store/store';
+import { usePMDetails } from '../../../components/maintenance/pms/details/usePmDetails';
+import { RootState } from '../../../components/store/store';
 import { useRouter } from 'next/router';
-import FullPage from '../../components/page/fullPage';
-import Toolbar from '../../components/page/toolbar';
+import FullPage from '../../../components/page/fullPage';
+import Toolbar from '../../../components/page/toolbar';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
-import LoadingNoDataError from '../../components/loading/loadingNoDataError';
-import DetailsBox from '../../components/detailsBox/detailsBox';
-import AttachedFilesBox from '../../components/attachedFilesBox/attachedFilesBox';
-import DataTable from '../../components/dataTable/dataTable';
+import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
+import DetailsBox from '../../../components/detailsBox/detailsBox';
+import AttachedFilesBox from '../../../components/attachedFilesBox/attachedFilesBox';
+import DataTable from '../../../components/dataTable/dataTable';
 import { useState } from 'react';
-import ModalBase from '../../components/modal/modal';
-import { addToDetailsConfig } from '../../components/settings/customFields/addToDetailsConfig';
-import { DetailsConfig } from '../../commonTypes/DetailsConfig';
+import ModalBase from '../../../components/modal/modal';
+import { addToDetailsConfig } from '../../../components/settings/customFields/addToDetailsConfig';
+import { DetailsConfig } from '../../../commonTypes/DetailsConfig';
 
 const PMDetails = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -22,10 +22,10 @@ const PMDetails = () => {
     const clientId = useSelector((state: RootState) => state.user.value.client);
     const router = useRouter();
     if (!permissions.schedules?.view && !isAdmin) {
-        router.push('/');
+        router.push('/maintenance');
     }
 
-    const pmId = router.asPath.split('/')[2];
+    const pmId = router.asPath.split('/')[3];
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: number }>({ view: false, type: '', payload: 0 });
     const { pmDetails, customFields, timeDetails, sparesDetails, loading, noData, error, reload } = usePMDetails(pmId);
 
@@ -73,7 +73,7 @@ const PMDetails = () => {
     return (
         <FullPage>
             <Toolbar>
-                <Link href='/pms' className="tLink">
+                <Link href='/maintenance/pms' className="tLink">
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to PMs</p>
                 </Link>

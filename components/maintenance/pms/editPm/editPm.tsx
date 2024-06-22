@@ -1,22 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
-import FormContainer from '../../forms/formContainer';
-import FormHeader from '../../forms/formHeader';
-import GeneralForm from '../../forms/generalForm';
-import GeneralFormInput from '../../forms/generalFormInput';
-import GeneralFormSubmit from '../../forms/generalFormSubmit';
-import LoadingNoDataError from '../../loading/loadingNoDataError';
+import FormContainer from '../../../forms/formContainer';
+import FormHeader from '../../../forms/formHeader';
+import GeneralForm from '../../../forms/generalForm';
+import GeneralFormInput from '../../../forms/generalFormInput';
+import GeneralFormSubmit from '../../../forms/generalFormSubmit';
+import LoadingNoDataError from '../../../loading/loadingNoDataError';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState } from '../../../store/store';
 import { useForm } from 'react-hook-form';
-import AltTableContainer from '../../dataTable/altTableContainer';
-import AltTableHeaders from '../../dataTable/altTableHeaders';
-import TimeAddRemoveTable from '../../usersSelector/timeAddRemoveTable';
-import SparesAddRemoveTable from '../../sparesSelector/sparesAddRemoveTable';
+import AltTableContainer from '../../../dataTable/altTableContainer';
+import AltTableHeaders from '../../../dataTable/altTableHeaders';
+import TimeAddRemoveTable from '../../../usersSelector/timeAddRemoveTable';
+import SparesAddRemoveTable from '../../../sparesSelector/sparesAddRemoveTable';
 import { useEditPM } from './useEditPm';
-import ModalBase from '../../modal/modal';
-import FormTextCenter from '../../forms/formTextCenter';
+import ModalBase from '../../../modal/modal';
+import FormTextCenter from '../../../forms/formTextCenter';
 import { editPMHandler } from './editPMHandler';
-import { FieldInputs } from '../../settings/customFields/fieldInputs';
+import { FieldInputs } from '../../../settings/customFields/fieldInputs';
 
 interface Props {
     closeModal: () => void;
@@ -76,7 +76,7 @@ const EditPM = (props: Props) => {
 
     const handleRegistration = async (data: any) => {
         const complete = completableStatus.includes(parseInt(data.status));
-        editPMHandler(data, props.pmId, complete, currentFacility, loggedTimeDetails, sparesSelected, props.closeModal, []);
+        editPMHandler(data, props.pmId, complete, currentFacility, loggedTimeDetails, sparesSelected, props.closeModal);
     };
 
     return (

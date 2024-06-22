@@ -22,9 +22,9 @@ import AddEditStatusType from '../settings/statusTypes/addEditStatusType/addEdit
 import AddEditUrgencyType from '../settings/urgencyTypes/addEditUrgencyType/addEditUrgencyType';
 import { GlobalDebug } from '../debug/globalDebug';
 import AddEditEnumValue from '../settings/enumgroups/enumValues/addEditEnumValues/addEditEnumValue';
-import AddSchedule from '../pms/pmsManagement/addSchedule/addSchedule';
-import EditPM from '../pms/editPm/editPm';
-import EditSchedule from '../pms/pmsManagement/editSchedule/editSchedule';
+import AddSchedule from '../maintenance/pms/pmsManagement/addSchedule/addSchedule';
+import EditPM from '../maintenance/pms/editPm/editPm';
+import EditSchedule from '../maintenance/pms/pmsManagement/editSchedule/editSchedule';
 import AddEditLogTemplate from '../logs/logsManagement/addEditLogTemplate/addEditLogTemplate';
 import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditField/addEditLogField';
 import UpdateLog from '../logs/updateLog/updateLog';

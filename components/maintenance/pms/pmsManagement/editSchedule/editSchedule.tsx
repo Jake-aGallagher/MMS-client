@@ -1,26 +1,23 @@
 import { useForm } from 'react-hook-form';
-import FormContainer from '../../../forms/formContainer';
-import FormHeader from '../../../forms/formHeader';
-import GeneralForm from '../../../forms/generalForm';
-import LoadingNoDataError from '../../../loading/loadingNoDataError';
+import { useEditSchedule } from './useEditSchedule';
 import { useEffect, useMemo } from 'react';
-import { useAddSchedule } from './useAddSchedule';
-import { yupResolverAddSchedule } from './addScheduleValidation';
-import GeneralFormInput from '../../../forms/generalFormInput';
-import FormTextCenter from '../../../forms/formTextCenter';
-import { addScheduleHandler } from './addScheduleHandler';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
-import GeneralFormSubmit from '../../../forms/generalFormSubmit';
+import { yupResolverEditSchedule } from './editScheduleValidation';
+import LoadingNoDataError from '../../../../loading/loadingNoDataError';
+import FormContainer from '../../../../forms/formContainer';
+import FormHeader from '../../../../forms/formHeader';
+import GeneralForm from '../../../../forms/generalForm';
+import GeneralFormInput from '../../../../forms/generalFormInput';
+import FormTextCenter from '../../../../forms/formTextCenter';
+import GeneralFormSubmit from '../../../../forms/generalFormSubmit';
+import { editScheduleHandler } from './editScheduleHandler';
 
 interface ModalProps {
     closeModal: () => void;
-    assetId: number;
+    payload: { id: number; name: string;};
 }
 
-const AddSchedule = (props: ModalProps) => {
-    const facilityId = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
-    const { defaultValues, typeOptions, loading, error } = useAddSchedule();
+const EditSchedule = (props: ModalProps) => {
+    const { defaultValues, typeOptions, loading, error } = useEditSchedule(props.payload.id);
     const yesNoOptions = [
         { id: 'No', value: 'No' },
         { id: 'Yes', value: 'Yes' },
@@ -39,41 +36,41 @@ const AddSchedule = (props: ModalProps) => {
         reset,
         formState: { errors },
     } = useForm({
-        resolver: yupResolverAddSchedule,
+        resolver: yupResolverEditSchedule,
         defaultValues: useMemo(() => {
             return defaultValues;
         }, [defaultValues]),
     });
 
-    const [watchStartNow] = watch(['startNow']);
+    const [watchEditStart] = watch(['editStart']);
 
     useEffect(() => {
         reset(defaultValues);
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await addScheduleHandler({ data, facilityId, assetId: props.assetId, closeModal: props.closeModal });
+        await editScheduleHandler(props.payload.id, data, props.closeModal);
     };
 
     return (
         <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
-                <FormHeader label={'Create New Planned Maintenance Schedule'} />
+            <FormHeader label={'Edit PM Schedule'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="PM Type" type="select" formName="type" errors={errors} required={true} optionNameString="value" selectOptions={typeOptions} />
                     <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
                     <GeneralFormInput register={register} label="PM Description" type="textarea" formName="description" errors={errors} rows={5} />
                     <GeneralFormInput
                         register={register}
-                        label="Start from today"
+                        label="Adjust Current Due Date?"
                         type="select"
-                        formName="startNow"
+                        formName="editStart"
                         errors={errors}
                         required={true}
                         optionNameString="value"
                         selectOptions={yesNoOptions}
                     />
-                    {watchStartNow === 'No' ? <GeneralFormInput register={register} label="Start Date" type="date" formName="scheduleStart" errors={errors} required={true} /> : null}
+                    {watchEditStart === 'Yes' ? <GeneralFormInput register={register} label="Next Due" type="date" formName="scheduleStart" errors={errors} required={true} /> : null}
                     <FormTextCenter label="Schedule frequency" />
                     <div className="flex flex-row w-full gap-2">
                         <GeneralFormInput register={register} label="Frequency" type="number" formName="frequencyTime" errors={errors} required={true} min={1} />
@@ -96,4 +93,4 @@ const AddSchedule = (props: ModalProps) => {
     );
 };
 
-export default AddSchedule;
+export default EditSchedule;

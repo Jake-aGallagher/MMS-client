@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../debug/globalDebug';
+import { GlobalDebug } from '../../../../debug/globalDebug';
 import { addScheduleConn } from './addScheduleConn';
 
 interface Props {

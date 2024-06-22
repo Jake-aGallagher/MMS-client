@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../debug/globalDebug';
+import { GlobalDebug } from '../../../../debug/globalDebug';
 import { addScheduleConn } from './editScheduleConn';
 
 export const editScheduleHandler = async (id: number, data: any, closeModal: () => void) => {
