@@ -27,7 +27,7 @@ export const useAddEditTaskType = (props: Props) => {
 
     const getTaskTypeHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/tasktypes/${props.taskTypeNumber}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/tasktypes/${props.taskTypeNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditTaskType/getTaskTypeHandler', [['response', response]]);

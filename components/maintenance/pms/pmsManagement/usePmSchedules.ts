@@ -36,7 +36,7 @@ export const usePmSchedules = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const schedulesList = await axios.get(`${SERVER_URL}/pms/schedules/all-schedules/${props.currentFacility}`, {
+            const schedulesList = await axios.get(`${SERVER_URL}/maintenance/pms/schedules/all-schedules/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('usePmSchedules/getUpdate', [['response', schedulesList]]);

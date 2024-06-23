@@ -44,7 +44,7 @@ export const useLogTemplateDetails = (facilityId: number, scheduleId: number) =>
 
     const getScheduleHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/logs/log-templates/${facilityId}/${scheduleId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/logs/log-templates/${facilityId}/${scheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useLogTemplateDetails/getScheduleHandler', [['response', response]]);

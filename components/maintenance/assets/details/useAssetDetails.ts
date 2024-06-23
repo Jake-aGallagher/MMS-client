@@ -75,7 +75,7 @@ export const useAssetDetails = (assetId: string) => {
 
     const getAssetHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/asset/${assetId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/asset/${assetId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAssetDetails/getAssetHandler', [['response', response]]);

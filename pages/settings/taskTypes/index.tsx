@@ -32,7 +32,7 @@ const TaskTypes = () => {
         ],
         searchable: true,
         modalType: 'TaskType',
-        deleteUrl: 'tasktypes',
+        deleteUrl: 'maintenance/tasktypes',
         idPointer: 'id',
         namePointer: 'value',
         reload: reload,

@@ -56,7 +56,7 @@ export const useUpdateJob = (currentFacility: number, jobId: number) => {
 
     const getJobUpdate = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/jobs/update/${currentFacility}/${jobId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/jobs/update/${currentFacility}/${jobId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useUpdateJob/getJobUpdate', [['response', response]]);

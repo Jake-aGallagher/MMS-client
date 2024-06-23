@@ -31,7 +31,7 @@ export const useAssets = (currentFacility: number) => {
 
     const getAssetTree = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/asset-tree/${currentFacility}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/asset-tree/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAssets/getAssetTree', [['response', response]]);

@@ -43,7 +43,7 @@ export const useAddEditAsset = (assetId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/asset/${assetId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/asset/${assetId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditAsset/getHandler', [['response', response]]);

@@ -34,7 +34,7 @@ const UrgencyTypes = () => {
         ],
         searchable: true,
         modalType: 'UrgencyType',
-        deleteUrl: 'urgencytypes',
+        deleteUrl: 'maintenance/urgencytypes',
         idPointer: 'id',
         namePointer: 'value',
         reload: reload,

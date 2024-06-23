@@ -1,28 +1,28 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import ModalBase from '../../../components/modal/modal';
+import ModalBase from '../../../../components/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
-import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
-import FullPage from '../../../components/page/fullPage';
-import Toolbar from '../../../components/page/toolbar';
-import DetailsBox from '../../../components/detailsBox/detailsBox';
-import AttachedFilesBox from '../../../components/attachedFilesBox/attachedFilesBox';
+import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
+import FullPage from '../../../../components/page/fullPage';
+import Toolbar from '../../../../components/page/toolbar';
+import DetailsBox from '../../../../components/detailsBox/detailsBox';
+import AttachedFilesBox from '../../../../components/attachedFilesBox/attachedFilesBox';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../components/store/store';
-import { usePmScheduleDetails } from '../../../components/pms/pmsManagement/details/usePmScheduleDetails';
-import DataTable from '../../../components/dataTable/dataTable';
+import { RootState } from '../../../../components/store/store';
+import { usePmScheduleDetails } from '../../../../components/maintenance/pms/pmsManagement/details/usePmScheduleDetails';
+import DataTable from '../../../../components/dataTable/dataTable';
 
 const ScheduleView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
     if (!permissions.schedules?.view && !isAdmin) {
-        router.push('/');
+        router.push('/maintenance');
     }
     const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
-    const pmScheduleId = parseInt(router.asPath.split('/')[3]);
+    const pmScheduleId = parseInt(router.asPath.split('/')[4]);
     const { scheduleDetails, pms, loading, noData, error, reload } = usePmScheduleDetails(currentFacility, pmScheduleId);
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
@@ -54,13 +54,13 @@ const ScheduleView = () => {
         ],
         searchable: true,
         reverseSort: true,
-        linkColPrefix: `/pm-schedules/pm/`,
+        linkColPrefix: `/maintenance/pm-schedules/pm/`,
     };
 
     return (
         <FullPage>
             <Toolbar>
-                <Link href="/pms/pmsManagement" className="tLink">
+                <Link href="/maintenance/pms/pmsManagement" className="tLink">
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to PM Schedules</p>
                 </Link>

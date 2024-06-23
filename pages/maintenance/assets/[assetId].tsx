@@ -70,7 +70,7 @@ const AssetView = () => {
         ],
         title: `5 Most recent PMs for Components of ${assetDetails?.name}`,
         searchable: false,
-        linkColPrefix: '/pms/',
+        linkColPrefix: '/maintenance/pms/',
     };
 
     return (

@@ -28,7 +28,7 @@ export const useDowntimeSelector = (assetsSelected: AssetDowntime[]) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/assets/revenues/${currentFacility}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/assets/revenues/${currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useDowntimeSelector/getHandler', [['response', response]]);

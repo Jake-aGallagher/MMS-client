@@ -34,7 +34,7 @@ const Schedules = () => {
         searchable: true,
         linkColPrefix: '/maintenance/pms/pmsManagement/',
         modalType: 'PmSchedule',
-        deleteUrl: 'pms/schedules',
+        deleteUrl: 'maintenance/pms/schedules',
         idPointer: 'id',
         namePointer: 'title',
         reload: reload,

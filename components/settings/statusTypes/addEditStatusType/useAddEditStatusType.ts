@@ -29,7 +29,7 @@ export const useAddEditStatusType = (props: Props) => {
 
     const getStatusTypeHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/statustypes/${props.statusTypeNumber}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/statustypes/${props.statusTypeNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditStatusType/getStatusTypeHandler', [['response', response]]);

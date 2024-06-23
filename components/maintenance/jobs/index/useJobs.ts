@@ -44,7 +44,7 @@ export const useJobs = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const jobsList = await axios.get(`${SERVER_URL}/jobs/all-jobs/${props.currentFacility}`, {
+            const jobsList = await axios.get(`${SERVER_URL}/maintenance/jobs/all-jobs/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useJobs/getHandler', [['response', jobsList]]);

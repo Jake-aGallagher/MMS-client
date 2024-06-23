@@ -30,7 +30,7 @@ export const useAddSchedule = () => {
 
     const getEnums = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/pms/schedules/add-schedule`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/pms/schedules/add-schedule`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddSchedule/getEnums', [['response', response]]);

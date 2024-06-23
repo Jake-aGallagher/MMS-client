@@ -42,7 +42,7 @@ export const useAddEditLogField = (fieldId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/logs/edit-log-field/${fieldId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/logs/edit-log-field/${fieldId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditLogField/getHandler', [['response', response]]);

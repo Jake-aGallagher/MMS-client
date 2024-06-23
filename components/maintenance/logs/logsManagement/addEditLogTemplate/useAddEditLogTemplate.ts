@@ -36,7 +36,7 @@ export const useAddEditLogTemplate = (logTemplateId: number) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/logs/edit-log-template/${logTemplateId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/logs/edit-log-template/${logTemplateId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditLogTemplate/getHandler', [['response', response]]);

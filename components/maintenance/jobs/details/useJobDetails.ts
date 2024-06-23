@@ -72,7 +72,7 @@ export const useJobDetails = (jobId: string) => {
 
     const getJobHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/jobs/${jobId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/jobs/${jobId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useJobDetails/getJobHandler', [['response', response]]);

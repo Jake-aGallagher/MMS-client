@@ -29,7 +29,7 @@ export const useAddEditUrgencyType = (props: Props) => {
 
     const getUrgencyTypeHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/urgencytypes/${props.urgencyTypeNumber}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/urgencytypes/${props.urgencyTypeNumber}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useAddEditUrgencyType/getUrgencyTypeHandler', [['response', response]]);

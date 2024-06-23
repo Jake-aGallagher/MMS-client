@@ -36,7 +36,7 @@ export const usePms = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/pms/${props.currentFacility}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/pms/${props.currentFacility}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('usePms/getHandler', [['response', response]]);

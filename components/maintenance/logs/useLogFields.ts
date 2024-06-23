@@ -36,7 +36,7 @@ export const useLogFields = (logId: number) => {
 
     const getScheduleHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/logs/log-fields/${logId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/logs/log-fields/${logId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useLogFields/getScheduleHandler', [['response', response]]);

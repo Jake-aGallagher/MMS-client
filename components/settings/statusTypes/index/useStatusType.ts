@@ -27,7 +27,7 @@ export const useStatusTypes = () => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/statustypes`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/statustypes`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useStatusTypes/getHandler', [['response', response]]);

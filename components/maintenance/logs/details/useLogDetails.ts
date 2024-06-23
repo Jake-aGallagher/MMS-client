@@ -48,7 +48,7 @@ export const useLogDetails = (props: Props) => {
 
     const getHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/logs/log/${props.logId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/logs/log/${props.logId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useLogDetails/getHandler', [['response', response]]);

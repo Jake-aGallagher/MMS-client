@@ -47,7 +47,7 @@ export const useEditPM = (currentFacility: number, PMId: number) => {
 
     const getUpdate = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/pms/edit/${currentFacility}/${PMId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/pms/edit/${currentFacility}/${PMId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('useEditPM/getUpdate', [['response', response]]);

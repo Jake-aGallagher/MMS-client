@@ -35,7 +35,7 @@ const LogTemplates = () => {
         searchable: true,
         linkColPrefix: '/maintenance/logs/logsManagement/',
         modalType: 'LogTemplate',
-        deleteUrl: 'logs/log-templates',
+        deleteUrl: 'maintenance/logs/log-templates',
         idPointer: 'id',
         namePointer: 'title',
         reload: reload,

@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import ModalBase from '../../../components/modal/modal';
 import { useFieldList } from '../../../components/settings/customFields/fieldList/useFieldList';
-import FieldCard from '../../../components/logs/logsManagement/details/formBuilder/useLogFields/FieldCard';
+import FieldCard from '../../../components/maintenance/logs/logsManagement/details/formBuilder/useLogFields/FieldCard';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
-import AddFieldButton from '../../../components/logs/logsManagement/details/formBuilder/addFieldButton';
+import AddFieldButton from '../../../components/maintenance/logs/logsManagement/details/formBuilder/addFieldButton';
 
 interface Props {
     type: 'facility' | 'asset' | 'spare' | 'job' | 'pm' | 'log';

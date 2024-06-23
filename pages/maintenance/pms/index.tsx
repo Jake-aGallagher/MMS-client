@@ -35,7 +35,7 @@ const Pms = () => {
         searchable: true,
         linkColPrefix: '/maintenance/pms/',
         modalType: 'Pms',
-        deleteUrl: 'pms',
+        deleteUrl: 'maintenance/pms',
         idPointer: 'id',
         namePointer: 'title',
         reload: reload,

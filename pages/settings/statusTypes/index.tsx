@@ -34,7 +34,7 @@ const StatusTypes = () => {
         ],
         searchable: true,
         modalType: 'StatusType',
-        deleteUrl: 'statustypes',
+        deleteUrl: 'maintenance/statustypes',
         idPointer: 'id',
         namePointer: 'value',
         reload: reload,

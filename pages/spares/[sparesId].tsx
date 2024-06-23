@@ -79,7 +79,7 @@ const SparesView = () => {
         ],
         title: `5 Most recent PMs where ${sparesDetails?.name} was used`,
         searchable: false,
-        linkColPrefix: '/pms/',
+        linkColPrefix: '/maintenance/pms/',
     };
 
     const editStock = () => {

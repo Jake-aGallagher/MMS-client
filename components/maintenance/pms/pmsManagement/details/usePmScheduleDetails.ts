@@ -48,7 +48,7 @@ export const usePmScheduleDetails = (facilityId: number, scheduleId: number) => 
 
     const getScheduleHandler = async () => {
         try {
-            const response = await axios.get(`${SERVER_URL}/pms/schedules/${facilityId}/${scheduleId}`, {
+            const response = await axios.get(`${SERVER_URL}/maintenance/pms/schedules/${facilityId}/${scheduleId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
             GlobalDebug('usePmScheduleDetails/getScheduleHandler', [['response', response]]);
