@@ -5,7 +5,7 @@ import { RootState } from '../../components/store/store';
 import { useRouter } from 'next/navigation';
 import ProductsCard from '../../components/inventory/index/productsCard';
 import StockCard from '../../components/inventory/index/stockCard';
-import TrackingCard from '../../components/inventory/index/trackingCard';
+import WarehouseCard from '../../components/inventory/index/warehouseCard';
 import ForecastingCard from '../../components/inventory/index/forecastingCard';
 import ValuationCard from '../../components/inventory/index/valuationCard';
 import IndexWrapper from '../../components/layout/indexWrapper';
@@ -25,7 +25,7 @@ const Inventory = () => {
                 <IndexWrapper>
                     <ProductsCard />
                     <StockCard />
-                    <TrackingCard />
+                    <WarehouseCard />
                     <ForecastingCard />
                     <ValuationCard />
                 </IndexWrapper>

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import IndexCard from "../../layout/indexCard";
 
 const OrdersCard = () => {
