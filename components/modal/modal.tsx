@@ -25,9 +25,9 @@ import AddEditEnumValue from '../settings/enumgroups/enumValues/addEditEnumValue
 import AddSchedule from '../maintenance/pms/pmsManagement/addSchedule/addSchedule';
 import EditPM from '../maintenance/pms/editPm/editPm';
 import EditSchedule from '../maintenance/pms/pmsManagement/editSchedule/editSchedule';
-import AddEditLogTemplate from '../logs/logsManagement/addEditLogTemplate/addEditLogTemplate';
-import AddEditLogField from '../logs/logsManagement/details/formBuilder/addEditField/addEditLogField';
-import UpdateLog from '../logs/updateLog/updateLog';
+import AddEditLogTemplate from '../maintenance/logs/logsManagement/addEditLogTemplate/addEditLogTemplate';
+import AddEditLogField from '../maintenance/logs/logsManagement/details/formBuilder/addEditField/addEditLogField';
+import UpdateLog from '../maintenance/logs/updateLog/updateLog';
 import AddEditField from '../settings/customFields/addEditField/addEditFields';
 import FacilityPicker from '../navigation/facilityPicker';
 import DowntimeSelector from '../maintenance/assets/downtimeSelector/downtimeSelector';

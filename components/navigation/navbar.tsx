@@ -76,12 +76,6 @@ const NavBar = (props: Props) => {
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Maintenance</span>
                     </Link>
                 ) : null}
-                {permissions.jobs?.view || isAdmin ? (
-                    <Link href="/logs" className={'nLink ' + (currentRoute == 'logs' ? 'text-accent' : '')}>
-                        <FontAwesomeIcon icon={faFileContract} className="mr-1 w-3" />
-                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Logs</span>
-                    </Link>
-                ) : null}
                 {permissions.spares?.view || isAdmin ? (
                     <Link href="/spares" className={'nLink ' + (currentRoute == 'spares' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faTruckFast} className="mr-1 w-3" />
