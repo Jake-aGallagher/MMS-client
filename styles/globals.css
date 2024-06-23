@@ -13,6 +13,6 @@
         @apply mr-8 hover:text-accent focus:text-accent flex flex-row items-center transition-all;
     }
     .nLink {
-        @apply mb-2 h-6 ml-6 xl:w-32 relative hover:text-accent focus:text-accent transition-all flex flex-row;
+        @apply mb-2 h-6 ml-6 xl:w-40 relative hover:text-accent focus:text-accent transition-all flex flex-row;
     }
 }

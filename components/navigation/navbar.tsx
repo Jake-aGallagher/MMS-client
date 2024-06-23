@@ -5,7 +5,23 @@ import { RootState } from '../store/store';
 import Logo from '../../public/Logo.svg';
 import LogoWithName from '../../public/LogoName.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxOpen, faBuilding, faChartColumn, faClipboardList, faCoins, faFileContract, faFolderTree, faGear, faRetweet, faRightFromBracket, faScrewdriverWrench, faTruck, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import {
+    faBoxOpen,
+    faBoxesStacked,
+    faBuilding,
+    faCalendarDays,
+    faChartColumn,
+    faClipboardCheck,
+    faCoins,
+    faFileContract,
+    faGear,
+    faMagnifyingGlass,
+    faRetweet,
+    faRightFromBracket,
+    faScrewdriverWrench,
+    faTruck,
+    faTruckFast,
+} from '@fortawesome/free-solid-svg-icons';
 import { logoutProcess } from './logoutProcess';
 import { useRetrieveFacility } from './useRetrieveFacility';
 import { useState } from 'react';
@@ -54,9 +70,19 @@ const NavBar = (props: Props) => {
                     <FontAwesomeIcon icon={faChartColumn} className="w-3" />
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Dashboard</span>
                 </Link>
-                <Link href="/revenue" className={'nLink ' + (currentRoute == 'revenue' ? 'text-accent' : '')}>
+                {permissions.facilities?.view || isAdmin ? (
+                    <Link href="/facilities" className={'nLink ' + (currentRoute == 'facilities' ? 'text-accent' : '')}>
+                        <FontAwesomeIcon icon={faBuilding} className="w-3" />
+                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Facilities</span>
+                    </Link>
+                ) : null}
+                {/* <Link href="/revenue" className={'nLink ' + (currentRoute == 'revenue' ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faCoins} className="w-3" />
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Revenue</span>
+                </Link> */}
+                <Link href="/scheduling" className={'nLink ' + (currentRoute == 'scheduling' ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faCalendarDays} className="w-3" />
+                    <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Scheduling</span>
                 </Link>
                 {permissions.products?.view || isAdmin ? (
                     <Link href="/products" className={'nLink ' + (currentRoute == 'products' ? 'text-accent' : '')}>
@@ -64,18 +90,20 @@ const NavBar = (props: Props) => {
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Products</span>
                     </Link>
                 ) : null}
-                {permissions.facilities?.view || isAdmin ? (
-                    <Link href="/facilities" className={'nLink ' + (currentRoute == 'facilities' ? 'text-accent' : '')}>
-                        <FontAwesomeIcon icon={faBuilding} className="w-3" />
-                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Facilities</span>
-                    </Link>
-                ) : null}
+                <Link href="/inventory" className={'nLink ' + (currentRoute == 'inventory' ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faBoxesStacked} className="w-3" />
+                    <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Inventory</span>
+                </Link>
                 {permissions.jobs?.view || isAdmin ? (
                     <Link href="/maintenance" className={'nLink ' + (currentRoute == 'maintenance' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faScrewdriverWrench} className="mr-1 w-3" />
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Maintenance</span>
                     </Link>
                 ) : null}
+                <Link href="/quality-control" className={'nLink ' + (currentRoute == 'quality-control' ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faFileContract} className="w-3" />
+                    <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide text-nowrap">Quality Control</span>
+                </Link>
                 {permissions.spares?.view || isAdmin ? (
                     <Link href="/spares" className={'nLink ' + (currentRoute == 'spares' ? 'text-accent' : '')}>
                         <FontAwesomeIcon icon={faTruckFast} className="mr-1 w-3" />
@@ -88,6 +116,14 @@ const NavBar = (props: Props) => {
                         <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide text-nowrap">Supply Chain</span>
                     </Link>
                 ) : null}
+                <Link href="/compliance" className={'nLink ' + (currentRoute == 'compliance' ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faClipboardCheck} className="w-3" />
+                    <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Compliance</span>
+                </Link>
+                <Link href="/reports" className={'nLink ' + (currentRoute == 'reports' ? 'text-accent' : '')}>
+                    <FontAwesomeIcon icon={faMagnifyingGlass} className="w-3" />
+                    <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Reports</span>
+                </Link>
                 <Link href="/settings" className={'nLink ' + (currentRoute == 'settings' ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faGear} className="mr-1 w-3" />
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Settings</span>
