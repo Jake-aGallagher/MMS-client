@@ -21,9 +21,9 @@ const SparesManagement = () => {
             <FullPage>
                 <Toolbar></Toolbar>
                 <div>
+                    <AssetsCard />
                     <JobsCard />
                     <PMsCard />
-                    <AssetsCard />
                     <LogsCard />
                 </div>
             </FullPage>
