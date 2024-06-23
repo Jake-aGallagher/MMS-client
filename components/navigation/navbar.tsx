@@ -84,12 +84,6 @@ const NavBar = (props: Props) => {
                     <FontAwesomeIcon icon={faCalendarDays} className="w-3" />
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Scheduling</span>
                 </Link>
-                {permissions.products?.view || isAdmin ? (
-                    <Link href="/products" className={'nLink ' + (currentRoute == 'products' ? 'text-accent' : '')}>
-                        <FontAwesomeIcon icon={faBoxOpen} className="w-3" />
-                        <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Products</span>
-                    </Link>
-                ) : null}
                 <Link href="/inventory" className={'nLink ' + (currentRoute == 'inventory' ? 'text-accent' : '')}>
                     <FontAwesomeIcon icon={faBoxesStacked} className="w-3" />
                     <span className="hidden group-hover:block xl:block absolute w-0 ml-4 animate-slide">Inventory</span>

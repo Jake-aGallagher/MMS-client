@@ -6,8 +6,9 @@ import { useRouter } from 'next/navigation';
 import SuppliersCard from '../../components/supplyChain/index/suppliersCard';
 import OrdersCard from '../../components/supplyChain/index/ordersCard';
 import TransportCard from '../../components/supplyChain/index/transportCard';
+import IndexWrapper from '../../components/layout/indexWrapper';
 
-const SparesManagement = () => {
+const SuplyChain = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
@@ -19,14 +20,14 @@ const SparesManagement = () => {
         <>
             <FullPage>
                 <Toolbar></Toolbar>
-                <div>
+                <IndexWrapper>
                     <SuppliersCard />
                     <OrdersCard />
                     <TransportCard />
-                </div>
+                </IndexWrapper>
             </FullPage>
         </>
     );
 };
 
-export default SparesManagement;
+export default SuplyChain;

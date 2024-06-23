@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import ModalBase from '../../components/modal/modal';
-import LoadingNoDataError from '../../components/loading/loadingNoDataError';
-import DataTable from '../../components/dataTable/dataTable';
-import FullPage from '../../components/page/fullPage';
-import Toolbar from '../../components/page/toolbar';
+import ModalBase from '../../../components/modal/modal';
+import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
+import DataTable from '../../../components/dataTable/dataTable';
+import FullPage from '../../../components/page/fullPage';
+import Toolbar from '../../../components/page/toolbar';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../components/store/store';
+import { RootState } from '../../../components/store/store';
 import { useRouter } from 'next/router';
-import { useProducts } from '../../components/products/index/useProducts';
+import { useProducts } from '../../../components/products/index/useProducts';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const productsTableConfig = {
     headers: [
@@ -19,7 +22,7 @@ const productsTableConfig = {
         { id: 'postcode', name: 'Postcode', type: 'string', search: true, order: true },
     ],
     searchable: true,
-    linkColPrefix: '/products/',
+    linkColPrefix: '/inventory/products/',
 };
 
 const Products = () => {
@@ -37,6 +40,10 @@ const Products = () => {
     return (
         <FullPage>
             <Toolbar>
+                <Link href="/inventory" className="tLink">
+                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
+                        <p>Return to Maintenance</p>
+                    </Link>
                 {permissions.products?.manage || isAdmin ? (
                     <button onClick={() => [setViewModal(true), setmodalType('addEditProducts')]} className="tLink">
                         <div className="text-2xl mr-1 pb-1">+</div>

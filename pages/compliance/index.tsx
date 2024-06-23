@@ -3,17 +3,13 @@ import Toolbar from '../../components/page/toolbar';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import { useRouter } from 'next/navigation';
-import JobsCard from '../../components/maintenance/index/jobsCard';
-import PMsCard from '../../components/maintenance/index/pmsCard';
-import AssetsCard from '../../components/maintenance/index/assetsCard';
-import LogsCard from '../../components/maintenance/index/logsCard';
 import IndexWrapper from '../../components/layout/indexWrapper';
 
-const Maintenance = () => {
+const Compliance = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
-    if (!permissions.maintenance?.view && !isAdmin) {
+    if (!permissions.compliance?.view && !isAdmin) {
         router.push('/');
     }
 
@@ -21,15 +17,10 @@ const Maintenance = () => {
         <>
             <FullPage>
                 <Toolbar></Toolbar>
-                <IndexWrapper>
-                    <AssetsCard />
-                    <JobsCard />
-                    <PMsCard />
-                    <LogsCard />
-                </IndexWrapper>
+                <IndexWrapper></IndexWrapper>
             </FullPage>
         </>
     );
 };
 
-export default Maintenance;
+export default Compliance;
