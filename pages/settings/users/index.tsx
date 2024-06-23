@@ -6,10 +6,10 @@ import { useUsers } from '../../../components/settings/users/index/useUsers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
-import ModalBase from '../../../components/modal/modal';
+import ModalBase from '../../../components/layout/modal/modal';
 import DataTable from '../../../components/dataTable/dataTable';
-import FullPage from '../../../components/page/fullPage';
-import Toolbar from '../../../components/page/toolbar';
+import FullPage from '../../../components/layout/page/fullPage';
+import Toolbar from '../../../components/layout/page/toolbar';
 import { useRouter } from 'next/router';
 import { DataTableConfig } from '../../../components/dataTable/types/configType';
 

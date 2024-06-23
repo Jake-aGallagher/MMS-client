@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../debug/globalDebug';
+import { GlobalDebug } from '../../../utility/debug/globalDebug';
 import { addEditFieldConn } from './addEditFieldConn';
 
 export const addEditFieldHandler = async (id: number, model: string, data: any, closeModal: () => void, modelId?: number) => {

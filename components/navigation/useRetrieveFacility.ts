@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../routing/addressAPI';
+import { SERVER_URL } from '../utility/routing/addressAPI';
 import { useDispatch } from 'react-redux';
 import { setCurrentFacility } from '../store/facilitySlice';
-import { GlobalDebug } from '../debug/globalDebug';
+import { GlobalDebug } from '../utility/debug/globalDebug';
 
 interface Props {
     currentFacility: number;

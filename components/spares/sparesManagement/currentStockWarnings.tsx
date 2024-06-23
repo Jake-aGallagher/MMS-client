@@ -2,11 +2,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { SERVER_URL } from '../../routing/addressAPI';
+import { SERVER_URL } from '../../utility/routing/addressAPI';
 import DataTable from '../../dataTable/dataTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { GlobalDebug } from '../../debug/globalDebug';
+import { GlobalDebug } from '../../utility/debug/globalDebug';
 
 interface LowWarnings {
     id: number;

@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import ModalBase from '../../../components/modal/modal';
+import ModalBase from '../../../components/layout/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
 import DataTable from '../../../components/dataTable/dataTable';
-import FullPage from '../../../components/page/fullPage';
-import Toolbar from '../../../components/page/toolbar';
+import FullPage from '../../../components/layout/page/fullPage';
+import Toolbar from '../../../components/layout/page/toolbar';
 import { useStatusTypes } from '../../../components/settings/statusTypes/index/useStatusType';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';

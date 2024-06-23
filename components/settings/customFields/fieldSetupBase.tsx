@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import FullPage from '../../../components/page/fullPage';
-import Toolbar from '../../../components/page/toolbar';
+import FullPage from '../../layout/page/fullPage';
+import Toolbar from '../../layout/page/toolbar';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import ModalBase from '../../../components/modal/modal';
+import ModalBase from '../../layout/modal/modal';
 import { useFieldList } from '../../../components/settings/customFields/fieldList/useFieldList';
 import FieldCard from '../../../components/maintenance/logs/logsManagement/details/formBuilder/useLogFields/FieldCard';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';

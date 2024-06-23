@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import axios from 'axios';
-import { SERVER_URL } from '../routing/addressAPI';
-import { GlobalDebug } from '../debug/globalDebug';
+import { SERVER_URL } from '../utility/routing/addressAPI';
+import { GlobalDebug } from '../utility/debug/globalDebug';
 
 interface Spare {
     id: number;

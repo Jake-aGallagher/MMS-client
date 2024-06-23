@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCircleInfo, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
-import Tooltip from '../../tooltip/tooltip';
+import Tooltip from '../../layout/tooltip/tooltip';
 
 export const StringData = (props: { string: string }) => {
     return <div>{props.string}</div>;

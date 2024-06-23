@@ -1,23 +1,20 @@
-import Loading from '../loading/loading';
+import Loading from '../../loading/loading';
 import DashChartComponent from './dashChartComponent';
 
 interface Props {
     data: {
-        thisMonth: number;
-        avgData: { value: number; flipped: boolean };
         mainData: { label: string; value: number }[];
     };
     loading: boolean;
     error: boolean;
 }
 
-const SparesCosts = (props: Props) => {
+const RevenueLostByAsset = (props: Props) => {
     const text = {
-        title: 'Spares Ordered Costs',
+        title: 'Lost Revenue by Asset (6 Months)',
         mainUnit: '£',
-        labels: 'Spares Ordered Costs (£)',
-        totalString: props.data?.thisMonth.toString(),
-        afterTotalString: '',
+        labels: 'Lost Revenue (£)',
+        removeMonthSoFar: true,
     };
 
     return (
@@ -27,10 +24,10 @@ const SparesCosts = (props: Props) => {
                     <Loading />
                 </div>
             ) : (
-                <DashChartComponent avgData={props.data.avgData} mainData={props.data.mainData} text={text} />
+                <DashChartComponent mainData={props.data.mainData} text={text} />
             )}
         </>
     );
 };
 
-export default SparesCosts;
+export default RevenueLostByAsset;

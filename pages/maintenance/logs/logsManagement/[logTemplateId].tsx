@@ -1,16 +1,16 @@
 import Link from 'next/link';
-import FullPage from '../../../../components/page/fullPage';
-import Toolbar from '../../../../components/page/toolbar';
+import FullPage from '../../../../components/layout/page/fullPage';
+import Toolbar from '../../../../components/layout/page/toolbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
-import DetailsBox from '../../../../components/detailsBox/detailsBox';
+import DetailsBox from '../../../../components/layout/detailsBox/detailsBox';
 import AttachedFilesBox from '../../../../components/attachedFilesBox/attachedFilesBox';
 import { useState } from 'react';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../components/store/store';
 import { useRouter } from 'next/router';
-import ModalBase from '../../../../components/modal/modal';
+import ModalBase from '../../../../components/layout/modal/modal';
 import { useLogTemplateDetails } from '../../../../components/maintenance/logs/logsManagement/details/useLogTemplateDetails';
 import DataTable from '../../../../components/dataTable/dataTable';
 

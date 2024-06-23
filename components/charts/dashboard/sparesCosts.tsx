@@ -1,4 +1,4 @@
-import Loading from '../loading/loading';
+import Loading from '../../loading/loading';
 import DashChartComponent from './dashChartComponent';
 
 interface Props {
@@ -11,11 +11,11 @@ interface Props {
     error: boolean;
 }
 
-const Downtime = (props: Props) => {
+const SparesCosts = (props: Props) => {
     const text = {
-        title: 'Downtime',
-        labels: 'Downtime (mins)',
-        yAxisLabel: 'minutes',
+        title: 'Spares Ordered Costs',
+        mainUnit: '£',
+        labels: 'Spares Ordered Costs (£)',
         totalString: props.data?.thisMonth.toString(),
         afterTotalString: '',
     };
@@ -33,4 +33,4 @@ const Downtime = (props: Props) => {
     );
 };
 
-export default Downtime;
+export default SparesCosts;

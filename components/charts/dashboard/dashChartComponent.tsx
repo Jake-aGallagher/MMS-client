@@ -1,6 +1,6 @@
 import { faArrowUp, faArrowDown, faUpRightAndDownLeftFromCenter, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BarChart from '../charts/barChart';
+import BarChart from '../../charts/barChart';
 import { useState } from 'react';
 
 interface Props {

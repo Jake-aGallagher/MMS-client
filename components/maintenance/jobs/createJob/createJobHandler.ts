@@ -1,6 +1,6 @@
 import { SetStateAction } from 'react';
 import { createJobConn } from './createJobConn';
-import { GlobalDebug } from '../../../debug/globalDebug';
+import { GlobalDebug } from '../../../utility/debug/globalDebug';
 
 interface Props {
     data: any;

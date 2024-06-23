@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import ModalBase from '../../../components/modal/modal';
+import ModalBase from '../../../components/layout/modal/modal';
 import { RootState } from '../../../components/store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useSuppliers } from '../../../components/supplyChain/suppliers/index/useSuppliers';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
 import DataTable from '../../../components/dataTable/dataTable';
-import FullPage from '../../../components/page/fullPage';
-import Toolbar from '../../../components/page/toolbar';
+import FullPage from '../../../components/layout/page/fullPage';
+import Toolbar from '../../../components/layout/page/toolbar';
 import { useRouter } from 'next/navigation';
 import { DataTableConfig } from '../../../components/dataTable/types/configType';
 

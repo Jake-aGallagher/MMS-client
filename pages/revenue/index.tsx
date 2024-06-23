@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import DataTable from "../../components/dataTable/dataTable";
 import LoadingNoDataError from "../../components/loading/loadingNoDataError";
-import FullPage from "../../components/page/fullPage";
-import Toolbar from "../../components/page/toolbar";
+import FullPage from "../../components/layout/page/fullPage";
+import Toolbar from "../../components/layout/page/toolbar";
 import { useRevenue } from "../../components/revenue/index/useRevenue";
 import { RootState } from "../../components/store/store";
 

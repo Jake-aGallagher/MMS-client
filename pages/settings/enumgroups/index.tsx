@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import ModalBase from '../../../components/modal/modal';
+import ModalBase from '../../../components/layout/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useEnumGroups } from '../../../components/settings/enumgroups/index/useEnumGroups';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
 import DataTable from '../../../components/dataTable/dataTable';
-import FullPage from '../../../components/page/fullPage';
-import Toolbar from '../../../components/page/toolbar';
+import FullPage from '../../../components/layout/page/fullPage';
+import Toolbar from '../../../components/layout/page/toolbar';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../components/store/store';
 import { useRouter } from 'next/router';

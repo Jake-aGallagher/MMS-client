@@ -1,6 +1,6 @@
 import Link from "next/link";
-import FullPage from "../../../../components/page/fullPage";
-import Toolbar from "../../../../components/page/toolbar";
+import FullPage from "../../../../components/layout/page/fullPage";
+import Toolbar from "../../../../components/layout/page/toolbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import LoadingNoDataError from "../../../../components/loading/loadingNoDataError";

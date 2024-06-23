@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import ModalBase from '../../../components/modal/modal';
+import ModalBase from '../../../components/layout/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCheck, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { useJobDetails } from '../../../components/maintenance/jobs/details/useJobDetails';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
-import FullPage from '../../../components/page/fullPage';
-import Toolbar from '../../../components/page/toolbar';
-import DetailsBox from '../../../components/detailsBox/detailsBox';
+import FullPage from '../../../components/layout/page/fullPage';
+import Toolbar from '../../../components/layout/page/toolbar';
+import DetailsBox from '../../../components/layout/detailsBox/detailsBox';
 import DataTable from '../../../components/dataTable/dataTable';
 import JobDetailsDefaultCharts from '../../../components/charts/defaults/jobDetailsDefaultCharts';
 import AttachedFilesBox from '../../../components/attachedFilesBox/attachedFilesBox';

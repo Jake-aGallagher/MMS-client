@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../store/userSlice';
 import axios from 'axios';
-import { SERVER_URL } from '../routing/addressAPI';
+import { SERVER_URL } from '../utility/routing/addressAPI';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation';
 import { setDebug } from '../store/debugSlice';
 import { setPermissions } from '../store/permissionsSlice';
 import LoadingNoDataError from '../loading/loadingNoDataError';
-import { GlobalDebug } from '../debug/globalDebug';
+import { GlobalDebug } from '../utility/debug/globalDebug';
 
 interface Props {
     loginHandler: () => void;

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import RetrieveError from '../error/retrieveError';
+import RetrieveError from '../layout/error/retrieveError';
 import Loading from './loading';
 
 interface Props {

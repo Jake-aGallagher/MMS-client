@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../debug/globalDebug';
+import { GlobalDebug } from '../../utility/debug/globalDebug';
 import { adjustSparesStockConn } from './adjustSparesStockConn';
 
 export const adjustSparesStockHandler = async (data: any, id: number, quantityRemaining: number, closeModal: () => void) => {

@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../debug/globalDebug';
+import { GlobalDebug } from '../../utility/debug/globalDebug';
 import { deleteFormConn } from './deleteFormConn';
 
 export const deleteFormHandler = async (name: string, url: string, id: number, closeModal: () => void) => {

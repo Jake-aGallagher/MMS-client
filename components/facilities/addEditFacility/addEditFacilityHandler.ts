@@ -2,7 +2,7 @@ import { setCurrentFacility } from '../../store/facilitySlice';
 import { Dispatch } from 'react';
 import { AnyAction } from '@reduxjs/toolkit';
 import { addEditFacilityConn } from './addEditFacilityConn';
-import { GlobalDebug } from '../../debug/globalDebug';
+import { GlobalDebug } from '../../utility/debug/globalDebug';
 
 export const addEditFacilityHandler = async (data: any, id: number, closeModal: () => void, dispatch: Dispatch<AnyAction>, facilityNumber?: number) => {
     const alertString = `There has been an issue ${facilityNumber && facilityNumber > 0 ? 'editing' : 'creating'} this Facility, please try again.`;

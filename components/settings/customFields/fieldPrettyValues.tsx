@@ -1,5 +1,5 @@
 import { EnumGroups, FileData } from "../../../commonTypes/CustomFields";
-import { SERVER_URL } from "../../routing/addressAPI";
+import { SERVER_URL } from "../../utility/routing/addressAPI";
 
 export const prettyFieldValues = (clientId: string, fieldId: number, type: string, value: string, enumGroups: EnumGroups, fileData: FileData, enumGroupId: number | null) => {
     if (value === 'undefined' || value === null || value === '') return '';

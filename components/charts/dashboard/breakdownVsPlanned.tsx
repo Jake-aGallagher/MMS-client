@@ -1,21 +1,19 @@
-import Loading from '../loading/loading';
+import Loading from '../../loading/loading';
 import DashChartComponent from './dashChartComponent';
 
 interface Props {
     data: {
-        thisMonth: number;
-        avgData: { value: number; flipped: boolean };
         mainData: { label: string; value: number }[];
     };
     loading: boolean;
     error: boolean;
 }
 
-const JobsRaised = (props: Props) => {
+const BreakdownVsPlanned = (props: Props) => {
     const text = {
-        title: 'Maintenance Tasks Created',
-        labels: 'Maintenance Tasks Created',
-        totalString: props.data?.thisMonth.toString(),
+        title: 'Open Breakdowns vs Planned',
+        labels: 'Count',
+        removeMonthSoFar: true,
     };
 
     return (
@@ -25,10 +23,10 @@ const JobsRaised = (props: Props) => {
                     <Loading />
                 </div>
             ) : (
-                <DashChartComponent avgData={props.data.avgData} mainData={props.data.mainData} text={text} />
+                <DashChartComponent mainData={props.data.mainData} text={text} />
             )}
         </>
     );
 };
 
-export default JobsRaised;
+export default BreakdownVsPlanned;

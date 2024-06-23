@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../../debug/globalDebug';
+import { GlobalDebug } from '../../../../utility/debug/globalDebug';
 import { addEditLogTemplateConn } from './addEditLogTemplateConn';
 
 export const addEditLogTemplateHandler = async (id: number, data: any, facilityId: number, closeModal: () => void) => {

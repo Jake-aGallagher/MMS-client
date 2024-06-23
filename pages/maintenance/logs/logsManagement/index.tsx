@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import FullPage from '../../../../components/page/fullPage';
-import Toolbar from '../../../../components/page/toolbar';
+import FullPage from '../../../../components/layout/page/fullPage';
+import Toolbar from '../../../../components/layout/page/toolbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { useLogTemplates } from '../../../../components/maintenance/logs/logsManagement/useLogsManagement';
@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
 import DataTable from '../../../../components/dataTable/dataTable';
 import { useState } from 'react';
-import ModalBase from '../../../../components/modal/modal';
+import ModalBase from '../../../../components/layout/modal/modal';
 
 const LogTemplates = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions); // todo permissions for logs

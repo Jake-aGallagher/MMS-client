@@ -1,6 +1,6 @@
 import SignatureCanvas from 'react-signature-canvas';
 import SignaturePad from 'react-signature-canvas';
-import { SERVER_URL } from '../routing/addressAPI';
+import { SERVER_URL } from '../utility/routing/addressAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleDown, faFloppyDisk, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { deleteFileHandler } from '../attachedFilesBox/deleteFileHandler';

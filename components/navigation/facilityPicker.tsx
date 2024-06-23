@@ -4,11 +4,11 @@ import FormHeader from '../forms/formHeader';
 import GeneralFormSubmit from '../forms/generalFormSubmit';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { SERVER_URL } from '../routing/addressAPI';
+import { SERVER_URL } from '../utility/routing/addressAPI';
 import { changeFacility } from './changeFacility';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { GlobalDebug } from '../debug/globalDebug';
+import { GlobalDebug } from '../utility/debug/globalDebug';
 
 interface AvailProps {
     id: number;

@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../../../../debug/globalDebug';
+import { GlobalDebug } from '../../../../../../utility/debug/globalDebug';
 import { addEditLogFieldConn } from './addEditLogFieldConn';
 
 export const addEditLogFieldHandler = async (id: number, data: any, templateId: number, closeModal: () => void) => {

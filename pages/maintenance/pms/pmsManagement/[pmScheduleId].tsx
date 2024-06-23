@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import ModalBase from '../../../../components/modal/modal';
+import ModalBase from '../../../../components/layout/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil } from '@fortawesome/free-solid-svg-icons';
 import LoadingNoDataError from '../../../../components/loading/loadingNoDataError';
-import FullPage from '../../../../components/page/fullPage';
-import Toolbar from '../../../../components/page/toolbar';
-import DetailsBox from '../../../../components/detailsBox/detailsBox';
+import FullPage from '../../../../components/layout/page/fullPage';
+import Toolbar from '../../../../components/layout/page/toolbar';
+import DetailsBox from '../../../../components/layout/detailsBox/detailsBox';
 import AttachedFilesBox from '../../../../components/attachedFilesBox/attachedFilesBox';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../components/store/store';

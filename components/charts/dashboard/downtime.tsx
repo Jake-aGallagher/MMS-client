@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
+import Loading from '../../loading/loading';
 import DashChartComponent from './dashChartComponent';
-import { formatNumeric } from './formatNumeric';
-import Loading from '../loading/loading';
 
 interface Props {
     data: {
@@ -13,11 +11,11 @@ interface Props {
     error: boolean;
 }
 
-const LostRevenue = (props: Props) => {
+const Downtime = (props: Props) => {
     const text = {
-        title: 'Lost Revenue',
-        mainUnit: '£',
-        labels: 'Lost Revenue (£)',
+        title: 'Downtime',
+        labels: 'Downtime (mins)',
+        yAxisLabel: 'minutes',
         totalString: props.data?.thisMonth.toString(),
         afterTotalString: '',
     };
@@ -35,4 +33,4 @@ const LostRevenue = (props: Props) => {
     );
 };
 
-export default LostRevenue;
+export default Downtime;

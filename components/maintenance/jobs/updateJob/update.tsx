@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { RootState } from '../../../store/store';
 import { useSelector } from 'react-redux';
-import ModalBase from '../../../modal/modal';
+import ModalBase from '../../../layout/modal/modal';
 import { useForm } from 'react-hook-form';
 import FormHeader from '../../../forms/formHeader';
 import GeneralFormSubmit from '../../../forms/generalFormSubmit';

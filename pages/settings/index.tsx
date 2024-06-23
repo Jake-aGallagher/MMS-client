@@ -2,8 +2,8 @@ import Link from 'next/link';
 import IndexCardLayout from '../../components/settings/indexCardLayout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
-import FullPage from '../../components/page/fullPage';
-import Toolbar from '../../components/page/toolbar';
+import FullPage from '../../components/layout/page/fullPage';
+import Toolbar from '../../components/layout/page/toolbar';
 import { faListOl, faPencil, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Settings = () => {

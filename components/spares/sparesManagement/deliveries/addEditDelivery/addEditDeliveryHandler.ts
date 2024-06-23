@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../../debug/globalDebug';
+import { GlobalDebug } from '../../../../utility/debug/globalDebug';
 import { addEditDeliveryConn } from './addEditDeliveryConn';
 
 interface Contents {

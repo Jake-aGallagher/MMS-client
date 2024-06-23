@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SERVER_URL } from '../routing/addressAPI';
+import { SERVER_URL } from '../utility/routing/addressAPI';
 
 export const addFileHandler = async (file: Blob, model: string, id: number, reload: () => void) => {
     const formData = new FormData();

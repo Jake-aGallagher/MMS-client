@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../../../../routing/addressAPI';
+import { SERVER_URL } from '../../../../utility/routing/addressAPI';
 import axios from 'axios';
-import { GlobalDebug } from '../../../../debug/globalDebug';
+import { GlobalDebug } from '../../../../utility/debug/globalDebug';
 
 interface Schedule {
     id: number;

@@ -1,5 +1,5 @@
-import Loading from '../loading/loading';
 import DashChartComponent from './dashChartComponent';
+import Loading from '../../loading/loading';
 
 interface Props {
     data: {
@@ -11,11 +11,13 @@ interface Props {
     error: boolean;
 }
 
-const JobsCompleted = (props: Props) => {
+const LostRevenue = (props: Props) => {
     const text = {
-        title: 'Maintenance Tasks Completed',
-        labels: 'Maintenance Tasks Completed',
+        title: 'Lost Revenue',
+        mainUnit: '£',
+        labels: 'Lost Revenue (£)',
         totalString: props.data?.thisMonth.toString(),
+        afterTotalString: '',
     };
 
     return (
@@ -31,4 +33,4 @@ const JobsCompleted = (props: Props) => {
     );
 };
 
-export default JobsCompleted;
+export default LostRevenue;

@@ -1,19 +1,19 @@
-import Downtime from '../components/dashboard/downtime';
-import JobsOpen from '../components/dashboard/jobsOpen';
-import JobsCompleted from '../components/dashboard/jobsCompleted';
-import JobsRaised from '../components/dashboard/jobsRaised';
-import LostRevenue from '../components/dashboard/lostRevenue';
-import SparesCosts from '../components/dashboard/sparesCosts';
-import FullPage from '../components/page/fullPage';
-import Toolbar from '../components/page/toolbar';
-import BreakdownVsPlannned from '../components/dashboard/breakdownVsPlanned';
-import IncidentsOfNoSpares from '../components/dashboard/incidentsOfNoSpares';
-import RevenueLostByAsset from '../components/dashboard/RevenueLostByAsset';
+import FullPage from '../components/layout/page/fullPage';
+import Toolbar from '../components/layout/page/toolbar';
 import { useSelector } from 'react-redux';
 import { RootState } from '../components/store/store';
-import { useDashboardJobs } from '../components/dashboard/dataHooks/useDashboardJobs';
-import { useDashboardSpares } from '../components/dashboard/dataHooks/useDashboardSpares';
-import { useDashboardRevenues } from '../components/dashboard/dataHooks/useDashboardRevenues';
+import RevenueLostByAsset from '../components/charts/dashboard/RevenueLostByAsset';
+import { useDashboardJobs } from '../components/charts/dashboard/dataHooks/useDashboardJobs';
+import { useDashboardRevenues } from '../components/charts/dashboard/dataHooks/useDashboardRevenues';
+import { useDashboardSpares } from '../components/charts/dashboard/dataHooks/useDashboardSpares';
+import Downtime from '../components/charts/dashboard/downtime';
+import IncidentsOfNoSpares from '../components/charts/dashboard/incidentsOfNoSpares';
+import JobsCompleted from '../components/charts/dashboard/jobsCompleted';
+import JobsOpen from '../components/charts/dashboard/jobsOpen';
+import JobsRaised from '../components/charts/dashboard/jobsRaised';
+import LostRevenue from '../components/charts/dashboard/lostRevenue';
+import SparesCosts from '../components/charts/dashboard/sparesCosts';
+import BreakdownVsPlannned from '../components/charts/dashboard/breakdownVsPlanned';
 
 const Dashboard = () => {
     const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);

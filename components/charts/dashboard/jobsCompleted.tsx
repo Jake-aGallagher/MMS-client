@@ -1,20 +1,21 @@
-import Loading from '../loading/loading';
+import Loading from '../../loading/loading';
 import DashChartComponent from './dashChartComponent';
 
 interface Props {
     data: {
+        thisMonth: number;
+        avgData: { value: number; flipped: boolean };
         mainData: { label: string; value: number }[];
     };
     loading: boolean;
     error: boolean;
 }
 
-const RevenueLostByAsset = (props: Props) => {
+const JobsCompleted = (props: Props) => {
     const text = {
-        title: 'Lost Revenue by Asset (6 Months)',
-        mainUnit: '£',
-        labels: 'Lost Revenue (£)',
-        removeMonthSoFar: true,
+        title: 'Maintenance Tasks Completed',
+        labels: 'Maintenance Tasks Completed',
+        totalString: props.data?.thisMonth.toString(),
     };
 
     return (
@@ -24,10 +25,10 @@ const RevenueLostByAsset = (props: Props) => {
                     <Loading />
                 </div>
             ) : (
-                <DashChartComponent mainData={props.data.mainData} text={text} />
+                <DashChartComponent avgData={props.data.avgData} mainData={props.data.mainData} text={text} />
             )}
         </>
     );
 };
 
-export default RevenueLostByAsset;
+export default JobsCompleted;

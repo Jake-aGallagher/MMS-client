@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { SERVER_URL } from '../routing/addressAPI';
+import { SERVER_URL } from '../utility/routing/addressAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleDown, faPaperclip, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { deleteFileHandler } from '../attachedFilesBox/deleteFileHandler';

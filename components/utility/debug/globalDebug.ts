@@ -1,4 +1,4 @@
-import { store } from "../store/store";
+import { store } from "../../store/store";
 
 export const GlobalDebug = (pageName: string, data: [string, any][]) => {
     const reduxState = store.getState();

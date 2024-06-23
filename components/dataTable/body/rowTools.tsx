@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
-import ModalBase from '../../modal/modal';
+import ModalBase from '../../layout/modal/modal';
 
 interface Props {
     id: number;

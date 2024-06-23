@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../debug/globalDebug';
+import { GlobalDebug } from '../../../utility/debug/globalDebug';
 import { addEditUrgencyTypeConn } from './addEditUrgencyTypeConn';
 
 export const addEditUrgencyTypeHandler = async (data: any, id: number, closeModal: () => void) => {

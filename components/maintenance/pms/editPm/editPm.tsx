@@ -13,7 +13,7 @@ import AltTableHeaders from '../../../dataTable/altTableHeaders';
 import TimeAddRemoveTable from '../../../usersSelector/timeAddRemoveTable';
 import SparesAddRemoveTable from '../../../sparesSelector/sparesAddRemoveTable';
 import { useEditPM } from './useEditPm';
-import ModalBase from '../../../modal/modal';
+import ModalBase from '../../../layout/modal/modal';
 import FormTextCenter from '../../../forms/formTextCenter';
 import { editPMHandler } from './editPMHandler';
 import { FieldInputs } from '../../../settings/customFields/fieldInputs';

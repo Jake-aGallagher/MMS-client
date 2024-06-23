@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { RootState } from '../../components/store/store';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import ModalBase from '../../components/modal/modal';
+import ModalBase from '../../components/layout/modal/modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import { useSpares } from '../../components/spares/index/useSpares';
 import LoadingNoDataError from '../../components/loading/loadingNoDataError';
 import DataTable from '../../components/dataTable/dataTable';
-import FullPage from '../../components/page/fullPage';
-import Toolbar from '../../components/page/toolbar';
+import FullPage from '../../components/layout/page/fullPage';
+import Toolbar from '../../components/layout/page/toolbar';
 import { DataTableConfig } from '../../components/dataTable/types/configType';
 import { useRouter } from 'next/router';
 

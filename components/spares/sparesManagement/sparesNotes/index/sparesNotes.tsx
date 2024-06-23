@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
-import ModalBase from '../../../../modal/modal';
+import ModalBase from '../../../../layout/modal/modal';
 import { useSparesNotes } from './useSparesNotes';
 import NoteTitlesList from './noteTitlesList';
 import NoteToView from './noteToView';

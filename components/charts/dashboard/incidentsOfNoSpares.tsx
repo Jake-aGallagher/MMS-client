@@ -1,19 +1,22 @@
-import Loading from '../loading/loading';
+import Loading from '../../loading/loading';
 import DashChartComponent from './dashChartComponent';
 
 interface Props {
     data: {
+        thisMonth: number;
+        avgData: { value: number; flipped: boolean };
         mainData: { label: string; value: number }[];
     };
     loading: boolean;
     error: boolean;
 }
 
-const BreakdownVsPlanned = (props: Props) => {
+const IncidentsOfNoSpares = (props: Props) => {
     const text = {
-        title: 'Open Breakdowns vs Planned',
+        title: 'Number of Missing Parts',
         labels: 'Count',
-        removeMonthSoFar: true,
+        totalString: props.data?.thisMonth.toString(),
+        afterTotalString: '',
     };
 
     return (
@@ -23,10 +26,10 @@ const BreakdownVsPlanned = (props: Props) => {
                     <Loading />
                 </div>
             ) : (
-                <DashChartComponent mainData={props.data.mainData} text={text} />
+                <DashChartComponent avgData={props.data.avgData} mainData={props.data.mainData} text={text} />
             )}
         </>
     );
 };
 
-export default BreakdownVsPlanned;
+export default IncidentsOfNoSpares;

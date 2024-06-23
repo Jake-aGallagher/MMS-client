@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { SERVER_URL } from '../../routing/addressAPI';
-import { GlobalDebug } from '../../debug/globalDebug';
+import { SERVER_URL } from '../../utility/routing/addressAPI';
+import { GlobalDebug } from '../../utility/debug/globalDebug';
 
 export const assignUsersdHandler = async (data: any, facilityNumber: number, closeModal: () => void) => {
     const alertString = `There has been an issue Assigning Users to this Facility, please try again.`;

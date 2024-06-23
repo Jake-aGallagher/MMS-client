@@ -25,7 +25,7 @@ import {
 import { logoutProcess } from './logoutProcess';
 import { useRetrieveFacility } from './useRetrieveFacility';
 import { useState } from 'react';
-import ModalBase from '../modal/modal';
+import ModalBase from '../layout/modal/modal';
 import Timer from './timer';
 
 interface Props {

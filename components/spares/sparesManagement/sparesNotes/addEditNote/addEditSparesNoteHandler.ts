@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../../debug/globalDebug';
+import { GlobalDebug } from '../../../../utility/debug/globalDebug';
 import { addEditSparesNoteConn } from './addEditSparesNoteConn';
 
 export const addEditSparesNoteHandler = async (data: any, id: number, currentFacility: number, closeModal: () => void) => {

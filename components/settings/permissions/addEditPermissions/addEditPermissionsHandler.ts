@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { SERVER_URL } from '../../../routing/addressAPI';
-import { GlobalDebug } from '../../../debug/globalDebug';
+import { SERVER_URL } from '../../../utility/routing/addressAPI';
+import { GlobalDebug } from '../../../utility/debug/globalDebug';
 
 export const addEditPermissionsHandler = async (data: any, id: number, closeModal: () => void) => {
     const alertString = `There has been an issue Assigning Permissions to this User, please try again.`;

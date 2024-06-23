@@ -1,5 +1,5 @@
-import FullPage from '../../components/page/fullPage';
-import Toolbar from '../../components/page/toolbar';
+import FullPage from '../../components/layout/page/fullPage';
+import Toolbar from '../../components/layout/page/toolbar';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../components/store/store';
 import { useRouter } from 'next/navigation';

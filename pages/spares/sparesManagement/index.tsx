@@ -4,8 +4,8 @@ import SparesNotes from '../../../components/spares/sparesManagement/sparesNotes
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import DeliveriesCard from '../../../components/spares/sparesManagement/deliveriesCard';
-import FullPage from '../../../components/page/fullPage';
-import Toolbar from '../../../components/page/toolbar';
+import FullPage from '../../../components/layout/page/fullPage';
+import Toolbar from '../../../components/layout/page/toolbar';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../components/store/store';
 import { useRouter } from 'next/navigation';

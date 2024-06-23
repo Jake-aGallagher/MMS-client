@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../debug/globalDebug';
+import { GlobalDebug } from '../../../utility/debug/globalDebug';
 import { addEditTaskTypeConn } from './addEditTaskTypeConn';
 
 export const addEditTaskTypeHandler = async (data: any, id: number, closeModal: () => void) => {

@@ -1,4 +1,4 @@
-import { SERVER_URL } from '../routing/addressAPI';
+import { SERVER_URL } from '../utility/routing/addressAPI';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { useRef } from 'react';

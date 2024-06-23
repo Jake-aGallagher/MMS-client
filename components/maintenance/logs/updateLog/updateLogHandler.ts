@@ -1,4 +1,4 @@
-import { GlobalDebug } from '../../../debug/globalDebug';
+import { GlobalDebug } from '../../../utility/debug/globalDebug';
 import { updateLogConn } from './updateLogConn';
 
 export const updateLogHandler = async (logId: number, data: any, facilityId: number, userId: number, closeModal: () => void) => {

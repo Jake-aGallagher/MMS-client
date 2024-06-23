@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { SERVER_URL } from '../../../routing/addressAPI';
-import { GlobalDebug } from '../../../debug/globalDebug';
+import { SERVER_URL } from '../../../utility/routing/addressAPI';
+import { GlobalDebug } from '../../../utility/debug/globalDebug';
 
 interface Props {
     statusTypeNumber: number;

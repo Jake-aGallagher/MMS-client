@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../components/store/store';
-import ModalBase from '../../../components/modal/modal';
+import ModalBase from '../../../components/layout/modal/modal';
 import Loading from '../../../components/loading/loading';
-import RetrieveError from '../../../components/error/retrieveError';
+import RetrieveError from '../../../components/layout/error/retrieveError';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faPencil, faWrench } from '@fortawesome/free-solid-svg-icons';
 import { useAssets } from '../../../components/maintenance/assets/index/useAssets';
 import { useOpenBranches } from '../../../components/maintenance/assets/assetUtil/useOpenBranches';
 import { useAssetTree } from '../../../components/maintenance/assets/assetUtil/useAssetTree';
-import FullPage from '../../../components/page/fullPage';
-import Toolbar from '../../../components/page/toolbar';
+import FullPage from '../../../components/layout/page/fullPage';
+import Toolbar from '../../../components/layout/page/toolbar';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
