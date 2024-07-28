@@ -9,7 +9,7 @@ interface Props extends PropsWithChildren {
 
 const IndexCardLayout = (props: Props) => {
     return (
-        <div className="rounded-md shadow-md bg-secondary mt-5 mx-2 w-80 pb-4 pt-2 px-4">
+        <div className="rounded-md shadow-md bg-secondary mt-5 mx-2 w-80 pb-4 pt-2 px-4 ">
             <div className='text-xl flex flex-row'>
                 {props.icon && <FontAwesomeIcon icon={props.icon} className={`mr-2 w-3`} />}
                 {props.label}

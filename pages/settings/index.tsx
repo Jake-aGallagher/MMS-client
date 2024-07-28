@@ -13,7 +13,7 @@ const Settings = () => {
     return (
         <FullPage>
             <Toolbar></Toolbar>
-            <div className=" flex flex-row flex-wrap items-start">
+            <div className=" flex flex-row flex-wrap">
                 {permissions.users?.view || permissions.userGroups?.view || isAdmin ? (
                     <IndexCardLayout label="Users" icon={faUser}>
                         {permissions.users?.view || isAdmin ? (
@@ -70,6 +70,16 @@ const Settings = () => {
                         Spares
                     </Link>
                 </IndexCardLayout>
+
+                <IndexCardLayout label="Audits" icon={faPencil}>
+                    <Link href="/settings/audits/assignments" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                        Assignments
+                    </Link>
+                    <Link href="/settings/audits/templates" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                        Templates
+                    </Link>
+                </IndexCardLayout>
+                
             </div>
         </FullPage>
     );
