@@ -31,6 +31,7 @@ import UpdateLog from '../../maintenance/logs/updateLog/updateLog';
 import AddEditField from '../../settings/customFields/addEditField/addEditFields';
 import FacilityPicker from '../../navigation/facilityPicker';
 import DowntimeSelector from '../../maintenance/assets/downtimeSelector/downtimeSelector';
+import AddAuditTemplate from '../../settings/audits/templates/add/addAuditTemplate';
 
 interface ModalProps {
     closeModal: () => void;
@@ -120,6 +121,9 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditStatusType closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditUrgencyType':
                 return <AddEditUrgencyType closeModal={props.closeModal} payload={props.payload} />;
+
+            case 'addAuditTemplate':
+                return <AddAuditTemplate closeModal={props.closeModal} payload={props.payload} />;
 
             // Fields
             case 'addEditField':
