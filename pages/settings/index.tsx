@@ -72,10 +72,10 @@ const Settings = () => {
                 </IndexCardLayout>
 
                 <IndexCardLayout label="Audits" icon={faPencil}>
-                    <Link href="/settings/audits/assignments" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                    <Link href="/settings/audit/assignments" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
                         Assignments
                     </Link>
-                    <Link href="/settings/audits/templates" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
+                    <Link href="/settings/audit/templates" className="mt-2 hover:text-accent flex flex-row items-center border-b-1 border-solid border-accent border-opacity-10 transition-all">
                         Templates
                     </Link>
                 </IndexCardLayout>
