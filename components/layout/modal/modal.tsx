@@ -32,6 +32,9 @@ import AddEditField from '../../settings/customFields/addEditField/addEditFields
 import FacilityPicker from '../../navigation/facilityPicker';
 import DowntimeSelector from '../../maintenance/assets/downtimeSelector/downtimeSelector';
 import AddAuditTemplate from '../../settings/audits/templates/add/addAuditTemplate';
+import AddEditAuditTopic from '../../settings/audits/templates/versions/addEditTopic/addEditTopic';
+import AddEditAuditQuestion from '../../settings/audits/templates/versions/addEditQuestion/addEditQuestion';
+import AddEditAuditOption from '../../settings/audits/templates/versions/addEditOption/addEditOption';
 
 interface ModalProps {
     closeModal: () => void;
@@ -122,8 +125,15 @@ const ModalBase = (props: ModalProps) => {
             case 'addEditUrgencyType':
                 return <AddEditUrgencyType closeModal={props.closeModal} payload={props.payload} />;
 
+            // Audits
             case 'addAuditTemplate':
                 return <AddAuditTemplate closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditTopic':
+                return <AddEditAuditTopic closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditQuestion':
+                return <AddEditAuditQuestion closeModal={props.closeModal} payload={props.payload} />;
+            case 'addEditOption':
+                return <AddEditAuditOption closeModal={props.closeModal} payload={props.payload} />;
 
             // Fields
             case 'addEditField':
@@ -145,6 +155,9 @@ const ModalBase = (props: ModalProps) => {
             case 'deleteLogTemplate':
             case 'deleteLogField':
             case 'deleteField':
+            case 'deleteTopic':
+            case 'deleteQuestion':
+            case 'deleteOption':
                 return <DeleteForm closeModal={props.closeModal} payload={props.payload} />;
         }
     };
