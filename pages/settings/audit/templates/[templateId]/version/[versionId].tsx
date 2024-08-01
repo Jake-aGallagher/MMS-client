@@ -37,6 +37,7 @@ const TemplateVersion = () => {
     const templateId = parseInt(router.asPath.split('/')[4]);
     const version = parseInt(router.asPath.split('/')[6]);
     const { templateVersion, topics, loading, error, reload } = useTemplateVersion(templateId, version);
+    const published = templateVersion?.published == 1;
     const [modal, setModal] = useState<{ view: boolean; type: string; payload: TopicPayload | QuestionPayload | ResponsePayload }>({
         view: false,
         type: '',
@@ -79,18 +80,19 @@ const TemplateVersion = () => {
         setModal({ view: true, type: 'deleteOption', payload: { id, name, questionId, url: 'audit/option' } });
     };
 
-
     return (
         <FullPage>
             <Toolbar>
-                <Link href="/settings/audits/templates" className="tLink">
+                <Link href={`/settings/audit/templates/${templateId}`} className="tLink">
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
-                    <p>Return to Templates</p>
+                    <p>Return to Versions</p>
                 </Link>
-                <button onClick={addTopic} className="tLink">
-                    <div className="text-2xl mr-1 pb-1">+</div>
-                    Add Topic
-                </button>
+                {!published && (
+                    <button onClick={addTopic} className="tLink">
+                        <div className="text-2xl mr-1 pb-1">+</div>
+                        Add Topic
+                    </button>
+                )}
             </Toolbar>
             {modal.view ? (
                 <ModalBase
@@ -102,6 +104,7 @@ const TemplateVersion = () => {
             <LoadingNoDataError loading={loading} error={error}>
                 <div className="mt-4 text-center">
                     <h1 className="text-xl">{templateVersion?.title}</h1>
+                    <div className="">Status: {published ? 'Published' : 'Editable'}</div>
                     <div className="">Version: {templateVersion?.version}</div>
                 </div>
                 {topics.map((topic) => (
@@ -111,22 +114,26 @@ const TemplateVersion = () => {
                                 <th colSpan={4} className="font-normal text-xl">
                                     {topic.title}
                                 </th>
-                                <th className="w-10 group hover:cursor-pointer">
+                                <th className={`w-10 group ${!published && 'hover:cursor-pointer'}`}>
                                     <div className="w-full h-full flex flex-row justify-center">
-                                        <AuditRowTools tools={[
-                                            { label: 'Add Question', icon: faPlus, function: () => addQuestion(topic.id) },
-                                            { label: 'Edit Topic', icon: faPenToSquare, function: () => editTopic(topic.id, topic.title) },
-                                            { label: 'Delete Topic', icon: faTrashCan, function: () => deleteTopic(topic.id, topic.title) },
-                                        ]} />
+                                        {published ? null : (
+                                            <AuditRowTools
+                                                tools={[
+                                                    { label: 'Add Question', icon: faPlus, function: () => addQuestion(topic.id) },
+                                                    { label: 'Edit Topic', icon: faPenToSquare, function: () => editTopic(topic.id, topic.title) },
+                                                    { label: 'Delete Topic', icon: faTrashCan, function: () => deleteTopic(topic.id, topic.title) },
+                                                ]}
+                                            />
+                                        )}
                                     </div>
                                 </th>
                             </tr>
                             <tr>
                                 <th className="font-normal">Question Type</th>
                                 <th className="font-normal">Question</th>
-                                <th className='w-10'></th>
+                                <th className="w-10"></th>
                                 <th className="font-normal">Options (if applicable)</th>
-                                <th className='w-10'></th>
+                                <th className="w-10"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -134,17 +141,19 @@ const TemplateVersion = () => {
                                 <tr key={topic.id + '-' + question.id} className="border border-collapse border-solid border-secondary">
                                     <td className="pl-2 border border-collapse border-solid border-secondary">{question.question_type}</td>
                                     <td className="pl-2 ">{question.title}</td>
-                                    <td className="group hover:cursor-pointer border-r border-solid border-secondary w-10">
+                                    <td className={`group ${!published && 'hover:cursor-pointer'} border-r border-solid border-secondary w-10`}>
                                         <div className="w-full h-full flex flex-row justify-center">
-                                            <AuditRowTools
-                                                tools={[
-                                                    ...(question.question_type === 'select' || question.question_type === 'multi-select'
-                                                        ? [{ label: 'Add Option', icon: faPlus, function: () => addOption(question.id) }]
-                                                        : []),
-                                                    { label: 'Edit Question', icon: faPenToSquare, function: () => editQuestion(question.id, question.title, topic.id) },
-                                                    { label: 'Delete Question', icon: faTrashCan, function: () => deleteQuestion(question.id, question.title, topic.id) },
-                                                ]}
-                                            />
+                                            {published ? null : (
+                                                <AuditRowTools
+                                                    tools={[
+                                                        ...(question.question_type === 'select' || question.question_type === 'multi-select'
+                                                            ? [{ label: 'Add Option', icon: faPlus, function: () => addOption(question.id) }]
+                                                            : []),
+                                                        { label: 'Edit Question', icon: faPenToSquare, function: () => editQuestion(question.id, question.title, topic.id) },
+                                                        { label: 'Delete Question', icon: faTrashCan, function: () => deleteQuestion(question.id, question.title, topic.id) },
+                                                    ]}
+                                                />
+                                            )}
                                         </div>
                                     </td>
                                     <td>
@@ -154,20 +163,20 @@ const TemplateVersion = () => {
                                             </div>
                                         ))}
                                     </td>
-                                    <td className='w-10'>
-                                    {question.options?.map((option) => (
-                                            <div  key={topic.id + '-' + question.id + '-' + option.id + '_tools'} className="group hover:cursor-pointer">
-                                            <AuditRowTools
-                                                tools={[
-                                                    { label: 'Edit Option', icon: faPenToSquare, function: () => editOption(option.id, option.title, question.id) },
-                                                    { label: 'Delete Option', icon: faTrashCan, function: () => deleteOption(option.id, option.title, question.id) },
-                                                ]}
-                                            />
-                                        </div>
+                                    <td className="w-10">
+                                        {question.options?.map((option) => (
+                                            <div key={topic.id + '-' + question.id + '-' + option.id + '_tools'} className={`group ${!published && 'hover:cursor-pointer'}`}>
+                                                {published ? null : (
+                                                    <AuditRowTools
+                                                        tools={[
+                                                            { label: 'Edit Option', icon: faPenToSquare, function: () => editOption(option.id, option.title, question.id) },
+                                                            { label: 'Delete Option', icon: faTrashCan, function: () => deleteOption(option.id, option.title, question.id) },
+                                                        ]}
+                                                    />
+                                                )}
+                                            </div>
                                         ))}
-                                        
                                     </td>
-                                    
                                 </tr>
                             ))}
                         </tbody>

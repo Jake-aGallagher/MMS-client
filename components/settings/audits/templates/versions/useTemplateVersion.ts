@@ -7,6 +7,7 @@ interface TemplateVersion {
     id: number;
     version: number;
     title: string;
+    published: number;
 }
 
 interface Topic {
