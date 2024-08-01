@@ -33,7 +33,7 @@ const TemplateVersions = () => {
     return (
         <FullPage>
             <Toolbar>
-                <Link href="/settings/audits/templates" className="tLink">
+                <Link href="/settings/audit/templates" className="tLink">
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Templates</p>
                 </Link>
