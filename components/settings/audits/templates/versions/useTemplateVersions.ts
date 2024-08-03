@@ -7,6 +7,8 @@ interface TemplateVersion {
     id: number;
     version: number;
     title: string;
+    published: number;
+    latest: number;
 }
 
 export const useTemplateVersions = (templateId: number) => {
