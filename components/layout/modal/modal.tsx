@@ -36,6 +36,7 @@ import AddEditAuditTopic from '../../settings/audits/templates/versions/addEditT
 import AddEditAuditQuestion from '../../settings/audits/templates/versions/addEditQuestion/addEditQuestion';
 import AddEditAuditOption from '../../settings/audits/templates/versions/addEditOption/addEditOption';
 import AddEditAuditVersion from '../../settings/audits/templates/versions/addVersion/addEditVersion';
+import PublishVersion from '../../settings/audits/templates/versions/publishVersion/publishVersion';
 
 interface ModalProps {
     closeModal: () => void;
@@ -48,6 +49,7 @@ interface ModalProps {
 const ModalBase = (props: ModalProps) => {
     const modalToDisplay = (modalType: string) => {
         GlobalDebug('Modal', [['modal type', modalType]]);
+        //console.log(modalType);
 
         switch (modalType) {
             // Facility
@@ -127,6 +129,8 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditUrgencyType closeModal={props.closeModal} payload={props.payload} />;
 
             // Audits
+            case 'publishVersion':
+                return <PublishVersion closeModal={props.closeModal} payload={props.payload} />;
             case 'addAuditTemplate':
                 return <AddAuditTemplate closeModal={props.closeModal} payload={props.payload} />;
             case 'addAuditVersion':

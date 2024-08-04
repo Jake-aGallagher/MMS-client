@@ -2,7 +2,7 @@ import Link from 'next/link';
 import FullPage from '../../../../../../components/layout/page/fullPage';
 import Toolbar from '../../../../../../components/layout/page/toolbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowUpFromBracket, faPenToSquare, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import LoadingNoDataError from '../../../../../../components/loading/loadingNoDataError';
 import ModalBase from '../../../../../../components/layout/modal/modal';
 import { useState } from 'react';
@@ -43,6 +43,10 @@ const TemplateVersion = () => {
         type: '',
         payload: { id: 0, name: '', templateId: 0, version: 0 },
     });
+
+    const publishVersion = () => {
+        setModal({ view: true, type: 'publishVersion', payload: { id: 0, templateId, version, name: '' } });
+    };
 
     const addTopic = () => {
         setModal({ view: true, type: 'addEditTopic', payload: { id: 0, templateId, version, name: '' } });
@@ -88,10 +92,16 @@ const TemplateVersion = () => {
                     <p>Return to Versions</p>
                 </Link>
                 {!published && (
-                    <button onClick={addTopic} className="tLink">
-                        <div className="text-2xl mr-1 pb-1">+</div>
-                        Add Topic
-                    </button>
+                    <>
+                        <button onClick={addTopic} className="tLink">
+                            <div className="text-2xl mr-1 pb-1">+</div>
+                            Add Topic
+                        </button>
+                        <button onClick={publishVersion} className="tLink">
+                            <FontAwesomeIcon icon={faArrowUpFromBracket} className="mr-1 w-3" />
+                            Publish
+                        </button>
+                    </>
                 )}
             </Toolbar>
             {modal.view ? (
