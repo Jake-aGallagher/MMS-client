@@ -17,7 +17,7 @@ const UserGroups = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
     const router = useRouter();
-    if (!permissions.userGrous?.view && !isAdmin) {
+    if (!permissions.userGroups?.view && !isAdmin) {
         router.push('/settings');
     }
 
@@ -36,7 +36,7 @@ const UserGroups = () => {
         namePointer: 'name',
         reload: reload,
     };
-    if (permissions.userGrous?.manage || isAdmin) {
+    if (permissions.userGroups?.manage || isAdmin) {
         userGroupsTableConfig.headers.push({ id: 'tools', name: 'Tools', type: 'tools', search: false, order: false, functions: ['edit', 'delete'] });
     }
 
@@ -51,7 +51,7 @@ const UserGroups = () => {
                     <FontAwesomeIcon icon={faArrowLeft} className="mr-1 w-3" />
                     <p>Return to Settings</p>
                 </Link>
-                {permissions.userGrous?.manage || isAdmin ? (
+                {permissions.userGroups?.manage || isAdmin ? (
                     <button onClick={addUserGroup} className="tLink">
                         <div className="text-2xl mr-1 pb-1">+</div>
                         Add User Group
