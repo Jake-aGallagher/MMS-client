@@ -51,7 +51,6 @@ export const useJobDetails = (jobId: string) => {
     const [error, setError] = useState(false);
     const [jobDetails, setJobDetails] = useState<Job>();
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
-    const [files, setFiles] = useState<{ id: string; name: string }[]>([]);
     const [timeDetails, setTimeDetails] = useState<TimeDetails[]>([]);
     const [sparesDetails, setSparesDetails] = useState<UsedSpares[]>([]);
     const [missingSpares, setMissingSpares] = useState<Spare[]>([]);
@@ -81,7 +80,6 @@ export const useJobDetails = (jobId: string) => {
             } else {
                 setJobDetails(response.data.jobDetails[0]);
                 setCustomFields(response.data.customFields);
-                setFiles(response.data.files || []);
                 setTimeDetails(response.data.timeDetails || []);
                 setSparesDetails(response.data.usedSpares || []);
                 setMissingSpares(response.data.missingSpares || []);
@@ -94,5 +92,5 @@ export const useJobDetails = (jobId: string) => {
             setLoading(false);
         }
     };
-    return { jobDetails, customFields, files, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload };
+    return { jobDetails, customFields, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload };
 };
