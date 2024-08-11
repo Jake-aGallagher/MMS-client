@@ -17,7 +17,7 @@ const JobAssignments = () => {
         ],
         searchable: true,
         linkColPrefix: '/settings/audit/assignments/jobs/',
-        modalType: 'auditAssingmentsJobs',
+        modalType: 'auditAssignmentsJobs',
         deleteUrl: 'audit/assignments',
         idPointer: 'id',
         namePointer: 'subtype_title',
