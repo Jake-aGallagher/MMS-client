@@ -19,9 +19,7 @@ const IndexCard = (props: Props) => {
             <div className="bg-background h-full p-6 rounded-md shadow-md flex flex-col">
                 <h2 className="text-xl font-semibold mb-2">{props.title}</h2>
                 <div>{description}</div>
-                <button className="btnBlue h-8 px-4 mt-auto">
-                    <Link href={props.link}>{props.linkDescription}</Link>
-                </button>
+                    <Link className="btnBlue h-8 px-4 mt-auto flex flex-row justify-center items-center" href={props.link}>{props.linkDescription}</Link>
             </div>
         </div>
     );
