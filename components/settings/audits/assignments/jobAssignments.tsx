@@ -8,7 +8,7 @@ import { RootState } from '../../../store/store';
 const JobAssignments = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
     const isAdmin = useSelector((state: RootState) => state.user.value.isAdmin);
-    const { assignments, loading, error, reload } = useAuditAssignments('jobs');
+    const { assignments, loading, error, reload } = useAuditAssignments('job');
 
     const auditAssinmentTableConfig: DataTableConfig = {
         headers: [
@@ -16,7 +16,7 @@ const JobAssignments = () => {
             { id: 'assignment_title', name: 'Audit', type: 'string', search: true, order: true },
         ],
         searchable: true,
-        linkColPrefix: '/settings/audit/assignments/jobs/',
+        linkColPrefix: '/settings/audit/assignments/job/',
         modalType: 'auditAssignmentsJobs',
         deleteUrl: 'audit/assignments',
         idPointer: 'id',
