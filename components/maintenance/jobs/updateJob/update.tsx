@@ -21,7 +21,7 @@ import { FieldInputs } from '../../../settings/customFields/fieldInputs';
 
 interface ModalProps {
     closeModal: () => void;
-    jobId: number;
+    payload: { id: number; name: string;};
 }
 
 interface Modal {
@@ -51,7 +51,7 @@ const UpdateJob = (props: ModalProps) => {
         loading,
         noData,
         error,
-    } = useUpdateJob(currentFacility, props.jobId);
+    } = useUpdateJob(currentFacility, props.payload.id);
     const [viewModal, setViewModal] = useState(false);
     const [modal, setModal] = useState<Modal>({ modalType: '', payload: {}, fullSize: true, passbackDeatails: null, closeModal: () => setViewModal(false) });
 
@@ -105,12 +105,12 @@ const UpdateJob = (props: ModalProps) => {
     const handleRegistration = async (data: any) => {
         if (completableStatus.includes(parseInt(String(statusWatch[0]))) && completed !== 1) {
             if (confirm('You are about to Complete this Job, once completed the only editable section will be the Notes, are you sure you want to continue') === true) {
-                updateJobFullHandler(true, data, props.jobId, currentFacility, loggedTimeDetails, sparesSelected, sparesMissing, downtime, props.closeModal);
+                updateJobFullHandler(true, data, props.payload.id, currentFacility, loggedTimeDetails, sparesSelected, sparesMissing, downtime, props.closeModal);
             }
         } else if (completed !== 1) {
-            updateJobFullHandler(false, data, props.jobId, currentFacility, loggedTimeDetails, sparesSelected, sparesMissing, downtime, props.closeModal);
+            updateJobFullHandler(false, data, props.payload.id, currentFacility, loggedTimeDetails, sparesSelected, sparesMissing, downtime, props.closeModal);
         } else {
-            updatejobNotesHandler(data, props.jobId, props.closeModal);
+            updatejobNotesHandler(data, props.payload.id, props.closeModal);
         }
     };
 

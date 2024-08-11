@@ -72,7 +72,7 @@ const ModalBase = (props: ModalProps) => {
             case 'createJob':
                 return <CreateJob closeModal={props.closeModal} assetId={props.payload.assetId} />;
             case 'updateJob':
-                return <UpdateJob closeModal={props.closeModal} jobId={props.payload} />;
+                return <UpdateJob closeModal={props.closeModal} payload={props.payload} />;
             case 'usersSelector':
                 return <UsersSelector closeModal={props.closeModal} payload={props.payload} passbackDetails={props.passbackDeatails} />;
 
@@ -141,6 +141,10 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditAuditQuestion closeModal={props.closeModal} payload={props.payload} />;
             case 'addEditOption':
                 return <AddEditAuditOption closeModal={props.closeModal} payload={props.payload} />;
+
+            case 'audit':
+                console.log(props.payload)
+                return <div>this is an audit</div>
 
             // Fields
             case 'addEditField':

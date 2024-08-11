@@ -23,9 +23,7 @@ const CreateJob = (props: ModalProps) => {
     const { defaultValues, typeOptions, urgencyOptions, loading, error } = useCreateJob();
     const userId = useSelector((state: RootState) => state.user.value.id);
     const currentFacility = useSelector((state: RootState) => state.currentFacility.value.currentFacility);
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
-    const [modalPayload, setModalPayload] = useState(0);
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string, auditType?: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
     const yesNoOptions = [
         { id: 'No', value: 'No' },
         { id: 'Yes', value: 'Yes' },
@@ -47,12 +45,12 @@ const CreateJob = (props: ModalProps) => {
     }, [defaultValues]);
 
     const handleRegistration = async (data: any) => {
-        await createJobHandler({ data, currentFacility, assetId: props.assetId, userId, closeModal: props.closeModal, setModalPayload, setModalType, setViewModal });
+        await createJobHandler({ data, currentFacility, assetId: props.assetId, userId, closeModal: props.closeModal, setModal });
     };
 
     return (
         <>
-            {viewModal ? <ModalBase modalType={modalType} payload={modalPayload} fullSize={true} closeModal={() => [setViewModal(false), props.closeModal()]} /> : ''}
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } })]} /> : null}
             <FormContainer closeModal={props.closeModal}>
                 <LoadingNoDataError loading={loading} error={error}>
                     <FormHeader label={'Create New Job'} />

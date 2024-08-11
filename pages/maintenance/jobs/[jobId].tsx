@@ -27,9 +27,8 @@ const JobView = () => {
     }
 
     const jobId = router.asPath.split('/')[3];
-    const { jobDetails, customFields, files, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload } = useJobDetails(jobId);
-    const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState('');
+    const { jobDetails, customFields, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload } = useJobDetails(jobId);
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     let jobDetailsConfig: DetailsConfig = {
         id: jobDetails?.id,
@@ -102,7 +101,7 @@ const JobView = () => {
                     <p>Return to all Jobs</p>
                 </Link>
                 {permissions.jobs?.manage || isAdmin ? (
-                    <button onClick={() => [setViewModal(true), setModalType('updateJob')]} className="tLink">
+                    <button onClick={() => setModal({ view: true, type: 'updateJob', payload: { id: jobDetails?.id || 0, name: '' } })} className="tLink">
                         {jobDetails == undefined ? null : jobDetails.completed == 1 ? (
                             <FontAwesomeIcon icon={faPencil} className="mr-1 w-3" />
                         ) : (
@@ -113,7 +112,7 @@ const JobView = () => {
                 ) : null}
             </Toolbar>
 
-            {viewModal ? <ModalBase modalType={modalType} payload={jobDetails?.id} closeModal={() => [setViewModal(false), reload()]} /> : ''}
+            {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : ''}
             <LoadingNoDataError loading={loading} error={error} noData={noData}>
                 <div className="w-full h-full pt-4 flex flex-col">
                     <div className="flex flex-col xl:flex-row">

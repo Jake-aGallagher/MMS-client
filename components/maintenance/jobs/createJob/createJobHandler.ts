@@ -8,9 +8,7 @@ interface Props {
     assetId: number;
     userId: number;
     closeModal: () => void;
-    setModalPayload: (value: SetStateAction<number>) => void;
-    setModalType: (value: SetStateAction<string>) => void;
-    setViewModal: (value: SetStateAction<boolean>) => void;
+    setModal: (value: SetStateAction<{ view: boolean; type: string; payload: { id: number; name: string, auditType?: string } }>) => void;
 }
 
 export const createJobHandler = async (props: Props) => {
@@ -29,9 +27,7 @@ export const createJobHandler = async (props: Props) => {
         if (response.data.created && props.data.compNow == 'No') {
             props.closeModal();
         } else if (response.data.created && props.data.compNow == 'Yes') {
-            props.setModalPayload(response.data.jobId);
-            props.setModalType('updateJob');
-            props.setViewModal(true);
+            props.setModal({ view: true, type: 'updateJob', payload: { id: response.data.jobId, name: '' } });
         } else {
             alert(alertString);
         }
