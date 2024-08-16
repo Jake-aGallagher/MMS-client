@@ -1,5 +1,6 @@
 import { EnumGroups, FileData } from "../../../commonTypes/CustomFields";
-import { SERVER_URL } from "../../utility/routing/addressAPI";
+import FilePrettyValue from "./filePrettyValue";
+import ImagePrettyValue from "./imagePrettyValue.";
 
 export const prettyFieldValues = (clientId: string, fieldId: number, type: string, value: string, enumGroups: EnumGroups, fileData: FileData, enumGroupId: number | null) => {
     if (value === 'undefined' || value === null || value === '') return '';
@@ -9,20 +10,13 @@ export const prettyFieldValues = (clientId: string, fieldId: number, type: strin
         case 'date':
             return new Date(value).toLocaleDateString();
         case 'select':
-            return enumGroups[enumGroupId!].find((item) => item.id == parseInt(value))?.value || 'Enum Group Not Found';
+            if (enumGroupId === null) return 'Enum Group Not Found';
+            return enumGroups[enumGroupId].find((item) => item.id == parseInt(value))?.value || 'Enum Group Not Found';
         case 'file':
-            const values = value.split(',');
-            const fileList = values.map((item, i) => (
-                <li key={'file_list_' + fileData[fieldId][i].encodedId}>
-                    <a className="text-accent hover:text-primary" href={`${SERVER_URL}/getfile/${clientId}/${fileData[fieldId][i].encodedId}`}>
-                        {fileData[fieldId][i].name}
-                    </a>
-                </li>
-            ));
-            return <ul>{fileList}</ul>;
+            return <FilePrettyValue clientId={clientId} fieldId={fieldId} value={value} fileData={fileData} />
         case 'image':
         case 'signature':
-            return <img src={`${SERVER_URL}/getimage/${clientId}/${fileData[fieldId][0].encodedId}`} alt="Uploaded Photo" className="w-full" />
+            return <ImagePrettyValue clientId={clientId} fieldId={fieldId} fileData={fileData} />
         default:
             return value;
     }
