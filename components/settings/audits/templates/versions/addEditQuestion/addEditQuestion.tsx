@@ -54,11 +54,11 @@ const AddEditAuditQuestion = (props: ModalProps) => {
     return (
         <FormContainer closeModal={props.closeModal}>
             <LoadingNoDataError loading={loading} error={error}>
-                <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.title : 'Add Topic'} />
+                <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.title : 'Add Question'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="Question Type" type="select" formName="questionType" errors={errors} required={true} optionNameString="value" selectOptions={fieldTypeOptions} />
                     <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
-                    <GeneralFormInput register={register} label="Order" type="number" formName="sortOrder" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="Order" type="number" formName="sortOrder" errors={errors} required={true} min={0} />
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
             </LoadingNoDataError>

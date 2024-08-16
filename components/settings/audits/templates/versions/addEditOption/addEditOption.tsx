@@ -44,7 +44,7 @@ const AddEditAuditOption = (props: ModalProps) => {
                 <FormHeader label={props.payload.id > 0 ? 'Edit ' + defaultValues.title : 'Add Topic'} />
                 <GeneralForm handleSubmit={handleSubmit} handleRegistration={handleRegistration}>
                     <GeneralFormInput register={register} label="Title" type="text" formName="title" errors={errors} required={true} />
-                    <GeneralFormInput register={register} label="Order" type="number" formName="sortOrder" errors={errors} required={true} />
+                    <GeneralFormInput register={register} label="Order" type="number" formName="sortOrder" errors={errors} required={true} min={0} />
                     <GeneralFormSubmit closeModal={props.closeModal} />
                 </GeneralForm>
             </LoadingNoDataError>
