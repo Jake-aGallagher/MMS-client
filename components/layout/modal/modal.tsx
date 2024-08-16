@@ -37,6 +37,7 @@ import AddEditAuditQuestion from '../../settings/audits/templates/versions/addEd
 import AddEditAuditOption from '../../settings/audits/templates/versions/addEditOption/addEditOption';
 import AddEditAuditVersion from '../../settings/audits/templates/versions/addVersion/addEditVersion';
 import PublishVersion from '../../settings/audits/templates/versions/publishVersion/publishVersion';
+import AuditWizard from '../../audits/auditWizard/auditWizard';
 
 interface ModalProps {
     closeModal: () => void;
@@ -143,8 +144,7 @@ const ModalBase = (props: ModalProps) => {
                 return <AddEditAuditOption closeModal={props.closeModal} payload={props.payload} />;
 
             case 'audit':
-                console.log(props.payload)
-                return <div>this is an audit</div>
+                return <AuditWizard closeModal={props.closeModal} payload={props.payload} />;
 
             // Fields
             case 'addEditField':
