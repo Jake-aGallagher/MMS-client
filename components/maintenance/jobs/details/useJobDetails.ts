@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../../../utility/routing/addressAPI';
 import axios from 'axios';
-import { CustomFieldData } from '../../../../commonTypes/CustomFields';
+import { CustomFieldData, FileData } from '../../../../commonTypes/CustomFields';
 import { GlobalDebug } from '../../../utility/debug/globalDebug';
+import { AuditTopic } from '../../../../commonTypes/audits';
 
 interface Job {
     id: number;
@@ -50,6 +51,8 @@ export const useJobDetails = (jobId: string) => {
     const [noData, setNoData] = useState(false);
     const [error, setError] = useState(false);
     const [jobDetails, setJobDetails] = useState<Job>();
+    const [audit, setAudit] = useState<AuditTopic[]>([]);
+    const [auditFiles, setAuditFiles] = useState<FileData>({});
     const [customFields, setCustomFields] = useState<CustomFieldData>({ fields: [], enumGroups: {}, fileData: {} });
     const [timeDetails, setTimeDetails] = useState<TimeDetails[]>([]);
     const [sparesDetails, setSparesDetails] = useState<UsedSpares[]>([]);
@@ -79,6 +82,8 @@ export const useJobDetails = (jobId: string) => {
                 setNoData(true);
             } else {
                 setJobDetails(response.data.jobDetails[0]);
+                setAudit(response.data.audit);
+                setAuditFiles(response.data.auditFiles);
                 setCustomFields(response.data.customFields);
                 setTimeDetails(response.data.timeDetails || []);
                 setSparesDetails(response.data.usedSpares || []);
@@ -92,5 +97,5 @@ export const useJobDetails = (jobId: string) => {
             setLoading(false);
         }
     };
-    return { jobDetails, customFields, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload };
+    return { jobDetails, audit, auditFiles, customFields, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload };
 };
