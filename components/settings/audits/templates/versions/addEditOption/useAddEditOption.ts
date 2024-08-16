@@ -26,7 +26,6 @@ export const useAddEditOption = (optionId: number) => {
             const response = await axios.get(`${SERVER_URL}/audit/option/${optionId}`, {
                 headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') },
             });
-            console.log(response.data)
             GlobalDebug('useAddEditOption/getHandler', [['response', response]]);
             const data = response.data.option;
             setDefaultValues({
