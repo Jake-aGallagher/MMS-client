@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import ModalBase from '../../../components/layout/modal/modal';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faCheck, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCheck, faPencil, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useJobDetails } from '../../../components/maintenance/jobs/details/useJobDetails';
 import LoadingNoDataError from '../../../components/loading/loadingNoDataError';
 import FullPage from '../../../components/layout/page/fullPage';
@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../components/store/store';
 import { DetailsConfig } from '../../../commonTypes/DetailsConfig';
 import { addToDetailsConfig } from '../../../components/settings/customFields/addToDetailsConfig';
+import AuditView from '../../../components/audits/auditView';
 
 const JobView = () => {
     const permissions = useSelector((state: RootState) => state.permissions.value.permissions);
@@ -27,8 +28,8 @@ const JobView = () => {
     }
 
     const jobId = router.asPath.split('/')[3];
-    const { jobDetails, customFields, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload } = useJobDetails(jobId);
-    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
+    const { jobDetails, audit, auditFiles, customFields, timeDetails, sparesDetails, missingSpares, downtime, loading, noData, error, reload } = useJobDetails(jobId);
+    const [modal, setModal] = useState<{ view: boolean; type: string; payload: { id: number; name: string; eventType?: string } }>({ view: false, type: '', payload: { id: 0, name: '' } });
 
     let jobDetailsConfig: DetailsConfig = {
         id: jobDetails?.id,
@@ -110,6 +111,10 @@ const JobView = () => {
                         {jobDetails == undefined ? null : jobDetails.completed == 1 ? 'Update' : 'Update & Complete'}
                     </button>
                 ) : null}
+                <button onClick={() => setModal({ view: true, type: 'audit', payload: {eventType: 'job', id: jobDetails?.id || 0, name: '' } })} className="tLink">
+                    <FontAwesomeIcon icon={faPenToSquare} className="mr-1 w-3" />
+                    Edit Audit
+                </button>
             </Toolbar>
 
             {modal.view ? <ModalBase modalType={modal.type} payload={modal.payload} closeModal={() => [setModal({ view: false, type: '', payload: { id: 0, name: '' } }), reload()]} /> : ''}
@@ -146,6 +151,7 @@ const JobView = () => {
                     ) : null}
                     <div className="pb-10"></div>
                 </div>
+                <AuditView audit={audit} fileData={auditFiles} />
             </LoadingNoDataError>
         </FullPage>
     );
