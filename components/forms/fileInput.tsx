@@ -11,6 +11,7 @@ import { RootState } from '../store/store';
 interface Props<T extends FieldValues> {
     register: UseFormRegister<T>;
     setValue: (name: string, value: string) => void;
+    setValueAdvanced?: (keyId: string, id: string, encodedId: string, name: string, deleteFile: boolean) => void; // used for multi stage forms
     formName: string;
     label: string;
     required: boolean;
@@ -34,11 +35,17 @@ const FileInput = (props: Props<any>) => {
         const response = await axios.post(`${SERVER_URL}/file/field-file`, formData, { headers: { Authorisation: 'Bearer ' + localStorage.getItem('token') } });
         const resFile = response.data;
         setFileList((prev) => [...prev, { id: resFile.fileId, encodedId: resFile.encodedId, name: resFile.fileName }]);
+        if (props.setValueAdvanced) {
+            props.setValueAdvanced(props.formName, resFile.fileId, resFile.encodedId, resFile.fileName, false);
+        }
     };
 
     const deleteFile = async (encodedId: string) => {
         deleteFileHandler(encodedId);
         setFileList((prev) => prev.filter((item) => item.encodedId !== encodedId));
+        if (props.setValueAdvanced) {
+            props.setValueAdvanced(props.formName, '', encodedId, '', true);
+        }
     };
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {

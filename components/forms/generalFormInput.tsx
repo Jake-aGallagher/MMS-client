@@ -24,6 +24,7 @@ const GeneralFormInput = (props: Props<any>) => {
     const singleTypes = ['text', 'number', 'date', 'time', 'password'];
     const areaTypes = ['textarea'];
     const selectTypes = ['select'];
+    const multiSelectTypes = ['multi-select'];
     const checkboxTypes = ['checkbox'];
 
     return (
@@ -63,6 +64,23 @@ const GeneralFormInput = (props: Props<any>) => {
                 <select
                     id={props.formName}
                     className={`h-10 pl-1 my-2 rounded-md w-full bg-background border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${
+                        props.errors[props.formName] && 'border-red border-2'
+                    }`}
+                    {...props.register(props.formName, { required: props.required })}
+                >
+                    {props.selectOptions!.map((item) => (
+                        <option value={item.id} key={props.formName + '_' + item.id}>
+                            {item[props.optionNameString!]}
+                        </option>
+                    ))}
+                </select>
+            )}
+
+            {multiSelectTypes.includes(props.type) && (
+                <select
+                    multiple
+                    id={props.formName}
+                    className={`h-32 pl-1 py-2 my-2 rounded-md w-full bg-background border-1 border-primary border-solid ${props.extraClasses && props.extraClasses} ${
                         props.errors[props.formName] && 'border-red border-2'
                     }`}
                     {...props.register(props.formName, { required: props.required })}

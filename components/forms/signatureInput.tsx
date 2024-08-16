@@ -13,6 +13,7 @@ import { RootState } from '../store/store';
 interface Props<T extends FieldValues> {
     register: UseFormRegister<T>;
     setValue: (name: string, value: string) => void;
+    setValueAdvanced?: (keyId: string, id: string, encodedId: string, name: string, deleteFile: boolean) => void; // used for multi stage forms
     formName: string;
     label: string;
     required: boolean;
@@ -39,12 +40,18 @@ const SignatureInput = (props: Props<any>) => {
             });
             const resFile = response.data;
             setFileList((prev) => [...prev, { id: resFile.fileId, encodedId: resFile.encodedId, name: resFile.fileName }]);
+            if (props.setValueAdvanced) {
+                props.setValueAdvanced(props.formName, resFile.fileId, resFile.encodedId, resFile.fileName, false);
+            }
         }
     };
 
     const deleteFile = async (encodedId: string) => {
         deleteFileHandler(encodedId);
         setFileList((prev) => prev.filter((item) => item.encodedId !== encodedId));
+        if (props.setValueAdvanced) {
+            props.setValueAdvanced(props.formName, '', encodedId, '', true);
+        }
     };
 
     return (
